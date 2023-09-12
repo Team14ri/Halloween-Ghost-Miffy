@@ -33,6 +33,15 @@ namespace DS
             Wave
         }
 
+        public static readonly Dictionary<string, float> TextAnimationSpeed = new()
+        {
+            { "tiny", .1f },
+            { "short", .25f },
+            { "normal", 0.666f },
+            { "long", 1f },
+            { "read", 2f },
+        };
+
         public static List<Command> ParseCommands(string input)
         {
             List<Command> commands = new List<Command>();
@@ -75,7 +84,7 @@ namespace DS
 
         private static (Command, int, float) ParseSpeedTag(string input, int currentIndex)
         {
-            var match = Regex.Match(input, @"<speed:(\d+)>");
+            var match = Regex.Match(input, @"<speed:([\d]+(\.\d+)?)>");
             var newSpeed = float.Parse(match.Groups[1].Value);
             var command = new Command
             {
@@ -108,7 +117,7 @@ namespace DS
 
         private static (Command, int) ParsePauseTag(string input, int currentIndex)
         {
-            var match = Regex.Match(input, @"<pause:(\d+)>");
+            var match = Regex.Match(input, @"<pause:([\d]+(\.\d+)?)>");
             var command = new Command
             {
                 commandType = CommandType.Pause,

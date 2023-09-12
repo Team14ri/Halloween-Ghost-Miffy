@@ -17,7 +17,31 @@ namespace DS
 
         public IEnumerator AnimateTextIn(List<DialogueUtility.Command> commands)
         {
+            _textBox.text = "";
+            
             _commands = commands;
+            float currentTextSpeed = DialogueUtility.TextAnimationSpeed["normal"];
+
+            foreach (var command in _commands)
+            {
+                switch (command.commandType)
+                {
+                    case DialogueUtility.CommandType.Pause:
+                        yield return new WaitForSeconds(command.floatValue);
+                        break;
+                    case DialogueUtility.CommandType.TextSpeedChange:
+                        currentTextSpeed = command.floatValue;
+                        break;
+                    default:
+                        foreach (var t in command.stringValue)
+                        {
+                            _textBox.text += t;
+                            yield return new WaitForSeconds(currentTextSpeed);
+                        }
+                        break;
+                }
+            }
+            
             yield return null;
         }
     }

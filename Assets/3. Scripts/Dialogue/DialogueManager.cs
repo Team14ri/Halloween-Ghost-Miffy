@@ -17,7 +17,7 @@ namespace DS
         }
         
         private void PlayDialogue1() {
-            PlayDialogue(_textBox, "테스트 테스트 <speed:5>속도 증가 <pause:1><anim:wave>애니메이션</anim><speed:1>속도 보통 <pause:3>3초 멈춤");
+            PlayDialogue(_textBox, "<speed:0.03>으아악!\n<pause:0.3><speed:0.15>배.. 고... 파<pause:0.5><speed:0.05>\n너.. <pause:0.2>혹시.... <pause:0.24><anim:wave>먹을 것</anim> 좀 있어?");
         }
         
         public float waveSpeed = 7f;
