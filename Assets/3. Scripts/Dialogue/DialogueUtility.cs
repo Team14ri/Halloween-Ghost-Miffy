@@ -112,7 +112,7 @@ namespace DS
                 startIndex = currentIndex,
                 endIndex = newIndex
             };
-            return (command, match.Length, newIndex);
+            return (command, match.Length, newIndex + 1);
         }
 
         private static (Command, int) ParsePauseTag(string input, int currentIndex)
@@ -143,7 +143,7 @@ namespace DS
                 startIndex = currentIndex,
                 endIndex = newIndex
             };
-            return (command, match.Length, newIndex);
+            return (command, match.Length, newIndex + 1);
         }
     }
 }
