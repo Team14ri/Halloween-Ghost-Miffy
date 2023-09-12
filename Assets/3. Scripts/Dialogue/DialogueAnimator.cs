@@ -14,6 +14,13 @@ namespace DS
 
         private bool _updateAnimation;
 
+        [SerializeField] private float WaveSpeed = 7f;
+        [SerializeField] private float WaveHeight = 0.08f;
+        [SerializeField] private float WaveDifference = 1f;
+        
+        
+        [SerializeField] private float ShakeMagnitude = 0.04f;
+
         private void Awake()
         {
             if (Instance == null)
@@ -90,11 +97,11 @@ namespace DS
                     
                 switch (command.textAnimationType)
                 {
-                    case DialogueUtility.TextAnimationType.Shake:
-                        AnimateShake(textInfo, command);
-                        break;
                     case DialogueUtility.TextAnimationType.Wave:
-                        AnimateWave(textInfo, command);
+                        AnimateWave(textInfo, command, WaveSpeed, WaveHeight);
+                        break;
+                    case DialogueUtility.TextAnimationType.Shake:
+                        AnimateShake(textInfo, command, ShakeMagnitude);
                         break;
                 }
             }
@@ -124,7 +131,7 @@ namespace DS
                 for (int j = 0; j < 4; j++)
                 {
                     Vector3 vertex = vertices[charInfo.vertexIndex + j];
-                    vertex.y += Mathf.Sin(Time.time * waveSpeed + vertex.x * 0.1f) * waveHeight;
+                    vertex.y += Mathf.Sin(Time.time * waveSpeed + vertex.x * WaveDifference) * waveHeight;
                     vertices[charInfo.vertexIndex + j] = vertex;
                 }
             }
