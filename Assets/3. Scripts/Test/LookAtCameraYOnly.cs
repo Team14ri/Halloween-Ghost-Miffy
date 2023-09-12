@@ -1,15 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LookAtCameraYOnly : MonoBehaviour
 {
+    [SerializeField] private GameObject cam;
+
     private void Update()
     {
-        Vector3 directionToCamera = transform.position - Camera.main.transform.position;
-        
-        directionToCamera.y = 0;
-        
-        transform.forward = directionToCamera.normalized;
+        float cameraYRotation = cam.transform.eulerAngles.y;
+        transform.rotation = Quaternion.Euler(transform.eulerAngles.x, cameraYRotation, transform.eulerAngles.z);
     }
 }
