@@ -7,26 +7,12 @@ namespace DS
 {
     public class DialogueUtility : MonoBehaviour
     {
-        private void Start()
-        {
-            string input = "테스트 테스트 <speed:5>속도 증가 <pause:1><anim:wave>애니메이션</anim><speed:1>속도 보통 <pause:3>3초 멈춤";
-            List<Command> commands = ParseCommands(input);
-
-            Debug.Log("Dialogue Utility");
-            
-            // 출력 테스트
-            foreach (var command in commands)
-            {
-                Debug.Log($"{command.commandType}, {command.textAnimationType}, \"{command.stringValue}\", {command.floatValue}");
-            }
-        }
-        
         public struct Command
         {
+            // Todo: ColorValue 추가하기
             public CommandType commandType;
             public TextAnimationType textAnimationType;
             public string stringValue;
-            public Color colorValue;
             public float floatValue;
         }
 
