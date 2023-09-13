@@ -33,7 +33,7 @@ public class CM_Freelook : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            float input = UnityEngine.Input.GetAxis(axis);
+            float input = UnityEngine.Input.GetAxis(axis) * -1;
 
             return input;
         }
