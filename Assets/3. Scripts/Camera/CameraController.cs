@@ -12,7 +12,7 @@ public class CameraController : MonoBehaviour
     [Space]
 
     [Header("카메라 줌 속성")]
-    [SerializeField] private float cameraZoomSpeed = 100.0f;
+    [SerializeField] private float cameraZoomSpeed = 10.0f;
     [Tooltip("줌에 걸리는 시간 (높을수록 부드러워짐)")]
     [SerializeField] private float cameraZoomTime = 0.05f;
     [Tooltip("줌 최소 거리")]
