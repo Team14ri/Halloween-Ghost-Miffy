@@ -10,7 +10,6 @@ public class AutoSizeByText : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(textBox.GetRenderedValues(true));
         _gameObject.GetComponent<RectTransform>().sizeDelta = textBox.GetRenderedValues(true);
     }
 }
