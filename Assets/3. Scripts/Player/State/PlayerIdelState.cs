@@ -15,8 +15,7 @@ public class PlayerIdleState : IState
 
     public void Execute()
     {
-        Debug.Log($"Idle {player.movementInput}");
-        
+        // Idle -> Moving
         if (player.movementInput != Vector2.zero)
         {
             stateMachine.ChangeState(new PlayerWalkingState(player, stateMachine));

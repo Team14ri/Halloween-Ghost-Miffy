@@ -5,11 +5,16 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     private StateMachine stateMachine = new();
+
+    public Transform tr;
+    public Rigidbody rb;
     
     public Vector2 movementInput;
 
     private void Start()
     {
+        tr = transform;
+        rb = GetComponent<Rigidbody>();
         stateMachine.ChangeState(new PlayerIdleState(this, stateMachine));
     }
 
