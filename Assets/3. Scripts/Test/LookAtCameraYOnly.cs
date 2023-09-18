@@ -4,7 +4,7 @@ public class LookAtCameraYOnly : MonoBehaviour
 {
     [SerializeField] private GameObject cam;
 
-    private void Update()
+    private void FixedUpdate()
     {
         float cameraYRotation = cam.transform.eulerAngles.y;
         transform.rotation = Quaternion.Euler(transform.eulerAngles.x, cameraYRotation, transform.eulerAngles.z);
