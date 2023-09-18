@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.InputSystem;
 
 public class CameraController : MonoBehaviour
 {
@@ -55,23 +56,28 @@ public class CameraController : MonoBehaviour
     private void Zoom()
     {
         var input = Input.GetAxis("Mouse ScrollWheel");
-
+        
         if (Math.Abs(input) > 0)
         {
+            // 카메라 줌이 변화할 값
             var zoomDelta = input * cameraZoomSpeed;
 
+            // target생성, 최소~최대 줌 범위내에 있는지 확인
             targetOrthographicSize -= zoomDelta;
             targetOrthographicSize = Mathf.Clamp(targetOrthographicSize, cameraZoomMinLength, cameraZoomMaxLength);
             lerpTime = 0;
         }
 
+        // 현재 카메라와 target의 orthographic size가 다르다면 업데이트
         if (!Mathf.Approximately(_cinemachineFreeLook.m_Lens.OrthographicSize, targetOrthographicSize))
         {
             lerpTime += Time.deltaTime;
         }
 
+        // 총 걸리는 시간 ~ 현재 경과한 시간 비율
         var percentComplete = lerpTime / cameraZoomTime;
 
+        // 현재 카메라와 target의 orthographic size 보간
         _cinemachineFreeLook.m_Lens.OrthographicSize = Mathf.Lerp(
             _cinemachineFreeLook.m_Lens.OrthographicSize,
             targetOrthographicSize,
