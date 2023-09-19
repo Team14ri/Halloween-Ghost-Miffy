@@ -7,11 +7,13 @@ public class DialogueTest : MonoBehaviour
 {
     [SerializeField] private TMP_Text textBox;
     [SerializeField] private Button playDialogueButton;
+    [SerializeField] private string dialogueTitle;
     [SerializeField, TextArea(10, 1)] private string dialogueText;
 
     public void EnterArea()
     {
         playDialogueButton.gameObject.SetActive(true);
+        playDialogueButton.GetComponentInChildren<TMP_Text>().text = dialogueTitle;
         playDialogueButton.onClick.RemoveAllListeners();
         playDialogueButton.onClick.AddListener(PlayDialogue);
     }
