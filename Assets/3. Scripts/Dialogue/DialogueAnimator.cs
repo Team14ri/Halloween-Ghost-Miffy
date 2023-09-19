@@ -12,13 +12,12 @@ namespace DS
         private TMP_Text _textBox;
         private List<DialogueUtility.Command> _commands = new();
 
-        private bool _updateAnimation;
-
+        [Header("Wave Animation Settings")]
         [SerializeField] private float WaveSpeed = 7f;
-        [SerializeField] private float WaveHeight = 0.08f;
+        [SerializeField] private float WaveHeight = 0.1f;
         [SerializeField] private float WaveDifference = 1f;
         
-        
+        [Header("Shake Animation Settings")]
         [SerializeField] private float ShakeMagnitude = 0.04f;
 
         private void Awake()
@@ -26,7 +25,6 @@ namespace DS
             if (Instance == null)
             {
                 Instance = this;
-                StartAnimation();
             }
             else if (Instance != this)
             {
@@ -39,14 +37,13 @@ namespace DS
             _textBox = textBox;
         }
         
-        public void StartAnimation()
+        public void StopCurrentAnimation()
         {
-            _updateAnimation = true;
-        }
-        
-        public void StopAnimation()
-        {
-            _updateAnimation = false;
+            if (_textBox == null
+                || _textBox.text.Length == 0)
+                return;
+            
+            _textBox.text = "";
         }
 
         public IEnumerator AnimateTextIn(List<DialogueUtility.Command> commands)
@@ -81,8 +78,8 @@ namespace DS
         
         private void Update()
         {
-            if (_updateAnimation == false
-                || _textBox == null)
+            if (_textBox == null
+                || _textBox.text.Length == 0)
                 return;
             
             _textBox.ForceMeshUpdate();
