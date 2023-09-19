@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class AutoSizeByText : MonoBehaviour
+public class DynamicScaleTextbox : MonoBehaviour
 {
     [SerializeField] private TMP_Text textBox;
     [SerializeField] private GameObject targetObject;
