@@ -8,14 +8,23 @@ public class DialogueTest : MonoBehaviour
     [SerializeField] private TMP_Text textBox;
     [SerializeField] private Button playDialogueButton;
     [SerializeField, TextArea(10, 1)] private string dialogueText;
-    
-    private void Start()
+
+    public void EnterArea()
     {
+        playDialogueButton.gameObject.SetActive(true);
+        playDialogueButton.onClick.RemoveAllListeners();
         playDialogueButton.onClick.AddListener(PlayDialogue);
     }
-
-    private void PlayDialogue()
+    
+    public void ExitArea()
     {
+        playDialogueButton.gameObject.SetActive(false);
+        DialogueManager.Instance.StopDialogue();
+    }
+
+    public void PlayDialogue()
+    {
+        playDialogueButton.gameObject.SetActive(false);
         DialogueManager.Instance.PlayDialogue(textBox, dialogueText);
     }
 }

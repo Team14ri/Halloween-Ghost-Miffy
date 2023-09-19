@@ -39,6 +39,10 @@ namespace DS
         
         public void StopCurrentAnimation()
         {
+            if (_textBox == null
+                || _textBox.text.Length == 0)
+                return;
+            
             _textBox.text = "";
         }
 

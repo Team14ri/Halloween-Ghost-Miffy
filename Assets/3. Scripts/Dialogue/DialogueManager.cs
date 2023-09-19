@@ -35,5 +35,11 @@ namespace DS
             //     Debug.Log($"{command.commandType}, {command.textAnimationType}, \"{command.stringValue}\", {command.floatValue}, {command.startIndex}, {command.endIndex}");
             // }
         }
+        
+        public void StopDialogue()
+        {
+            this.EnsureCoroutineStopped(ref _typeRoutine);
+            DialogueAnimator.Instance.StopCurrentAnimation();
+        }
     }
 }
