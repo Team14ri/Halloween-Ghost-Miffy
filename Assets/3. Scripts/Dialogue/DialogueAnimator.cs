@@ -11,6 +11,8 @@ namespace DS
         
         private TMP_Text _textBox;
         private List<DialogueUtility.Command> _commands = new();
+        private float _originTextFontSize;
+        private string _renderText;
 
         [Header("Wave Animation Settings")]
         [SerializeField] private float WaveSpeed = 7f;
@@ -44,14 +46,20 @@ namespace DS
                 return;
             
             _textBox.text = "";
+            _renderText = "";
+            _originTextFontSize = _textBox.fontSize;
         }
 
         public IEnumerator AnimateTextIn(List<DialogueUtility.Command> commands)
         {
             _textBox.text = "";
+            _renderText = "";
             _commands = commands;
+            _originTextFontSize = _textBox.fontSize;
 
             float currentTextSpeed = DialogueUtility.TextAnimationSpeed["normal"];
+            
+            AppendToTextBox($"<size={_originTextFontSize}>");
 
             foreach (var command in _commands)
             {
@@ -63,10 +71,13 @@ namespace DS
                     case DialogueUtility.CommandType.TextSpeedChange:
                         currentTextSpeed = command.floatValue;
                         break;
+                    case DialogueUtility.CommandType.Size:
+                        AppendToTextBox($"</size><size={_originTextFontSize * command.floatValue}>");
+                        break;
                     default:
                         foreach (var t in command.stringValue)
                         {
-                            _textBox.text += t;
+                            AppendToTextBox($"{t}");
                             yield return new WaitForSeconds(currentTextSpeed);
                         }
                         break;
@@ -74,6 +85,12 @@ namespace DS
             }
             
             yield return null;
+        }
+
+        private void AppendToTextBox(string text)
+        {
+            _renderText += text;
+            _textBox.text = $"{_renderText}</size>";
         }
         
         private void Update()

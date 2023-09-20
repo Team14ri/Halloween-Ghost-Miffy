@@ -626,7 +626,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -780}
+  m_AnchoredPosition: {x: 0, y: -676}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &857080621
@@ -649,10 +649,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '
-
-
-'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3d12085188d159f4fb13548fb6d73eb7, type: 2}
   m_sharedMaterial: {fileID: 3749388221098665389, guid: 3d12085188d159f4fb13548fb6d73eb7, type: 2}
@@ -679,8 +676,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -744,10 +741,9 @@ MonoBehaviour:
   textBox: {fileID: 857080621}
   playDialogueButton: {fileID: 679012528}
   dialogueTitle: Print Dialogue
-  dialogueText: "<speed:0.03><anim:shake>\uC73C\uC544\uC545!</anim>\n<pause:0.3><speed:0.15>\uBC30..
+  dialogueText: "<speed:0.03><size:1.5><anim:shake>\uD750</anim><size:1.25><anim:shake>\uC544</anim><size:1><anim:shake>\uC544...</anim>\n<pause:0.3><size:1><speed:0.15>\uBC30..
     \uACE0... \uD30C<pause:0.5><speed:0.05>\n\uB108.. <pause:0.2>\uD639\uC2DC....
-    <pause:0.24><anim:wave>\uBA39\uC744 \uAC83</anim> \uC880 \uC788\uC5B4?\n<size:2>\uD070
-    \uD14D\uC2A4\uD2B8"
+    <pause:0.24><size:1.25><anim:wave>\uBA39\uC744 \uAC83</anim><size:1> \uC880 \uC788\uC5B4?"
 --- !u!1 &863076344
 GameObject:
   m_ObjectHideFlags: 0
@@ -938,7 +934,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -649}
+  m_AnchoredPosition: {x: 0, y: -583}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1517177724
@@ -988,8 +984,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1208,7 +1204,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -121}
+  m_AnchoredPosition: {x: 0, y: -211}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1930317150
@@ -1231,9 +1227,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "[ \uC6D0\uBCF8 \uD14D\uC2A4\uD2B8 ]\n\n<speed:0.03><anim:shake>\uC73C\uC544\uC545!</anim>\\\\n\n<pause:0.3><speed:0.15>\uBC30..
-    \uACE0... \uD30C<pause:0.5><speed:0.05>\\\\n\n\uB108.. <pause:0.2>\uD639\uC2DC....
-    <pause:0.24><anim:wave>\uBA39\uC744 \uAC83</anim> \uC880 \uC788\uC5B4?\n\n"
+  m_text: "[ \uC6D0\uBCF8 \uD14D\uC2A4\uD2B8 ]\n\n<speed:0.03><size:1.5><anim:shake>\uD750</anim><size:1.25><anim:shake>\uC544</anim><size:1><anim:shake>\uC544...</anim>\n<pause:0.3><speed:0.15>\uBC30..
+    \uACE0... \uD30C<pause:0.5><speed:0.05>\n\uB108.. <pause:0.2>\uD639\uC2DC....
+    <pause:0.24><size:1.25><anim:wave>\uBA39\uC744 \uAC83</anim><size:1> \uC880 \uC788\uC5B4?\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3d12085188d159f4fb13548fb6d73eb7, type: 2}
   m_sharedMaterial: {fileID: 3749388221098665389, guid: 3d12085188d159f4fb13548fb6d73eb7, type: 2}
@@ -1260,8 +1256,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

@@ -23,6 +23,7 @@ namespace DS
             Normal,
             Pause,
             TextSpeedChange,
+            Size,
             Animation
         }
 
@@ -67,6 +68,12 @@ namespace DS
                 else if (input.StartsWith("<pause:"))
                 {
                     var (command, len) = ParsePauseTag(input, currentIndex);
+                    commands.Add(command);
+                    input = input.Substring(len);
+                }
+                else if (input.StartsWith("<size:"))
+                {
+                    var (command, len) = ParseSizeTag(input, currentIndex);
                     commands.Add(command);
                     input = input.Substring(len);
                 }
@@ -121,6 +128,21 @@ namespace DS
             var command = new Command
             {
                 commandType = CommandType.Pause,
+                textAnimationType = TextAnimationType.None,
+                stringValue = "",
+                floatValue = float.Parse(match.Groups[1].Value),
+                startIndex = currentIndex,
+                endIndex = currentIndex
+            };
+            return (command, match.Length);
+        }
+        
+        private static (Command, int) ParseSizeTag(string input, int currentIndex)
+        {
+            var match = Regex.Match(input, @"<size:([\d]+(\.\d+)?)>");
+            var command = new Command
+            {
+                commandType = CommandType.Size,
                 textAnimationType = TextAnimationType.None,
                 stringValue = "",
                 floatValue = float.Parse(match.Groups[1].Value),
