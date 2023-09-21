@@ -7,7 +7,7 @@ public class DialogueTest : MonoBehaviour
 {
     [SerializeField] private TMP_Text textBox;
     [SerializeField] private Button playDialogueButton;
-    [SerializeField] private string dialogueTitle;
+    [SerializeField] public string dialogueTitle;
     [SerializeField, TextArea(10, 1)] private string dialogueText;
 
     public void EnterArea()
