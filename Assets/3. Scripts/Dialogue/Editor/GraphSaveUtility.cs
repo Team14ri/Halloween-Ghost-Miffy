@@ -7,6 +7,7 @@ using UnityEngine;
 public class GraphSaveUtility
 {
     private DialogueGraphView _targetGraphView;
+    private DialogueContainer _containerCache;
 
     private List<Edge> Edges => _targetGraphView.edges.ToList();
     private List<DialogueNode> Nodes => _targetGraphView.nodes.ToList().Cast<DialogueNode>().ToList();
@@ -60,6 +61,50 @@ public class GraphSaveUtility
 
     public void LoadGraph(string fileName)
     {
+        _containerCache = Resources.Load<DialogueContainer>(fileName);
         
+        if (_containerCache == null)
+        {
+            EditorUtility.DisplayDialog("File Not Found", "Target dialogue graph file does not exist!", "OK");
+            return;
+        }
+
+        ClearGraph();
+        CreateNodes();
+        ConnectNodes();
+    }
+
+    private void ClearGraph()
+    {
+        Nodes.Find(x => x.EntryPoint).GUID = _containerCache.NodeLinks[0].BaseNodeGuid;
+
+        foreach (var node in Nodes)
+        {
+            if (node.EntryPoint)
+                continue;
+            
+            Edges.Where(x => x.input.node == node).ToList()
+                .ForEach(edge => _targetGraphView.RemoveElement(edge));
+            
+            _targetGraphView.RemoveElement(node);
+        }
+    }
+
+    private void CreateNodes()
+    {
+        foreach (var nodeData in _containerCache.DialogueNodeData)
+        {
+            var tempNode = _targetGraphView.CreateDialogueNode(nodeData.DialogueText);
+            tempNode.GUID = nodeData.GUID;
+            _targetGraphView.AddElement(tempNode);
+
+            var nodePorts = _containerCache.NodeLinks.Where(x => x.BaseNodeGuid == nodeData.GUID).ToList();
+            nodePorts.ForEach(x => _targetGraphView.AddChoicePort(tempNode, x.PortName));
+        }
+    }
+    
+    private void ConnectNodes()
+    {
+        throw new System.NotImplementedException();
     }
 }
