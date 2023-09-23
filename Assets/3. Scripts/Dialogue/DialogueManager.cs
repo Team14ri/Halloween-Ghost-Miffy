@@ -24,7 +24,7 @@ namespace DS
 
         public void PlayDialogue(TMP_Text textBox, string value)
         {
-            this.EnsureCoroutineStopped(ref _typeRoutine);
+            StopDialogue();
             List<DialogueUtility.Command> commands = DialogueUtility.ParseCommands(value);
             DialogueAnimator.Instance.ChangeTextBox(textBox);
             _typeRoutine = StartCoroutine(DialogueAnimator.Instance.AnimateTextIn(commands));
