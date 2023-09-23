@@ -86,6 +86,8 @@ public class DialogueGraphView : GraphView
         inputPort.portName = "Input";
         dialogueNode.inputContainer.Add(inputPort);
 
+        dialogueNode.styleSheets.Add(Resources.Load<StyleSheet>("UI/DialogueNode"));
+        
         var button = new Button(() => { AddChoicePort(dialogueNode); })
         {
             text = "New Choice"
