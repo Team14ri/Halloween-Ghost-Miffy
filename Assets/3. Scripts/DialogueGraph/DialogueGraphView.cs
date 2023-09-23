@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -14,6 +15,22 @@ public class DialogueGraphView : GraphView
         this.AddManipulator(new RectangleSelector());
 
        AddElement(GenerateEntryPointNode());
+    }
+
+    public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
+    {
+        var compatiblePorts = new List<Port>();
+        
+        ports.ForEach(port =>
+        {
+            if (startPort != port
+                && startPort.node != port.node)
+            {
+                compatiblePorts.Add(port);
+            }
+        });
+
+        return compatiblePorts;
     }
 
     private Port GeneratePort(DialogueNode node, Direction portDirection, Port.Capacity capacity = Port.Capacity.Single)
@@ -33,8 +50,8 @@ public class DialogueGraphView : GraphView
 
         var generatedPort = GeneratePort(node, Direction.Output);
         generatedPort.portName = "Next";
-        
         node.outputContainer.Add(generatedPort);
+
         node.RefreshExpandedState();
         node.RefreshPorts();
         
@@ -59,13 +76,31 @@ public class DialogueGraphView : GraphView
 
         var inputPort = GeneratePort(dialogueNode, Direction.Input, Port.Capacity.Multi);
         inputPort.portName = "Input";
-        
         dialogueNode.inputContainer.Add(inputPort);
+
+        var button = new Button(() => { AddChoicePort(dialogueNode); })
+        {
+            text = "New Choice"
+        };
+        dialogueNode.titleContainer.Add(button);
+        
         dialogueNode.RefreshExpandedState();
         dialogueNode.RefreshPorts();
         
         dialogueNode.SetPosition(new Rect(Vector2.zero, defaultNodeSize));
 
         return dialogueNode;
+    }
+
+    private void AddChoicePort(DialogueNode dialogueNode)
+    {
+        var generatedPort = GeneratePort(dialogueNode, Direction.Output);
+
+        var outputPortCount = dialogueNode.outputContainer.Query("connector").ToList().Count;
+        generatedPort.portName = $"Choice {outputPortCount}";
+        
+        dialogueNode.outputContainer.Add(generatedPort);
+        dialogueNode.RefreshExpandedState();
+        dialogueNode.RefreshPorts();
     }
 }
