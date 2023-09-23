@@ -10,13 +10,18 @@ public class DialogueGraphView : GraphView
     
     public DialogueGraphView()
     {
+        styleSheets.Add(Resources.Load<StyleSheet>("UI/DialogueGraph"));
         SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
         
         this.AddManipulator(new ContentDragger());
         this.AddManipulator(new SelectionDragger());
         this.AddManipulator(new RectangleSelector());
 
-       AddElement(GenerateEntryPointNode());
+        var grid = new GridBackground();
+        Insert(0, grid);
+        grid.StretchToParentSize();
+
+        AddElement(GenerateEntryPointNode());
     }
 
     public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
