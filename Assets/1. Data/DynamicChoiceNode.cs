@@ -1,56 +1,48 @@
 using System.Collections;
-using System.Collections.Generic;
+using DS;
 using Unity.VisualScripting;
 using UnityEngine;
 
 [UnitCategory("Custom")]
-public class DynamicChoiceNode : Unit 
+public class DynamicChoiceNode : Unit
 {
     [DoNotSerialize]
-    public ValueInput stringListInput { get; private set; }
+    public ControlInput FlowInput { get; private set; }
 
     [DoNotSerialize]
-    public ControlInput flowInput { get; private set; }
-
+    public ControlOutput FlowOutput { get; private set; }
+    
     [DoNotSerialize]
-    public ControlOutput flowOutput { get; private set; }
-
+    public ValueInput TargetInput { get; private set; }
+    
     [DoNotSerialize]
-    public ValueOutput selectOutput { get; private set; }
+    public ValueInput MessageInput { get; private set; }
 
     protected override void Definition()
     {
-        stringListInput = ValueInput(nameof(stringListInput), new List<string>());
-        flowInput = ControlInput(nameof(flowInput), ExecuteNode);
-        flowOutput = ControlOutput(nameof(flowOutput));
-        selectOutput = ValueOutput<int>(nameof(selectOutput)); // int형 출력 포트 정의
-
-        Succession(flowInput, flowOutput);
-        Requirement(stringListInput, flowInput);
-    }
-
-    ControlOutput ExecuteNode(Flow flow)
-    {
-        List<string> inputList = flow.GetValue<List<string>>(stringListInput);
-        HandleList(inputList);
-
-        flow.SetValue(selectOutput, ComputeIntValue()); // selectOutput에 값을 설정
-        flow.Invoke(flowOutput);
+        FlowInput = ControlInput(nameof(FlowInput), ExecuteNode);
+        FlowOutput = ControlOutput(nameof(FlowOutput));
         
-        return null; 
+        TargetInput = ValueInput<GameObject>(nameof(TargetInput));
+        MessageInput = ValueInput<string>(nameof(MessageInput));
+
+        Succession(FlowInput, FlowOutput);
+        Requirement(TargetInput, FlowInput);
+        Requirement(MessageInput, FlowInput);
     }
 
-    void HandleList(List<string> inputList)
+    private ControlOutput ExecuteNode(Flow flow)
     {
-        foreach (var str in inputList)
-        {
-            Debug.Log(str);
-        }
-    }
+        GameObject target = flow.GetValue<GameObject>(TargetInput);
+        string message = flow.GetValue<string>(MessageInput);
+        
+        HandleMessage(target, message);
 
-    int ComputeIntValue()
+        return FlowOutput;
+    }
+    
+    private void HandleMessage(GameObject target, string message)
     {
-        // 예제: int 값을 계산하는 로직. 실제 로직에 따라 변경하십시오.
-        return 42;
+        target.GetComponent<DialogueHandler>().PlayDialogue(message.Replace("\\n", "\n"));
     }
 }
