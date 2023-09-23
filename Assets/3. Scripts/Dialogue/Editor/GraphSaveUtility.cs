@@ -95,7 +95,7 @@ public class GraphSaveUtility
     {
         foreach (var nodeData in _containerCache.DialogueNodeData)
         {
-            var tempNode = _targetGraphView.CreateDialogueNode(nodeData.DialogueText);
+            var tempNode = _targetGraphView.CreateDialogueNode(nodeData.DialogueText, nodeData.Position);
             tempNode.GUID = nodeData.GUID;
             _targetGraphView.AddElement(tempNode);
 

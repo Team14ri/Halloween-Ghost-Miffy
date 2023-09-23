@@ -17,12 +17,27 @@ public class DialogueGraphView : GraphView
         this.AddManipulator(new ContentDragger());
         this.AddManipulator(new SelectionDragger());
         this.AddManipulator(new RectangleSelector());
+        this.AddManipulator(CreateNodeContextualMenu());
 
         var grid = new GridBackground();
         Insert(0, grid);
         grid.StretchToParentSize();
 
         AddElement(GenerateEntryPointNode());
+    }
+
+    private IManipulator CreateNodeContextualMenu()
+    {
+        ContextualMenuManipulator contextualMenuManipulator = new ContextualMenuManipulator(
+            menuEvent =>
+            {
+                // 마우스 클릭한 위치를 가져옵니다.
+                Vector2 mousePosition = menuEvent.localMousePosition;
+
+                // 위치에 노드를 생성합니다.
+                menuEvent.menu.AppendAction("Add Node", _ => CreateNode("Dialogue Node", mousePosition));
+            });
+        return contextualMenuManipulator;
     }
 
     public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
@@ -71,12 +86,12 @@ public class DialogueGraphView : GraphView
         return node;
     }
 
-    public void CreateNode(string nodeName)
+    public void CreateNode(string nodeName, Vector2 position)
     {
-        AddElement(CreateDialogueNode(nodeName));
+        AddElement(CreateDialogueNode(nodeName, position));
     }
 
-    public DialogueNode CreateDialogueNode(string nodeName)
+    public DialogueNode CreateDialogueNode(string nodeName, Vector2 position)
     {
         var dialogueNode = new DialogueNode()
         {
@@ -109,7 +124,17 @@ public class DialogueGraphView : GraphView
         dialogueNode.RefreshExpandedState();
         dialogueNode.RefreshPorts();
         
-        dialogueNode.SetPosition(new Rect(Vector2.zero, DefaultNodeSize));
+        // // 현재 GraphView의 viewport를 가져옵니다.
+        // Rect graphViewRect = contentViewContainer.WorldToLocal(layout);
+        //
+        // // viewport의 중앙 위치를 계산합니다.
+        // Vector2 centerPosition = new Vector2(graphViewRect.x + graphViewRect.width * 0.5f, graphViewRect.y + graphViewRect.height * 0.5f);
+        //
+        // // 노드의 크기를 고려하여 노드의 중앙이 viewport의 중앙이 되도록 조정합니다.
+        // Vector2 nodePosition = centerPosition - DefaultNodeSize * 0.5f;
+
+        // 노드의 위치를 설정합니다.
+        dialogueNode.SetPosition(new Rect(position, DefaultNodeSize));
 
         return dialogueNode;
     }

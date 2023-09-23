@@ -59,17 +59,17 @@ public class DialogueGraph : EditorWindow
         
         toolbar.Add(new Button(() => RequestDataOperation(true))
         {
-            text = "Save Data"
+            text = "Save"
         });
         toolbar.Add(new Button(() => RequestDataOperation(false))
         {
-            text = "Load Data"
+            text = "Load"
         });
         
-        toolbar.Add(new Button(() => _graphView.CreateNode("Dialogue Node"))
-        {
-            text = "Create Node"
-        });
+        // toolbar.Add(new Button(() => _graphView.CreateNode("Dialogue Node"))
+        // {
+        //     text = "Create Node"
+        // });
         
         rootVisualElement.Add(toolbar);
     }
