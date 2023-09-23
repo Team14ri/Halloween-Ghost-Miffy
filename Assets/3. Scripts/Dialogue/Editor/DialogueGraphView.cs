@@ -60,6 +60,9 @@ public class DialogueGraphView : GraphView
         generatedPort.portName = "Next";
         node.outputContainer.Add(generatedPort);
 
+        node.capabilities &= ~Capabilities.Movable;
+        node.capabilities &= ~Capabilities.Deletable;
+
         node.RefreshExpandedState();
         node.RefreshPorts();
         
