@@ -18,7 +18,7 @@ public class DialogueGraph : EditorWindow
     {
         _graphView = new DialogueGraphView()
         {
-            name = "Dialogue Graph "
+            name = "Dialogue Graph"
         };
         
         _graphView.StretchToParentSize();
