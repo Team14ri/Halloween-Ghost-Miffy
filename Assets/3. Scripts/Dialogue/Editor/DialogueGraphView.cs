@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 public class DialogueGraphView : GraphView
 {
-    private readonly Vector2 defaultNodeSize = new(150, 200);
+    public readonly Vector2 DefaultNodeSize = new(150, 200);
     
     public DialogueGraphView()
     {
@@ -91,11 +91,20 @@ public class DialogueGraphView : GraphView
             text = "New Choice"
         };
         dialogueNode.titleContainer.Add(button);
+
+        var textField = new TextField(string.Empty);
+        textField.RegisterValueChangedCallback(evt =>
+        {
+            dialogueNode.DialogueText = evt.newValue;
+            dialogueNode.title = evt.newValue;
+        });
+        textField.SetValueWithoutNotify(dialogueNode.title);
+        dialogueNode.mainContainer.Add(textField);
         
         dialogueNode.RefreshExpandedState();
         dialogueNode.RefreshPorts();
         
-        dialogueNode.SetPosition(new Rect(Vector2.zero, defaultNodeSize));
+        dialogueNode.SetPosition(new Rect(Vector2.zero, DefaultNodeSize));
 
         return dialogueNode;
     }
@@ -139,7 +148,7 @@ public class DialogueGraphView : GraphView
         var targetEdge = edges.ToList().Where(x =>
             x.output.portName == generatedPort.portName && x.output.node == generatedPort.node);
 
-        if (!targetEdge.Any())
+        if (targetEdge.Any())
         {
             var edge = targetEdge.First();
             edge.input.Disconnect(edge);
