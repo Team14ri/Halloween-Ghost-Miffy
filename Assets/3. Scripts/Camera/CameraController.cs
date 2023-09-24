@@ -13,9 +13,11 @@ public class CameraController : MonoBehaviour
     [Space]
 
     [Header("카메라 줌 속성")]
+    [Tooltip("줌 커브")]
+    [SerializeField] AnimationCurve cameraZoomCurve;
     [SerializeField] private float cameraZoomSpeed = 10.0f;
     [Tooltip("줌에 걸리는 시간 (높을수록 부드러워짐)")]
-    [SerializeField] private float cameraZoomTime = 0.05f;
+    [SerializeField] private float cameraZoomTime = 1.0f;
     [Tooltip("줌 최소 거리")]
     [SerializeField] private float cameraZoomMinLength = 1.0f;
     [Tooltip("줌 최대 거리")]
@@ -23,7 +25,7 @@ public class CameraController : MonoBehaviour
 
     private CinemachineFreeLook _cinemachineFreeLook;
     private float targetOrthographicSize;
-    private float lerpTime = 0;
+    private float lerpTime;
 
     private void Awake()
     {
@@ -56,8 +58,9 @@ public class CameraController : MonoBehaviour
     private void Zoom()
     {
         var input = Input.GetAxis("Mouse ScrollWheel");
-        
-        if (Math.Abs(input) > 0)
+        bool isScrolling = Math.Abs(input) > 0;
+
+        if (isScrolling)
         {
             // 카메라 줌이 변화할 값
             var zoomDelta = input * cameraZoomSpeed;
@@ -65,6 +68,7 @@ public class CameraController : MonoBehaviour
             // target생성, 최소~최대 줌 범위내에 있는지 확인
             targetOrthographicSize -= zoomDelta;
             targetOrthographicSize = Mathf.Clamp(targetOrthographicSize, cameraZoomMinLength, cameraZoomMaxLength);
+        
             lerpTime = 0;
         }
 
@@ -72,15 +76,14 @@ public class CameraController : MonoBehaviour
         if (!Mathf.Approximately(_cinemachineFreeLook.m_Lens.OrthographicSize, targetOrthographicSize))
         {
             lerpTime += Time.deltaTime;
+            float percentComplete = lerpTime / cameraZoomTime;
+
+            // 애니메이션 커브를 이용한 보간
+            float curvePercentComplete = cameraZoomCurve.Evaluate(percentComplete);
+            _cinemachineFreeLook.m_Lens.OrthographicSize = Mathf.Lerp(
+                _cinemachineFreeLook.m_Lens.OrthographicSize,
+                targetOrthographicSize,
+                curvePercentComplete);
         }
-
-        // 총 걸리는 시간 ~ 현재 경과한 시간 비율
-        var percentComplete = lerpTime / cameraZoomTime;
-
-        // 현재 카메라와 target의 orthographic size 보간
-        _cinemachineFreeLook.m_Lens.OrthographicSize = Mathf.Lerp(
-            _cinemachineFreeLook.m_Lens.OrthographicSize,
-            targetOrthographicSize,
-            percentComplete);
     }
 }
