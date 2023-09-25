@@ -7,7 +7,7 @@ namespace DS.Runtime
     public class DialogueNodeData
     {
         public string GUID;
-        public string DialogueText;
+        public string NodeTitle;
         public Vector2 Position;
     }
 }

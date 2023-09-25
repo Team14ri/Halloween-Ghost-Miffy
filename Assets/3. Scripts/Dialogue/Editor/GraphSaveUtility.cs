@@ -12,33 +12,36 @@ namespace DS.Editor
     {
         private DialogueGraphView _targetGraphView;
         private DialogueContainer _containerCache;
-        
-        private IEnumerable<Edge> Edges => _targetGraphView.edges.ToList();
-        private IEnumerable<DialogueNode> Nodes => _targetGraphView.nodes.ToList().Cast<DialogueNode>();
 
-        private GraphSaveUtility(DialogueGraphView targetGraphView)
+        private List<Edge> Edges => _targetGraphView.edges.ToList();
+        private List<DialogueNode> Nodes => _targetGraphView.nodes.ToList().Cast<DialogueNode>().ToList();
+
+        public static GraphSaveUtility GetInstance(DialogueGraphView targetGraphView)
         {
-            _targetGraphView = targetGraphView;
+            return new GraphSaveUtility
+            {
+                _targetGraphView = targetGraphView
+            };
         }
-
-        public static GraphSaveUtility GetInstance(DialogueGraphView targetGraphView) 
-            => new GraphSaveUtility(targetGraphView);
 
         public void SaveGraph(string fileName)
         {
-            if (!Edges.Any()) return;
+            if (!Edges.Any())   // Edges(연결)이 없다면 저장하지 않음
+                return;
 
             var dialogueContainer = ScriptableObject.CreateInstance<DialogueContainer>();
+
             SaveNodes(dialogueContainer);
             SaveLinks(dialogueContainer);
 
+            // 리소스 폴더가 없다면 자동으로 폴더 생성
             if (!AssetDatabase.IsValidFolder("Assets/Resources"))
                 AssetDatabase.CreateFolder("Assets", "Resources");
-
+            
             AssetDatabase.CreateAsset(dialogueContainer, $"Assets/Resources/{fileName}.asset");
             AssetDatabase.SaveAssets();
         }
-
+        
         private void SaveLinks(DialogueContainer container)
         {
             var connectedPorts = Edges.Where(x => x.input.node != null).ToArray();
@@ -64,7 +67,7 @@ namespace DS.Editor
                 container.DialogueNodeData.Add(new DialogueNodeData
                 {
                     GUID = dialogueNode.GUID,
-                    DialogueText = dialogueNode.DialogueText,
+                    NodeTitle = dialogueNode.NodeTitle,
                     Position = dialogueNode.GetPosition().position
                 });
             }
@@ -73,6 +76,7 @@ namespace DS.Editor
         public void LoadGraph(string fileName)
         {
             _containerCache = Resources.Load<DialogueContainer>(fileName);
+            
             if (_containerCache == null)
             {
                 EditorUtility.DisplayDialog("File Not Found", "Target dialogue graph file does not exist!", "OK");
@@ -86,17 +90,16 @@ namespace DS.Editor
 
         private void ClearGraph()
         {
-            var entryNode = Nodes.FirstOrDefault(x => x.EntryPoint);
-            entryNode.GUID = _containerCache.NodeLinks[0].BaseNodeGuid;
+            Nodes.Find(x => x.EntryPoint).GUID = _containerCache.NodeLinks[0].BaseNodeGuid;
 
             foreach (var node in Nodes)
             {
-                if (node.EntryPoint) continue;
-
-                var connectedEdges = Edges.Where(x => x.input.node == node).ToList();
-                foreach (var edge in connectedEdges)
-                    _targetGraphView.RemoveElement(edge);
-
+                if (node.EntryPoint)
+                    continue;
+                
+                Edges.Where(x => x.input.node == node).ToList()
+                    .ForEach(edge => _targetGraphView.RemoveElement(edge));
+                
                 _targetGraphView.RemoveElement(node);
             }
         }
@@ -105,47 +108,45 @@ namespace DS.Editor
         {
             foreach (var nodeData in _containerCache.DialogueNodeData)
             {
-                var tempNode = _targetGraphView.CreateDialogueNode(nodeData.DialogueText, nodeData.Position);
+                var tempNode = _targetGraphView.CreateMultiChoiceNode(nodeData.NodeTitle, nodeData.Position) as MultiChoiceNode;
                 tempNode.GUID = nodeData.GUID;
                 _targetGraphView.AddElement(tempNode);
 
                 var nodePorts = _containerCache.NodeLinks.Where(x => x.BaseNodeGuid == nodeData.GUID).ToList();
-                nodePorts.ForEach(x => _targetGraphView.AddChoicePort(tempNode, x.PortName));
+                nodePorts.ForEach(x => tempNode.AddChoicePort(x.PortName));
             }
         }
-
+        
         private void ConnectNodes()
         {
-            foreach (var node in Nodes)
+            for (int i = 0; i < Nodes.Count; i++)
             {
-                var connections = _containerCache.NodeLinks.Where(x => x.BaseNodeGuid == node.GUID).ToList();
-                foreach (var connection in connections)
+                var connections = _containerCache.NodeLinks.Where(x => x.BaseNodeGuid == Nodes[i].GUID).ToList();
+                for (int j = 0; j < connections.Count; j++)
                 {
-                    var targetNodeGuid = connection.TargetNodeGuid;
+                    var targetNodeGuid = connections[j].TargetNodeGuid;
                     var targetNode = Nodes.First(x => x.GUID == targetNodeGuid);
+                    LinkNodes(Nodes[i].outputContainer[j].Q<Port>(), (Port)targetNode.inputContainer[0]);
                     
-                    var output = node.outputContainer.Q<Port>();
-                    var input = (Port)targetNode.inputContainer[0];
-
-                    LinkNodes(output, input);
-
-                    var position = _containerCache.DialogueNodeData.First(x => x.GUID == targetNodeGuid).Position;
-                    targetNode.SetPosition(new Rect(position, _targetGraphView.DefaultNodeSize));
+                    targetNode.SetPosition(new Rect(
+                        _containerCache.DialogueNodeData.First(x => x.GUID == targetNodeGuid).Position,
+                        _targetGraphView.DefaultNodeSize
+                    ));
                 }
             }
         }
 
         private void LinkNodes(Port output, Port input)
         {
-            var edge = new Edge
+            var tempEdge = new Edge
             {
                 output = output,
                 input = input
             };
-            edge.input.Connect(edge);
-            edge.output.Connect(edge);
-
-            _targetGraphView.Add(edge);
+            tempEdge?.input.Connect(tempEdge);
+            tempEdge?.output.Connect(tempEdge);
+            
+            _targetGraphView.Add(tempEdge);
         }
     }
 }
