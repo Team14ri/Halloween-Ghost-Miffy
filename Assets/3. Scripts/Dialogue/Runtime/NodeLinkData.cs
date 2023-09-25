@@ -1,9 +1,12 @@
 using System;
 
-[Serializable]
-public class NodeLinkData
+namespace DS.Runtime
 {
-    public string BaseNodeGuid;
-    public string PortName;
-    public string TargetNodeGuid;
+    [Serializable]
+    public class NodeLinkData
+    {
+        public string BaseNodeGuid;
+        public string PortName;
+        public string TargetNodeGuid;
+    }
 }

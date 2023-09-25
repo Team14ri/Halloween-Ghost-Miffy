@@ -1,10 +1,13 @@
 using System;
 using UnityEngine;
 
-[Serializable]
-public class DialogueNodeData
+namespace DS.Runtime
 {
-    public string GUID;
-    public string DialogueText;
-    public Vector2 Position;
+    [Serializable]
+    public class DialogueNodeData
+    {
+        public string GUID;
+        public string NodeTitle;
+        public Vector2 Position;
+    }
 }

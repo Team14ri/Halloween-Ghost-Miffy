@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class DialogueContainer : ScriptableObject
+namespace DS.Runtime
 {
-    public List<NodeLinkData> NodeLinks = new();
-    public List<DialogueNodeData> DialogueNodeData = new();
+    [Serializable]
+    public class DialogueContainer : ScriptableObject
+    {
+        public List<NodeLinkData> NodeLinks = new();
+        public List<DialogueNodeData> DialogueNodeData = new();
+    }
 }

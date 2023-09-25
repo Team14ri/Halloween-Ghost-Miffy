@@ -1,4 +1,4 @@
-using DS;
+using DS.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
