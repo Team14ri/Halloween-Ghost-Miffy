@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace DS
+namespace DS.Core
 {
     public class DialogueManager : MonoBehaviour
     {

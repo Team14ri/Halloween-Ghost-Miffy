@@ -1,5 +1,4 @@
-using System.Collections;
-using DS;
+using DS.Core;
 using Unity.VisualScripting;
 using UnityEngine;
 
