@@ -34,22 +34,48 @@ MonoBehaviour:
   - BaseNodeGuid: d29ca05c-c9ce-4825-aef8-1f425173a389
     PortName: Choice 1
     TargetNodeGuid: b2cc9b25-3a0e-475c-a292-0354706107d5
+  - BaseNodeGuid: dad6fe1b-b24c-416f-b91d-e033f639fbe9
+    PortName: Choice 1
+    TargetNodeGuid: 69034fcd-6b77-412d-9d66-cc470a4ed6aa
+  - BaseNodeGuid: dad6fe1b-b24c-416f-b91d-e033f639fbe9
+    PortName: Choice 2
+    TargetNodeGuid: 96282ea9-c298-40ed-b7de-943344058db4
+  - BaseNodeGuid: b2cc9b25-3a0e-475c-a292-0354706107d5
+    PortName: Choice 2
+    TargetNodeGuid: 69034fcd-6b77-412d-9d66-cc470a4ed6aa
+  - BaseNodeGuid: b2cc9b25-3a0e-475c-a292-0354706107d5
+    PortName: Choice 1
+    TargetNodeGuid: 96282ea9-c298-40ed-b7de-943344058db4
   DialogueNodeData:
   - GUID: 7ed0a15b-afbd-4e25-8c63-3d7f9651cafb
     NodeTitle: Test 1
+    NodeType: 1
     Position: {x: 270, y: 152}
   - GUID: bbceac0d-3b90-439f-af23-8e84d7c5c06a
     NodeTitle: Test 3
+    NodeType: 1
     Position: {x: 542, y: 200}
   - GUID: 121f6ab0-2031-462f-a455-0c66072b6761
     NodeTitle: Test 2
+    NodeType: 1
     Position: {x: 542, y: 75}
   - GUID: d29ca05c-c9ce-4825-aef8-1f425173a389
     NodeTitle: Test 4
+    NodeType: 1
     Position: {x: 542, y: 326}
   - GUID: dad6fe1b-b24c-416f-b91d-e033f639fbe9
     NodeTitle: Test 5
-    Position: {x: 845, y: 75}
+    NodeType: 1
+    Position: {x: 813, y: 75}
   - GUID: b2cc9b25-3a0e-475c-a292-0354706107d5
     NodeTitle: Test 6
-    Position: {x: 845, y: 326}
+    NodeType: 1
+    Position: {x: 813, y: 326}
+  - GUID: 69034fcd-6b77-412d-9d66-cc470a4ed6aa
+    NodeTitle: NoChoice Node
+    NodeType: 0
+    Position: {x: 1104, y: 75}
+  - GUID: 96282ea9-c298-40ed-b7de-943344058db4
+    NodeTitle: NoChoice Node
+    NodeType: 0
+    Position: {x: 1104, y: 350}

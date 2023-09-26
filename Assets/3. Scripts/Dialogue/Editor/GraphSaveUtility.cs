@@ -68,6 +68,7 @@ namespace DS.Editor
                 {
                     GUID = dialogueNode.GUID,
                     NodeTitle = dialogueNode.NodeTitle,
+                    NodeType = (DialogueNodeData.NodeTypes)dialogueNode.NodeType,
                     Position = dialogueNode.GetPosition().position
                 });
             }
@@ -108,25 +109,45 @@ namespace DS.Editor
         {
             foreach (var nodeData in _containerCache.DialogueNodeData)
             {
-                var tempNode = _targetGraphView.CreateMultiChoiceNode(nodeData.NodeTitle, nodeData.Position) as MultiChoiceNode;
-                tempNode.GUID = nodeData.GUID;
-                _targetGraphView.AddElement(tempNode);
-
-                var nodePorts = _containerCache.NodeLinks.Where(x => x.BaseNodeGuid == nodeData.GUID).ToList();
-                nodePorts.ForEach(x => tempNode.AddChoicePort(x.PortName));
+                switch (nodeData.NodeType)
+                {
+                    case DialogueNodeData.NodeTypes.NoChoice:
+                        CreateNoChoiceNode(nodeData);
+                        break;
+                    case DialogueNodeData.NodeTypes.MultiChoice:
+                        CreateMultiChoiceNode(nodeData);
+                        break;
+                }
             }
         }
-        
+
+        private void CreateNoChoiceNode(DialogueNodeData nodeData)
+        {
+            var tempNode = _targetGraphView.CreateNoChoiceNode(nodeData.NodeTitle, nodeData.Position) as NoChoiceNode;
+            tempNode.GUID = nodeData.GUID;
+            _targetGraphView.AddElement(tempNode);
+        }
+
+        private void CreateMultiChoiceNode(DialogueNodeData nodeData)
+        {
+            var tempNode = _targetGraphView.CreateMultiChoiceNode(nodeData.NodeTitle, nodeData.Position) as MultiChoiceNode;
+            tempNode.GUID = nodeData.GUID;
+            _targetGraphView.AddElement(tempNode);
+
+            var nodePorts = _containerCache.NodeLinks.Where(x => x.BaseNodeGuid == nodeData.GUID).ToList();
+            nodePorts.ForEach(x => tempNode.AddChoicePort(x.PortName));
+        }
+
         private void ConnectNodes()
         {
-            for (int i = 0; i < Nodes.Count; i++)
+            foreach (var node in Nodes)
             {
-                var connections = _containerCache.NodeLinks.Where(x => x.BaseNodeGuid == Nodes[i].GUID).ToList();
+                var connections = _containerCache.NodeLinks.Where(x => x.BaseNodeGuid == node.GUID).ToList();
                 for (int j = 0; j < connections.Count; j++)
                 {
                     var targetNodeGuid = connections[j].TargetNodeGuid;
                     var targetNode = Nodes.First(x => x.GUID == targetNodeGuid);
-                    LinkNodes(Nodes[i].outputContainer[j].Q<Port>(), (Port)targetNode.inputContainer[0]);
+                    LinkNodes(node.outputContainer[j].Q<Port>(), (Port)targetNode.inputContainer[0]);
                     
                     targetNode.SetPosition(new Rect(
                         _containerCache.DialogueNodeData.First(x => x.GUID == targetNodeGuid).Position,

@@ -16,6 +16,7 @@ namespace DS.Editor
         {
             title = name;
             NodeTitle = name;
+            NodeType = NodeTypes.MultiChoice;
             GUID = Guid.NewGuid().ToString();
             
             _dialogueGraphView = dialogueGraphView;
