@@ -49,7 +49,7 @@ namespace DS.Editor
                 Matrix4x4 transformationMatrix = contentViewContainer.worldTransform;
                 Vector2 mousePosition = menuEvent.mousePosition;
                 Vector2 localMousePosition = transformationMatrix.inverse.MultiplyPoint3x4(mousePosition);
-                menuEvent.menu.AppendAction("Add Node", _ => CreateNode("Dialogue Node", localMousePosition));
+                menuEvent.menu.AppendAction("Add MultiChoice Node", _ => CreateNode("MultiChoice Node", localMousePosition));
             });
         }
 
