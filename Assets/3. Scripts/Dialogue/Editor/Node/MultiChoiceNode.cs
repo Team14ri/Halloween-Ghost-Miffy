@@ -25,7 +25,7 @@ namespace DS.Editor
         public void Build(Vector2 position)
         {
             var inputPort = GeneratePort(Direction.Input, Port.Capacity.Multi);
-            inputPort.portName = "Input";
+            inputPort.portName = "Connection";
             inputContainer.Add(inputPort);
             
             LoadStyleSheet();
@@ -56,6 +56,7 @@ namespace DS.Editor
         private void AddNewChoiceButton()
         {
             var button = new Button(() => { AddChoicePort(); }) { text = "+" };
+            button.AddToClassList("choice-button");
             titleContainer.Add(button);
         }
         
@@ -94,6 +95,7 @@ namespace DS.Editor
         private void AddDeleteButtonToPort(Port generatedPort)
         {
             var deleteButton = new Button(() => RemovePort(generatedPort)) { text = "X" };
+            deleteButton.AddToClassList("delete-choice-button");
             generatedPort.contentContainer.Add(deleteButton);
         }
 
