@@ -16,8 +16,8 @@ namespace DS.Editor
         {
             LoadStyleSheet(StyleSheetPath);
             SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
-            AddManipulators();
             SetupBackground();
+            AddManipulators();
             AddElement(CreateEntryPointNode("Start"));
         }
 
@@ -25,15 +25,7 @@ namespace DS.Editor
         {
             styleSheets.Add(Resources.Load<StyleSheet>(path));
         }
-
-        private void AddManipulators()
-        {
-            this.AddManipulator(new ContentDragger());
-            this.AddManipulator(new SelectionDragger());
-            this.AddManipulator(new RectangleSelector());
-            this.AddManipulator(CreateNodeContextualMenu());
-        }
-
+        
         private void SetupBackground()
         {
             var grid = new GridBackground();
@@ -41,7 +33,17 @@ namespace DS.Editor
             grid.StretchToParentSize();
         }
 
-        private IManipulator CreateNodeContextualMenu()
+        private void AddManipulators()
+        {
+            this.AddManipulator(new ContentDragger());
+            this.AddManipulator(new SelectionDragger());
+            this.AddManipulator(new RectangleSelector());
+            
+            this.AddManipulator(CreateNoChoiceNodeContextualMenu());
+            this.AddManipulator(CreateMultiChoiceNodeContextualMenu());
+        }
+
+        private IManipulator CreateNoChoiceNodeContextualMenu()
         {
             return new ContextualMenuManipulator(menuEvent =>
             {
@@ -49,7 +51,19 @@ namespace DS.Editor
                 Matrix4x4 transformationMatrix = contentViewContainer.worldTransform;
                 Vector2 mousePosition = menuEvent.mousePosition;
                 Vector2 localMousePosition = transformationMatrix.inverse.MultiplyPoint3x4(mousePosition);
-                menuEvent.menu.AppendAction("Add Node", _ => CreateNode("Dialogue Node", localMousePosition));
+                menuEvent.menu.AppendAction("Add NoChoice Node", _ => CreateNode(DialogueNode.NodeTypes.NoChoice, "NoChoice Node", localMousePosition));
+            });
+        }
+
+        private IManipulator CreateMultiChoiceNodeContextualMenu()
+        {
+            return new ContextualMenuManipulator(menuEvent =>
+            {
+                // 현재 GraphView의 변형(줌 레벨과 스크롤 오프셋)을 가져옵니다.
+                Matrix4x4 transformationMatrix = contentViewContainer.worldTransform;
+                Vector2 mousePosition = menuEvent.mousePosition;
+                Vector2 localMousePosition = transformationMatrix.inverse.MultiplyPoint3x4(mousePosition);
+                menuEvent.menu.AppendAction("Add MultiChoice Node", _ => CreateNode(DialogueNode.NodeTypes.MultiChoice, "MultiChoice Node", localMousePosition));
             });
         }
 
@@ -58,9 +72,17 @@ namespace DS.Editor
             return ports.Where(port => startPort != port && startPort.node != port.node).ToList();
         }
 
-        public void CreateNode(string nodeName, Vector2 position)
+        private void CreateNode(DialogueNode.NodeTypes type, string nodeName, Vector2 position)
         {
-            AddElement(CreateMultiChoiceNode(nodeName, position));
+            switch (type)
+            {
+                case DialogueNode.NodeTypes.NoChoice:
+                    AddElement(CreateNoChoiceNode(nodeName, position));
+                    break;
+                case DialogueNode.NodeTypes.MultiChoice:
+                    AddElement(CreateMultiChoiceNode(nodeName, position));
+                    break;
+            }
         }
         
         private DialogueNode CreateEntryPointNode(string nodeName)
@@ -69,6 +91,14 @@ namespace DS.Editor
             entryPointNode.Build();
 
             return entryPointNode;
+        }
+        
+        public DialogueNode CreateNoChoiceNode(string nodeName, Vector2 position)
+        {
+            var noChoiceNode = new NoChoiceNode(this, nodeName);
+            noChoiceNode.Build(position);
+
+            return noChoiceNode;
         }
 
         public DialogueNode CreateMultiChoiceNode(string nodeName, Vector2 position)

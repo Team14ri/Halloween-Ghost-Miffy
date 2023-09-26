@@ -8,10 +8,17 @@ namespace DS.Editor
     {
         public string GUID;
         public string NodeTitle;
+        public NodeTypes NodeType;
         public bool EntryPoint = false;
         
         private const string NodeStyleSheetPath = "UI/DialogueNode";
 
+        public enum NodeTypes
+        {
+            NoChoice,
+            MultiChoice
+        }
+        
         protected void LoadStyleSheet()
         {
             styleSheets.Add(Resources.Load<StyleSheet>(NodeStyleSheetPath));
