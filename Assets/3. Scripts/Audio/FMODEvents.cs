@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
 
-public class AudioManager : MonoBehaviour
+public class FMODEvents : MonoBehaviour
 {
-    public static AudioManager instance { get; private set; }
+    // 사운드 추가 예시
+    [Header("Coin SFX")]
+    [SerializeField] private EventReference coinCollected;
+    
+    public static FMODEvents instance { get; private set; }
 
     private void Awake()
     {
         if (instance != null)
         {
-            Debug.LogError("한 씬에 AudioManager가 여러 개 있습니다.");
+            Debug.LogError("한 씬에 FMODEvents가 여러 개 있습니다.");
             Destroy(this.gameObject);
         }
         else
@@ -21,8 +25,4 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayoneShot(EventReference sound, Vector3 worldPos)
-    {
-        RuntimeManager.PlayOneShot(sound, worldPos);
-    }
 }
