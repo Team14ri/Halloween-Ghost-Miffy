@@ -25,7 +25,7 @@ namespace DS.Editor
         public void Build(Vector2 position)
         {
             var inputPort = GeneratePort(Direction.Input, Port.Capacity.Multi);
-            inputPort.portName = "Input";
+            inputPort.portName = "Connection";
             inputContainer.Add(inputPort);
             
             var outputPort = GeneratePort(Direction.Output);
