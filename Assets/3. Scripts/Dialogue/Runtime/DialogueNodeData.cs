@@ -16,5 +16,23 @@ namespace DS.Runtime
             NoChoice,
             MultiChoice
         }
+        
+        public bool IsEqual(DialogueNodeData other)
+        {
+            if (GUID != other.GUID)
+                return false;
+            
+            if (NodeTitle != other.NodeTitle)
+                return false;
+            
+            if (NodeType != other.NodeType)
+                return false;
+            
+            if (!(Mathf.Approximately(Position.x, other.Position.x) 
+                  && Mathf.Approximately(Position.y, other.Position.y))) 
+                return false;
+            
+            return true;
+        }
     }
 }

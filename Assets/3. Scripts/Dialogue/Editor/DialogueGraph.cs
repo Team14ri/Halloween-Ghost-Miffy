@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using DS.Runtime;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
@@ -91,6 +92,21 @@ namespace DS.Editor
         private void CreateNewDialogue()
         {
             var saveUtility = GraphSaveUtility.GetInstance(_graphView);
+            
+            // 수정사항이 있다면 저장하겠습니까 팝업을 띄움
+            if (_graphView.edges.ToList().Any())
+            {
+                if (_graphView.SaveDirectory == null // 한 번도 저장하지 않았거나
+                    || saveUtility.CheckAnyChange(_graphView.SaveDirectory)) // 변경사항이 있다면
+                {
+                    bool doSave = EditorUtility.DisplayDialog("Save Confirmation", "Would you like to save?", "Yes", "No");
+                    if (doSave)
+                    {
+                        RequestDataOperation(true);
+                    }
+                }
+            }
+            
             saveUtility.ClearGraph();
             _graphView.SaveDirectory = String.Empty;
         }
@@ -114,6 +130,20 @@ namespace DS.Editor
             }
             else
             {
+                // 수정사항이 있다면 저장하겠습니까 팝업을 띄움
+                if (_graphView.edges.ToList().Any())
+                {
+                    if (_graphView.SaveDirectory == null // 한 번도 저장하지 않았거나
+                        || saveUtility.CheckAnyChange(_graphView.SaveDirectory)) // 변경사항이 있다면
+                    {
+                        bool doSave = EditorUtility.DisplayDialog("Save Confirmation", "Would you like to save?", "Yes", "No");
+                        if (doSave)
+                        {
+                            RequestDataOperation(true);
+                        }
+                    }
+                }
+                    
                 string fullPath = EditorUtility.OpenFilePanel("Dialogue Graph", "", "asset");
                 
                 if (string.IsNullOrEmpty(fullPath))

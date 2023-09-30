@@ -26,6 +26,19 @@ namespace DS.Editor
             };
         }
 
+        public bool CheckAnyChange(string fullPath)
+        {
+            var dialogueContainer = ScriptableObject.CreateInstance<DialogueContainer>();
+
+            SaveNodes(dialogueContainer);
+            SaveLinks(dialogueContainer);
+
+            string relativePath = ConvertFullToRelativePath(fullPath);
+            _containerCache = AssetDatabase.LoadAssetAtPath<DialogueContainer>(relativePath);
+
+            return !dialogueContainer.IsEqual(_containerCache);
+        }
+
         public void SaveGraph(string fullPath)
         {
             string relativePath = ConvertFullToRelativePath(fullPath);
