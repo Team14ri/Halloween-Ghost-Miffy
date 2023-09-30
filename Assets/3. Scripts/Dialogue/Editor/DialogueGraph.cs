@@ -52,7 +52,7 @@ namespace DS.Editor
         private void GenerateMiniMap()
         {
             var miniMap = new MiniMap { anchored = true };
-            miniMap.SetPosition(new Rect(10, 30, 200, 140));
+            miniMap.SetPosition(new Rect(5, 35, 200, 140));
             _graphView.Add(miniMap);
         }
 
@@ -62,6 +62,7 @@ namespace DS.Editor
             toolbar.Add(CreateNewDialogueButton());
             toolbar.Add(CreateSaveButton());
             toolbar.Add(CreateLoadButton());
+            toolbar.styleSheets.Add(Resources.Load<StyleSheet>("UI/DialogueToolbar"));
             rootVisualElement.Add(toolbar);
         }
         

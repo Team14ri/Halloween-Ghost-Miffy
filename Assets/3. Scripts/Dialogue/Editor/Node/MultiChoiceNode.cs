@@ -50,6 +50,7 @@ namespace DS.Editor
                 NodeTitle = evt.newValue;
             });
             textField.SetValueWithoutNotify(title);
+            textField.AddToClassList("title-textfield");
             titleContainer.Insert(0, textField);
         }
         
@@ -88,6 +89,7 @@ namespace DS.Editor
         {
             var textField = new TextField { name = string.Empty, value = portName };
             textField.RegisterValueChangedCallback(evt => generatedPort.portName = evt.newValue);
+            textField.AddToClassList("output-textfield");
             generatedPort.contentContainer.Add(new Label("    "));
             generatedPort.contentContainer.Add(textField);
         }
