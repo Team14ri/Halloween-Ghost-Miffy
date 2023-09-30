@@ -58,7 +58,7 @@ namespace DS.Editor
         private void GenerateToolbar()
         {
             var toolbar = new Toolbar();
-            // toolbar.Add(CreateNewDialogueButton());
+            toolbar.Add(CreateNewDialogueButton());
             toolbar.Add(CreateSaveButton());
             toolbar.Add(CreateLoadButton());
             rootVisualElement.Add(toolbar);
@@ -115,10 +115,11 @@ namespace DS.Editor
             else
             {
                 string fullPath = EditorUtility.OpenFilePanel("Dialogue Graph", "", "asset");
-                _graphView.SaveDirectory = fullPath;
                 
-                if (string.IsNullOrEmpty(_graphView.SaveDirectory))
+                if (string.IsNullOrEmpty(fullPath))
                     return;
+                
+                _graphView.SaveDirectory = fullPath;
                 
                 saveUtility.LoadGraph(_graphView.SaveDirectory);
             }

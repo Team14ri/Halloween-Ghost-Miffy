@@ -105,11 +105,6 @@ namespace DS.Editor
 
         public void ClearGraph()
         {
-            if (_containerCache.NodeLinks.Count > 0)
-            {
-                Nodes.Find(x => x.EntryPoint).GUID = _containerCache.NodeLinks[0].BaseNodeGuid;
-            }
-
             foreach (var node in Nodes)
             {
                 if (node.EntryPoint)
@@ -124,6 +119,11 @@ namespace DS.Editor
 
         private void CreateNodes()
         {
+            if (_containerCache.NodeLinks.Count > 0)
+            {
+                Nodes.Find(x => x.EntryPoint).GUID = _containerCache.NodeLinks[0].BaseNodeGuid;
+            }
+            
             foreach (var nodeData in _containerCache.DialogueNodeData)
             {
                 switch (nodeData.NodeType)
