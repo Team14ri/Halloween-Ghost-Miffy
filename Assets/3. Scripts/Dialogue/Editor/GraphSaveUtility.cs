@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using DS.Runtime;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Edge = UnityEditor.Experimental.GraphView.Edge;
 
 namespace DS.Editor
 {
@@ -24,9 +26,11 @@ namespace DS.Editor
             };
         }
 
-        public void SaveGraph(string fileName)
+        public void SaveGraph(string fullPath)
         {
-            if (!Edges.Any())   // Edges(연결)이 없다면 저장하지 않음
+            string relativePath = ConvertFullToRelativePath(fullPath);
+            
+            if (string.IsNullOrEmpty(relativePath))
                 return;
 
             var dialogueContainer = ScriptableObject.CreateInstance<DialogueContainer>();
@@ -34,11 +38,7 @@ namespace DS.Editor
             SaveNodes(dialogueContainer);
             SaveLinks(dialogueContainer);
 
-            // 리소스 폴더가 없다면 자동으로 폴더 생성
-            if (!AssetDatabase.IsValidFolder("Assets/Resources"))
-                AssetDatabase.CreateFolder("Assets", "Resources");
-            
-            AssetDatabase.CreateAsset(dialogueContainer, $"Assets/Resources/{fileName}.asset");
+            AssetDatabase.CreateAsset(dialogueContainer, relativePath);
             AssetDatabase.SaveAssets();
         }
         
@@ -74,24 +74,41 @@ namespace DS.Editor
             }
         }
 
-        public void LoadGraph(string fileName)
+        public void LoadGraph(string fullPath)
         {
-            _containerCache = Resources.Load<DialogueContainer>(fileName);
-            
+            string relativePath = ConvertFullToRelativePath(fullPath);
+            _containerCache = AssetDatabase.LoadAssetAtPath<DialogueContainer>(relativePath);
+
             if (_containerCache == null)
             {
-                EditorUtility.DisplayDialog("File Not Found", "Target dialogue graph file does not exist!", "OK");
+                EditorUtility.DisplayDialog("File Not Found", "Target dialogue graph file does not exist!\n\nPath: " + relativePath, "OK");
                 return;
             }
-
+            
             ClearGraph();
             CreateNodes();
             ConnectNodes();
         }
-
-        private void ClearGraph()
+        
+        private string ConvertFullToRelativePath(string fullPath)
         {
-            Nodes.Find(x => x.EntryPoint).GUID = _containerCache.NodeLinks[0].BaseNodeGuid;
+            string projectPath = Application.dataPath;
+            if (fullPath.StartsWith(projectPath))
+            {
+                string relativePath = "Assets" + fullPath.Substring(projectPath.Length);
+                return relativePath;
+            }
+
+            EditorUtility.DisplayDialog("Outside of the Project", "File path is outside of the project: " + fullPath, "OK");
+            return "";
+        }
+
+        public void ClearGraph()
+        {
+            if (_containerCache.NodeLinks.Count > 0)
+            {
+                Nodes.Find(x => x.EntryPoint).GUID = _containerCache.NodeLinks[0].BaseNodeGuid;
+            }
 
             foreach (var node in Nodes)
             {

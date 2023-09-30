@@ -1,3 +1,6 @@
+using System;
+using System.IO;
+using DS.Runtime;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
@@ -9,7 +12,6 @@ namespace DS.Editor
     public class DialogueGraph : EditorWindow
     {
         private DialogueGraphView _graphView;
-        private string _fileName = "New Dialogue";
 
         [MenuItem("Dialogue Graph/Editor")]
         public static void OpenDialogueGraphView()
@@ -56,19 +58,18 @@ namespace DS.Editor
         private void GenerateToolbar()
         {
             var toolbar = new Toolbar();
-            toolbar.Add(CreateFileNameTextField());
+            // toolbar.Add(CreateNewDialogueButton());
             toolbar.Add(CreateSaveButton());
             toolbar.Add(CreateLoadButton());
             rootVisualElement.Add(toolbar);
         }
-
-        private TextField CreateFileNameTextField()
+        
+        private Button CreateNewDialogueButton()
         {
-            var fileNameTextField = new TextField("File Name:");
-            fileNameTextField.SetValueWithoutNotify(_fileName);
-            fileNameTextField.MarkDirtyRepaint();
-            fileNameTextField.RegisterValueChangedCallback(evt => _fileName = evt.newValue);
-            return fileNameTextField;
+            return new Button(CreateNewDialogue)
+            {
+                text = "Create New Dialogue"
+            };
         }
 
         private Button CreateSaveButton()
@@ -86,24 +87,40 @@ namespace DS.Editor
                 text = "Load"
             };
         }
+        
+        private void CreateNewDialogue()
+        {
+            var saveUtility = GraphSaveUtility.GetInstance(_graphView);
+            saveUtility.ClearGraph();
+            _graphView.SaveDirectory = String.Empty;
+        }
 
         private void RequestDataOperation(bool save)
         {
-            if (string.IsNullOrEmpty(_fileName))
-            {
-                EditorUtility.DisplayDialog("Invalid file name!", "Please enter a valid file name.", "OK");
-                return;
-            }
-
             var saveUtility = GraphSaveUtility.GetInstance(_graphView);
 
             if (save)
             {
-                saveUtility.SaveGraph(_fileName);
+                if (string.IsNullOrEmpty(_graphView.SaveDirectory))
+                {
+                    string fullPath = EditorUtility.SaveFilePanel("Dialogue Graph", "", "", "asset");
+                    _graphView.SaveDirectory = fullPath;
+                }
+                
+                if (string.IsNullOrEmpty(_graphView.SaveDirectory))
+                    return;
+                
+                saveUtility.SaveGraph(_graphView.SaveDirectory);
             }
             else
             {
-                saveUtility.LoadGraph(_fileName);
+                string fullPath = EditorUtility.OpenFilePanel("Dialogue Graph", "", "asset");
+                _graphView.SaveDirectory = fullPath;
+                
+                if (string.IsNullOrEmpty(_graphView.SaveDirectory))
+                    return;
+                
+                saveUtility.LoadGraph(_graphView.SaveDirectory);
             }
         }
     }

@@ -11,6 +11,8 @@ namespace DS.Editor
         private const string StyleSheetPath = "UI/DialogueGraph";
 
         public readonly Vector2 DefaultNodeSize = new Vector2(150, 200);
+        
+        public string SaveDirectory;
 
         public DialogueGraphView()
         {
