@@ -9,7 +9,6 @@ namespace DS.Editor
     public class MultiChoiceNode : DialogueNode
     {
         private readonly Vector2 NodeSize = new Vector2(150, 200);
-
         private readonly DialogueGraphView _dialogueGraphView;
         
         public MultiChoiceNode(DialogueGraphView dialogueGraphView, string name)

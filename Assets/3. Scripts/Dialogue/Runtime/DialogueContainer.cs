@@ -8,7 +8,9 @@ namespace DS.Runtime
     public class DialogueContainer : ScriptableObject
     {
         public List<NodeLinkData> NodeLinks = new();
-        public List<DialogueNodeData> DialogueNodeData = new();
+        
+        [SerializeReference]
+        public List<DialogueNodeData> NodeData = new();
         
         public bool IsEqual(DialogueContainer other)
         {
@@ -23,12 +25,12 @@ namespace DS.Runtime
             }
 
             // DialogueNodeData 리스트 비교
-            if (DialogueNodeData.Count != other.DialogueNodeData.Count)
+            if (NodeData.Count != other.NodeData.Count)
                 return false;
 
-            for (int i = 0; i < DialogueNodeData.Count; i++)
+            for (int i = 0; i < NodeData.Count; i++)
             {
-                if (!DialogueNodeData[i].IsEqual(other.DialogueNodeData[i]))
+                if (!NodeData[i].IsEqual(other.NodeData[i]))
                     return false;
             }
 

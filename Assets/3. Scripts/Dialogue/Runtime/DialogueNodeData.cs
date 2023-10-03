@@ -31,24 +31,15 @@ namespace DS.Runtime
     }
     
     [Serializable]
-    public class test : DialogueNodeData
+    public class NoChoiceNodeData : DialogueNodeData
     {
-        public override bool IsEqual(DialogueNodeData other)
-        {
-            if (GUID != other.GUID)
-                return false;
-            
-            if (NodeTitle != other.NodeTitle)
-                return false;
-            
-            if (NodeType != other.NodeType)
-                return false;
-            
-            if (!(Mathf.Approximately(Position.x, other.Position.x) 
-                  && Mathf.Approximately(Position.y, other.Position.y))) 
-                return false;
-            
-            return true;
-        }
+        public string TargetObjectID;
+        public string DialogueText;
+    }
+    
+    [Serializable]
+    public class MultiChoiceNodeData : DialogueNodeData
+    {
+        
     }
 }
