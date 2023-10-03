@@ -13,69 +13,70 @@ MonoBehaviour:
   m_Name: Quest_1-1
   m_EditorClassIdentifier: 
   NodeLinks:
-  - BaseNodeGuid: 91f25e0a-c84d-43f2-b6a3-9f00c9bd8a82
+  - BaseNodeGuid: 14691116-3de3-4bfe-9187-4079d9a8465a
     PortName: Execute
-    TargetNodeGuid: 7ed0a15b-afbd-4e25-8c63-3d7f9651cafb
-  - BaseNodeGuid: 7ed0a15b-afbd-4e25-8c63-3d7f9651cafb
-    PortName: Choice 1
-    TargetNodeGuid: 121f6ab0-2031-462f-a455-0c66072b6761
-  - BaseNodeGuid: 7ed0a15b-afbd-4e25-8c63-3d7f9651cafb
-    PortName: Choice 2
-    TargetNodeGuid: d29ca05c-c9ce-4825-aef8-1f425173a389
-  - BaseNodeGuid: 7ed0a15b-afbd-4e25-8c63-3d7f9651cafb
-    PortName: Choice 3
-    TargetNodeGuid: bbceac0d-3b90-439f-af23-8e84d7c5c06a
-  - BaseNodeGuid: bbceac0d-3b90-439f-af23-8e84d7c5c06a
-    PortName: Choice 1
-    TargetNodeGuid: dad6fe1b-b24c-416f-b91d-e033f639fbe9
-  - BaseNodeGuid: 121f6ab0-2031-462f-a455-0c66072b6761
-    PortName: Choice 1
-    TargetNodeGuid: dad6fe1b-b24c-416f-b91d-e033f639fbe9
-  - BaseNodeGuid: d29ca05c-c9ce-4825-aef8-1f425173a389
-    PortName: Choice 1
-    TargetNodeGuid: b2cc9b25-3a0e-475c-a292-0354706107d5
-  - BaseNodeGuid: dad6fe1b-b24c-416f-b91d-e033f639fbe9
-    PortName: Choice 1
-    TargetNodeGuid: 69034fcd-6b77-412d-9d66-cc470a4ed6aa
-  - BaseNodeGuid: dad6fe1b-b24c-416f-b91d-e033f639fbe9
-    PortName: Choice 2
-    TargetNodeGuid: 96282ea9-c298-40ed-b7de-943344058db4
-  - BaseNodeGuid: b2cc9b25-3a0e-475c-a292-0354706107d5
-    PortName: Choice 1
-    TargetNodeGuid: 69034fcd-6b77-412d-9d66-cc470a4ed6aa
-  - BaseNodeGuid: b2cc9b25-3a0e-475c-a292-0354706107d5
-    PortName: Choice 2
-    TargetNodeGuid: 96282ea9-c298-40ed-b7de-943344058db4
-  DialogueNodeData:
-  - GUID: 7ed0a15b-afbd-4e25-8c63-3d7f9651cafb
-    NodeTitle: Test 1
-    NodeType: 1
-    Position: {x: 234, y: 152}
-  - GUID: bbceac0d-3b90-439f-af23-8e84d7c5c06a
-    NodeTitle: Test 3
-    NodeType: 1
-    Position: {x: 506, y: 200}
-  - GUID: 121f6ab0-2031-462f-a455-0c66072b6761
-    NodeTitle: Test 2
-    NodeType: 1
-    Position: {x: 506, y: 75}
-  - GUID: d29ca05c-c9ce-4825-aef8-1f425173a389
-    NodeTitle: Test 4
-    NodeType: 1
-    Position: {x: 506, y: 326}
-  - GUID: dad6fe1b-b24c-416f-b91d-e033f639fbe9
-    NodeTitle: Test 5
-    NodeType: 1
-    Position: {x: 777, y: 75}
-  - GUID: b2cc9b25-3a0e-475c-a292-0354706107d5
-    NodeTitle: Test 6
-    NodeType: 1
-    Position: {x: 777, y: 326}
-  - GUID: 69034fcd-6b77-412d-9d66-cc470a4ed6aa
-    NodeTitle: NoChoice Node
-    NodeType: 0
-    Position: {x: 1068, y: 75}
-  - GUID: 96282ea9-c298-40ed-b7de-943344058db4
-    NodeTitle: NoChoice Node
-    NodeType: 0
-    Position: {x: 1068, y: 350}
+    TargetNodeGuid: 6592497b-19ee-44c7-b86e-a1d85aa6c907
+  - BaseNodeGuid: 6592497b-19ee-44c7-b86e-a1d85aa6c907
+    PortName: Next
+    TargetNodeGuid: 7719c66a-e809-44b0-9156-d5723a0ed8a3
+  - BaseNodeGuid: 7719c66a-e809-44b0-9156-d5723a0ed8a3
+    PortName: "\uC870\uAE08 \uAC00\uC9C0\uACE0 \uC788\uC5B4"
+    TargetNodeGuid: be744056-442e-44f4-9453-b750daa6f8ce
+  - BaseNodeGuid: 7719c66a-e809-44b0-9156-d5723a0ed8a3
+    PortName: "\uC544\uB2C8..."
+    TargetNodeGuid: 4ab0ea87-2e33-4968-b852-b8dc773fcf4a
+  - BaseNodeGuid: be744056-442e-44f4-9453-b750daa6f8ce
+    PortName: Next
+    TargetNodeGuid: 968009ad-4a03-4d08-8a0f-978bba84971c
+  NodeData:
+  - rid: 5163360563378257958
+  - rid: 5163360563378257959
+  - rid: 5163360563378257960
+  - rid: 5163360563378257961
+  - rid: 5163360563378257962
+  references:
+    version: 2
+    RefIds:
+    - rid: 5163360563378257958
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 6592497b-19ee-44c7-b86e-a1d85aa6c907
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 237, y: 110}
+        TargetObjectID: NPC_1
+        DialogueText: "<speed:0.03><size:1.5><anim:shake>\uD6C4</anim><size:1.25><anim:shake>\uC544</anim><size:1><anim:shake>\uC544!</anim>\n<pause:0.3><speed:0.15>\uBC30..
+          \uACE0... \uD30C<pause:0.5><speed:0.05>\n\uB108.. <pause:0.2>\uD639\uC2DC....
+          <pause:0.24><anim:wave>\uBA39\uC744 \uAC83</anim> \uC880 \uC788\uC5B4?"
+    - rid: 5163360563378257959
+      type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 7719c66a-e809-44b0-9156-d5723a0ed8a3
+        NodeTitle: MultiChoice Node
+        NodeType: 1
+        Position: {x: 1133, y: 176}
+    - rid: 5163360563378257960
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: be744056-442e-44f4-9453-b750daa6f8ce
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1460, y: 91}
+        TargetObjectID: NPC_1
+        DialogueText: "\uACE0\uB9C8\uC6CC~"
+    - rid: 5163360563378257961
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 4ab0ea87-2e33-4968-b852-b8dc773fcf4a
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1460, y: 277}
+        TargetObjectID: NPC_1
+        DialogueText: "\uC557 \uADF8\uB807\uAD6C\uB098..."
+    - rid: 5163360563378257962
+      type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 968009ad-4a03-4d08-8a0f-978bba84971c
+        NodeTitle: MultiChoice Node
+        NodeType: 1
+        Position: {x: 1768, y: 53}

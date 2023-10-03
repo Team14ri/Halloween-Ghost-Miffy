@@ -9,14 +9,43 @@ namespace DS.Editor
     public class NoChoiceNode : DialogueNode
     {
         private readonly Vector2 NodeSize = new Vector2(150, 200);
-
         private readonly DialogueGraphView _dialogueGraphView;
+
+        #region Main Container
+
+        private TextField _targetObjectIDTextField;
+        private string _targetObjectID;
+        public string TargetObjectID
+        {
+            get => _targetObjectID;
+            set
+            {
+                _targetObjectID = value;
+                if (_targetObjectIDTextField != null)
+                    _targetObjectIDTextField.SetValueWithoutNotify(value);
+            }
+        }
         
+        private TextField _dialogueTextField;
+        private string _dialogueText;
+        public string DialogueText
+        {
+            get => _dialogueText;
+            set
+            {
+                _dialogueText = value;
+                if (_dialogueTextField != null)
+                    _dialogueTextField.SetValueWithoutNotify(value);
+            }
+        }
+
+        #endregion
+
         public NoChoiceNode(DialogueGraphView dialogueGraphView, string name)
         {
             title = name;
             NodeTitle = name;
-            NodeType = NodeTypes.NoChoice;
+            NodeType = NodeTypes.NodeType.NoChoice;
             GUID = Guid.NewGuid().ToString();
             
             _dialogueGraphView = dialogueGraphView;
@@ -35,6 +64,8 @@ namespace DS.Editor
             LoadStyleSheet();
 
             AddTitleTextField();
+            AddTargetObjectIDTextField();
+            AddDialogueTextField();
 
             RefreshExpandedState();
             RefreshPorts();
@@ -54,6 +85,33 @@ namespace DS.Editor
             });
             textField.SetValueWithoutNotify(title);
             titleContainer.Insert(0, textField);
+        }
+
+        private void AddTargetObjectIDTextField()
+        {
+            _targetObjectIDTextField = new TextField("Target Object ID");
+            _targetObjectIDTextField.RegisterValueChangedCallback(evt => 
+            {
+                TargetObjectID = evt.newValue;
+            });
+            _targetObjectIDTextField.SetValueWithoutNotify(TargetObjectID ?? string.Empty);
+            _targetObjectIDTextField.AddToClassList("TargetObjectID-textfield");
+            mainContainer.Add(_targetObjectIDTextField);
+        }
+        
+        private void AddDialogueTextField()
+        {
+            _dialogueTextField = new TextField("Dialogue Text")
+            {
+                multiline = true
+            };
+            _dialogueTextField.RegisterValueChangedCallback(evt => 
+            {
+                DialogueText = evt.newValue;
+            });
+            _dialogueTextField.SetValueWithoutNotify(DialogueText ?? string.Empty);
+            _dialogueTextField.AddToClassList("DialogueText-textfield");
+            mainContainer.Add(_dialogueTextField);
         }
     }
 }

@@ -2,12 +2,35 @@ DialogueNode #title {
     background-color: darkslateblue;
 }
 
+/* EntryPointNode */
+
+EntryPointNode {
+    background-color: #111;
+}
+
 EntryPointNode #title {
     background-color: #487548;
 }
 
+/* NoChoiceNode */
+
+NoChoiceNode {
+    background-color: #111;
+}
+
 NoChoiceNode #title {
     background-color: darkslategrey;
+}
+
+NoChoiceNode .DialogueText-textfield > .unity-text-field__input {
+    max-height: 200px;
+}
+
+
+/* MultiChoiceNode */
+
+MultiChoiceNode {
+    background-color: #111;
 }
 
 MultiChoiceNode #title {
@@ -27,6 +50,8 @@ MultiChoiceNode .delete-choice-button {
     width: 18px;
     color: #ff4b4b;
 }
+
+/* Unity */
 
 TextField
 {

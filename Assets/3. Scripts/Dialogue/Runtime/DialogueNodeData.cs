@@ -8,16 +8,10 @@ namespace DS.Runtime
     {
         public string GUID;
         public string NodeTitle;
-        public NodeTypes NodeType;
+        public NodeTypes.NodeType NodeType;
         public Vector2 Position;
-        
-        public enum NodeTypes
-        {
-            NoChoice,
-            MultiChoice
-        }
-        
-        public bool IsEqual(DialogueNodeData other)
+
+        public virtual bool IsEqual(DialogueNodeData other)
         {
             if (GUID != other.GUID)
                 return false;
@@ -34,5 +28,18 @@ namespace DS.Runtime
             
             return true;
         }
+    }
+    
+    [Serializable]
+    public class NoChoiceNodeData : DialogueNodeData
+    {
+        public string TargetObjectID;
+        public string DialogueText;
+    }
+    
+    [Serializable]
+    public class MultiChoiceNodeData : DialogueNodeData
+    {
+        
     }
 }

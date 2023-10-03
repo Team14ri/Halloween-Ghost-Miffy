@@ -9,14 +9,13 @@ namespace DS.Editor
     public class MultiChoiceNode : DialogueNode
     {
         private readonly Vector2 NodeSize = new Vector2(150, 200);
-
         private readonly DialogueGraphView _dialogueGraphView;
         
         public MultiChoiceNode(DialogueGraphView dialogueGraphView, string name)
         {
             title = name;
             NodeTitle = name;
-            NodeType = NodeTypes.MultiChoice;
+            NodeType = NodeTypes.NodeType.MultiChoice;
             GUID = Guid.NewGuid().ToString();
             
             _dialogueGraphView = dialogueGraphView;

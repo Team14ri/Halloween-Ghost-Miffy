@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using DS.Runtime;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -54,7 +53,7 @@ namespace DS.Editor
             AssetDatabase.CreateAsset(dialogueContainer, relativePath);
             AssetDatabase.SaveAssets();
         }
-        
+
         private void SaveLinks(DialogueContainer container)
         {
             var connectedPorts = Edges.Where(x => x.input.node != null).ToArray();
@@ -77,13 +76,31 @@ namespace DS.Editor
         {
             foreach (var dialogueNode in Nodes.Where(node => !node.EntryPoint))
             {
-                container.DialogueNodeData.Add(new DialogueNodeData
+                switch (dialogueNode.NodeType)
                 {
-                    GUID = dialogueNode.GUID,
-                    NodeTitle = dialogueNode.NodeTitle,
-                    NodeType = (DialogueNodeData.NodeTypes)dialogueNode.NodeType,
-                    Position = dialogueNode.GetPosition().position
-                });
+                    case NodeTypes.NodeType.NoChoice:
+                        var noChoiceNode = dialogueNode as NoChoiceNode;
+                        container.NodeData.Add(new NoChoiceNodeData
+                        {
+                            GUID = noChoiceNode.GUID,
+                            NodeTitle = noChoiceNode.NodeTitle,
+                            NodeType = noChoiceNode.NodeType,
+                            Position = noChoiceNode.GetPosition().position,
+                            TargetObjectID = noChoiceNode.TargetObjectID,
+                            DialogueText = noChoiceNode.DialogueText
+                        });
+                        break;
+                    case NodeTypes.NodeType.MultiChoice:
+                        var multiChoiceNode = dialogueNode as MultiChoiceNode;
+                        container.NodeData.Add(new MultiChoiceNodeData
+                        {
+                            GUID = multiChoiceNode.GUID,
+                            NodeTitle = multiChoiceNode.NodeTitle,
+                            NodeType = multiChoiceNode.NodeType,
+                            Position = multiChoiceNode.GetPosition().position
+                        });
+                        break;
+                }
             }
         }
 
@@ -137,28 +154,30 @@ namespace DS.Editor
                 Nodes.Find(x => x.EntryPoint).GUID = _containerCache.NodeLinks[0].BaseNodeGuid;
             }
             
-            foreach (var nodeData in _containerCache.DialogueNodeData)
+            foreach (var nodeData in _containerCache.NodeData)
             {
                 switch (nodeData.NodeType)
                 {
-                    case DialogueNodeData.NodeTypes.NoChoice:
-                        CreateNoChoiceNode(nodeData);
+                    case NodeTypes.NodeType.NoChoice:
+                        CreateNoChoiceNode(nodeData as NoChoiceNodeData);
                         break;
-                    case DialogueNodeData.NodeTypes.MultiChoice:
-                        CreateMultiChoiceNode(nodeData);
+                    case NodeTypes.NodeType.MultiChoice:
+                        CreateMultiChoiceNode(nodeData as MultiChoiceNodeData);
                         break;
                 }
             }
         }
 
-        private void CreateNoChoiceNode(DialogueNodeData nodeData)
+        private void CreateNoChoiceNode(NoChoiceNodeData nodeData)
         {
             var tempNode = _targetGraphView.CreateNoChoiceNode(nodeData.NodeTitle, nodeData.Position) as NoChoiceNode;
             tempNode.GUID = nodeData.GUID;
+            tempNode.TargetObjectID = nodeData.TargetObjectID;
+            tempNode.DialogueText = nodeData.DialogueText;
             _targetGraphView.AddElement(tempNode);
         }
 
-        private void CreateMultiChoiceNode(DialogueNodeData nodeData)
+        private void CreateMultiChoiceNode(MultiChoiceNodeData nodeData)
         {
             var tempNode = _targetGraphView.CreateMultiChoiceNode(nodeData.NodeTitle, nodeData.Position) as MultiChoiceNode;
             tempNode.GUID = nodeData.GUID;
@@ -180,7 +199,7 @@ namespace DS.Editor
                     LinkNodes(node.outputContainer[j].Q<Port>(), (Port)targetNode.inputContainer[0]);
                     
                     targetNode.SetPosition(new Rect(
-                        _containerCache.DialogueNodeData.First(x => x.GUID == targetNodeGuid).Position,
+                        _containerCache.NodeData.First(x => x.GUID == targetNodeGuid).Position,
                         _targetGraphView.DefaultNodeSize
                     ));
                 }
