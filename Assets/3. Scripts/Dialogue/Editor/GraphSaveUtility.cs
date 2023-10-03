@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using DS.Runtime;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -54,7 +53,7 @@ namespace DS.Editor
             AssetDatabase.CreateAsset(dialogueContainer, relativePath);
             AssetDatabase.SaveAssets();
         }
-        
+
         private void SaveLinks(DialogueContainer container)
         {
             var connectedPorts = Edges.Where(x => x.input.node != null).ToArray();
@@ -81,7 +80,7 @@ namespace DS.Editor
                 {
                     GUID = dialogueNode.GUID,
                     NodeTitle = dialogueNode.NodeTitle,
-                    NodeType = (DialogueNodeData.NodeTypes)dialogueNode.NodeType,
+                    NodeType = dialogueNode.NodeType,
                     Position = dialogueNode.GetPosition().position
                 });
             }
@@ -141,10 +140,10 @@ namespace DS.Editor
             {
                 switch (nodeData.NodeType)
                 {
-                    case DialogueNodeData.NodeTypes.NoChoice:
+                    case NodeTypes.NodeType.NoChoice:
                         CreateNoChoiceNode(nodeData);
                         break;
-                    case DialogueNodeData.NodeTypes.MultiChoice:
+                    case NodeTypes.NodeType.MultiChoice:
                         CreateMultiChoiceNode(nodeData);
                         break;
                 }
