@@ -13,7 +13,11 @@ namespace Interaction
         
         public void Execute()
         {
-            Debug.Log("Execute");
+            // Debug.Log("Execute");
+            // PlayerController.Instance.StopMovementInput = !PlayerController.Instance.StopMovementInput;
+            PlayerController.Instance.stateMachine.ChangeState(
+                new PlayerInteractionState(PlayerController.Instance, PlayerController.Instance.stateMachine, 
+                    dialogueHandler, dialogueContainer));
         }
     }
 }

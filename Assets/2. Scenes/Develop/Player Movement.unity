@@ -5922,6 +5922,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08df6eec009d9ea4c93d47330f69f421, type: 3}
+--- !u!114 &385568305 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3811083696193649726, guid: f87c45126dcd1e54ba01d1f91c7fedd7, type: 3}
+  m_PrefabInstance: {fileID: 3811083697937492118}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &392643188
 GameObject:
   m_ObjectHideFlags: 0
@@ -10840,6 +10851,17 @@ Transform:
   m_Father: {fileID: 2617752}
   m_RootOrder: 30
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &506698928 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3811083696193649726, guid: f87c45126dcd1e54ba01d1f91c7fedd7, type: 3}
+  m_PrefabInstance: {fileID: 1109380066}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &516287538
 GameObject:
   m_ObjectHideFlags: 0
@@ -17062,6 +17084,7 @@ GameObject:
   - component: {fileID: 843050308}
   - component: {fileID: 843050307}
   - component: {fileID: 843050311}
+  - component: {fileID: 843050313}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -17111,9 +17134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c85d5d52ed6ecc4fabd2dc8af511bd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tr: {fileID: 0}
-  rb: {fileID: 0}
-  movementInput: {x: 0, y: 0}
 --- !u!114 &843050308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17155,6 +17175,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 5a3843fa-d319-44ff-8036-e2ccb6139610
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 843050307}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnInteraction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5e18e3a6-380d-4719-9f84-32cbd003952b
+    m_ActionName: Player/Interaction[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -17217,6 +17253,20 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 3.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &843050313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843050304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f8012e1440fdad4ea591169c3523507, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: Player
+  textBox: {fileID: 506698928}
 --- !u!224 &865132732 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8339047906624088022, guid: f87c45126dcd1e54ba01d1f91c7fedd7, type: 3}
@@ -18568,6 +18618,7 @@ GameObject:
   - component: {fileID: 1433679151}
   - component: {fileID: 1433679154}
   - component: {fileID: 1433679153}
+  - component: {fileID: 1433679160}
   - component: {fileID: 1433679159}
   m_Layer: 0
   m_Name: NPC 1
@@ -18649,8 +18700,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   title: "\uB300\uD654\uD558\uAE30 (NPC_1)"
-  dialogueHandler: {fileID: 3811083697937492119}
+  dialogueHandler: {fileID: 1433679160}
   dialogueContainer: {fileID: 11400000, guid: 00bbc04809a9616438c0f24bac5402a1, type: 2}
+--- !u!114 &1433679160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433679150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f8012e1440fdad4ea591169c3523507, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: NPC_1
+  textBox: {fileID: 385568305}
 --- !u!1 &1481112496
 GameObject:
   m_ObjectHideFlags: 0
@@ -24653,7 +24718,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1971359812
 MonoBehaviour:
@@ -24977,7 +25042,7 @@ RectTransform:
   m_Children:
   - {fileID: 1625235285}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -25265,14 +25330,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f87c45126dcd1e54ba01d1f91c7fedd7, type: 3}
---- !u!114 &3811083697937492119 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5874520486066865815, guid: f87c45126dcd1e54ba01d1f91c7fedd7, type: 3}
-  m_PrefabInstance: {fileID: 3811083697937492118}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f8012e1440fdad4ea591169c3523507, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

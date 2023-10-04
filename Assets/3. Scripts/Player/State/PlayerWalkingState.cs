@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerWalkingState : IState
@@ -26,17 +24,17 @@ public class PlayerWalkingState : IState
 
         // 카메라 방향 기준으로 움직임 방향을 계산
         Vector3 moveDirection = 
-            cameraForward * player.movementInput.y + 
-            cameraRight * player.movementInput.x;
+            cameraForward * player.MovementInput.y + 
+            cameraRight * player.MovementInput.x;
 
         moveDirection.Normalize(); // 방향 벡터 정규화
 
         Vector3 moveVelocity = moveDirection * 3.5f; // 하드 코딩 수정 필요: moveSpeed
-        player.rb.velocity = new Vector3(moveVelocity.x, player.rb.velocity.y, moveVelocity.z); // 플레이어의 Rigidbody에 속도 적용
+        player.Rb.velocity = new Vector3(moveVelocity.x, player.Rb.velocity.y, moveVelocity.z); // 플레이어의 Rigidbody에 속도 적용
 
         
         // 만약 움직임 입력이 없으면 Idle 상태로 전환
-        if (player.movementInput == Vector2.zero)
+        if (player.MovementInput == Vector2.zero)
         {
             stateMachine.ChangeState(new PlayerIdleState(player, stateMachine));
         }
