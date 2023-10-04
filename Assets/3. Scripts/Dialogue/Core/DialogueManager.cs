@@ -12,6 +12,7 @@ namespace DS.Core
         public readonly Dictionary<string, DialogueHandler> Handlers = new();
         
         private Coroutine _typeRoutine;
+        private bool _typeEndFlag = true;
 
         private void Awake()
         {
@@ -32,16 +33,26 @@ namespace DS.Core
             throw new Exception($"DialogueHandler not found with ID: {id}");
         }
 
-        public void PlayDialogue(TMP_Text textBox, string value)
+        public void PlayDialogue(TMP_Text textBox, string value, bool skipTyping = false)
         {
             StopDialogue();
+            _typeEndFlag = false;
             List<DialogueUtility.Command> commands = DialogueUtility.ParseCommands(value);
             DialogueAnimator.Instance.ChangeTextBox(textBox);
-            _typeRoutine = StartCoroutine(DialogueAnimator.Instance.AnimateTextIn(commands));
+            _typeRoutine = StartCoroutine(DialogueAnimator.Instance.AnimateTextIn(commands, () =>
+            {
+                _typeEndFlag = true;
+            }, skipTyping));
+        }
+
+        public bool CheckDialogueEnd()
+        {
+            return _typeEndFlag;
         }
         
         public void StopDialogue()
         {
+            _typeEndFlag = true;
             this.EnsureCoroutineStopped(ref _typeRoutine);
             DialogueAnimator.Instance.StopCurrentAnimation();
         }

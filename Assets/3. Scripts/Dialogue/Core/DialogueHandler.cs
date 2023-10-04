@@ -15,9 +15,9 @@ namespace DS.Core
             DialogueManager.Instance.Handlers.TryAdd(ID, this);
         }
 
-        public void PlayDialogue(string text)
+        public void PlayDialogue(string text, bool skipTyping = false)
         {
-            DialogueManager.Instance.PlayDialogue(textBox, text);
+            DialogueManager.Instance.PlayDialogue(textBox, text, skipTyping);
         }
     }
 }

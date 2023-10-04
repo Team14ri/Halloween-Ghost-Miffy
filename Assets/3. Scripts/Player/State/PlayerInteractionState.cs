@@ -39,25 +39,36 @@ public class PlayerInteractionState : IState
             return;
         player.InteractionInput = false;
 
-        var nodeLinks = dialogueFlow.GetCurrentNodeLinks();
+        bool skipTyping = false;
 
-        if (nodeLinks.Count == 0)
+        if (DialogueManager.Instance.CheckDialogueEnd())
         {
-            stateMachine.ChangeState(new PlayerIdleState(player, stateMachine));
-            return;
+            // 다이얼로그 출력 완료 후 다음 텍스트 출력
+            var nodeLinks = dialogueFlow.GetCurrentNodeLinks();
+
+            if (nodeLinks.Count == 0)
+            {
+                stateMachine.ChangeState(new PlayerIdleState(player, stateMachine));
+                return;
+            }
+            
+            dialogueFlow.ChangeCurrentNodeData(nodeLinks[0].TargetNodeGuid);
         }
-        
-        dialogueFlow.ChangeCurrentNodeData(nodeLinks[0].TargetNodeGuid);
-        
+        else
+        {
+            // 다이얼로그 빠르게 출력
+            skipTyping = true;
+        }
+
         var nodeData = dialogueFlow.GetCurrentNodeData();
         switch (nodeData.NodeType)
         {
             case NodeTypes.NodeType.NoChoice:
                 var detailNodeData = nodeData as NoChoiceNodeData;
-                DialogueManager.Instance.GetHandler(detailNodeData.TargetObjectID).PlayDialogue(detailNodeData.DialogueText);
+                DialogueManager.Instance.GetHandler(detailNodeData.TargetObjectID)
+                    .PlayDialogue(detailNodeData.DialogueText, skipTyping);
                 break;
         }
-        
     }
 
     public void Exit()
