@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8339047906624088022}
-  - component: {fileID: 1860647975}
-  m_Layer: 0
+  - component: {fileID: 5874520486066865815}
+  m_Layer: 5
   m_Name: Dialogue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,19 +38,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!135 &1860647975
-SphereCollider:
+--- !u!114 &5874520486066865815
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2211198250805981135}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 3.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f8012e1440fdad4ea591169c3523507, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textBox: {fileID: 3811083696193649726}
 --- !u!1 &3811083696193649712
 GameObject:
   m_ObjectHideFlags: 0
@@ -62,7 +62,7 @@ GameObject:
   - component: {fileID: 3811083696193649713}
   - component: {fileID: 3811083696193649724}
   - component: {fileID: 3811083696193649726}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Dialogue_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 3811083696434707044}
   - component: {fileID: 3811083696434707047}
   - component: {fileID: 3811083696434707045}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Dialogue_Main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 3811083697210763009}
   - component: {fileID: 3811083697210763008}
   - component: {fileID: 3811083697210763011}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Dialogue_Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: 3811083698262187101}
   - component: {fileID: 3811083698262187099}
   - component: {fileID: 3811083698262187098}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Dialogue_Image (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -414,7 +414,7 @@ GameObject:
   - component: {fileID: 3811083698264834180}
   - component: {fileID: 3811083698264834178}
   - component: {fileID: 3811083698264834181}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Dialogue_Image (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

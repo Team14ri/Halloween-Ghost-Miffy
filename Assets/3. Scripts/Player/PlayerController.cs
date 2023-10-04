@@ -6,10 +6,10 @@ public class PlayerController : MonoBehaviour
 {
     private StateMachine stateMachine = new();
 
-    public Transform tr;
-    public Rigidbody rb;
+    [HideInInspector] public Transform tr;
+    [HideInInspector] public Rigidbody rb;
     
-    public Vector2 movementInput;
+    [HideInInspector] public Vector2 movementInput;
 
     private void Start()
     {
