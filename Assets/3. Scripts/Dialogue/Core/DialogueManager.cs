@@ -24,6 +24,13 @@ namespace DS.Core
                 Destroy(gameObject);
             }
         }
+        
+        public DialogueHandler GetHandler(string id)
+        {
+            if (Handlers.TryGetValue(id, out DialogueHandler value))
+                return value;
+            throw new Exception($"DialogueHandler not found with ID: {id}");
+        }
 
         public void PlayDialogue(TMP_Text textBox, string value)
         {
