@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,6 +8,8 @@ namespace DS.Core
     public class DialogueManager : MonoBehaviour
     {
         public static DialogueManager Instance;
+        
+        public readonly Dictionary<string, DialogueHandler> Handlers = new();
         
         private Coroutine _typeRoutine;
 
@@ -21,6 +24,13 @@ namespace DS.Core
                 Destroy(gameObject);
             }
         }
+        
+        public DialogueHandler GetHandler(string id)
+        {
+            if (Handlers.TryGetValue(id, out DialogueHandler value))
+                return value;
+            throw new Exception($"DialogueHandler not found with ID: {id}");
+        }
 
         public void PlayDialogue(TMP_Text textBox, string value)
         {
@@ -28,12 +38,6 @@ namespace DS.Core
             List<DialogueUtility.Command> commands = DialogueUtility.ParseCommands(value);
             DialogueAnimator.Instance.ChangeTextBox(textBox);
             _typeRoutine = StartCoroutine(DialogueAnimator.Instance.AnimateTextIn(commands));
-            
-            // 출력 테스트
-            // foreach (var command in commands)
-            // {
-            //     Debug.Log($"{command.commandType}, {command.textAnimationType}, \"{command.stringValue}\", {command.floatValue}, {command.startIndex}, {command.endIndex}");
-            // }
         }
         
         public void StopDialogue()
