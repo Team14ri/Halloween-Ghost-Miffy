@@ -1,3 +1,4 @@
+using System;
 using DS;
 using DS.Core;
 using DS.Runtime;
@@ -7,30 +8,20 @@ public class PlayerInteractionState : IState
 {
     private PlayerController player;
     private StateMachine stateMachine;
-
-    private DialogueHandler dialogueHandler;
-    private DialogueContainer dialogueContainer;
+    
     private DialogueFlow dialogueFlow;
 
-    public PlayerInteractionState(PlayerController player, StateMachine stateMachine, DialogueHandler dialogueHandler, DialogueContainer dialogueContainer)
+    public PlayerInteractionState(PlayerController player, StateMachine stateMachine, DialogueContainer dialogueContainer)
     {
         this.player = player;
         this.stateMachine = stateMachine;
-        this.dialogueHandler = dialogueHandler;
-        this.dialogueContainer = dialogueContainer;
         dialogueFlow = new DialogueFlow(dialogueContainer);
     }
 
     public void Enter()
     {
-        var nodeData = dialogueFlow.GetCurrentNodeData();
-        switch (nodeData.NodeType)
-        {
-            case NodeTypes.NodeType.NoChoice:
-                var detailNodeData = nodeData as NoChoiceNodeData;
-                DialogueManager.Instance.GetHandler(detailNodeData.TargetObjectID).PlayDialogue(detailNodeData.DialogueText);
-                break;
-        }
+        player.Interaction.Enabled = false;
+        PlayCurrentNode();
     }
 
     public void Execute()
@@ -39,27 +30,45 @@ public class PlayerInteractionState : IState
             return;
         player.InteractionInput = false;
 
-        bool skipTyping = false;
-
-        if (DialogueManager.Instance.CheckDialogueEnd())
+        CheckDialoguePlaying((skipTyping) =>
         {
-            // 다이얼로그 출력 완료 후 다음 텍스트 출력
-            var nodeLinks = dialogueFlow.GetCurrentNodeLinks();
-            
-            if (nodeLinks.Count == 0)
-            {
-                stateMachine.ChangeState(new PlayerIdleState(player, stateMachine));
-                return;
-            }
-            
-            dialogueFlow.ChangeCurrentNodeData(nodeLinks[0].TargetNodeGuid);
-        }
-        else
+            PlayCurrentNode(skipTyping);
+        });
+    }
+    
+    private void CheckDialoguePlaying(Action<bool> action)
+    {
+        if (!DialogueManager.Instance.CheckDialogueEnd())
         {
-            // 다이얼로그 빠르게 출력
-            skipTyping = true;
+            action?.Invoke(true);
+            return;
         }
         
+        var nodeLinks = dialogueFlow.GetCurrentNodeLinks();
+            
+        if (nodeLinks.Count == 0)
+        {
+            stateMachine.ChangeState(new PlayerIdleState(player, stateMachine));
+            return;
+        }
+
+        switch (dialogueFlow.GetCurrentNodeData().NodeType)
+        {
+            // Todo: 아래처럼 텍스트 출력이 아닌 것들은 전처리를 거칠 수 있습니다
+            // case NodeTypes.NodeType.IsQuestInProgress:
+            //     // Do Something
+            //     CheckDialoguePlaying(action);
+            //     break;
+            default:
+                dialogueFlow.ChangeCurrentNodeData(nodeLinks[0].TargetNodeGuid);
+                action?.Invoke(false);
+                break;
+        }
+
+    }
+    
+    private void PlayCurrentNode(bool skipTyping = false)
+    {
         var nodeData = dialogueFlow.GetCurrentNodeData();
         switch (nodeData.NodeType)
         {
@@ -71,6 +80,9 @@ public class PlayerInteractionState : IState
             case NodeTypes.NodeType.MultiChoice:
                 // player.StopInteractionInput = true;
                 var multiChoiceNodeData = nodeData as MultiChoiceNodeData;
+                DialogueManager.Instance.GetHandler(multiChoiceNodeData.TargetObjectID)
+                    .PlayDialogue(multiChoiceNodeData.DialogueText, skipTyping);
+                
                 var nodeLinks = dialogueFlow.GetCurrentNodeLinks();
                 foreach (var nodeLink in nodeLinks)
                 {
@@ -82,6 +94,7 @@ public class PlayerInteractionState : IState
 
     public void Exit()
     {
+        player.Interaction.Enabled = true;
         DialogueManager.Instance.StopDialogue();
     }
 }

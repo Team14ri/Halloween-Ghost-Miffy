@@ -13,8 +13,11 @@ namespace Interaction
         private TMP_Text playInteractionText;
         [SerializeField] private List<InteractionTrigger> interactionTriggers = new();
 
+        public bool Enabled { get; set; }
+            
         private void Start()
         {
+            Enabled = true;
             playInteractionButton.gameObject.SetActive(false);
             playInteractionButton.onClick.AddListener(ExecuteInteraction);
             playInteractionText = playInteractionButton.GetComponentInChildren<TMP_Text>();
@@ -22,7 +25,7 @@ namespace Interaction
 
         private void Update()
         {
-            if (interactionTriggers.Count == 0)
+            if (!Enabled || interactionTriggers.Count == 0)
             {
                 playInteractionButton.gameObject.SetActive(false);
                 return;
