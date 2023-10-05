@@ -1,7 +1,8 @@
+using Interaction;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody), typeof(PlayerInput))]
+[RequireComponent(typeof(Rigidbody), typeof(PlayerInput), typeof(PlayerInteraction))]
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance;
@@ -9,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public StateMachine stateMachine = new();
     
     public Rigidbody Rb { get; private set; }
+    public PlayerInteraction Interaction { get; private set; }
 
     #region PlayerInput
 
@@ -60,6 +62,7 @@ public class PlayerController : MonoBehaviour
     {
         Rb = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
+        Interaction = GetComponent<PlayerInteraction>();
         stateMachine.ChangeState(new PlayerIdleState(this, stateMachine));
     }
 

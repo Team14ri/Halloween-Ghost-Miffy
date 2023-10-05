@@ -97,7 +97,9 @@ namespace DS.Editor
                             GUID = multiChoiceNode.GUID,
                             NodeTitle = multiChoiceNode.NodeTitle,
                             NodeType = multiChoiceNode.NodeType,
-                            Position = multiChoiceNode.GetPosition().position
+                            Position = multiChoiceNode.GetPosition().position,
+                            TargetObjectID = multiChoiceNode.TargetObjectID,
+                            DialogueText = multiChoiceNode.DialogueText
                         });
                         break;
                 }
@@ -181,6 +183,8 @@ namespace DS.Editor
         {
             var tempNode = _targetGraphView.CreateMultiChoiceNode(nodeData.NodeTitle, nodeData.Position) as MultiChoiceNode;
             tempNode.GUID = nodeData.GUID;
+            tempNode.TargetObjectID = nodeData.TargetObjectID;
+            tempNode.DialogueText = nodeData.DialogueText;
             _targetGraphView.AddElement(tempNode);
 
             var nodePorts = _containerCache.NodeLinks.Where(x => x.BaseNodeGuid == nodeData.GUID).ToList();
