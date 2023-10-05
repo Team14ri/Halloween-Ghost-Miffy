@@ -71,7 +71,13 @@ namespace DS.Core
             
             foreach (var command in _commands)
             {
-                yield return ExecuteCommand(command, skipTyping);
+                if (skipTyping)
+                {
+                    FastExecuteCommand(command);
+                    continue;
+                }
+        
+                yield return ExecuteCommand(command);
             }
             
             yield return null;
@@ -89,12 +95,12 @@ namespace DS.Core
             AppendToTextBox($"<size={_originTextFontSize}>");
         }
 
-        private IEnumerator ExecuteCommand(DialogueUtility.Command command, bool skipTyping = false)
+        private IEnumerator ExecuteCommand(DialogueUtility.Command command)
         {
             switch (command.commandType)
             {
                 case DialogueUtility.CommandType.Pause:
-                    yield return skipTyping ? null : new WaitForSeconds(command.floatValue);
+                    yield return new WaitForSeconds(command.floatValue);
                     break;
                 case DialogueUtility.CommandType.TextSpeedChange:
                     HandleTextSpeedChange(command.floatValue);
@@ -103,7 +109,23 @@ namespace DS.Core
                     AppendToTextBox($"</size><size={_originTextFontSize * command.floatValue}>");
                     break;
                 default:
-                    yield return TypeText(command.stringValue, skipTyping);
+                    yield return TypeText(command.stringValue);
+                    break;
+            }
+        }
+        
+        private void FastExecuteCommand(DialogueUtility.Command command)
+        {
+            switch (command.commandType)
+            {
+                case DialogueUtility.CommandType.Pause:
+                case DialogueUtility.CommandType.TextSpeedChange:
+                    break;
+                case DialogueUtility.CommandType.Size:
+                    AppendToTextBox($"</size><size={_originTextFontSize * command.floatValue}>");
+                    break;
+                default:
+                    AppendToTextBox(command.stringValue);
                     break;
             }
         }
@@ -113,20 +135,12 @@ namespace DS.Core
             _currentTextSpeed = newSpeed;
         }
 
-        private IEnumerator TypeText(string text, bool skipTyping = false)
+        private IEnumerator TypeText(string text)
         {
-            if (skipTyping)
+            foreach (var character in text)
             {
-                AppendToTextBox(text);
-                yield return null;
-            }
-            else
-            {
-                foreach (var character in text)
-                {
-                    AppendToTextBox($"{character}");
-                    yield return new WaitForSeconds(CalculateTextSpeed());
-                }
+                AppendToTextBox($"{character}");
+                yield return new WaitForSeconds(CalculateTextSpeed());
             }
         }
 
