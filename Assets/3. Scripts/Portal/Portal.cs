@@ -9,8 +9,10 @@ public class Portal : MonoBehaviour
      * 스크립트가 적용될 오브젝트의 이름의 끝에 숫자가 들어가야 합니다.
      * ex) Portal 1, Portal 2...
      */
-    public int portalNum;
+    [HideInInspector] public int portalNum;
+    [Tooltip("이동시킬 씬 이름   (ex. MiffyHouse.unity로 이동시킨다면, MiffyHouse 입력)")]
     public string exitSceneName = null;
+    [Tooltip("이동시킬 포탈 번호   (ex. 마을 씬의 Portal 1로 이동시킨다면, 1 입력")]
     public int exitPortalNum = -1;
 
     private void Awake()

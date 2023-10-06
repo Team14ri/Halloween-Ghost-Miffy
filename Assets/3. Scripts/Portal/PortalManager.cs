@@ -7,8 +7,9 @@ public class PortalManager : MonoBehaviour
 {
     public static PortalManager instance { get; private set; }
     public GameObject player { get; private set; }
+    
+    [Tooltip("포탈이 활성화 되는 거리 (반지름)")]
     public float portalActivationRange = 5.0f;
-
     private Dictionary<int, Portal> portalDictionary = new Dictionary<int, Portal>();
 
     private void Awake()
@@ -26,7 +27,6 @@ public class PortalManager : MonoBehaviour
         }
     }
 
-    // 함수명 변경이 필요할듯
     public void TeleportPlayerToExitPortal(string sceneName, int exitPortalNum)
     {
         if (sceneName == null || exitPortalNum == -1)
