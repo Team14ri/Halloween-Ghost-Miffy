@@ -2,6 +2,7 @@ using System;
 using DS;
 using DS.Core;
 using DS.Runtime;
+using Quest;
 using UnityEngine;
 
 public class PlayerInteractionState : IState
@@ -30,10 +31,7 @@ public class PlayerInteractionState : IState
             return;
         player.InteractionInput = false;
 
-        CheckDialoguePlaying((skipTyping) =>
-        {
-            PlayCurrentNode(skipTyping);
-        });
+        CheckDialoguePlaying(PlayCurrentNode);
     }
     
     private void CheckDialoguePlaying(Action<bool> action)
@@ -52,19 +50,9 @@ public class PlayerInteractionState : IState
             return;
         }
 
-        switch (dialogueFlow.GetCurrentNodeData().NodeType)
-        {
-            // Todo: 아래처럼 텍스트 출력이 아닌 것들은 전처리를 거칠 수 있습니다
-            // case NodeTypes.NodeType.IsQuestInProgress:
-            //     // Do Something
-            //     CheckDialoguePlaying(action);
-            //     break;
-            default:
-                dialogueFlow.ChangeCurrentNodeData(nodeLinks[0].TargetNodeGuid);
-                action?.Invoke(false);
-                break;
-        }
-
+        dialogueFlow.ChangeCurrentNodeData(nodeLinks[0].TargetNodeGuid);
+        
+        action?.Invoke(false);
     }
     
     private void PlayCurrentNode(bool skipTyping = false)
@@ -88,6 +76,12 @@ public class PlayerInteractionState : IState
                 {
                     Debug.Log(nodeLink.PortName);
                 }
+                break;
+            case NodeTypes.NodeType.StartQuest:
+                var startQuestNodeData = dialogueFlow.GetCurrentNodeData() as StartQuestNodeData;
+                QuestManager.Instance.Accept(startQuestNodeData.QuestType, startQuestNodeData.QuestID);
+
+                CheckDialoguePlaying(PlayCurrentNode);
                 break;
         }
     }

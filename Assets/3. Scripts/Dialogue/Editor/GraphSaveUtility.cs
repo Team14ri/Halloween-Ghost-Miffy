@@ -118,6 +118,18 @@ namespace DS.Editor
                             DialogueText = multiChoiceNode.DialogueText
                         });
                         break;
+                    case NodeTypes.NodeType.StartQuest:
+                        var startQuestNode = dialogueNode as StartQuestNode;
+                        container.NodeData.Add(new StartQuestNodeData
+                        {
+                            GUID = startQuestNode.GUID,
+                            NodeTitle = startQuestNode.NodeTitle,
+                            NodeType = startQuestNode.NodeType,
+                            Position = startQuestNode.GetPosition().position,
+                            QuestType = startQuestNode.QuestType,
+                            QuestID = startQuestNode.QuestID
+                        });
+                        break;
                 }
             }
         }
@@ -182,6 +194,9 @@ namespace DS.Editor
                     case NodeTypes.NodeType.MultiChoice:
                         CreateMultiChoiceNode(nodeData as MultiChoiceNodeData);
                         break;
+                    case NodeTypes.NodeType.StartQuest:
+                        CreateStartQuestNode(nodeData as StartQuestNodeData);
+                        break;
                 }
             }
         }
@@ -205,6 +220,15 @@ namespace DS.Editor
 
             var nodePorts = _containerCache.NodeLinks.Where(x => x.BaseNodeGuid == nodeData.GUID).ToList();
             nodePorts.ForEach(x => tempNode.AddChoicePort(x.PortName));
+        }
+        
+        private void CreateStartQuestNode(StartQuestNodeData nodeData)
+        {
+            var tempNode = _targetGraphView.CreateStartQuestNode(nodeData.NodeTitle, nodeData.Position) as StartQuestNode;
+            tempNode.GUID = nodeData.GUID;
+            tempNode.QuestType = nodeData.QuestType;
+            tempNode.QuestID = nodeData.QuestID;
+            _targetGraphView.AddElement(tempNode);
         }
 
         private void ConnectNodes()

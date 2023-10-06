@@ -75,4 +75,27 @@ namespace DS.Runtime
             return true;
         }
     }
+    
+    [Serializable]
+    public class StartQuestNodeData : DialogueNodeData
+    {
+        public string QuestType;
+        public string QuestID;
+        
+        public override bool IsEqual(DialogueNodeData other)
+        {
+            if (!base.IsEqual(other))
+                return false;
+
+            var otherNode = other as StartQuestNodeData;
+            
+            if (QuestType != otherNode.QuestType)
+                return false;
+            
+            if (QuestID != otherNode.QuestID)
+                return false;
+
+            return true;
+        }
+    }
 }

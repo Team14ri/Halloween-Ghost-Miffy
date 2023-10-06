@@ -5,7 +5,8 @@ namespace DS
         public enum NodeType
         {
             NoChoice,
-            MultiChoice
+            MultiChoice,
+            StartQuest
         }
     }
 }
