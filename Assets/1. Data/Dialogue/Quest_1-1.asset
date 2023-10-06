@@ -22,6 +22,9 @@ MonoBehaviour:
   - BaseNodeGuid: 929d56c9-b5a0-4160-911c-207265d3ad16
     PortName: "\uC544\uB2C8..."
     TargetNodeGuid: 8109b731-33f3-4829-885c-980a7e70b44e
+  - BaseNodeGuid: d04029e8-6d84-486b-bd7a-444759cf41d2
+    PortName: Next
+    TargetNodeGuid: 6a87e64e-11f4-48a1-9b4a-998656c28347
   - BaseNodeGuid: 8109b731-33f3-4829-885c-980a7e70b44e
     PortName: Next
     TargetNodeGuid: d6548d1f-7209-431f-8d86-6d3ed6aa5e0d
@@ -32,15 +35,16 @@ MonoBehaviour:
     PortName: "\uC2EB\uC5B4"
     TargetNodeGuid: 13fe4dc3-dcd4-4571-8bfb-4870dcd36f39
   NodeData:
-  - rid: 5163360597626585254
-  - rid: 5163360597626585255
-  - rid: 5163360597626585256
-  - rid: 5163360597626585257
-  - rid: 5163360597626585258
+  - rid: 5163360633992773684
+  - rid: 5163360633992773685
+  - rid: 5163360633992773686
+  - rid: 5163360633992773687
+  - rid: 5163360633992773688
+  - rid: 5163360633992773689
   references:
     version: 2
     RefIds:
-    - rid: 5163360597626585254
+    - rid: 5163360633992773684
       type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 929d56c9-b5a0-4160-911c-207265d3ad16
@@ -51,7 +55,7 @@ MonoBehaviour:
         DialogueText: "<speed:0.03><size:1.5><anim:shake>\uD6C4</anim><size:1.25><anim:shake>\uC544</anim><size:1><anim:shake>\uC544!</anim>\n<pause:0.3><speed:0.15>\uBC30..
           \uACE0... \uD30C<pause:0.5><speed:0.05>\n\uB108.. <pause:0.2>\uD639\uC2DC....
           <pause:0.24><anim:wave>\uBA39\uC744 \uAC83</anim> \uC880 \uC788\uC5B4?"
-    - rid: 5163360597626585255
+    - rid: 5163360633992773685
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: d04029e8-6d84-486b-bd7a-444759cf41d2
@@ -60,7 +64,7 @@ MonoBehaviour:
         Position: {x: 1793, y: 150}
         TargetObjectID: NPC_2
         DialogueText: "\uACE0\uB9C8\uC6CC~"
-    - rid: 5163360597626585256
+    - rid: 5163360633992773686
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 13fe4dc3-dcd4-4571-8bfb-4870dcd36f39
@@ -69,7 +73,7 @@ MonoBehaviour:
         Position: {x: 1793, y: 341}
         TargetObjectID: NPC_2
         DialogueText: "\uC54C\uACA0\uC5B4. \n\uC2DC\uAC04\uB0B4\uC918\uC11C \uACE0\uB9C8\uC6CC"
-    - rid: 5163360597626585257
+    - rid: 5163360633992773687
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 8109b731-33f3-4829-885c-980a7e70b44e
@@ -78,7 +82,7 @@ MonoBehaviour:
         Position: {x: 1138, y: 317}
         TargetObjectID: NPC_2
         DialogueText: "\uC557.. \uADF8\uB807\uAD6C\uB098"
-    - rid: 5163360597626585258
+    - rid: 5163360633992773688
       type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: d6548d1f-7209-431f-8d86-6d3ed6aa5e0d
@@ -88,3 +92,12 @@ MonoBehaviour:
         TargetObjectID: NPC_2
         DialogueText: "\uD639\uC2DC \uB098\uC911\uC5D0 \uBA39\uC744 \uAC8C \uC0DD\uAE30\uBA74\n\uB098\uC5D0\uAC8C
           \uB098\uB220\uC904 \uC218 \uC788\uC5B4?"
+    - rid: 5163360633992773689
+      type: {class: StartQuestNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 6a87e64e-11f4-48a1-9b4a-998656c28347
+        NodeTitle: StartQuest Node
+        NodeType: 2
+        Position: {x: 2065, y: 150}
+        QuestType: MAIN
+        QuestID: Quest 1-2

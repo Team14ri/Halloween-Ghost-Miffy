@@ -43,6 +43,7 @@ namespace DS.Editor
             
             this.AddManipulator(CreateNoChoiceNodeContextualMenu());
             this.AddManipulator(CreateMultiChoiceNodeContextualMenu());
+            this.AddManipulator(CreateStartQuestNodeContextualMenu());
         }
 
         private IManipulator CreateNoChoiceNodeContextualMenu()
@@ -69,6 +70,18 @@ namespace DS.Editor
             });
         }
 
+        private IManipulator CreateStartQuestNodeContextualMenu()
+        {
+            return new ContextualMenuManipulator(menuEvent =>
+            {
+                // 현재 GraphView의 변형(줌 레벨과 스크롤 오프셋)을 가져옵니다.
+                Matrix4x4 transformationMatrix = contentViewContainer.worldTransform;
+                Vector2 mousePosition = menuEvent.mousePosition;
+                Vector2 localMousePosition = transformationMatrix.inverse.MultiplyPoint3x4(mousePosition);
+                menuEvent.menu.AppendAction("Add StartQuest Node", _ => CreateNode(NodeTypes.NodeType.StartQuest, "StartQuest Node", localMousePosition));
+            });
+        }
+
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
         {
             return ports.Where(port => startPort != port && startPort.node != port.node).ToList();
@@ -84,31 +97,42 @@ namespace DS.Editor
                 case NodeTypes.NodeType.MultiChoice:
                     AddElement(CreateMultiChoiceNode(nodeName, position));
                     break;
+                case NodeTypes.NodeType.StartQuest:
+                    AddElement(CreateStartQuestNode(nodeName, position));
+                    break;
             }
         }
         
         private DialogueNode CreateEntryPointNode(string nodeName)
         {
-            var entryPointNode = new EntryPointNode(nodeName);
-            entryPointNode.Build();
+            var node = new EntryPointNode(nodeName);
+            node.Build();
 
-            return entryPointNode;
+            return node;
         }
         
         public DialogueNode CreateNoChoiceNode(string nodeName, Vector2 position)
         {
-            var noChoiceNode = new NoChoiceNode(this, nodeName);
-            noChoiceNode.Build(position);
+            var node = new NoChoiceNode(this, nodeName);
+            node.Build(position);
 
-            return noChoiceNode;
+            return node;
         }
 
         public DialogueNode CreateMultiChoiceNode(string nodeName, Vector2 position)
         {
-            var multiChoiceNode = new MultiChoiceNode(this, nodeName);
-            multiChoiceNode.Build(position);
+            var node = new MultiChoiceNode(this, nodeName);
+            node.Build(position);
 
-            return multiChoiceNode;
+            return node;
+        }
+        
+        public DialogueNode CreateStartQuestNode(string nodeName, Vector2 position)
+        {
+            var node = new StartQuestNode(this, nodeName);
+            node.Build(position);
+
+            return node;
         }
     }
 }
