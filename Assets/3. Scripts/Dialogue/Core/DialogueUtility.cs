@@ -36,17 +36,17 @@ namespace DS.Core
 
         public static readonly Dictionary<string, float> TextAnimationSpeed = new()
         {
-            { "tiny", .1f },
-            { "short", .25f },
-            { "normal", 0.666f },
-            { "long", 1f },
-            { "read", 2f },
+            { "tiny", .01f },
+            { "short", .03f },
+            { "normal", .06f },
+            { "long", .1f },
+            { "read", .15f },
         };
 
         public static List<Command> ParseCommands(string input)
         {
             List<Command> commands = new List<Command>();
-            float currentSpeed = 1f;
+            float currentSpeed = TextAnimationSpeed["normal"];
             int currentIndex = 0;
 
             while (input.Length > 0)

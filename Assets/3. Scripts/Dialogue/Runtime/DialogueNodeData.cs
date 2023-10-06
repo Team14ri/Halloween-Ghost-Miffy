@@ -35,11 +35,44 @@ namespace DS.Runtime
     {
         public string TargetObjectID;
         public string DialogueText;
+
+        public override bool IsEqual(DialogueNodeData other)
+        {
+            if (!base.IsEqual(other))
+                return false;
+
+            var otherNode = other as NoChoiceNodeData;
+            
+            if (TargetObjectID != otherNode.TargetObjectID)
+                return false;
+            
+            if (DialogueText != otherNode.DialogueText)
+                return false;
+            
+            return true;
+        }
     }
     
     [Serializable]
     public class MultiChoiceNodeData : DialogueNodeData
     {
+        public string TargetObjectID;
+        public string DialogueText;
         
+        public override bool IsEqual(DialogueNodeData other)
+        {
+            if (!base.IsEqual(other))
+                return false;
+
+            var otherNode = other as MultiChoiceNodeData;
+            
+            if (TargetObjectID != otherNode.TargetObjectID)
+                return false;
+            
+            if (DialogueText != otherNode.DialogueText)
+                return false;
+            
+            return true;
+        }
     }
 }

@@ -35,6 +35,9 @@ namespace DS.Editor
             string relativePath = ConvertFullToRelativePath(fullPath);
             _containerCache = AssetDatabase.LoadAssetAtPath<DialogueContainer>(relativePath);
 
+            if (_containerCache == null)
+                return true;
+
             return !dialogueContainer.IsEqual(_containerCache);
         }
 
@@ -45,13 +48,26 @@ namespace DS.Editor
             if (string.IsNullOrEmpty(relativePath))
                 return;
 
-            var dialogueContainer = ScriptableObject.CreateInstance<DialogueContainer>();
+            DialogueContainer dialogueContainer = AssetDatabase.LoadAssetAtPath<DialogueContainer>(relativePath);
+            
+            if (dialogueContainer == null)
+            {
+                dialogueContainer = ScriptableObject.CreateInstance<DialogueContainer>();
+                AssetDatabase.CreateAsset(dialogueContainer, relativePath);
+            }
 
+            ResetContainer(dialogueContainer);
             SaveNodes(dialogueContainer);
             SaveLinks(dialogueContainer);
 
-            AssetDatabase.CreateAsset(dialogueContainer, relativePath);
+            EditorUtility.SetDirty(dialogueContainer);
             AssetDatabase.SaveAssets();
+        }
+
+        private void ResetContainer(DialogueContainer container)
+        {
+            container.NodeData = new List<DialogueNodeData>();
+            container.NodeLinks = new List<NodeLinkData>();
         }
 
         private void SaveLinks(DialogueContainer container)
@@ -97,7 +113,9 @@ namespace DS.Editor
                             GUID = multiChoiceNode.GUID,
                             NodeTitle = multiChoiceNode.NodeTitle,
                             NodeType = multiChoiceNode.NodeType,
-                            Position = multiChoiceNode.GetPosition().position
+                            Position = multiChoiceNode.GetPosition().position,
+                            TargetObjectID = multiChoiceNode.TargetObjectID,
+                            DialogueText = multiChoiceNode.DialogueText
                         });
                         break;
                 }
@@ -181,6 +199,8 @@ namespace DS.Editor
         {
             var tempNode = _targetGraphView.CreateMultiChoiceNode(nodeData.NodeTitle, nodeData.Position) as MultiChoiceNode;
             tempNode.GUID = nodeData.GUID;
+            tempNode.TargetObjectID = nodeData.TargetObjectID;
+            tempNode.DialogueText = nodeData.DialogueText;
             _targetGraphView.AddElement(tempNode);
 
             var nodePorts = _containerCache.NodeLinks.Where(x => x.BaseNodeGuid == nodeData.GUID).ToList();

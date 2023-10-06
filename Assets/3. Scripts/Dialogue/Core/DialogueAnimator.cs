@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace DS.Core
 {
@@ -63,16 +65,24 @@ namespace DS.Core
             _originTextFontSize = _textBox.fontSize;
         }
 
-        public IEnumerator AnimateTextIn(List<DialogueUtility.Command> commands)
+        public IEnumerator AnimateTextIn(List<DialogueUtility.Command> commands, Action onComplete, bool skipTyping = false)
         {
             InitializeAnimation(commands);
             
             foreach (var command in _commands)
             {
+                if (skipTyping)
+                {
+                    FastExecuteCommand(command);
+                    continue;
+                }
+        
                 yield return ExecuteCommand(command);
             }
             
             yield return null;
+            
+            onComplete?.Invoke();
         }
 
         private void InitializeAnimation(List<DialogueUtility.Command> commands)
@@ -100,6 +110,22 @@ namespace DS.Core
                     break;
                 default:
                     yield return TypeText(command.stringValue);
+                    break;
+            }
+        }
+        
+        private void FastExecuteCommand(DialogueUtility.Command command)
+        {
+            switch (command.commandType)
+            {
+                case DialogueUtility.CommandType.Pause:
+                case DialogueUtility.CommandType.TextSpeedChange:
+                    break;
+                case DialogueUtility.CommandType.Size:
+                    AppendToTextBox($"</size><size={_originTextFontSize * command.floatValue}>");
+                    break;
+                default:
+                    AppendToTextBox(command.stringValue);
                     break;
             }
         }

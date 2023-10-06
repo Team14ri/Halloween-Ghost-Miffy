@@ -30,6 +30,9 @@ namespace DS.Runtime
 
             for (int i = 0; i < NodeData.Count; i++)
             {
+                if (NodeData[i].NodeType != other.NodeData[i].NodeType)
+                    return false;
+
                 if (!NodeData[i].IsEqual(other.NodeData[i]))
                     return false;
             }
