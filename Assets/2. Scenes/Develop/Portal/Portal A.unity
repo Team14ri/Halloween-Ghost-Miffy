@@ -17549,7 +17549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6969f41deb4f59846902f46e89ed2f9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  portalNum: 0
+  portalNum: 1
   exitSceneName: Portal B
   exitPortalNum: 1
 --- !u!23 &786281378
@@ -17962,6 +17962,7 @@ GameObject:
   - component: {fileID: 843050310}
   - component: {fileID: 843050312}
   - component: {fileID: 843050311}
+  - component: {fileID: 843050313}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -18011,9 +18012,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c85d5d52ed6ecc4fabd2dc8af511bd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tr: {fileID: 0}
-  rb: {fileID: 0}
-  movementInput: {x: 0, y: 0}
 --- !u!114 &843050308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18120,6 +18118,20 @@ MonoBehaviour:
   _data:
     _json: '{"declarations":{"Kind":"Object","collection":{"$content":[],"$version":"A"},"$version":"A"}}'
     _objectReferences: []
+--- !u!114 &843050313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843050304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 370808d668e366e46aca43e80c70b952, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playInteractionButton: {fileID: 0}
+  interactionTriggers: []
 --- !u!224 &865132732 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8339047906624088022, guid: f87c45126dcd1e54ba01d1f91c7fedd7, type: 3}
@@ -18754,6 +18766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f8012e1440fdad4ea591169c3523507, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 
   textBox: {fileID: 1607623260}
 --- !u!1 &1049148199
 GameObject:
@@ -20167,6 +20180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f8012e1440fdad4ea591169c3523507, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 
   textBox: {fileID: 1748964520}
 --- !u!1 &1481112496
 GameObject:
@@ -27313,7 +27327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6969f41deb4f59846902f46e89ed2f9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  portalNum: 0
+  portalNum: 2
   exitSceneName: Portal C
   exitPortalNum: 2
 --- !u!23 &2131531976

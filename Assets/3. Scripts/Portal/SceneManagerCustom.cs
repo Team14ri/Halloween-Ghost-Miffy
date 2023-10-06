@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -21,8 +20,11 @@ public class SceneManagerCustom : MonoBehaviour
         }
     }
 
+    // 씬 전환시 호출될 최종 함수
     public void LoadScene(string sceneName, int exitPortalNum)
     {
+        // 기존 포탈 정보를 초기화
+        PortalManager.instance.portalDictionary.Clear();
         StartCoroutine(LoadSceneAsync(sceneName, exitPortalNum));
     }
     
@@ -33,9 +35,8 @@ public class SceneManagerCustom : MonoBehaviour
         // 씬 로드가 완료될 때까지 대기
         while (!asyncLoad.isDone)
         {
-            float progress = Mathf.Clamp01(asyncLoad.progress / 0.9f);
-            Debug.Log("로딩 진행률: " + (progress * 100) + "%");
-
+            // float progress = Mathf.Clamp01(asyncLoad.progress / 0.9f);
+            // Debug.Log("로딩 진행률: " + (progress * 100) + "%");
             yield return null;
         }
 
