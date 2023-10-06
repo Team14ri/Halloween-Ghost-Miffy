@@ -8,9 +8,9 @@ public class UIFadeController : MonoBehaviour
 {
     [SerializeField] private GameObject activeTarget;
 
-    [SerializeField] private float fadeInTime = 1f;
-    [SerializeField] private float fadeOutTime = 1f;
-    [SerializeField] private float autoFadeWaitTime = 1f;
+    [SerializeField] private float fadeInTime = 1.1f;
+    [SerializeField] private float fadeOutTime = 1.4f;
+    [SerializeField] private float autoFadeWaitTime = 4f;
 
     [SerializeField] private List<Image> images;
     [SerializeField] private List<TMP_Text> texts;
