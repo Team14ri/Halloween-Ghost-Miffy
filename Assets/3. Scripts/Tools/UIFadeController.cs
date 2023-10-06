@@ -18,11 +18,6 @@ public class UIFadeController : MonoBehaviour
     [SerializeField] private List<Image> images;
     [SerializeField] private List<TMP_Text> texts;
 
-    private void Start()
-    {
-        Invoke(nameof(AutoFadeInAndOut), 1f);
-    }
-
     public void AutoFadeInAndOut()
     {
         SetAlpha(images, 0f);
