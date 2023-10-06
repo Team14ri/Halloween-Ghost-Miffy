@@ -9,9 +9,7 @@ public class Portal : MonoBehaviour
      * 스크립트가 적용될 오브젝트의 이름의 끝에 숫자가 들어가야 합니다.
      * ex) Portal 1, Portal 2...
      */
-    
     public int portalNum;
-
     public string exitSceneName = null;
     public int exitPortalNum = -1;
 
@@ -22,7 +20,8 @@ public class Portal : MonoBehaviour
 
     private void Update()
     {
-        if (IsPlayerCloseToPortal() && Input.GetKeyDown(KeyCode.Space))
+        // 포탈마다 Update문을 돌리지 않고, 플레이어가 포탈을 탐지하게 변경하면 좋을것 같습니다.
+        if (Input.GetKeyDown(KeyCode.Space) && IsPlayerCloseToPortal())
         {
             SceneManagerCustom.instance.LoadScene(exitSceneName, exitPortalNum);
         }
@@ -33,10 +32,10 @@ public class Portal : MonoBehaviour
         Vector3 portalPos = this.transform.position;
         Vector3 playerPos = PortalManager.instance.player.transform.position;
         Vector3 different = portalPos - playerPos;
-        
+
         float distance = different.magnitude;
 
         // 플레이어와의 거리가 설정된 거리보다 작거나 같다면 true
-        return (distance <= PortalManager.instance.portalActivationRange) ? true : false;
+        return distance <= PortalManager.instance.portalActivationRange;
     }
 }

@@ -11,7 +11,7 @@ public class SceneManagerCustom : MonoBehaviour
     {
         if (instance != null)
         {
-            Debug.LogError("한 씬에 SceneManagerCustom가 여러 개 있습니다.");
+            Debug.LogWarning("한 씬에 SceneManagerCustom가 여러 개 있어 삭제합니다.");
             Destroy(this.gameObject);
         }
         else
@@ -39,7 +39,14 @@ public class SceneManagerCustom : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("씬 로드 완료");
-        PortalManager.instance.SceneChange(sceneName, exitPortalNum);
+        if (asyncLoad.isDone && asyncLoad.allowSceneActivation)
+        {
+            Debug.Log("씬 로드 완료");
+            PortalManager.instance.TeleportPlayerToExitPortal(sceneName, exitPortalNum);
+        }
+        else
+        {
+            Debug.LogError("씬 로드 중 예외 발생 또는 씬 활성화가 중지되었습니다.");
+        }
     }
 }

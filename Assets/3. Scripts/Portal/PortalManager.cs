@@ -9,11 +9,13 @@ public class PortalManager : MonoBehaviour
     public GameObject player { get; private set; }
     public float portalActivationRange = 5.0f;
 
+    private Dictionary<int, Portal> portalDictionary = new Dictionary<int, Portal>();
+
     private void Awake()
     {
         if (instance != null)
         {
-            Debug.LogError("한 씬에 PortalManager가 여러 개 있습니다.");
+            Debug.LogWarning("한 씬에 PortalManager가 여러 개 있어 삭제합니다.");
             Destroy(this.gameObject);
         }
         else
@@ -24,45 +26,50 @@ public class PortalManager : MonoBehaviour
         }
     }
 
-    void FindPlayer()
-    {
-        player = GameObject.FindWithTag("Player");
-    }
-
     // 함수명 변경이 필요할듯
-    public void SceneChange(string sceneName, int exitPortalNum)
+    public void TeleportPlayerToExitPortal(string sceneName, int exitPortalNum)
     {
         if (sceneName == null || exitPortalNum == -1)
         {
             Debug.Log("포탈의 exit 정보가 잘못됐습니다.");
             return;
         }
-        
+
         FindPlayer();
-
-        Vector3 exitPortalPos = FindPortalPosition(exitPortalNum);
-        SetPlayerPosition(exitPortalPos);
-    }
-
-    private Vector3 FindPortalPosition(int portalNum)
-    {
-        GameObject[] portals = GameObject.FindGameObjectsWithTag("Portal");
+        FindPortals();
         
-        foreach (var cur in portals)
-        {
-            Debug.Log("포탈 찾는중" + cur.GetComponent<Portal>().portalNum);
+        Vector3 exitPortalPosition = GetPortalPosition(exitPortalNum);
+        SetPlayerPosition(exitPortalPosition);
+    }
+    void FindPlayer()
+    {
+        player = GameObject.FindWithTag("Player");
+    }
+    void FindPortals()
+    {
+        portalDictionary.Clear();
+        GameObject[] portalObjects = GameObject.FindGameObjectsWithTag("Portal");
 
-            if (cur.GetComponent<Portal>().portalNum == portalNum)
+        foreach (var portalObject  in portalObjects)
+        {
+            Portal portal = portalObject.GetComponent<Portal>();
+            if (portal != null)
             {
-                Debug.Log("포탈 찾음");
-                return cur.transform.position;
+                portalDictionary[portal.portalNum] = portal;
             }
         }
-
-        Debug.Log("못찾음" + SceneManager.GetActiveScene().name);
-        return Vector3.zero;
     }
+    private Vector3 GetPortalPosition(int portalNum)
+    {
+        if (!portalDictionary.ContainsKey(portalNum))
+        {
+            Debug.LogError("포탈을 찾지 못했습니다.");
+            return Vector3.zero;
+        }
 
+        Vector3 portalPosition = portalDictionary[portalNum].transform.position;
+        return portalPosition;
+    }
     private void SetPlayerPosition(Vector3 portalPos)
     {
         player.transform.position = portalPos;
