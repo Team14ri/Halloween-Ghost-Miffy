@@ -8,9 +8,12 @@ public class UIFadeController : MonoBehaviour
 {
     [SerializeField] private GameObject activeTarget;
 
-    [SerializeField] private float fadeInTime = 1.1f;
-    [SerializeField] private float fadeOutTime = 1.4f;
+    [SerializeField] private float fadeInTime = 1.4f;
+    [SerializeField] private float fadeOutTime = 2.2f;
     [SerializeField] private float autoFadeWaitTime = 4f;
+
+    [SerializeField] private AnimationCurve FadeInAccelerationCurve = new(new Keyframe(0, 0), new Keyframe(1, 1));
+    [SerializeField] private AnimationCurve FadeOutAccelerationCurve = new(new Keyframe(0, 1), new Keyframe(1, 0));
 
     [SerializeField] private List<Image> images;
     [SerializeField] private List<TMP_Text> texts;
@@ -45,7 +48,7 @@ public class UIFadeController : MonoBehaviour
         activeTarget.SetActive(true);
         for (float t = 0; t < fadeInTime; t += Time.deltaTime)
         {
-            float alpha = Mathf.Lerp(0, 1, t / fadeInTime);
+            float alpha = FadeInAccelerationCurve.Evaluate(Mathf.Min(t + (Time.deltaTime / fadeInTime), 1f));
             SetAlpha(images, alpha);
             SetAlpha(texts, alpha);
             yield return null;
@@ -58,7 +61,7 @@ public class UIFadeController : MonoBehaviour
     {
         for (float t = 0; t < fadeOutTime; t += Time.deltaTime)
         {
-            float alpha = Mathf.Lerp(1, 0, t / fadeOutTime);
+            float alpha = FadeOutAccelerationCurve.Evaluate(Mathf.Min(t + (Time.deltaTime / fadeOutTime), 1f));
             SetAlpha(images, alpha);
             SetAlpha(texts, alpha);
             yield return null;
