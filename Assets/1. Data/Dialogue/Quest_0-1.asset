@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: Quest_0-1
   m_EditorClassIdentifier: 
   NodeLinks:
+  - BaseNodeGuid: 14691116-3de3-4bfe-9187-4079d9a8465a
+    PortName: Execute
+    TargetNodeGuid: 212c0dc1-f7ba-4b1e-aba5-12d62222c455
   - BaseNodeGuid: 212c0dc1-f7ba-4b1e-aba5-12d62222c455
     PortName: Next
     TargetNodeGuid: 9a62574d-dfe7-4ded-853b-ae81b0e14328
@@ -22,18 +25,15 @@ MonoBehaviour:
   - BaseNodeGuid: 913010f8-e237-4f86-86f3-252070784fa9
     PortName: Next
     TargetNodeGuid: 068ee155-ea1d-4767-93c2-f67bb009e64a
-  - BaseNodeGuid: 14691116-3de3-4bfe-9187-4079d9a8465a
-    PortName: Execute
-    TargetNodeGuid: 212c0dc1-f7ba-4b1e-aba5-12d62222c455
   NodeData:
-  - rid: 5163360652114526218
-  - rid: 5163360652114526219
-  - rid: 5163360652114526220
-  - rid: 5163360652114526221
+  - rid: 5163360652114526414
+  - rid: 5163360652114526415
+  - rid: 5163360652114526416
+  - rid: 5163360652114526417
   references:
     version: 2
     RefIds:
-    - rid: 5163360652114526218
+    - rid: 5163360652114526414
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 212c0dc1-f7ba-4b1e-aba5-12d62222c455
@@ -42,7 +42,7 @@ MonoBehaviour:
         Position: {x: 218, y: 136}
         TargetObjectID: NPC_1
         DialogueText: "\uC544\uC544 \uD14C\uC2A4\uD2B8 \uC785\uB2C8\uB2E4"
-    - rid: 5163360652114526219
+    - rid: 5163360652114526415
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 9a62574d-dfe7-4ded-853b-ae81b0e14328
@@ -52,7 +52,7 @@ MonoBehaviour:
         TargetObjectID: NPC_1
         DialogueText: "\uC774\uAC83\uC740 \uC904\uBC14\uAFC8\n\uD14C\uC2A4\uD2B8
           \uC785\uB2C8\uB2E4"
-    - rid: 5163360652114526220
+    - rid: 5163360652114526416
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 913010f8-e237-4f86-86f3-252070784fa9
@@ -62,7 +62,7 @@ MonoBehaviour:
         TargetObjectID: NPC_2
         DialogueText: "\uB2E4\uB978 NPC\uB3C4 \uB300\uD654\uC5D0\n\uCC38\uC5EC\uD560
           \uC218 \uC788\uC2B5\uB2C8\uB2E4"
-    - rid: 5163360652114526221
+    - rid: 5163360652114526417
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 068ee155-ea1d-4767-93c2-f67bb009e64a
