@@ -18,7 +18,7 @@ public class DynamicScaleTextbox : MonoBehaviour
         StoreAnchoredPositions(targetObject.transform);
     }
 
-    private void LateUpdate()
+    private void Update()
     {
         if (textBox.text.Length == 0)
         {
