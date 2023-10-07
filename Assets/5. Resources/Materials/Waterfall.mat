@@ -20,7 +20,23 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _NormalNoiseTexture:
+        m_Texture: {fileID: 2800000, guid: 469cca6660d133040bdb7a384c07de85, type: 3}
+        m_Scale: {x: 0.5, y: 0.5}
+        m_Offset: {x: 0, y: 0}
+    - _NormalTexture:
+        m_Texture: {fileID: 2800000, guid: 249ca4e50bb70494a88cb9d094972786, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _NormalTexture1:
+        m_Texture: {fileID: 2800000, guid: 249ca4e50bb70494a88cb9d094972786, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WaveMaskTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -40,6 +56,10 @@ Material:
     m_Floats:
     - _AlphaCutoff: 0.5
     - _EnvironmentReflections: 1
+    - _NormalNoiseSpeed: 0.02
+    - _NormalNoiseSpeedStrength: 0.2
+    - _NormalNoiseStrength: 1
+    - _NormalScale: 0.2
     - _NormalScale1: 0.2
     - _NormalTiling: 1.5
     - _QueueControl: 0
@@ -48,14 +68,22 @@ Material:
     - _SpecularHighlights: 1
     - _WaterCausticsScale01: 7
     - _WaterCausticsScale02: 7
-    - _WaterLineDistance: 0.2
+    - _WaterDistance: 2
+    - _WaterLineDistance: 0.5
     - _WaterLineScale: 25
-    - _WaterLineSpeed: 0.02
+    - _WaterLineSpeed: 0.093
+    - _WaveHeight: 0.3
+    - _WaveNoise: 1.5
     m_Colors:
+    - _DeepWaterColor: {r: 0, g: 0.5019608, b: 2, a: 1}
     - _DeepWaterColor1: {r: 0, g: 0.25, b: 1, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _NormalSpeed: {r: 0.1, g: 0, b: 0, a: 0}
     - _NormalSpeed1: {r: 0.1, g: 0, b: 0, a: 0}
-    - _WaterCausticsSpeed1: {r: 0.1, g: 0, b: 0, a: 0}
-    - _WaterColor1: {r: 0, g: 1.011765, b: 1.498039, a: 0.5490196}
+    - _WaterCausticsSpeed1: {r: 0.2, g: 0, b: 0, a: 0}
+    - _WaterColor: {r: 0, g: 1.4419433, b: 2.1185474, a: 0.7490196}
+    - _WaterColor1: {r: 0, g: 0.43258297, b: 2.1185474, a: 1}
+    - _WaterLineColor: {r: 1, g: 1, b: 1, a: 1}
     - _WaterLineColor1: {r: 1, g: 1, b: 1, a: 1}
+    - _WaveSpeed: {r: 0.2, g: 0.2, b: 0, a: 0}
   m_BuildTextureStacks: []
