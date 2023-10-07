@@ -17,25 +17,29 @@ public class UIFadeController : MonoBehaviour
 
     [SerializeField] private List<Image> images;
     [SerializeField] private List<TMP_Text> texts;
+    
+    private Coroutine _fadeRoutine;
 
     public void AutoFadeInAndOut()
     {
         SetAlpha(images, 0f);
         SetAlpha(texts, 0f);
 
-        StartCoroutine(FadeInProcess());
+        FadeIn();
 
         Invoke(nameof(FadeOut), fadeInTime + autoFadeWaitTime);
     }
 
     public void FadeIn()
     {
-        StartCoroutine(FadeInProcess());
+        this.EnsureCoroutineStopped(ref _fadeRoutine);
+        _fadeRoutine = StartCoroutine(FadeInProcess());
     }
 
     public void FadeOut()
     {
-        StartCoroutine(FadeOutProcess());
+        this.EnsureCoroutineStopped(ref _fadeRoutine);
+        _fadeRoutine = StartCoroutine(FadeOutProcess());
     }
 
     IEnumerator FadeInProcess()
