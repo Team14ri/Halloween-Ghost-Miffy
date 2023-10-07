@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+zusing System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PortalManager : MonoBehaviour
 {
@@ -10,7 +8,7 @@ public class PortalManager : MonoBehaviour
     
     [Tooltip("포탈이 활성화 되는 거리 (반지름)")]
     public float portalActivationRange = 5.0f;
-    private Dictionary<int, Portal> portalDictionary = new Dictionary<int, Portal>();
+    public Dictionary<int, Portal> portalDictionary = new Dictionary<int, Portal>();
 
     private void Awake()
     {
@@ -36,40 +34,32 @@ public class PortalManager : MonoBehaviour
         }
 
         FindPlayer();
-        FindPortals();
-        
         Vector3 exitPortalPosition = GetPortalPosition(exitPortalNum);
         SetPlayerPosition(exitPortalPosition);
     }
+    
     void FindPlayer()
     {
         player = GameObject.FindWithTag("Player");
-    }
-    void FindPortals()
-    {
-        portalDictionary.Clear();
-        GameObject[] portalObjects = GameObject.FindGameObjectsWithTag("Portal");
-
-        foreach (var portalObject  in portalObjects)
+        
+        if (player == null)
         {
-            Portal portal = portalObject.GetComponent<Portal>();
-            if (portal != null)
-            {
-                portalDictionary[portal.portalNum] = portal;
-            }
+            Debug.LogWarning("플레이어를 찾을 수 없습니다.");
         }
     }
+    
     private Vector3 GetPortalPosition(int portalNum)
     {
         if (!portalDictionary.ContainsKey(portalNum))
         {
-            Debug.LogError("포탈을 찾지 못했습니다.");
+            Debug.LogError($"포탈 {portalNum}을 찾을 수 없습니다.");
             return Vector3.zero;
         }
 
         Vector3 portalPosition = portalDictionary[portalNum].transform.position;
         return portalPosition;
     }
+    
     private void SetPlayerPosition(Vector3 portalPos)
     {
         player.transform.position = portalPos;
