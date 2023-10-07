@@ -1,6 +1,7 @@
 using System;
 using DS.Runtime;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Interaction
 {
@@ -8,12 +9,17 @@ namespace Interaction
     {
         public string title = String.Empty;
         [SerializeField] private DialogueContainer dialogueContainer;
+        [SerializeField] private UnityEvent events;
         
         public void Execute()
         {
-            PlayerController.Instance.stateMachine.ChangeState(
-                new PlayerInteractionState(PlayerController.Instance, 
-                    PlayerController.Instance.stateMachine, dialogueContainer));
+            if (dialogueContainer != null)
+            {
+                PlayerController.Instance.stateMachine.ChangeState(
+                    new PlayerInteractionState(PlayerController.Instance, 
+                        PlayerController.Instance.stateMachine, dialogueContainer));
+            }
+            events?.Invoke();
         }
     }
 }
