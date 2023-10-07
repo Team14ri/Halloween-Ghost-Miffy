@@ -15,24 +15,8 @@ public class Portal : MonoBehaviour
         PortalManager.Instance.PortalDictionary[portalNum] = this;
     }
 
-    private void Update()
+    public void LoadScene()
     {
-        // 포탈마다 Update문을 돌리지 않고, 플레이어가 포탈을 탐지하게 변경하면 좋을것 같습니다.
-        if (Input.GetKeyDown(KeyCode.E) && IsPlayerCloseToPortal())
-        {
-            SceneManagerCustom.instance.LoadScene(exitSceneName, exitPortalNum);
-        }
-    }
-
-    public bool IsPlayerCloseToPortal()
-    {
-        Vector3 portalPos = transform.position;
-        Vector3 playerPos = PortalManager.Instance.Player.transform.position;
-        Vector3 difference = portalPos - playerPos;
-
-        float distance = difference.magnitude;
-
-        // 플레이어와의 거리가 설정된 거리보다 작거나 같다면 true
-        return distance <= PortalManager.Instance.portalActivationRange;
+        SceneManagerCustom.instance.LoadScene(exitSceneName, exitPortalNum);
     }
 }
