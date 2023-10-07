@@ -22,6 +22,7 @@ public class DynamicScaleTextbox : MonoBehaviour
     {
         if (textBox.text.Length == 0)
         {
+            textBox.ForceMeshUpdate();
             targetObject.GetComponent<RectTransform>().sizeDelta = sizeOffset;
             targetObject.SetActive(false);
             return;
@@ -60,8 +61,6 @@ public class DynamicScaleTextbox : MonoBehaviour
 
     public void AdjustSizeAndRestorePositions()
     {
-        // textBox.ForceMeshUpdate();
-        
         // 크기 조절
         var newSize = textBox.GetRenderedValues(true) + sizeOffset;
         newSize = new Vector2(Math.Max(newSize.x, sizeDefault.x), Math.Max(newSize.y, sizeDefault.y));
