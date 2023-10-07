@@ -10,7 +10,7 @@ public class LookAtCameraYOnly : MonoBehaviour
         Cam = Camera.main;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         float cameraYRotation = Cam.transform.eulerAngles.y;
         transform.rotation = Quaternion.Euler(transform.eulerAngles.x, cameraYRotation, transform.eulerAngles.z);

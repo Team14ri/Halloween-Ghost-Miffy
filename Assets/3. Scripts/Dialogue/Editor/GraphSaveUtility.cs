@@ -74,10 +74,23 @@ namespace DS.Editor
         {
             var connectedPorts = Edges.Where(x => x.input.node != null).ToArray();
 
+            var entryNode = Nodes.FirstOrDefault(node => node.EntryPoint);
+            container.NodeLinks.Add(new NodeLinkData
+            {
+                BaseNodeGuid = entryNode.GUID
+            });
+            
             foreach (var port in connectedPorts)
             {
                 var outputNode = port.output.node as DialogueNode;
                 var inputNode = port.input.node as DialogueNode;
+
+                if (outputNode.GUID == entryNode.GUID)
+                {
+                    container.NodeLinks[0].PortName = port.output.portName;
+                    container.NodeLinks[0].TargetNodeGuid = inputNode.GUID;
+                    continue;
+                }
 
                 container.NodeLinks.Add(new NodeLinkData
                 {

@@ -39,7 +39,7 @@ namespace DS.Core
             }
         }
 
-        private void Update()
+        private void LateUpdate()
         {
             if (_textBox == null 
                 || _textBox.text.Length == 0)

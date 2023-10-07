@@ -7,7 +7,9 @@ namespace DS.Core
     public class DialogueHandler : MonoBehaviour
     {
         [SerializeField] private string ID;
+        [SerializeField] private string Name;
         
+        [SerializeField] private TMP_Text nameBox;
         [SerializeField] private TMP_Text textBox;
 
         private void Start()
@@ -17,6 +19,7 @@ namespace DS.Core
 
         public void PlayDialogue(string text, bool skipTyping = false)
         {
+            nameBox.text = Name;
             DialogueManager.Instance.PlayDialogue(textBox, text, skipTyping);
         }
     }

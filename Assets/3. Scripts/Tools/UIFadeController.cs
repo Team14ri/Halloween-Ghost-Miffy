@@ -8,11 +8,12 @@ public class UIFadeController : MonoBehaviour
 {
     [SerializeField] private GameObject activeTarget;
 
-    [SerializeField] private float fadeInTime = 1.4f;
-    [SerializeField] private float fadeOutTime = 2.2f;
     [SerializeField] private float autoFadeWaitTime = 4f;
-
+    
+    [SerializeField] private float fadeInTime = 1.4f;
     [SerializeField] private AnimationCurve FadeInAccelerationCurve = new(new Keyframe(0, 0), new Keyframe(1, 1));
+    
+    [SerializeField] private float fadeOutTime = 2.2f;
     [SerializeField] private AnimationCurve FadeOutAccelerationCurve = new(new Keyframe(0, 1), new Keyframe(1, 0));
 
     [SerializeField] private List<Image> images;
@@ -42,7 +43,7 @@ public class UIFadeController : MonoBehaviour
         _fadeRoutine = StartCoroutine(FadeOutProcess());
     }
 
-    IEnumerator FadeInProcess()
+    private IEnumerator FadeInProcess()
     {
         activeTarget.SetActive(true);
         for (float t = 0; t < fadeInTime; t += Time.deltaTime)
@@ -56,7 +57,7 @@ public class UIFadeController : MonoBehaviour
         SetAlpha(texts, 1);
     }
 
-    IEnumerator FadeOutProcess()
+    private IEnumerator FadeOutProcess()
     {
         for (float t = 0; t < fadeOutTime; t += Time.deltaTime)
         {
