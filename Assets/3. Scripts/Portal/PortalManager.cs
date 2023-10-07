@@ -1,4 +1,4 @@
-zusing System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PortalManager : MonoBehaviour
@@ -15,12 +15,12 @@ public class PortalManager : MonoBehaviour
         if (instance != null)
         {
             Debug.LogWarning("한 씬에 PortalManager가 여러 개 있어 삭제합니다.");
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
         else
         {
             instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(gameObject);
             FindPlayer();
         }
     }

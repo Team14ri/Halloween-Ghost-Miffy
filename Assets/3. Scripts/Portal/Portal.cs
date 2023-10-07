@@ -12,7 +12,7 @@ public class Portal : MonoBehaviour
 
     private void Start()
     {
-        PortalManager.instance.portalDictionary.AddOrUpdate(portalNum, this, (key, oldValue) => this);
+        PortalManager.instance.portalDictionary[portalNum] = this;
     }
 
     private void Update()
