@@ -8,9 +8,13 @@ public class CameraZoomController : MonoBehaviour
     public static CameraZoomController Instance;
     
     [SerializeField] private CinemachineFreeLook freeLookCamera;
-    [SerializeField] private float zoomInTime = 1f;
-    [SerializeField] private float zoomOutTime = 1f;
     
+    [SerializeField] private float zoomInTime = 0.4f;
+    [SerializeField] private AnimationCurve ZoomInAccelerationCurve = new(new Keyframe(0, 0), new Keyframe(1, 1));
+    [SerializeField] private float zoomOutTime = 0.6f;
+    
+    [SerializeField] private AnimationCurve ZoomOutAccelerationCurve = new(new Keyframe(0, 0), new Keyframe(1, 1));
+
     private Coroutine _zoomRoutine;
     private float initialYAxisValue;
     
@@ -61,14 +65,15 @@ public class CameraZoomController : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float percentage = elapsedTime / zoomInTime;
 
-            freeLookCamera.m_YAxis.Value = Mathf.Lerp(initialYAxisValue, 0, percentage);
+            float curveValue = ZoomInAccelerationCurve.Evaluate(percentage);
+            freeLookCamera.m_YAxis.Value = Mathf.Lerp(initialYAxisValue, 0, curveValue);
 
             yield return null;
         }
 
         freeLookCamera.m_YAxis.Value = 0;
     }
-    
+
     private IEnumerator ZoomOutProcess(float zoomOutTime)
     {
         float elapsedTime = 0;
@@ -78,7 +83,8 @@ public class CameraZoomController : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float percentage = elapsedTime / zoomOutTime;
 
-            freeLookCamera.m_YAxis.Value = Mathf.Lerp(0, initialYAxisValue, percentage);
+            float curveValue = ZoomOutAccelerationCurve.Evaluate(percentage);
+            freeLookCamera.m_YAxis.Value = Mathf.Lerp(0, initialYAxisValue, curveValue);
 
             yield return null;
         }
