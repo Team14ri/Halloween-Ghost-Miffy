@@ -1,4 +1,5 @@
 using System;
+using Cinemachine;
 using DS;
 using DS.Core;
 using DS.Runtime;
@@ -22,6 +23,7 @@ public class PlayerInteractionState : IState
     public void Enter()
     {
         player.Interaction.Enabled = false;
+        CameraZoomController.Instance.ZoomIn();
         PlayCurrentNode();
     }
 
@@ -33,7 +35,7 @@ public class PlayerInteractionState : IState
 
         CheckDialoguePlaying(PlayCurrentNode);
     }
-    
+
     private void CheckDialoguePlaying(Action<bool> action)
     {
         if (!DialogueManager.Instance.CheckDialogueEnd())
@@ -89,6 +91,7 @@ public class PlayerInteractionState : IState
     public void Exit()
     {
         player.Interaction.Enabled = true;
+        CameraZoomController.Instance.ZoomOut();
         DialogueManager.Instance.StopDialogue();
     }
 }
