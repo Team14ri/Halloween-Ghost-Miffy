@@ -13,6 +13,8 @@ namespace Interaction
         [SerializeField] private DialogueContainer dialogueContainer;
         [SerializeField] private UnityEvent events;
         
+        public bool DisableInteraction { get; private set; }
+        
         public void Enter()
         {
             interactionButtonController.Enable(interactionButtonType);
@@ -34,6 +36,17 @@ namespace Interaction
                         PlayerController.Instance.stateMachine, dialogueContainer));
             }
             events?.Invoke();
+        }
+        
+        private void SetInteractionEnable()
+        {
+            DisableInteraction = false;
+        }
+        
+        public void DisableUntil(float seconds)
+        {
+            DisableInteraction = true;
+            Invoke(nameof(SetInteractionEnable), seconds);
         }
     }
 }

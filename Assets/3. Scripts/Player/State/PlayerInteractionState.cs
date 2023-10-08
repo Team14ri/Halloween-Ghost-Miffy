@@ -13,6 +13,10 @@ public class PlayerInteractionState : IState
     
     private DialogueFlow dialogueFlow;
 
+    private DialogueHandler lastestDialogueHandler;
+
+    private float currentXAxis;
+
     public PlayerInteractionState(PlayerController player, StateMachine stateMachine, DialogueContainer dialogueContainer)
     {
         this.player = player;
@@ -23,7 +27,8 @@ public class PlayerInteractionState : IState
     public void Enter()
     {
         player.Interaction.Enabled = false;
-        CameraZoomController.Instance.ZoomIn();
+        // CameraZoomController.Instance.ZoomIn();
+        currentXAxis = CameraZoomController.Instance.GetXAxis();
         PlayCurrentNode();
     }
 
@@ -60,18 +65,36 @@ public class PlayerInteractionState : IState
     private void PlayCurrentNode(bool skipTyping = false)
     {
         var nodeData = dialogueFlow.GetCurrentNodeData();
+        var oldDialogueHandler = lastestDialogueHandler;
         switch (nodeData.NodeType)
         {
             case NodeTypes.NodeType.NoChoice:
                 var noChoiceNodeData = nodeData as NoChoiceNodeData;
-                DialogueManager.Instance.GetHandler(noChoiceNodeData.TargetObjectID)
-                    .PlayDialogue(noChoiceNodeData.DialogueText, skipTyping);
+                lastestDialogueHandler = DialogueManager.Instance.GetHandler(noChoiceNodeData.TargetObjectID);
+
+                if (oldDialogueHandler != null)
+                {
+                    currentXAxis = oldDialogueHandler.GetXAxis();
+                    oldDialogueHandler.DisableLookTarget();
+                }
+                
+                lastestDialogueHandler.LookTarget(currentXAxis);
+                lastestDialogueHandler.PlayDialogue(noChoiceNodeData.DialogueText, skipTyping);
                 break;
             case NodeTypes.NodeType.MultiChoice:
                 // player.StopInteractionInput = true;
                 var multiChoiceNodeData = nodeData as MultiChoiceNodeData;
-                DialogueManager.Instance.GetHandler(multiChoiceNodeData.TargetObjectID)
-                    .PlayDialogue(multiChoiceNodeData.DialogueText, skipTyping);
+                
+                lastestDialogueHandler = DialogueManager.Instance.GetHandler(multiChoiceNodeData.TargetObjectID);
+
+                if (oldDialogueHandler != null)
+                {
+                    currentXAxis = oldDialogueHandler.GetXAxis();
+                    oldDialogueHandler.DisableLookTarget();
+                }
+                
+                lastestDialogueHandler.LookTarget(currentXAxis);
+                lastestDialogueHandler.PlayDialogue(multiChoiceNodeData.DialogueText, skipTyping);
                 
                 var nodeLinks = dialogueFlow.GetCurrentNodeLinks();
                 foreach (var nodeLink in nodeLinks)
@@ -90,8 +113,14 @@ public class PlayerInteractionState : IState
 
     public void Exit()
     {
+        if (lastestDialogueHandler != null)
+        {
+            CameraZoomController.Instance.SetXAxis(lastestDialogueHandler.GetXAxis());
+            lastestDialogueHandler.DisableLookTarget();
+        }
+        
         player.Interaction.Enabled = true;
-        CameraZoomController.Instance.ZoomOut();
+        // CameraZoomController.Instance.ZoomOut();
         DialogueManager.Instance.StopDialogue();
     }
 }
