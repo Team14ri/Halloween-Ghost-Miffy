@@ -70,6 +70,9 @@ namespace Interaction
             
             if (interactionTrigger == null)
                 return;
+
+            if (closestInteractionTrigger == interactionTrigger)
+                closestInteractionTrigger = null;
             
             interactionTriggers.Remove(interactionTrigger);
             interactionTrigger.Exit();
