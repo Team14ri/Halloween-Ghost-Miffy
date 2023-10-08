@@ -33,6 +33,12 @@ namespace Interaction
                 .FirstOrDefault();
 
             closestInteractionTrigger.Enter();
+            
+            if (PlayerController.Instance.InteractionInput)
+            {
+                PlayerController.Instance.InteractionInput = false;
+                closestInteractionTrigger.Execute();
+            }
         }
 
         private void OnTriggerEnter(Collider other)
@@ -54,18 +60,6 @@ namespace Interaction
             
             interactionTriggers.Remove(interactionTrigger);
             interactionTrigger.Exit();
-        }
-        
-        private void ExecuteInteraction()
-        {
-            if (interactionTriggers.Count == 0)
-                return;
-            
-            var closestInteractionTriggers = interactionTriggers
-                .OrderBy(c => Vector3.Distance(transform.position, c.transform.position))
-                .FirstOrDefault();
-
-            closestInteractionTriggers.Execute();
         }
     }   
 }
