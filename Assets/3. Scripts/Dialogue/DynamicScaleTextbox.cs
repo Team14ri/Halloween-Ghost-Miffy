@@ -22,6 +22,7 @@ public class DynamicScaleTextbox : MonoBehaviour
     {
         if (textBox.text.Length == 0)
         {
+            textBox.ForceMeshUpdate();
             targetObject.GetComponent<RectTransform>().sizeDelta = sizeOffset;
             targetObject.SetActive(false);
             return;
