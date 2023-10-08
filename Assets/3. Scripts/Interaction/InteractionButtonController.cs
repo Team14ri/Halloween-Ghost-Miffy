@@ -9,6 +9,8 @@ public enum InteractionButtonType
 
 public class InteractionButtonController : MonoBehaviour
 {
+    [SerializeField] private UIFadeController uiFadeController;
+    
     [SerializeField] private GameObject talkButton;
     [SerializeField] private GameObject questionButton;
     [SerializeField] private GameObject findButton;
@@ -27,6 +29,7 @@ public class InteractionButtonController : MonoBehaviour
                 findButton.SetActive(true);
                 break;
         }
+        uiFadeController.FadeIn();
     }
     
     public void Disable()
@@ -34,5 +37,6 @@ public class InteractionButtonController : MonoBehaviour
         talkButton.SetActive(false);
         questionButton.SetActive(false);
         findButton.SetActive(false);
+        uiFadeController.FadeOut();
     }
 }

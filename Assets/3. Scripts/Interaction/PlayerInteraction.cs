@@ -12,6 +12,8 @@ namespace Interaction
         [SerializeField] private List<InteractionTrigger> interactionTriggers = new();
 
         public bool Enabled { get; set; }
+
+        private InteractionTrigger closestInteractionTrigger;
             
         private void Start()
         {
@@ -20,19 +22,30 @@ namespace Interaction
 
         private void Update()
         {
-            foreach (var trigger in interactionTriggers)
-            {
-                trigger.Exit();
-            }
-            
             if (!Enabled || interactionTriggers.Count == 0)
+            {
+                closestInteractionTrigger = null;
+                foreach (var trigger in interactionTriggers)
+                {
+                    trigger.Exit();
+                }
                 return;
+            }
 
-            var closestInteractionTrigger = interactionTriggers
+            var newClosestInteractionTrigger = interactionTriggers
                 .OrderBy(c => Vector3.Distance(transform.position, c.transform.position))
                 .FirstOrDefault();
 
-            closestInteractionTrigger.Enter();
+            if (closestInteractionTrigger == null 
+                || newClosestInteractionTrigger != closestInteractionTrigger)
+            {
+                foreach (var trigger in interactionTriggers)
+                {
+                    trigger.Exit();
+                }
+                closestInteractionTrigger = newClosestInteractionTrigger;
+                closestInteractionTrigger.Enter();
+            }
             
             if (PlayerController.Instance.InteractionInput)
             {
