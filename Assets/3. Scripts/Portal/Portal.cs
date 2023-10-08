@@ -12,7 +12,7 @@ public class Portal : MonoBehaviour
 
     private void Start()
     {
-        PortalManager.Instance.PortalDictionary[portalNum] = this;
+        PortalManager.instance.PortalDictionary[portalNum] = this;
     }
 
     public void LoadScene()

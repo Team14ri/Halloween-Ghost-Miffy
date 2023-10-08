@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 public class SceneManagerCustom : MonoBehaviour
 {
     public static SceneManagerCustom instance { get; private set; }
-
+    private Cutout cutout;
+    
     private void Awake()
     {
         if (instance != null)
@@ -17,18 +18,22 @@ public class SceneManagerCustom : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(this.gameObject);
+
+            FindCutout();
         }
     }
 
     // 씬 전환시 호출될 최종 함수
     public void LoadScene(string sceneName, int exitPortalNum)
     {
+        cutout.FadeOut();
+        
         // 기존 포탈 정보를 초기화
-        PortalManager.Instance.PortalDictionary.Clear();
-        StartCoroutine(LoadSceneAsync(sceneName, exitPortalNum));
+        PortalManager.instance.PortalDictionary.Clear();
+        StartCoroutine(LoadSceneCoroutine(sceneName, exitPortalNum));
     }
     
-    private IEnumerator LoadSceneAsync(string sceneName, int exitPortalNum)
+    private IEnumerator LoadSceneCoroutine(string sceneName, int exitPortalNum)
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 
@@ -43,11 +48,18 @@ public class SceneManagerCustom : MonoBehaviour
         if (asyncLoad.isDone && asyncLoad.allowSceneActivation)
         {
             Debug.Log("씬 로드 완료");
-            PortalManager.Instance.TeleportPlayerToExitPortal(sceneName, exitPortalNum);
+            PortalManager.instance.TeleportPlayerToExitPortal(sceneName, exitPortalNum);
+            
+            FindCutout();
         }
         else
         {
             Debug.LogError("씬 로드 중 예외 발생 또는 씬 활성화가 중지되었습니다.");
         }
+    }
+
+    private void FindCutout()
+    {
+        cutout = GameObject.FindObjectOfType<Cutout>();
     }
 }
