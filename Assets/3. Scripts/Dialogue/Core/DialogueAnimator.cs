@@ -160,9 +160,11 @@ namespace DS.Core
             _textBox.ForceMeshUpdate();
 
             TMP_TextInfo textInfo = _textBox.textInfo;
-
+            
+            if (textInfo == null)
+                return;
+            
             AnimateText(textInfo);
-
             UpdateGeometry(textInfo);
         }
 
