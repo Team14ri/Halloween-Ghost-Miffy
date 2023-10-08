@@ -9,8 +9,6 @@ namespace Interaction
 {
     public class PlayerInteraction : MonoBehaviour
     {
-        [SerializeField] private Button playInteractionButton;
-        private TMP_Text playInteractionText;
         [SerializeField] private List<InteractionTrigger> interactionTriggers = new();
 
         public bool Enabled { get; set; }
@@ -18,25 +16,23 @@ namespace Interaction
         private void Start()
         {
             Enabled = true;
-            playInteractionButton.gameObject.SetActive(false);
-            playInteractionButton.onClick.AddListener(ExecuteInteraction);
-            playInteractionText = playInteractionButton.GetComponentInChildren<TMP_Text>();
         }
 
         private void Update()
         {
-            if (!Enabled || interactionTriggers.Count == 0)
+            foreach (var trigger in interactionTriggers)
             {
-                playInteractionButton.gameObject.SetActive(false);
-                return;
+                trigger.Exit();
             }
             
+            if (!Enabled || interactionTriggers.Count == 0)
+                return;
+
             var closestInteractionTrigger = interactionTriggers
                 .OrderBy(c => Vector3.Distance(transform.position, c.transform.position))
                 .FirstOrDefault();
-            
-            playInteractionButton.gameObject.SetActive(true);
-            playInteractionText.text = closestInteractionTrigger.title;
+
+            closestInteractionTrigger.Enter();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -57,6 +53,7 @@ namespace Interaction
                 return;
             
             interactionTriggers.Remove(interactionTrigger);
+            interactionTrigger.Exit();
         }
         
         private void ExecuteInteraction()

@@ -156,6 +156,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3509007874306094424, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
+      propertyPath: interactionButtonType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3509007874306094424, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
+      propertyPath: interactionButtonController
+      value: 
+      objectReference: {fileID: 1967193976887473096}
+    - target: {fileID: 3509007874306094424, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
       propertyPath: events.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -183,8 +191,27 @@ PrefabInstance:
       propertyPath: events.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 6796724519612229064, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8015745513838196644, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
+--- !u!114 &1967193976887473096 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2353259445783822859, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
+  m_PrefabInstance: {fileID: 4315737623205081539}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db1ac8d1ace38e246ac920837068693c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &3251889240521844030 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1640889748532057341, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
