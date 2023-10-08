@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class UIFadeController : MonoBehaviour
 {
-    [SerializeField] private GameObject activeTarget;
+    [SerializeField] private List<GameObject> activeTarget;
 
     [SerializeField] private float autoFadeWaitTime = 4f;
     
@@ -23,9 +23,6 @@ public class UIFadeController : MonoBehaviour
 
     public void AutoFadeInAndOut()
     {
-        SetAlpha(images, 0f);
-        SetAlpha(texts, 0f);
-
         FadeIn();
 
         Invoke(nameof(FadeOut), fadeInTime + autoFadeWaitTime);
@@ -33,6 +30,9 @@ public class UIFadeController : MonoBehaviour
 
     public void FadeIn()
     {
+        SetAlpha(images, 0f);
+        SetAlpha(texts, 0f);
+        
         this.EnsureCoroutineStopped(ref _fadeRoutine);
         _fadeRoutine = StartCoroutine(FadeInProcess());
     }
@@ -45,7 +45,10 @@ public class UIFadeController : MonoBehaviour
 
     private IEnumerator FadeInProcess()
     {
-        activeTarget.SetActive(true);
+        foreach (var obj in activeTarget)
+        {
+            obj.SetActive(true);
+        }
         for (float t = 0; t < fadeInTime; t += Time.deltaTime)
         {
             float alpha = FadeInAccelerationCurve.Evaluate(Mathf.Min(t + (Time.deltaTime / fadeInTime), 1f));
@@ -53,6 +56,7 @@ public class UIFadeController : MonoBehaviour
             SetAlpha(texts, alpha);
             yield return null;
         }
+        
         SetAlpha(images, 1);
         SetAlpha(texts, 1);
     }
@@ -66,9 +70,14 @@ public class UIFadeController : MonoBehaviour
             SetAlpha(texts, alpha);
             yield return null;
         }
+        
         SetAlpha(images, 0);
         SetAlpha(texts, 0);
-        activeTarget.SetActive(false);
+        
+        foreach (var obj in activeTarget)
+        {
+            obj.SetActive(false);
+        }
     }
 
     private void SetAlpha<T>(List<T> objList, float alpha) where T : Component
