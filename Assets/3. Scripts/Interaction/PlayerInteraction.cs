@@ -37,8 +37,8 @@ namespace Interaction
                 .OrderBy(c => Vector3.Distance(transform.position, c.transform.position))
                 .FirstOrDefault();
 
-            if (closestInteractionTrigger == null 
-                || newClosestInteractionTrigger != closestInteractionTrigger)
+            if (newClosestInteractionTrigger != null 
+                && newClosestInteractionTrigger != closestInteractionTrigger)
             {
                 foreach (var trigger in interactionTriggers)
                 {
@@ -51,7 +51,11 @@ namespace Interaction
             if (PlayerController.Instance.InteractionInput)
             {
                 PlayerController.Instance.InteractionInput = false;
-                closestInteractionTrigger.Execute();
+                if (closestInteractionTrigger != null)
+                {
+                    closestInteractionTrigger.Execute();
+                    closestInteractionTrigger = null;
+                }
             }
         }
 

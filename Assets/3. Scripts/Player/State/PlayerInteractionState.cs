@@ -28,7 +28,7 @@ public class PlayerInteractionState : IState
     {
         player.Interaction.Enabled = false;
         // CameraZoomController.Instance.ZoomIn();
-        currentXAxis = CameraZoomController.Instance.GetXAxis();
+        currentXAxis = VirtualCameraController.Instance.GetXAxis();
         PlayCurrentNode();
     }
 
@@ -115,7 +115,7 @@ public class PlayerInteractionState : IState
     {
         if (lastestDialogueHandler != null)
         {
-            CameraZoomController.Instance.SetXAxis(lastestDialogueHandler.GetXAxis());
+            VirtualCameraController.Instance.SetXAxis(lastestDialogueHandler.GetXAxis());
             lastestDialogueHandler.DisableLookTarget();
         }
         

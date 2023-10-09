@@ -1,17 +1,16 @@
 using System.Collections;
-using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 
-public class CameraZoomController : MonoBehaviour
+public class VirtualCameraController : MonoBehaviour
 {
-    public static CameraZoomController Instance;
+    public static VirtualCameraController Instance;
     
     [SerializeField] private CinemachineFreeLook freeLookCamera;
     
-    [SerializeField] private float zoomInTime = 0.4f;
+    [SerializeField] private float zoomInTime = 0.5f;
     [SerializeField] private AnimationCurve ZoomInAccelerationCurve = new(new Keyframe(0, 0), new Keyframe(1, 1));
-    [SerializeField] private float zoomOutTime = 0.6f;
+    [SerializeField] private float zoomOutTime = 1f;
     
     [SerializeField] private AnimationCurve ZoomOutAccelerationCurve = new(new Keyframe(0, 0), new Keyframe(1, 1));
 
@@ -34,6 +33,17 @@ public class CameraZoomController : MonoBehaviour
     {
         if (freeLookCamera == null)
             return;
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player)
+        {
+            freeLookCamera.Follow = player.transform;
+            freeLookCamera.LookAt = player.transform;
+        }
+        else
+        {
+            Debug.LogWarning("Player object with 'Player' tag not found in the scene!");
+        }
         
         initialYAxisValue = freeLookCamera.m_YAxis.Value;
     }
