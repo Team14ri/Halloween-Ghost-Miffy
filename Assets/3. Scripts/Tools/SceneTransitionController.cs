@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SceneTransitionController : MonoBehaviour
 {
@@ -85,7 +86,7 @@ public class SceneTransitionController : MonoBehaviour
             transitionUI.sizeDelta = new Vector2(irisValue, irisValue);
             yield return null;
         }
-        transitionUI.sizeDelta = new Vector2(irisMaxValue, irisMaxValue);
+        transitionUI.sizeDelta = new Vector2(0, 0);
         action?.Invoke();
     }
 }
