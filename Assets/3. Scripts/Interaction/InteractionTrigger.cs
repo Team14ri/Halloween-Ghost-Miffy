@@ -31,9 +31,9 @@ namespace Interaction
             
             if (dialogueContainer != null)
             {
-                PlayerController.Instance.stateMachine.ChangeState(
+                PlayerController.Instance.StateMachine.ChangeState(
                     new PlayerInteractionState(PlayerController.Instance, 
-                        PlayerController.Instance.stateMachine, dialogueContainer));
+                        PlayerController.Instance.StateMachine, dialogueContainer));
             }
             events?.Invoke();
         }

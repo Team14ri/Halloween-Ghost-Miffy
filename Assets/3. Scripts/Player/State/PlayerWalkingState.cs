@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerWalkingState : IState
@@ -29,15 +30,26 @@ public class PlayerWalkingState : IState
 
         moveDirection.Normalize(); // 방향 벡터 정규화
 
-        Vector3 moveVelocity = moveDirection * 5f; // 하드 코딩 수정 필요: moveSpeed
-        player.Rb.velocity = new Vector3(moveVelocity.x, player.Rb.velocity.y, moveVelocity.z); // 플레이어의 Rigidbody에 속도 적용
-
+        Vector3 moveVelocity = moveDirection * player.data.MovementSpeed;
+        player.Rb.velocity = new Vector3(moveVelocity.x, player.Rb.velocity.y, moveVelocity.z);
         
         // 만약 움직임 입력이 없으면 Idle 상태로 전환
         if (player.MovementInput == Vector2.zero)
         {
             stateMachine.ChangeState(new PlayerIdleState(player, stateMachine));
+            return;
         }
+
+        if (player.MovementInput.x == 0f)
+            return;
+
+        float newScaleX = MathF.Abs(player.model.transform.localScale.x);
+        newScaleX *= player.MovementInput.x < 0f ? -1f : 1f;
+        
+        player.model.transform.localScale = new Vector3(
+            newScaleX, 
+            player.model.transform.localScale.y, 
+            player.model.transform.localScale.z);
     }
 
     public void Exit()
