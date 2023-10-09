@@ -14,7 +14,6 @@ public class PortalManager : MonoBehaviour
     {
         if (Instance != null)
         {
-            Debug.LogWarning("한 씬에 PortalManager가 여러 개 있어 삭제합니다.");
             Destroy(gameObject);
         }
         else

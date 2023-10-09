@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LocationPopupManager : MonoBehaviour
 {
@@ -11,13 +12,13 @@ public class LocationPopupManager : MonoBehaviour
     
     private TmpTextEditor _locationTmpTextEditor;
     private UIFadeController _locationFadeController;
-
+    
     private void Start()
     {
         _locationTmpTextEditor = locationUI.GetComponent<TmpTextEditor>();
         _locationFadeController = locationUI.GetComponent<UIFadeController>();
-        
-        Show();
+
+        SceneTransitionController.Instance.IrisOpen(Show);
     }
         
     public void Show()
