@@ -29,7 +29,7 @@ public class PlayerWalkingState : IState
 
         moveDirection.Normalize(); // 방향 벡터 정규화
 
-        Vector3 moveVelocity = moveDirection * 3.5f; // 하드 코딩 수정 필요: moveSpeed
+        Vector3 moveVelocity = moveDirection * 5f; // 하드 코딩 수정 필요: moveSpeed
         player.Rb.velocity = new Vector3(moveVelocity.x, player.Rb.velocity.y, moveVelocity.z); // 플레이어의 Rigidbody에 속도 적용
 
         
