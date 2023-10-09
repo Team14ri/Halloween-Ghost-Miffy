@@ -59,7 +59,7 @@ public class DynamicScaleTextbox : MonoBehaviour
         }
     }
 
-    public void AdjustSizeAndRestorePositions()
+    private void AdjustSizeAndRestorePositions()
     {
         // 크기 조절
         var newSize = textBox.GetRenderedValues(true) + sizeOffset;
