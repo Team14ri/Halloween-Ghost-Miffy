@@ -37,7 +37,17 @@ public class CameraZoomController : MonoBehaviour
         
         initialYAxisValue = freeLookCamera.m_YAxis.Value;
     }
+
+    public void SetXAxis(float xAxis)
+    {
+        freeLookCamera.m_XAxis.Value = xAxis;
+    } 
     
+    public float GetXAxis()
+    {
+        return freeLookCamera.m_XAxis.Value;
+    }
+
     public void ZoomIn()
     {
         if (freeLookCamera == null)

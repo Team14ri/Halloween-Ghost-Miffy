@@ -8,7 +8,7 @@ public class TmpTextEditor : MonoBehaviour
     public readonly Dictionary<string, TMP_Text> Texts = new();
     [SerializeField] private List<TMP_Text> textStructs = new();
 
-    private void Start()
+    private void Awake()
     {
         foreach (var text in textStructs)
         {
