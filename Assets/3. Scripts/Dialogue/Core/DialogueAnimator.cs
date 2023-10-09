@@ -92,7 +92,6 @@ namespace DS.Core
             _commands = commands;
             _originTextFontSize = _textBox.fontSize;
             HandleTextSpeedChange(DialogueUtility.TextAnimationSpeed["normal"]);
-            AppendToTextBox($"<size={_originTextFontSize}>");
         }
 
         private IEnumerator ExecuteCommand(DialogueUtility.Command command)
@@ -152,7 +151,7 @@ namespace DS.Core
         private void AppendToTextBox(string text)
         {
             _renderText += text;
-            _textBox.text = $"{_renderText}</size>";
+            _textBox.text = $"<size={_originTextFontSize}>{_renderText}</size>";
         }
 
         private void UpdateMeshInfo()

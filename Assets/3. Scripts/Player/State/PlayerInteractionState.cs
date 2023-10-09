@@ -84,7 +84,6 @@ public class PlayerInteractionState : IState
             case NodeTypes.NodeType.MultiChoice:
                 // player.StopInteractionInput = true;
                 var multiChoiceNodeData = nodeData as MultiChoiceNodeData;
-                
                 lastestDialogueHandler = DialogueManager.Instance.GetHandler(multiChoiceNodeData.TargetObjectID);
 
                 if (oldDialogueHandler != null)
