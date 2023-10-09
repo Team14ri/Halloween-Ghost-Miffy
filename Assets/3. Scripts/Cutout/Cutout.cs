@@ -8,6 +8,27 @@ public class Cutout : MonoBehaviour
     private RectTransform rectTransform;
     public float fadeSpeed = 1.0f;
     private Vector2 targetSize;
+    
+    public static Cutout instance { get; private set; }
+    
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.LogWarning("한 씬에 Cutout가 여러 개 있어 삭제합니다.");
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+
+            // 현재 GameObject의 부모인 Canvas도 DontDestroyOnLoad 설정
+            if (transform.parent != null)
+                DontDestroyOnLoad(transform.parent.gameObject);
+        }
+    }
+
 
     private void Start()
     {
@@ -21,27 +42,20 @@ public class Cutout : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            FadeOut();
+            StartCoroutine(FadeOutCoroutine());
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            FadeIn();
+            StartCoroutine(FadeInCoroutine());
         }
     }
 
-    public void FadeIn()
+    public IEnumerator FadeInCoroutine()
     {
-        StartCoroutine(FadeInCoroutine());
-    }
-
-    public void FadeOut()
-    {
-        StartCoroutine(FadeOutCoroutine());
-    }
-    
-    private IEnumerator FadeInCoroutine()
-    {
+        EnableAllChildren();
+        
         float elapsedTime = 0f;
+        rectTransform.sizeDelta = Vector2.zero;
         Vector2 startSize = rectTransform.sizeDelta;
 
         while (elapsedTime < 1.0f)
@@ -53,10 +67,11 @@ public class Cutout : MonoBehaviour
 
         // 오차 보정
         rectTransform.sizeDelta = targetSize;
+        
         DisableAllChildren();
     }
 
-    private IEnumerator FadeOutCoroutine()
+    public IEnumerator FadeOutCoroutine()
     {
         EnableAllChildren();
 
@@ -74,7 +89,7 @@ public class Cutout : MonoBehaviour
         rectTransform.sizeDelta = Vector2.zero;
     }
 
-    private void DisableAllChildren()
+    public void DisableAllChildren()
     {
         Transform parentTransform = transform;
 

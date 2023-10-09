@@ -26,8 +26,6 @@ public class SceneManagerCustom : MonoBehaviour
     // 씬 전환시 호출될 최종 함수
     public void LoadScene(string sceneName, int exitPortalNum)
     {
-        cutout.FadeOut();
-        
         // 기존 포탈 정보를 초기화
         PortalManager.instance.PortalDictionary.Clear();
         StartCoroutine(LoadSceneCoroutine(sceneName, exitPortalNum));
@@ -35,6 +33,8 @@ public class SceneManagerCustom : MonoBehaviour
     
     private IEnumerator LoadSceneCoroutine(string sceneName, int exitPortalNum)
     {
+        yield return StartCoroutine(cutout.FadeOutCoroutine());
+        
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 
         // 씬 로드가 완료될 때까지 대기
@@ -51,15 +51,24 @@ public class SceneManagerCustom : MonoBehaviour
             PortalManager.instance.TeleportPlayerToExitPortal(sceneName, exitPortalNum);
             
             FindCutout();
+            
+            yield return StartCoroutine(cutout.FadeInCoroutine());
         }
         else
         {
             Debug.LogError("씬 로드 중 예외 발생 또는 씬 활성화가 중지되었습니다.");
         }
+
+
     }
 
     private void FindCutout()
     {
         cutout = GameObject.FindObjectOfType<Cutout>();
+
+        if (cutout == null)
+        {
+            Debug.Log("Cutout 스크립트를 가진 객체를 찾지 못했습니다.");
+        }
     }
 }
