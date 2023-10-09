@@ -9,26 +9,19 @@ public class Cutout : MonoBehaviour
     public float fadeSpeed = 1.0f;
     private Vector2 targetSize;
     
-    public static Cutout instance { get; private set; }
-    
+    public bool isBlackout = false;
+
     private void Awake()
     {
-        if (instance != null)
+        if (isBlackout == true)
         {
-            Debug.LogWarning("한 씬에 Cutout가 여러 개 있어 삭제합니다.");
-            Destroy(this.gameObject);
+            EnableAllChildren();
         }
         else
         {
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
-
-            // 현재 GameObject의 부모인 Canvas도 DontDestroyOnLoad 설정
-            if (transform.parent != null)
-                DontDestroyOnLoad(transform.parent.gameObject);
+            DisableAllChildren();
         }
     }
-
 
     private void Start()
     {

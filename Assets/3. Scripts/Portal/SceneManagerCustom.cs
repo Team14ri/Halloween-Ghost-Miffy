@@ -51,7 +51,6 @@ public class SceneManagerCustom : MonoBehaviour
             PortalManager.instance.TeleportPlayerToExitPortal(sceneName, exitPortalNum);
             
             FindCutout();
-            
             yield return StartCoroutine(cutout.FadeInCoroutine());
         }
         else
