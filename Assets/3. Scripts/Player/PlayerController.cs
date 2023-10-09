@@ -1,3 +1,4 @@
+using Cinemachine;
 using Interaction;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -6,8 +7,10 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance;
+    public readonly StateMachine StateMachine = new();
 
-    public StateMachine stateMachine = new();
+    public PlayerData data;
+    public GameObject model;
     
     public Rigidbody Rb { get; private set; }
     public PlayerInteraction Interaction { get; private set; }
@@ -63,12 +66,12 @@ public class PlayerController : MonoBehaviour
         Rb = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
         Interaction = GetComponent<PlayerInteraction>();
-        stateMachine.ChangeState(new PlayerIdleState(this, stateMachine));
+        StateMachine.ChangeState(new PlayerIdleState(this, StateMachine));
     }
 
     private void Update()
     {
-        stateMachine.ExecuteCurrentState();
+        StateMachine.ExecuteCurrentState();
     }
 
     #endregion
