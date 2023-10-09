@@ -27,7 +27,7 @@ public class SceneManagerCustom : MonoBehaviour
     public void LoadScene(string sceneName, int exitPortalNum)
     {
         // 기존 포탈 정보를 초기화
-        PortalManager.instance.PortalDictionary.Clear();
+        PortalManager.Instance.PortalDictionary.Clear();
         StartCoroutine(LoadSceneCoroutine(sceneName, exitPortalNum));
     }
     
@@ -48,7 +48,7 @@ public class SceneManagerCustom : MonoBehaviour
         if (asyncLoad.isDone && asyncLoad.allowSceneActivation)
         {
             Debug.Log("씬 로드 완료");
-            PortalManager.instance.TeleportPlayerToExitPortal(sceneName, exitPortalNum);
+            PortalManager.Instance.TeleportPlayerToExitPortal(sceneName, exitPortalNum);
             
             FindCutout();
             yield return StartCoroutine(cutout.FadeInCoroutine());
