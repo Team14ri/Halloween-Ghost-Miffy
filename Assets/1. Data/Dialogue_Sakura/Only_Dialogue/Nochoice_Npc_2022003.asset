@@ -16,18 +16,32 @@ MonoBehaviour:
   - BaseNodeGuid: c2fe7e1c-764e-4f79-963b-db622296e973
     PortName: Execute
     TargetNodeGuid: 133e936e-2524-426c-b307-a2035d87633e
+  - BaseNodeGuid: 133e936e-2524-426c-b307-a2035d87633e
+    PortName: Next
+    TargetNodeGuid: 7595ba4a-995d-4fdf-ad4b-50d82670ff72
   NodeData:
-  - rid: 195164606552866885
+  - rid: 7667219173105468010
+  - rid: 7667219173105468011
   references:
     version: 2
     RefIds:
-    - rid: 195164606552866885
+    - rid: 7667219173105468010
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 133e936e-2524-426c-b307-a2035d87633e
         NodeTitle: NoChoice Node
         NodeType: 0
         Position: {x: 287, y: 200}
-        TargetObjectID: Npc_
-        DialogueText: "\uD638\uBC15\uAF43 \uC815\uB9D0 \uC544\uB984\uB2F5\uAD6C\uB098\u2026
-          \uD638\uBC15\uAF43 \uC232\uC5D0 \uAC00\uBD24\uB2C8?"
+        TargetObjectID: Sara
+        DialogueText: "\uD638\uBC15\uAF43\uC774 \uC815\uB9D0 \uC544\uB984\uB2F5\uAD6C\uB098\u2026\n<anim:wave>\uD638\uBC15\uAF43
+          \uC232\uC5D0 \uAC00\uBD24\uB2C8?</anim>"
+    - rid: 7667219173105468011
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 7595ba4a-995d-4fdf-ad4b-50d82670ff72
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 815, y: 213}
+        TargetObjectID: Sara
+        DialogueText: "\uC800\uAE30 \uC5B8\uB355 \uC704\uC5D0 \uC62C\uB77C\uAC00\uBA74
+          \uAC08 \uC218 \uC788\uC744\uAC70\uC57C.\r"
