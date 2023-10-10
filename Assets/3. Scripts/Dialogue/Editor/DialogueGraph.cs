@@ -120,7 +120,7 @@ namespace DS.Editor
             {
                 if (string.IsNullOrEmpty(_graphView.SaveDirectory))
                 {
-                    string fullPath = EditorUtility.SaveFilePanel("Dialogue Graph", "", "", "asset");
+                    string fullPath = EditorUtility.SaveFilePanel("Dialogue Graph", "/Assets", "", "asset");
                     _graphView.SaveDirectory = fullPath;
                 }
                 
@@ -145,7 +145,7 @@ namespace DS.Editor
                     }
                 }
                     
-                string fullPath = EditorUtility.OpenFilePanel("Dialogue Graph", "", "asset");
+                string fullPath = EditorUtility.OpenFilePanel("Dialogue Graph", "/Assets", "asset");
                 
                 if (string.IsNullOrEmpty(fullPath))
                     return;

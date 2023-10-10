@@ -6,7 +6,8 @@ namespace DS
         {
             NoChoice,
             MultiChoice,
-            StartQuest
+            StartQuest,
+            RandomChoice
         }
     }
 }
