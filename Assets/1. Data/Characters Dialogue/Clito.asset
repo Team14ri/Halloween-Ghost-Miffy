@@ -29,15 +29,15 @@ MonoBehaviour:
     PortName: Next
     TargetNodeGuid: 77719a22-9cef-4c13-a8ff-58af5238c1c5
   NodeData:
-  - rid: 7667219173105468079
-  - rid: 7667219173105468080
-  - rid: 7667219173105468081
-  - rid: 7667219173105468082
-  - rid: 7667219173105468083
+  - rid: 7667219173105468098
+  - rid: 7667219173105468099
+  - rid: 7667219173105468100
+  - rid: 7667219173105468101
+  - rid: 7667219173105468102
   references:
     version: 2
     RefIds:
-    - rid: 7667219173105468079
+    - rid: 7667219173105468098
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 349820da-f3d3-4bc0-a6cb-fbca74051831
@@ -45,8 +45,8 @@ MonoBehaviour:
         NodeType: 0
         Position: {x: 241, y: 200}
         TargetObjectID: Clito
-        DialogueText: ...
-    - rid: 7667219173105468080
+        DialogueText: "\uD751\uD751..."
+    - rid: 7667219173105468099
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 226707df-8d0d-4a71-b035-7b64e883c036
@@ -56,16 +56,7 @@ MonoBehaviour:
         TargetObjectID: Clito
         DialogueText: "\uD560\uB85C\uC708 \uCD95\uC81C\uC5D0 \uC8FC\uC778\uB2D8\uC774\uB791
           \uAC19\uC774 \uC654\uB294\uB370<speed:0.3>..."
-    - rid: 7667219173105468081
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: 99460f4b-be11-4951-8551-9cc6524485e2
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 1145, y: 198}
-        TargetObjectID: Miffy
-        DialogueText: "\uC654\uB294\uB370...?"
-    - rid: 7667219173105468082
+    - rid: 7667219173105468100
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: a16dfabe-e7df-4934-9734-3f24713054a1
@@ -73,13 +64,23 @@ MonoBehaviour:
         NodeType: 0
         Position: {x: 594, y: 455}
         TargetObjectID: Clito
-        DialogueText: "\uC8FC\uC778\uB2D8\uC744 \uC783\uC5B4\uBC84\uB838\uC9C0 \uBB50\uC57C.."
-    - rid: 7667219173105468083
+        DialogueText: "\uC8FC\uC778\uB2D8\uC744 <size:1>\uC783<size:0.9>\uC5B4<size:0.8>\uBC84<size:0.7>\uB838<size:0.6>\uC9C0
+          <size:0.5>\uBB50<size:0.4>\uC57C.."
+    - rid: 7667219173105468101
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 99460f4b-be11-4951-8551-9cc6524485e2
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1115, y: 80}
+        TargetObjectID: Miffy
+        DialogueText: "\uC654\uB294\uB370...?"
+    - rid: 7667219173105468102
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 77719a22-9cef-4c13-a8ff-58af5238c1c5
         NodeTitle: NoChoice Node
         NodeType: 0
-        Position: {x: 1037, y: 450}
+        Position: {x: 1107, y: 270}
         TargetObjectID: Clito
         DialogueText: "<size:3><anim:shake>\uD750</anim><size:2><anim:shake>\uC544</anim><size:1><anim:shake>\uC559~!</anim>"

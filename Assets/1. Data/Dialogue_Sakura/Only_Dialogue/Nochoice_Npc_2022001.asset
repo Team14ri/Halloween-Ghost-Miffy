@@ -16,18 +16,32 @@ MonoBehaviour:
   - BaseNodeGuid: c2fe7e1c-764e-4f79-963b-db622296e973
     PortName: Execute
     TargetNodeGuid: a1c18301-acb1-4376-bd88-166dbe1de5b0
+  - BaseNodeGuid: a1c18301-acb1-4376-bd88-166dbe1de5b0
+    PortName: Next
+    TargetNodeGuid: 379e91f5-fc70-4ab0-b832-bdb2ebd88af7
   NodeData:
-  - rid: 195164606552866883
+  - rid: 7667219173105468214
+  - rid: 7667219173105468215
   references:
     version: 2
     RefIds:
-    - rid: 195164606552866883
+    - rid: 7667219173105468214
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: a1c18301-acb1-4376-bd88-166dbe1de5b0
         NodeTitle: NoChoice Node
         NodeType: 0
         Position: {x: 242, y: 200}
-        TargetObjectID: Npc_
-        DialogueText: "\uC5B4\uBA38~ \uC2E0\uAE30\uD574\uB77C. \uC720\uB839 \uBD84\uC7A5\uC744
-          \uD55C \uC720\uC77C\uD55C \uC544\uC774\uAC00 \uB108\uAD6C\uB098?"
+        TargetObjectID: Sara
+        DialogueText: "\uC5B4\uBA38~ \uC2E0\uAE30\uD574\uB77C.\n\uC720\uC77C\uD558\uAC8C
+          \uC720\uB839 \uBD84\uC7A5\uC744 \uD55C\n\uC544\uC774\uAC00 \uB108\uAD6C\uB098?"
+    - rid: 7667219173105468215
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 379e91f5-fc70-4ab0-b832-bdb2ebd88af7
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 825, y: 197}
+        TargetObjectID: Sara
+        DialogueText: "\uC0DD\uAC01\uBCF4\uB2E4 \uBD84\uC7A5\uC774 \uC88B\uB124<speed:0.4>...?\r\n<speed:0.03>\uB9C8\uCE58
+          \uC9C4\uC9DC \uC720\uB839\uAC19\uC544~"
