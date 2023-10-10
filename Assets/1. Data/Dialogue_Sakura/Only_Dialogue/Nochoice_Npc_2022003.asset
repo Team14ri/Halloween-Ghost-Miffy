@@ -16,18 +16,85 @@ MonoBehaviour:
   - BaseNodeGuid: c2fe7e1c-764e-4f79-963b-db622296e973
     PortName: Execute
     TargetNodeGuid: 133e936e-2524-426c-b307-a2035d87633e
+  - BaseNodeGuid: 133e936e-2524-426c-b307-a2035d87633e
+    PortName: Next
+    TargetNodeGuid: 7595ba4a-995d-4fdf-ad4b-50d82670ff72
+  - BaseNodeGuid: 7595ba4a-995d-4fdf-ad4b-50d82670ff72
+    PortName: Next
+    TargetNodeGuid: 466a8455-411f-4def-ae05-dd0999622e15
+  - BaseNodeGuid: 466a8455-411f-4def-ae05-dd0999622e15
+    PortName: Next
+    TargetNodeGuid: ba172fc7-317b-4b61-b2c2-640abd8b3728
+  - BaseNodeGuid: 51519df8-2d6c-4c3e-88d2-28c68b7e044d
+    PortName: Next
+    TargetNodeGuid: 22b9baf3-a1b3-48e3-a122-7f7ef759b803
+  - BaseNodeGuid: ba172fc7-317b-4b61-b2c2-640abd8b3728
+    PortName: Next
+    TargetNodeGuid: 51519df8-2d6c-4c3e-88d2-28c68b7e044d
   NodeData:
-  - rid: 195164606552866885
+  - rid: 7667219180599902219
+  - rid: 7667219180599902220
+  - rid: 7667219180599902221
+  - rid: 7667219180599902222
+  - rid: 7667219180599902223
+  - rid: 7667219180599902224
   references:
     version: 2
     RefIds:
-    - rid: 195164606552866885
+    - rid: 7667219180599902219
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 133e936e-2524-426c-b307-a2035d87633e
         NodeTitle: NoChoice Node
         NodeType: 0
         Position: {x: 287, y: 200}
-        TargetObjectID: Npc_
-        DialogueText: "\uD638\uBC15\uAF43 \uC815\uB9D0 \uC544\uB984\uB2F5\uAD6C\uB098\u2026
-          \uD638\uBC15\uAF43 \uC232\uC5D0 \uAC00\uBD24\uB2C8?"
+        TargetObjectID: Ivy
+        DialogueText: "\uD638\uBC15\uAF43\uC774 \uC815\uB9D0 \uC544\uB984\uB2F5\uAD6C\uB098\n<anim:wave>\uD638\uBC15\uAF43
+          \uC232\uC5D0 \uAC00\uBD24\uB2C8?</anim>"
+    - rid: 7667219180599902220
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 7595ba4a-995d-4fdf-ad4b-50d82670ff72
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 815, y: 213}
+        TargetObjectID: Ivy
+        DialogueText: "\uC800\uAE30 \uC5B8\uB355 \uC704\uC5D0 \uC62C\uB77C\uAC00\uBA74\n\uAC08
+          \uC218 \uC788\uC744\uAC70\uC57C.\r"
+    - rid: 7667219180599902221
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 466a8455-411f-4def-ae05-dd0999622e15
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1197, y: 198}
+        TargetObjectID: Ivy
+        DialogueText: "\uD639\uC2DC \uD638\uBC15\uAF43\uC744 \uBCF4\uBA74\r\n\uD558\uB098\uB9CC
+          \uAC00\uC838\uB2E4 \uC904\uB798?"
+    - rid: 7667219180599902222
+      type: {class: StartQuestNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 22b9baf3-a1b3-48e3-a122-7f7ef759b803
+        NodeTitle: StartQuest Node
+        NodeType: 2
+        Position: {x: 1640, y: 264}
+        QuestType: SUB QUEST
+        QuestID: "\uC544\uC774\uBE44\uC5D0\uAC8C \uD638\uBC15\uAF43 \uAC00\uC838\uB2E4\uC8FC\uAE30"
+    - rid: 7667219180599902223
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 51519df8-2d6c-4c3e-88d2-28c68b7e044d
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1617, y: 582}
+        TargetObjectID: Ivy
+        DialogueText: "\uACE0\uB9C8\uC6CC!"
+    - rid: 7667219180599902224
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: ba172fc7-317b-4b61-b2c2-640abd8b3728
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1258, y: 540}
+        TargetObjectID: Miffy
+        DialogueText: "\uC54C\uACA0\uC5B4\uC694."
