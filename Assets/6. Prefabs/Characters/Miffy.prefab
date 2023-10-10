@@ -88,7 +88,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1858751259887675995}
   - component: {fileID: 1858751259887675992}
-  - component: {fileID: 1858751259887675993}
+  - component: {fileID: 1747516366298903303}
   m_Layer: 5
   m_Name: World Canvas
   m_TagString: Untagged
@@ -138,7 +138,7 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &1858751259887675993
+--- !u!114 &1747516366298903303
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,14 +147,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1858751259887675994}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f7557f01c519384cb8ea6ea02b6f460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 0
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
+  followX: 0
+  followY: 1
 --- !u!1 &1858751259938157170
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,6 +205,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f7557f01c519384cb8ea6ea02b6f460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  followX: 1
+  followY: 0
 --- !u!54 &1858751259938157175
 Rigidbody:
   m_ObjectHideFlags: 0

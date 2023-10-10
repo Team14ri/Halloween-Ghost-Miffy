@@ -429,6 +429,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f7557f01c519384cb8ea6ea02b6f460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  followX: 1
+  followY: 0
 --- !u!54 &8411994511950094300
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1546,6 +1548,10 @@ PrefabInstance:
     - target: {fileID: 6796724519612229064, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6927973776169438126, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8015745513838196644, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
       propertyPath: m_IsActive
