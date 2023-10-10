@@ -1,0 +1,217 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Quest_1-1
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: 7719c66a-e809-44b0-9156-d5723a0ed8a3
+    PortName: Execute
+    TargetNodeGuid: a03f7073-a7ca-4af7-9526-a440cc1ba8bb
+  - BaseNodeGuid: d04029e8-6d84-486b-bd7a-444759cf41d2
+    PortName: Next
+    TargetNodeGuid: 35635b5b-6c1b-4d81-9582-9fa8dcb82033
+  - BaseNodeGuid: 8109b731-33f3-4829-885c-980a7e70b44e
+    PortName: Next
+    TargetNodeGuid: d6548d1f-7209-431f-8d86-6d3ed6aa5e0d
+  - BaseNodeGuid: d6548d1f-7209-431f-8d86-6d3ed6aa5e0d
+    PortName: "\uC54C\uACA0\uC5B4"
+    TargetNodeGuid: d04029e8-6d84-486b-bd7a-444759cf41d2
+  - BaseNodeGuid: d6548d1f-7209-431f-8d86-6d3ed6aa5e0d
+    PortName: "\uC2EB\uC5B4"
+    TargetNodeGuid: 13fe4dc3-dcd4-4571-8bfb-4870dcd36f39
+  - BaseNodeGuid: 35635b5b-6c1b-4d81-9582-9fa8dcb82033
+    PortName: Next
+    TargetNodeGuid: 6a87e64e-11f4-48a1-9b4a-998656c28347
+  - BaseNodeGuid: a8149f60-8399-472c-9ddb-ce720e90e8a0
+    PortName: Next
+    TargetNodeGuid: 440746ee-55be-4c4d-929d-282daf992012
+  - BaseNodeGuid: 440746ee-55be-4c4d-929d-282daf992012
+    PortName: Next
+    TargetNodeGuid: b5d6cbd0-28c4-48f0-9be9-7c7f254a03b9
+  - BaseNodeGuid: 929d56c9-b5a0-4160-911c-207265d3ad16
+    PortName: "\uC870\uAE08 \uAC00\uC9C0\uACE0 \uC788\uC5B4"
+    TargetNodeGuid: d04029e8-6d84-486b-bd7a-444759cf41d2
+  - BaseNodeGuid: 929d56c9-b5a0-4160-911c-207265d3ad16
+    PortName: "\uC544\uB2C8..."
+    TargetNodeGuid: 8109b731-33f3-4829-885c-980a7e70b44e
+  - BaseNodeGuid: b5d6cbd0-28c4-48f0-9be9-7c7f254a03b9
+    PortName: Next
+    TargetNodeGuid: 0359baea-1b68-4947-a185-a0a3a1a4f120
+  - BaseNodeGuid: 0359baea-1b68-4947-a185-a0a3a1a4f120
+    PortName: Next
+    TargetNodeGuid: 66ee10eb-8d0c-467e-8aca-ff0bbc22e7b2
+  - BaseNodeGuid: 66ee10eb-8d0c-467e-8aca-ff0bbc22e7b2
+    PortName: Next
+    TargetNodeGuid: 02fb2486-f187-4c0f-83a8-5a9976440454
+  - BaseNodeGuid: a03f7073-a7ca-4af7-9526-a440cc1ba8bb
+    PortName: Next
+    TargetNodeGuid: a8149f60-8399-472c-9ddb-ce720e90e8a0
+  NodeData:
+  - rid: 5163360652114526448
+  - rid: 5163360652114526449
+  - rid: 5163360652114526450
+  - rid: 5163360652114526451
+  - rid: 5163360652114526452
+  - rid: 5163360652114526453
+  - rid: 5163360652114526454
+  - rid: 5163360652114526455
+  - rid: 5163360652114526456
+  - rid: 5163360652114526457
+  - rid: 5163360652114526458
+  - rid: 5163360652114526459
+  - rid: 5163360652114526460
+  - rid: 5163360652114526461
+  - rid: 5163360652114526462
+  references:
+    version: 2
+    RefIds:
+    - rid: 5163360652114526448
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: d04029e8-6d84-486b-bd7a-444759cf41d2
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1793, y: 150}
+        TargetObjectID: NPC_2
+        DialogueText: "\uACE0\uB9C8\uC6CC~"
+    - rid: 5163360652114526449
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 13fe4dc3-dcd4-4571-8bfb-4870dcd36f39
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1793, y: 341}
+        TargetObjectID: NPC_2
+        DialogueText: "\uC54C\uACA0\uC5B4. \n\uC2DC\uAC04\uB0B4\uC918\uC11C \uACE0\uB9C8\uC6CC"
+    - rid: 5163360652114526450
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 8109b731-33f3-4829-885c-980a7e70b44e
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1138, y: 317}
+        TargetObjectID: NPC_2
+        DialogueText: "\uC557.. \uADF8\uB807\uAD6C\uB098"
+    - rid: 5163360652114526451
+      type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: d6548d1f-7209-431f-8d86-6d3ed6aa5e0d
+        NodeTitle: MultiChoice Node
+        NodeType: 1
+        Position: {x: 1416, y: 317}
+        TargetObjectID: NPC_2
+        DialogueText: "\uD639\uC2DC \uB098\uC911\uC5D0 \uBA39\uC744 \uAC8C \uC0DD\uAE30\uBA74\n\uB098\uC5D0\uAC8C
+          \uB098\uB220\uC904 \uC218 \uC788\uC5B4?"
+    - rid: 5163360652114526452
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 35635b5b-6c1b-4d81-9582-9fa8dcb82033
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2052, y: 150}
+        TargetObjectID: NPC_2
+        DialogueText: "\uC55E\uC73C\uB85C\uB3C4 \uC885\uC885 \uBD80\uD0C1\uD560\uAED8"
+    - rid: 5163360652114526453
+      type: {class: StartQuestNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 6a87e64e-11f4-48a1-9b4a-998656c28347
+        NodeTitle: StartQuest Node
+        NodeType: 2
+        Position: {x: 2387, y: 150}
+        QuestType: MAIN
+        QuestID: Quest 1-2
+    - rid: 5163360652114526454
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: a03f7073-a7ca-4af7-9526-a440cc1ba8bb
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 233, y: 447}
+        TargetObjectID: NPC_2
+        DialogueText: "<size:1.5><anim:shake>\uD6C4</anim><size:1.25><anim:shake>\uC544</anim><size:1><anim:shake>\uC544!</anim>"
+    - rid: 5163360652114526455
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: a8149f60-8399-472c-9ddb-ce720e90e8a0
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1086, y: 540}
+        TargetObjectID: Player
+        DialogueText: "\uBB34\uC2A8 \uC77C \uC788\uC5B4?"
+    - rid: 5163360652114526456
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 440746ee-55be-4c4d-929d-282daf992012
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1389, y: 749}
+        TargetObjectID: NPC_2
+        DialogueText: "<speed:0.15>\uBC30.. <pause:0.2>\uACE0... <pause:0.2>\uD30C"
+    - rid: 5163360652114526457
+      type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 929d56c9-b5a0-4160-911c-207265d3ad16
+        NodeTitle: MultiChoice Node
+        NodeType: 1
+        Position: {x: 233, y: 150}
+        TargetObjectID: NPC_2
+        DialogueText: "<speed:0.03><size:1.5><anim:shake>\uD6C4</anim><size:1.25><anim:shake>\uC544</anim><size:1><anim:shake>\uC544!</anim>\n<pause:0.3><speed:0.15>\uBC30..
+          \uACE0... \uD30C<pause:0.5><speed:0.05>\n\uB108.. <pause:0.2>\uD639\uC2DC....
+          <pause:0.24><anim:wave>\uBA39\uC744 \uAC83</anim> \uC880 \uC788\uC5B4?"
+    - rid: 5163360652114526458
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: cb0b7e43-4666-4720-8fd7-54de3dc4589e
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1389, y: 540}
+        TargetObjectID: NPC_2
+        DialogueText: "\uC557.. \uADF8\uB807\uAD6C\uB098"
+    - rid: 5163360652114526459
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: b5d6cbd0-28c4-48f0-9be9-7c7f254a03b9
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1889, y: 540}
+        TargetObjectID: NPC_2
+        DialogueText: "\uB108.. <pause:0.15>\uD639\uC2DC.... <pause:0.2><size:1.3>\uD638\uBC15\uC8FC\uC2A4<size:1>
+          \uC880 \uC788\uC5B4?"
+    - rid: 5163360652114526460
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 0359baea-1b68-4947-a185-a0a3a1a4f120
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2515, y: 540}
+        TargetObjectID: Player
+        DialogueText: "\uBBF8\uC548... \uC9C0\uAE08\uC740 \uC5C6\uC5B4"
+    - rid: 5163360652114526461
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 66ee10eb-8d0c-467e-8aca-ff0bbc22e7b2
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2818, y: 540}
+        TargetObjectID: NPC_2
+        DialogueText: "\uADF8\uB7FC \uB098\uC911\uC5D0 <size:1.5><size:1.3>\uD638\uBC15\uC8FC\uC2A4<size:1>\uAC00\n\uC0DD\uAE30\uBA74
+          \uB098\uC5D0\uAC8C \uAC74\uB124\uC918~"
+    - rid: 5163360652114526462
+      type: {class: StartQuestNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 02fb2486-f187-4c0f-83a8-5a9976440454
+        NodeTitle: StartQuest Node
+        NodeType: 2
+        Position: {x: 3321, y: 540}
+        QuestType: MAIN
+        QuestID: "<color=yellow>NPC_2</color>\uC5D0\uAC8C \uD638\uBC15\uC8FC\uC2A4
+          \uAC74\uB124\uAE30"
