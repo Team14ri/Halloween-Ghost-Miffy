@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Shader Graphs_Sprite Shadow
-  m_Shader: {fileID: -6465566751694194690, guid: 6c156c7b12b6d8c4bb269757cb68a503, type: 3}
+  m_Shader: {fileID: 4800000, guid: 555f1823cb79c6345ab062662fb07d16, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 2
@@ -51,7 +51,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AlphaCutoff: 0.5
+    - _Intensity: 0.92
+    - _NoisePower: 0
+    - _NoiseScale: 7
+    - _Opacity: 1
+    - _PannerSpeed: 0.1
     - _QueueControl: 0
     - _QueueOffset: 0
-    m_Colors: []
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 0}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
