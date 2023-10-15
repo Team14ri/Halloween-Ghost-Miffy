@@ -34,7 +34,7 @@ public class VirtualCameraController : MonoBehaviour
         if (freeLookCamera == null)
             return;
 
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        GameObject player = GameObject.FindGameObjectWithTag("PlayerViewPoint");
         if (player)
         {
             freeLookCamera.Follow = player.transform;
