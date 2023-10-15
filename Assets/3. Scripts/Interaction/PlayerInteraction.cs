@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -9,6 +10,7 @@ namespace Interaction
 {
     public class PlayerInteraction : MonoBehaviour
     {
+        [SerializeField] private float interactionDelay = 0.8f;
         [SerializeField] private List<InteractionTrigger> interactionTriggers = new();
 
         public bool Enabled { get; set; }
@@ -59,7 +61,18 @@ namespace Interaction
             }
         }
 
-        private void OnTriggerEnter(Collider other)
+        private IEnumerator SetInteractionEnable(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            Enabled = true;
+        }
+        
+        public void SetInteractionEnableAfterDelay()
+        {
+            StartCoroutine(SetInteractionEnable(interactionDelay));
+        }
+
+       private void OnTriggerEnter(Collider other)
         {
             var interactionTrigger = other.GetComponent<InteractionTrigger>();
             
