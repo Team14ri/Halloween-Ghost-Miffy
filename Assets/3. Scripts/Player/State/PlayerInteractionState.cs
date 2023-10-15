@@ -47,6 +47,11 @@ public class PlayerInteractionState : IState
     {
         if (!DialogueManager.Instance.CheckDialogueEnd())
         {
+            var nodeData = dialogueFlow.GetCurrentNodeData();
+            if (nodeData.NodeType == NodeTypes.NodeType.NoChoice
+                && (nodeData as NoChoiceNodeData).SkipDelay < 0f)
+                return;
+            
             action?.Invoke(true);
             return;
         }
@@ -83,9 +88,9 @@ public class PlayerInteractionState : IState
                 lastestDialogueHandler.LookTarget(currentXAxis);
                 lastestDialogueHandler.PlayDialogue(noChoiceNodeData.DialogueText, skipTyping);
 
-                if (skipTyping == false)
+                if (skipTyping == false && noChoiceNodeData.SkipDelay >= 0f)
                 {
-                    player.StopInteractionInputUntil(0.5f);
+                    player.StopInteractionInputUntil(noChoiceNodeData.SkipDelay);
                 }
                 break;
             case NodeTypes.NodeType.MultiChoice:

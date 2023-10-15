@@ -116,7 +116,8 @@ namespace DS.Editor
                             NodeType = noChoiceNode.NodeType,
                             Position = noChoiceNode.GetPosition().position,
                             TargetObjectID = noChoiceNode.TargetObjectID,
-                            DialogueText = noChoiceNode.DialogueText
+                            DialogueText = noChoiceNode.DialogueText,
+                            SkipDelay = noChoiceNode.SkipDelay
                         });
                         break;
                     case NodeTypes.NodeType.MultiChoice:
@@ -220,6 +221,7 @@ namespace DS.Editor
             tempNode.GUID = nodeData.GUID;
             tempNode.TargetObjectID = nodeData.TargetObjectID;
             tempNode.DialogueText = nodeData.DialogueText;
+            tempNode.SkipDelay = nodeData.SkipDelay;
             _targetGraphView.AddElement(tempNode);
         }
 
