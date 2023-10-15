@@ -3,7 +3,7 @@ using Interaction;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody), typeof(PlayerInput), typeof(PlayerInteraction))]
+[RequireComponent(typeof(Rigidbody), typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance;
@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
     {
         Rb = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
-        Interaction = GetComponent<PlayerInteraction>();
+        Interaction = GetComponentInChildren<PlayerInteraction>();
         StateMachine.ChangeState(new PlayerIdleState(this, StateMachine));
     }
 
