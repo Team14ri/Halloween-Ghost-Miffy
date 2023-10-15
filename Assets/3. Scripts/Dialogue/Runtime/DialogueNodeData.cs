@@ -35,6 +35,7 @@ namespace DS.Runtime
     {
         public string TargetObjectID;
         public string DialogueText;
+        public float SkipDelay;
 
         public override bool IsEqual(DialogueNodeData other)
         {
@@ -47,6 +48,9 @@ namespace DS.Runtime
                 return false;
             
             if (DialogueText != otherNode.DialogueText)
+                return false;
+            
+            if (!Mathf.Approximately(SkipDelay, otherNode.SkipDelay)) 
                 return false;
             
             return true;

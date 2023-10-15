@@ -72,6 +72,11 @@ TextField
     padding: 4px;
 }
 
+FloatField
+{
+    padding: 4px;
+}
+
 Button
 {
     background-color: #252729;
@@ -96,7 +101,16 @@ Button:active
     padding: 4px;
 }
 
+.unity-float-field__label {
+    padding: 4px;
+}
+
 TextField:focus > .unity-text-field__label
+{
+    color: #FDD057;
+}
+
+FloatField:focus > .unity-float-field__label
 {
     color: #FDD057;
 }
@@ -112,7 +126,23 @@ TextField:focus > .unity-text-field__label
     padding-right: 3px;
 }
 
+.unity-float-field__input
+{
+    background-color: #1D1D1E;
+    border-color: #27292C;
+    border-radius: 4px;
+    max-height: 35px;
+    min-width: 30px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
 .unity-text-field__input:focus
+{
+    color: #FDD057;
+}
+
+.unity-float-field__input:focus
 {
     color: #FDD057;
 }

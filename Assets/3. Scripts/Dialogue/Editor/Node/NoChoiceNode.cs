@@ -1,6 +1,8 @@
 using System;
+using System.Globalization;
 using System.Linq;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -38,6 +40,19 @@ namespace DS.Editor
                     _dialogueTextField.SetValueWithoutNotify(value);
             }
         }
+        
+        private FloatField _skipDelayTextField;
+        private float _skipDelay;
+        public float SkipDelay
+        {
+            get => _skipDelay;
+            set
+            {
+                _skipDelay = value;
+                if (_skipDelayTextField != null)
+                    _skipDelayTextField.SetValueWithoutNotify(value);
+            }
+        }
 
         #endregion
 
@@ -66,6 +81,7 @@ namespace DS.Editor
             AddTitleTextField();
             AddTargetObjectIDTextField();
             AddDialogueTextField();
+            AddSkipDelayTextField();
 
             RefreshExpandedState();
             RefreshPorts();
@@ -112,6 +128,18 @@ namespace DS.Editor
             _dialogueTextField.SetValueWithoutNotify(DialogueText ?? string.Empty);
             _dialogueTextField.AddToClassList("DialogueText-textfield");
             mainContainer.Add(_dialogueTextField);
+        }
+        
+        private void AddSkipDelayTextField()
+        {
+            _skipDelayTextField = new FloatField("Skip Delay");
+            _skipDelayTextField.RegisterValueChangedCallback(evt => 
+            {
+                SkipDelay = evt.newValue;
+            });
+            _skipDelayTextField.SetValueWithoutNotify(_skipDelay);
+            _skipDelayTextField.AddToClassList("SkipDelay-textfield");
+            mainContainer.Add(_skipDelayTextField);
         }
     }
 }

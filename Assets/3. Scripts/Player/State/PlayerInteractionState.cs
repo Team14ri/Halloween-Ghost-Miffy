@@ -1,9 +1,11 @@
 using System;
+using System.Collections;
 using Cinemachine;
 using DS;
 using DS.Core;
 using DS.Runtime;
 using Quest;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
 public class PlayerInteractionState : IState
@@ -45,6 +47,11 @@ public class PlayerInteractionState : IState
     {
         if (!DialogueManager.Instance.CheckDialogueEnd())
         {
+            var nodeData = dialogueFlow.GetCurrentNodeData();
+            if (nodeData.NodeType == NodeTypes.NodeType.NoChoice
+                && (nodeData as NoChoiceNodeData).SkipDelay < 0f)
+                return;
+            
             action?.Invoke(true);
             return;
         }
@@ -80,6 +87,11 @@ public class PlayerInteractionState : IState
                 
                 lastestDialogueHandler.LookTarget(currentXAxis);
                 lastestDialogueHandler.PlayDialogue(noChoiceNodeData.DialogueText, skipTyping);
+
+                if (skipTyping == false && noChoiceNodeData.SkipDelay >= 0f)
+                {
+                    player.StopInteractionInputUntil(noChoiceNodeData.SkipDelay);
+                }
                 break;
             case NodeTypes.NodeType.MultiChoice:
                 // player.StopInteractionInput = true;
@@ -118,7 +130,7 @@ public class PlayerInteractionState : IState
             lastestDialogueHandler.DisableLookTarget();
         }
         
-        player.Interaction.Enabled = true;
+        player.Interaction.SetInteractionEnableAfterDelay();
         // CameraZoomController.Instance.ZoomOut();
         DialogueManager.Instance.StopDialogue();
     }

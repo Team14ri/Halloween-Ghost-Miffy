@@ -1,3 +1,4 @@
+using System.Collections;
 using Cinemachine;
 using Interaction;
 using UnityEngine;
@@ -88,6 +89,18 @@ public class PlayerController : MonoBehaviour
         {
             playerInput.actions[actionName].Disable();
         }
+    }
+    
+    private IEnumerator _StopInteractionInputUntil(float delay)
+    {
+        StopInteractionInput = true;
+        yield return new WaitForSeconds(delay);
+        StopInteractionInput = false;
+    }
+    
+    public void StopInteractionInputUntil(float delay)
+    {
+        StartCoroutine(_StopInteractionInputUntil(delay));
     }
 
     #endregion
