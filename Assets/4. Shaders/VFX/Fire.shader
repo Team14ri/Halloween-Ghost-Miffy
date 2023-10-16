@@ -2828,10 +2828,10 @@ Node;AmplifyShaderEditor.RangedFloatNode;100;-224.1371,463.1514;Inherit;False;Co
 Node;AmplifyShaderEditor.DepthFade;97;-392.6533,543.6927;Inherit;False;True;True;True;2;1;FLOAT3;0,0,0;False;0;FLOAT;1;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;98;-542.9689,549.4713;Inherit;False;Property;_DepthFade;Depth Fade;9;0;Create;True;0;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.TextureCoordinatesNode;101;-2715.164,408.4459;Inherit;False;0;-1;4;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.RangedFloatNode;15;-2686.641,301.7862;Inherit;False;Property;_VoronoiScale01;Voronoi Scale01;6;0;Create;True;0;0;0;False;0;False;5;5;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.ToggleSwitchNode;102;-2495.768,302.2862;Inherit;False;Property;_UseCustomDataVoronoiScale01;Use Custom Data (Voronoi Scale01);11;0;Create;True;0;0;0;False;0;False;0;True;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.ToggleSwitchNode;103;-2321.223,531.3812;Inherit;False;Property;_UseCustomDataNoiseScale;Use Custom Data (Noise Scale);12;0;Create;True;0;0;0;False;0;False;0;True;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;38;-2489.646,470.2702;Inherit;False;Property;_NoiseScale;Noise Scale;5;0;Create;True;0;0;0;False;0;False;3;3;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;15;-2686.641,301.7862;Inherit;False;Property;_VoronoiScale01;Voronoi Scale01;6;0;Create;True;0;0;0;False;0;False;5;5;0;0;0;1;FLOAT;0
 WireConnection;52;0;53;0
 WireConnection;52;2;54;0
 WireConnection;40;0;11;0
@@ -2878,4 +2878,4 @@ WireConnection;102;1;101;3
 WireConnection;103;0;38;0
 WireConnection;103;1;101;4
 ASEEND*/
-//CHKSM=2566D1EE04F8FBE791FDDB5A3402654F2F280E8B
+//CHKSM=7478822A9C6FCC0D8EE18F9AC0E1D26EA723CA84

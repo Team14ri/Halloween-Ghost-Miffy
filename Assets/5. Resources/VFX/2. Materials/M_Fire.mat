@@ -10,7 +10,10 @@ Material:
   m_Name: M_Fire
   m_Shader: {fileID: 4800000, guid: cc04ede4a37858b47a5318f5eca55967, type: 3}
   m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _USECUSTOMDATANOISESCALE_ON
+  - _USECUSTOMDATAVORONOISCALE01_ON
+  - _USEDEPTHFADE_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -21,7 +24,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 569cf5290ee53184e8d7beea1b974780, type: 3}
+        m_Texture: {fileID: 2800000, guid: b7857f672b5ea834a91d7d4e6f177314, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -39,18 +42,21 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaCutoff: 0.5
-    - _DepthFade: 0.1
+    - _DepthFade: 0.05
     - _DepthFadeDistance: 0.1
-    - _MaskPowerV: 4.5
+    - _MaskPowerV: 4
     - _NoiseScale: 3
-    - _NoiseStrong: 100
+    - _NoiseStrong: 50
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _UseCustomDataNoiseScale: 1
+    - _UseCustomDataVoronoiScale01: 1
+    - _UseDepthFade: 1
     - _VoronoiAngle: 2
     - _VoronoiScale01: 5
-    - _VoronoiScale02: 3.5
+    - _VoronoiScale02: 3
     m_Colors:
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _PannerSpeed: {r: 0, g: -1, b: 0, a: 0}
-    - _TextureColor: {r: 2, g: 2, b: 2, a: 1}
+    - _TextureColor: {r: 3.9999995, g: 3.9999995, b: 3.9999995, a: 1}
   m_BuildTextureStacks: []
