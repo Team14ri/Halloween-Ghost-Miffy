@@ -15,8 +15,10 @@ Shader "Fire"
 		_VoronoiScale01("Voronoi Scale01", Float) = 5
 		_VoronoiScale02("Voronoi Scale02", Float) = 3.5
 		_MaskPowerV("Mask Power V", Float) = 4.5
-		_DepthFadeDistance("Depth Fade Distance", Float) = 0.1
-		[ASEEnd]_DepthFade("Depth Fade", Float) = 1
+		_DepthFade("Depth Fade", Float) = 1
+		[Toggle]_UseDepthFade("Use Depth Fade", Float) = 0
+		[Toggle]_UseCustomDataVoronoiScale01("Use Custom Data (Voronoi Scale01)", Float) = 0
+		[ASEEnd][Toggle]_UseCustomDataNoiseScale("Use Custom Data (Noise Scale)", Float) = 0
 
 
 		//_TessPhongStrength( "Tess Phong Strength", Range( 0, 1 ) ) = 0.5
@@ -165,7 +167,7 @@ Shader "Fire"
 			Name "Forward"
 			Tags { "LightMode"="UniversalForwardOnly" }
 
-			Blend One One, One OneMinusSrcAlpha
+			Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
 			ZWrite Off
 			ZTest LEqual
 			Offset 0 , 0
@@ -230,8 +232,8 @@ Shader "Fire"
 				#ifdef ASE_FOG
 					float fogFactor : TEXCOORD2;
 				#endif
-				float4 ase_texcoord3 : TEXCOORD3;
 				float4 ase_color : COLOR;
+				float4 ase_texcoord3 : TEXCOORD3;
 				float4 ase_texcoord4 : TEXCOORD4;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
@@ -240,13 +242,15 @@ Shader "Fire"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _TextureColor;
 			float2 _PannerSpeed;
-			float _DepthFadeDistance;
+			float _UseCustomDataVoronoiScale01;
 			float _VoronoiScale01;
 			float _VoronoiAngle;
 			float _VoronoiScale02;
+			float _UseCustomDataNoiseScale;
 			float _NoiseScale;
 			float _MaskPowerV;
 			float _NoiseStrong;
+			float _UseDepthFade;
 			float _DepthFade;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -258,8 +262,8 @@ Shader "Fire"
 			#endif
 			CBUFFER_END
 
-			uniform float4 _CameraDepthTexture_TexelSize;
 			sampler2D _MainTex;
+			uniform float4 _CameraDepthTexture_TexelSize;
 
 
 					float2 voronoihash11( float2 p )
@@ -366,13 +370,10 @@ Shader "Fire"
 
 				float4 ase_clipPos = TransformObjectToHClip((v.vertex).xyz);
 				float4 screenPos = ComputeScreenPos(ase_clipPos);
-				o.ase_texcoord3 = screenPos;
+				o.ase_texcoord4 = screenPos;
 				
 				o.ase_color = v.ase_color;
-				o.ase_texcoord4.xy = v.ase_texcoord.xy;
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord4.zw = 0;
+				o.ase_texcoord3 = v.ase_texcoord;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -515,17 +516,14 @@ Shader "Fire"
 					#endif
 				#endif
 
-				float4 screenPos = IN.ase_texcoord3;
-				float4 ase_screenPosNorm = screenPos / screenPos.w;
-				ase_screenPosNorm.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm.z : ase_screenPosNorm.z * 0.5 + 0.5;
-				float screenDepth88 = LinearEyeDepth(SHADERGRAPH_SAMPLE_SCENE_DEPTH( ase_screenPosNorm.xy ),_ZBufferParams);
-				float distanceDepth88 = saturate( abs( ( screenDepth88 - LinearEyeDepth( ase_screenPosNorm.z,_ZBufferParams ) ) / ( _DepthFadeDistance ) ) );
+				float4 texCoord101 = IN.ase_texcoord3;
+				texCoord101.xy = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
 				float mulTime69 = _TimeParameters.x * _VoronoiAngle;
 				float time11 = mulTime69;
 				float2 voronoiSmoothId11 = 0;
-				float2 texCoord53 = IN.ase_texcoord4.xy * float2( 1,1 ) + float2( 0,0 );
+				float2 texCoord53 = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
 				float2 panner52 = ( 1.0 * _Time.y * _PannerSpeed + texCoord53);
-				float2 coords11 = panner52 * _VoronoiScale01;
+				float2 coords11 = panner52 * (( _UseCustomDataVoronoiScale01 )?( texCoord101.z ):( _VoronoiScale01 ));
 				float2 id11 = 0;
 				float2 uv11 = 0;
 				float voroi11 = voronoi11( coords11, time11, id11, uv11, 0, voronoiSmoothId11 );
@@ -535,19 +533,22 @@ Shader "Fire"
 				float2 id33 = 0;
 				float2 uv33 = 0;
 				float voroi33 = voronoi33( coords33, time33, id33, uv33, 0, voronoiSmoothId33 );
-				float simplePerlin2D35 = snoise( panner52*_NoiseScale );
+				float simplePerlin2D35 = snoise( panner52*(( _UseCustomDataNoiseScale )?( texCoord101.w ):( _NoiseScale )) );
 				simplePerlin2D35 = simplePerlin2D35*0.5 + 0.5;
-				float2 texCoord61 = IN.ase_texcoord4.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 texCoord60 = IN.ase_texcoord4.xy * float2( 1,1 ) + float2( 0,0 );
+				float2 texCoord61 = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
+				float2 texCoord60 = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
 				float4 tex2DNode89 = tex2D( _MainTex, ( saturate( ( ( ( ( voroi11 * voroi33 ) * pow( simplePerlin2D35 , 1.0 ) ) * pow( texCoord61.y , _MaskPowerV ) ) * _NoiseStrong ) ) + texCoord60 ) );
 				
+				float4 screenPos = IN.ase_texcoord4;
+				float4 ase_screenPosNorm = screenPos / screenPos.w;
+				ase_screenPosNorm.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm.z : ase_screenPosNorm.z * 0.5 + 0.5;
 				float screenDepth97 = LinearEyeDepth(SHADERGRAPH_SAMPLE_SCENE_DEPTH( ase_screenPosNorm.xy ),_ZBufferParams);
 				float distanceDepth97 = saturate( abs( ( screenDepth97 - LinearEyeDepth( ase_screenPosNorm.z,_ZBufferParams ) ) / ( _DepthFade ) ) );
 				
 				float3 BakedAlbedo = 0;
 				float3 BakedEmission = 0;
-				float3 Color = ( distanceDepth88 * ( IN.ase_color * tex2DNode89 * _TextureColor ) ).rgb;
-				float Alpha = ( IN.ase_color.a * saturate( ( tex2DNode89.r * 2.0 ) ) * distanceDepth97 );
+				float3 Color = ( IN.ase_color * tex2DNode89 * _TextureColor ).rgb;
+				float Alpha = ( IN.ase_color.a * saturate( ( tex2DNode89.r * 2.0 ) ) * (( _UseDepthFade )?( distanceDepth97 ):( 1.0 )) );
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -638,13 +639,15 @@ Shader "Fire"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _TextureColor;
 			float2 _PannerSpeed;
-			float _DepthFadeDistance;
+			float _UseCustomDataVoronoiScale01;
 			float _VoronoiScale01;
 			float _VoronoiAngle;
 			float _VoronoiScale02;
+			float _UseCustomDataNoiseScale;
 			float _NoiseScale;
 			float _MaskPowerV;
 			float _NoiseStrong;
+			float _UseDepthFade;
 			float _DepthFade;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -770,10 +773,7 @@ Shader "Fire"
 				o.ase_texcoord3 = screenPos;
 				
 				o.ase_color = v.ase_color;
-				o.ase_texcoord2.xy = v.ase_texcoord.xy;
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord2.zw = 0;
+				o.ase_texcoord2 = v.ase_texcoord;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -927,12 +927,14 @@ Shader "Fire"
 					#endif
 				#endif
 
+				float4 texCoord101 = IN.ase_texcoord2;
+				texCoord101.xy = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
 				float mulTime69 = _TimeParameters.x * _VoronoiAngle;
 				float time11 = mulTime69;
 				float2 voronoiSmoothId11 = 0;
 				float2 texCoord53 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
 				float2 panner52 = ( 1.0 * _Time.y * _PannerSpeed + texCoord53);
-				float2 coords11 = panner52 * _VoronoiScale01;
+				float2 coords11 = panner52 * (( _UseCustomDataVoronoiScale01 )?( texCoord101.z ):( _VoronoiScale01 ));
 				float2 id11 = 0;
 				float2 uv11 = 0;
 				float voroi11 = voronoi11( coords11, time11, id11, uv11, 0, voronoiSmoothId11 );
@@ -942,7 +944,7 @@ Shader "Fire"
 				float2 id33 = 0;
 				float2 uv33 = 0;
 				float voroi33 = voronoi33( coords33, time33, id33, uv33, 0, voronoiSmoothId33 );
-				float simplePerlin2D35 = snoise( panner52*_NoiseScale );
+				float simplePerlin2D35 = snoise( panner52*(( _UseCustomDataNoiseScale )?( texCoord101.w ):( _NoiseScale )) );
 				simplePerlin2D35 = simplePerlin2D35*0.5 + 0.5;
 				float2 texCoord61 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
 				float2 texCoord60 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
@@ -954,7 +956,7 @@ Shader "Fire"
 				float distanceDepth97 = saturate( abs( ( screenDepth97 - LinearEyeDepth( ase_screenPosNorm.z,_ZBufferParams ) ) / ( _DepthFade ) ) );
 				
 
-				float Alpha = ( IN.ase_color.a * saturate( ( tex2DNode89.r * 2.0 ) ) * distanceDepth97 );
+				float Alpha = ( IN.ase_color.a * saturate( ( tex2DNode89.r * 2.0 ) ) * (( _UseDepthFade )?( distanceDepth97 ):( 1.0 )) );
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -1031,13 +1033,15 @@ Shader "Fire"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _TextureColor;
 			float2 _PannerSpeed;
-			float _DepthFadeDistance;
+			float _UseCustomDataVoronoiScale01;
 			float _VoronoiScale01;
 			float _VoronoiAngle;
 			float _VoronoiScale02;
+			float _UseCustomDataNoiseScale;
 			float _NoiseScale;
 			float _MaskPowerV;
 			float _NoiseStrong;
+			float _UseDepthFade;
 			float _DepthFade;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -1160,10 +1164,7 @@ Shader "Fire"
 				o.ase_texcoord3 = screenPos;
 				
 				o.ase_color = v.ase_color;
-				o.ase_texcoord2.xy = v.ase_texcoord.xy;
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord2.zw = 0;
+				o.ase_texcoord2 = v.ase_texcoord;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -1300,12 +1301,14 @@ Shader "Fire"
 					#endif
 				#endif
 
+				float4 texCoord101 = IN.ase_texcoord2;
+				texCoord101.xy = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
 				float mulTime69 = _TimeParameters.x * _VoronoiAngle;
 				float time11 = mulTime69;
 				float2 voronoiSmoothId11 = 0;
 				float2 texCoord53 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
 				float2 panner52 = ( 1.0 * _Time.y * _PannerSpeed + texCoord53);
-				float2 coords11 = panner52 * _VoronoiScale01;
+				float2 coords11 = panner52 * (( _UseCustomDataVoronoiScale01 )?( texCoord101.z ):( _VoronoiScale01 ));
 				float2 id11 = 0;
 				float2 uv11 = 0;
 				float voroi11 = voronoi11( coords11, time11, id11, uv11, 0, voronoiSmoothId11 );
@@ -1315,7 +1318,7 @@ Shader "Fire"
 				float2 id33 = 0;
 				float2 uv33 = 0;
 				float voroi33 = voronoi33( coords33, time33, id33, uv33, 0, voronoiSmoothId33 );
-				float simplePerlin2D35 = snoise( panner52*_NoiseScale );
+				float simplePerlin2D35 = snoise( panner52*(( _UseCustomDataNoiseScale )?( texCoord101.w ):( _NoiseScale )) );
 				simplePerlin2D35 = simplePerlin2D35*0.5 + 0.5;
 				float2 texCoord61 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
 				float2 texCoord60 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
@@ -1327,7 +1330,7 @@ Shader "Fire"
 				float distanceDepth97 = saturate( abs( ( screenDepth97 - LinearEyeDepth( ase_screenPosNorm.z,_ZBufferParams ) ) / ( _DepthFade ) ) );
 				
 
-				float Alpha = ( IN.ase_color.a * saturate( ( tex2DNode89.r * 2.0 ) ) * distanceDepth97 );
+				float Alpha = ( IN.ase_color.a * saturate( ( tex2DNode89.r * 2.0 ) ) * (( _UseDepthFade )?( distanceDepth97 ):( 1.0 )) );
 				float AlphaClipThreshold = 0.5;
 
 				#ifdef _ALPHATEST_ON
@@ -1398,13 +1401,15 @@ Shader "Fire"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _TextureColor;
 			float2 _PannerSpeed;
-			float _DepthFadeDistance;
+			float _UseCustomDataVoronoiScale01;
 			float _VoronoiScale01;
 			float _VoronoiAngle;
 			float _VoronoiScale02;
+			float _UseCustomDataNoiseScale;
 			float _NoiseScale;
 			float _MaskPowerV;
 			float _NoiseStrong;
+			float _UseDepthFade;
 			float _DepthFade;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -1538,10 +1543,7 @@ Shader "Fire"
 				o.ase_texcoord1 = screenPos;
 				
 				o.ase_color = v.ase_color;
-				o.ase_texcoord.xy = v.ase_texcoord.xy;
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord.zw = 0;
+				o.ase_texcoord = v.ase_texcoord;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -1652,12 +1654,14 @@ Shader "Fire"
 			{
 				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
 
+				float4 texCoord101 = IN.ase_texcoord;
+				texCoord101.xy = IN.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
 				float mulTime69 = _TimeParameters.x * _VoronoiAngle;
 				float time11 = mulTime69;
 				float2 voronoiSmoothId11 = 0;
 				float2 texCoord53 = IN.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
 				float2 panner52 = ( 1.0 * _Time.y * _PannerSpeed + texCoord53);
-				float2 coords11 = panner52 * _VoronoiScale01;
+				float2 coords11 = panner52 * (( _UseCustomDataVoronoiScale01 )?( texCoord101.z ):( _VoronoiScale01 ));
 				float2 id11 = 0;
 				float2 uv11 = 0;
 				float voroi11 = voronoi11( coords11, time11, id11, uv11, 0, voronoiSmoothId11 );
@@ -1667,7 +1671,7 @@ Shader "Fire"
 				float2 id33 = 0;
 				float2 uv33 = 0;
 				float voroi33 = voronoi33( coords33, time33, id33, uv33, 0, voronoiSmoothId33 );
-				float simplePerlin2D35 = snoise( panner52*_NoiseScale );
+				float simplePerlin2D35 = snoise( panner52*(( _UseCustomDataNoiseScale )?( texCoord101.w ):( _NoiseScale )) );
 				simplePerlin2D35 = simplePerlin2D35*0.5 + 0.5;
 				float2 texCoord61 = IN.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
 				float2 texCoord60 = IN.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
@@ -1679,7 +1683,7 @@ Shader "Fire"
 				float distanceDepth97 = saturate( abs( ( screenDepth97 - LinearEyeDepth( ase_screenPosNorm.z,_ZBufferParams ) ) / ( _DepthFade ) ) );
 				
 
-				surfaceDescription.Alpha = ( IN.ase_color.a * saturate( ( tex2DNode89.r * 2.0 ) ) * distanceDepth97 );
+				surfaceDescription.Alpha = ( IN.ase_color.a * saturate( ( tex2DNode89.r * 2.0 ) ) * (( _UseDepthFade )?( distanceDepth97 ):( 1.0 )) );
 				surfaceDescription.AlphaClipThreshold = 0.5;
 
 				#if _ALPHATEST_ON
@@ -1750,13 +1754,15 @@ Shader "Fire"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _TextureColor;
 			float2 _PannerSpeed;
-			float _DepthFadeDistance;
+			float _UseCustomDataVoronoiScale01;
 			float _VoronoiScale01;
 			float _VoronoiAngle;
 			float _VoronoiScale02;
+			float _UseCustomDataNoiseScale;
 			float _NoiseScale;
 			float _MaskPowerV;
 			float _NoiseStrong;
+			float _UseDepthFade;
 			float _DepthFade;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -1890,10 +1896,7 @@ Shader "Fire"
 				o.ase_texcoord1 = screenPos;
 				
 				o.ase_color = v.ase_color;
-				o.ase_texcoord.xy = v.ase_texcoord.xy;
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord.zw = 0;
+				o.ase_texcoord = v.ase_texcoord;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
@@ -1999,12 +2002,14 @@ Shader "Fire"
 			{
 				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
 
+				float4 texCoord101 = IN.ase_texcoord;
+				texCoord101.xy = IN.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
 				float mulTime69 = _TimeParameters.x * _VoronoiAngle;
 				float time11 = mulTime69;
 				float2 voronoiSmoothId11 = 0;
 				float2 texCoord53 = IN.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
 				float2 panner52 = ( 1.0 * _Time.y * _PannerSpeed + texCoord53);
-				float2 coords11 = panner52 * _VoronoiScale01;
+				float2 coords11 = panner52 * (( _UseCustomDataVoronoiScale01 )?( texCoord101.z ):( _VoronoiScale01 ));
 				float2 id11 = 0;
 				float2 uv11 = 0;
 				float voroi11 = voronoi11( coords11, time11, id11, uv11, 0, voronoiSmoothId11 );
@@ -2014,7 +2019,7 @@ Shader "Fire"
 				float2 id33 = 0;
 				float2 uv33 = 0;
 				float voroi33 = voronoi33( coords33, time33, id33, uv33, 0, voronoiSmoothId33 );
-				float simplePerlin2D35 = snoise( panner52*_NoiseScale );
+				float simplePerlin2D35 = snoise( panner52*(( _UseCustomDataNoiseScale )?( texCoord101.w ):( _NoiseScale )) );
 				simplePerlin2D35 = simplePerlin2D35*0.5 + 0.5;
 				float2 texCoord61 = IN.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
 				float2 texCoord60 = IN.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
@@ -2026,7 +2031,7 @@ Shader "Fire"
 				float distanceDepth97 = saturate( abs( ( screenDepth97 - LinearEyeDepth( ase_screenPosNorm.z,_ZBufferParams ) ) / ( _DepthFade ) ) );
 				
 
-				surfaceDescription.Alpha = ( IN.ase_color.a * saturate( ( tex2DNode89.r * 2.0 ) ) * distanceDepth97 );
+				surfaceDescription.Alpha = ( IN.ase_color.a * saturate( ( tex2DNode89.r * 2.0 ) ) * (( _UseDepthFade )?( distanceDepth97 ):( 1.0 )) );
 				surfaceDescription.AlphaClipThreshold = 0.5;
 
 				#if _ALPHATEST_ON
@@ -2107,13 +2112,15 @@ Shader "Fire"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _TextureColor;
 			float2 _PannerSpeed;
-			float _DepthFadeDistance;
+			float _UseCustomDataVoronoiScale01;
 			float _VoronoiScale01;
 			float _VoronoiAngle;
 			float _VoronoiScale02;
+			float _UseCustomDataNoiseScale;
 			float _NoiseScale;
 			float _MaskPowerV;
 			float _NoiseStrong;
+			float _UseDepthFade;
 			float _DepthFade;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -2244,10 +2251,7 @@ Shader "Fire"
 				o.ase_texcoord2 = screenPos;
 				
 				o.ase_color = v.ase_color;
-				o.ase_texcoord1.xy = v.ase_texcoord.xy;
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord1.zw = 0;
+				o.ase_texcoord1 = v.ase_texcoord;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
@@ -2360,12 +2364,14 @@ Shader "Fire"
 			{
 				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
 
+				float4 texCoord101 = IN.ase_texcoord1;
+				texCoord101.xy = IN.ase_texcoord1.xy * float2( 1,1 ) + float2( 0,0 );
 				float mulTime69 = _TimeParameters.x * _VoronoiAngle;
 				float time11 = mulTime69;
 				float2 voronoiSmoothId11 = 0;
 				float2 texCoord53 = IN.ase_texcoord1.xy * float2( 1,1 ) + float2( 0,0 );
 				float2 panner52 = ( 1.0 * _Time.y * _PannerSpeed + texCoord53);
-				float2 coords11 = panner52 * _VoronoiScale01;
+				float2 coords11 = panner52 * (( _UseCustomDataVoronoiScale01 )?( texCoord101.z ):( _VoronoiScale01 ));
 				float2 id11 = 0;
 				float2 uv11 = 0;
 				float voroi11 = voronoi11( coords11, time11, id11, uv11, 0, voronoiSmoothId11 );
@@ -2375,7 +2381,7 @@ Shader "Fire"
 				float2 id33 = 0;
 				float2 uv33 = 0;
 				float voroi33 = voronoi33( coords33, time33, id33, uv33, 0, voronoiSmoothId33 );
-				float simplePerlin2D35 = snoise( panner52*_NoiseScale );
+				float simplePerlin2D35 = snoise( panner52*(( _UseCustomDataNoiseScale )?( texCoord101.w ):( _NoiseScale )) );
 				simplePerlin2D35 = simplePerlin2D35*0.5 + 0.5;
 				float2 texCoord61 = IN.ase_texcoord1.xy * float2( 1,1 ) + float2( 0,0 );
 				float2 texCoord60 = IN.ase_texcoord1.xy * float2( 1,1 ) + float2( 0,0 );
@@ -2387,7 +2393,7 @@ Shader "Fire"
 				float distanceDepth97 = saturate( abs( ( screenDepth97 - LinearEyeDepth( ase_screenPosNorm.z,_ZBufferParams ) ) / ( _DepthFade ) ) );
 				
 
-				surfaceDescription.Alpha = ( IN.ase_color.a * saturate( ( tex2DNode89.r * 2.0 ) ) * distanceDepth97 );
+				surfaceDescription.Alpha = ( IN.ase_color.a * saturate( ( tex2DNode89.r * 2.0 ) ) * (( _UseDepthFade )?( distanceDepth97 ):( 1.0 )) );
 				surfaceDescription.AlphaClipThreshold = 0.5;
 
 				#if _ALPHATEST_ON
@@ -2469,13 +2475,15 @@ Shader "Fire"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _TextureColor;
 			float2 _PannerSpeed;
-			float _DepthFadeDistance;
+			float _UseCustomDataVoronoiScale01;
 			float _VoronoiScale01;
 			float _VoronoiAngle;
 			float _VoronoiScale02;
+			float _UseCustomDataNoiseScale;
 			float _NoiseScale;
 			float _MaskPowerV;
 			float _NoiseStrong;
+			float _UseDepthFade;
 			float _DepthFade;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -2605,10 +2613,7 @@ Shader "Fire"
 				o.ase_texcoord2 = screenPos;
 				
 				o.ase_color = v.ase_color;
-				o.ase_texcoord1.xy = v.ase_texcoord.xy;
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord1.zw = 0;
+				o.ase_texcoord1 = v.ase_texcoord;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
@@ -2721,12 +2726,14 @@ Shader "Fire"
 			{
 				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
 
+				float4 texCoord101 = IN.ase_texcoord1;
+				texCoord101.xy = IN.ase_texcoord1.xy * float2( 1,1 ) + float2( 0,0 );
 				float mulTime69 = _TimeParameters.x * _VoronoiAngle;
 				float time11 = mulTime69;
 				float2 voronoiSmoothId11 = 0;
 				float2 texCoord53 = IN.ase_texcoord1.xy * float2( 1,1 ) + float2( 0,0 );
 				float2 panner52 = ( 1.0 * _Time.y * _PannerSpeed + texCoord53);
-				float2 coords11 = panner52 * _VoronoiScale01;
+				float2 coords11 = panner52 * (( _UseCustomDataVoronoiScale01 )?( texCoord101.z ):( _VoronoiScale01 ));
 				float2 id11 = 0;
 				float2 uv11 = 0;
 				float voroi11 = voronoi11( coords11, time11, id11, uv11, 0, voronoiSmoothId11 );
@@ -2736,7 +2743,7 @@ Shader "Fire"
 				float2 id33 = 0;
 				float2 uv33 = 0;
 				float voroi33 = voronoi33( coords33, time33, id33, uv33, 0, voronoiSmoothId33 );
-				float simplePerlin2D35 = snoise( panner52*_NoiseScale );
+				float simplePerlin2D35 = snoise( panner52*(( _UseCustomDataNoiseScale )?( texCoord101.w ):( _NoiseScale )) );
 				simplePerlin2D35 = simplePerlin2D35*0.5 + 0.5;
 				float2 texCoord61 = IN.ase_texcoord1.xy * float2( 1,1 ) + float2( 0,0 );
 				float2 texCoord60 = IN.ase_texcoord1.xy * float2( 1,1 ) + float2( 0,0 );
@@ -2748,7 +2755,7 @@ Shader "Fire"
 				float distanceDepth97 = saturate( abs( ( screenDepth97 - LinearEyeDepth( ase_screenPosNorm.z,_ZBufferParams ) ) / ( _DepthFade ) ) );
 				
 
-				surfaceDescription.Alpha = ( IN.ase_color.a * saturate( ( tex2DNode89.r * 2.0 ) ) * distanceDepth97 );
+				surfaceDescription.Alpha = ( IN.ase_color.a * saturate( ( tex2DNode89.r * 2.0 ) ) * (( _UseDepthFade )?( distanceDepth97 ):( 1.0 )) );
 				surfaceDescription.AlphaClipThreshold = 0.5;
 
 				#if _ALPHATEST_ON
@@ -2789,9 +2796,7 @@ Node;AmplifyShaderEditor.SimpleTimeNode;69;-2268.324,-51.03764;Inherit;False;1;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;63;-956.4754,23.93703;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;65;-806.3603,24.02066;Inherit;True;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;44;-1858.263,455.9825;Inherit;False;Constant;_Power;Power;1;0;Create;True;0;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;15;-2101.64,113.2859;Inherit;False;Property;_VoronoiScale01;Voronoi Scale01;6;0;Create;True;0;0;0;False;0;False;5;5;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;41;-2098.694,231.6226;Inherit;False;Property;_VoronoiScale02;Voronoi Scale02;7;0;Create;True;0;0;0;False;0;False;3.5;2.5;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;38;-2185.499,377.8201;Inherit;False;Property;_NoiseScale;Noise Scale;5;0;Create;True;0;0;0;False;0;False;3;3;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;3;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;13;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;ShadowCaster;0;2;ShadowCaster;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Unlit;True;3;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;False;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=ShadowCaster;False;False;0;;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;4;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;13;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;DepthOnly;0;3;DepthOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Unlit;True;3;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;False;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;False;False;True;1;LightMode=DepthOnly;False;False;0;;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;5;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;13;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;Meta;0;4;Meta;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Unlit;True;3;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;False;0;;0;0;Standard;0;False;0
@@ -2813,16 +2818,20 @@ Node;AmplifyShaderEditor.RangedFloatNode;64;-1015.088,164.3042;Inherit;False;Pro
 Node;AmplifyShaderEditor.ColorNode;86;-273.0506,197.2663;Inherit;False;Property;_TextureColor;Texture Color;1;1;[HDR];Create;True;0;0;0;False;0;False;1,1,1,1;1,1,1,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RangedFloatNode;91;-206.1257,372.6235;Inherit;False;Constant;_Float0;Float 0;8;0;Create;True;0;0;0;False;0;False;2;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;14;23.91407,-21.81464;Inherit;False;3;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;74;246.4333,109.941;Inherit;False;3;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SaturateNode;92;118.9861,114.2257;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;90;-6.264602,116.069;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SamplerNode;89;-359.2581,-3.580394;Inherit;True;Property;_MainTex;Main Tex;0;0;Create;True;0;0;0;False;0;False;-1;569cf5290ee53184e8d7beea1b974780;569cf5290ee53184e8d7beea1b974780;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;96;465.2777,-45.15847;Inherit;False;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;2;642.1688,60.48275;Float;False;True;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;13;Fire;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;2;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;4;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;UniversalMaterialType=Unlit;True;3;True;12;all;0;False;True;1;1;False;;1;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForwardOnly;False;False;0;;0;0;Standard;23;Surface;1;638307710722065788;  Blend;2;638322274070427555;Two Sided;0;638317750147719102;Forward Only;0;0;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;10;False;True;True;True;False;False;True;True;True;True;False;;False;0
-Node;AmplifyShaderEditor.RangedFloatNode;94;-188.8411,-332.5256;Inherit;False;Property;_DepthFadeDistance;Depth Fade Distance;9;0;Create;True;0;0;0;False;0;False;0.1;1;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.DepthFade;88;26.63801,-352.1764;Inherit;False;True;True;True;2;1;FLOAT3;0,0,0;False;0;FLOAT;1;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;98;-314.7383,567.7668;Inherit;False;Property;_DepthFade;Depth Fade;10;0;Create;True;0;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.DepthFade;97;-111.1614,495.8567;Inherit;False;True;True;True;2;1;FLOAT3;0,0,0;False;0;FLOAT;1;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SamplerNode;89;-359.2581,-3.580394;Inherit;True;Property;_MainTex;Main Tex;0;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;2;642.1688,60.48275;Float;False;True;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;13;Fire;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;2;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;4;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;UniversalMaterialType=Unlit;True;3;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForwardOnly;False;False;0;;0;0;Standard;23;Surface;1;638307710722065788;  Blend;0;638330227500898109;Two Sided;0;638317750147719102;Forward Only;0;0;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;10;False;True;True;True;False;False;True;True;True;True;False;;False;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;74;246.4333,109.941;Inherit;False;3;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.ToggleSwitchNode;99;-97.14993,463.1516;Inherit;False;Property;_UseDepthFade;Use Depth Fade;10;0;Create;True;0;0;0;False;0;False;0;True;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;100;-224.1371,463.1514;Inherit;False;Constant;_Float1;Float 1;12;0;Create;True;0;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.DepthFade;97;-392.6533,543.6927;Inherit;False;True;True;True;2;1;FLOAT3;0,0,0;False;0;FLOAT;1;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;98;-542.9689,549.4713;Inherit;False;Property;_DepthFade;Depth Fade;9;0;Create;True;0;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.TextureCoordinatesNode;101;-2715.164,408.4459;Inherit;False;0;-1;4;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.ToggleSwitchNode;102;-2495.768,302.2862;Inherit;False;Property;_UseCustomDataVoronoiScale01;Use Custom Data (Voronoi Scale01);11;0;Create;True;0;0;0;False;0;False;0;True;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.ToggleSwitchNode;103;-2321.223,531.3812;Inherit;False;Property;_UseCustomDataNoiseScale;Use Custom Data (Noise Scale);12;0;Create;True;0;0;0;False;0;False;0;True;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;38;-2489.646,470.2702;Inherit;False;Property;_NoiseScale;Noise Scale;5;0;Create;True;0;0;0;False;0;False;3;3;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;15;-2686.641,301.7862;Inherit;False;Property;_VoronoiScale01;Voronoi Scale01;6;0;Create;True;0;0;0;False;0;False;5;5;0;0;0;1;FLOAT;0
 WireConnection;52;0;53;0
 WireConnection;52;2;54;0
 WireConnection;40;0;11;0
@@ -2830,7 +2839,7 @@ WireConnection;40;1;33;0
 WireConnection;42;0;40;0
 WireConnection;42;1;43;0
 WireConnection;35;0;52;0
-WireConnection;35;1;38;0
+WireConnection;35;1;103;0
 WireConnection;43;0;35;0
 WireConnection;43;1;44;0
 WireConnection;69;0;81;0
@@ -2844,7 +2853,7 @@ WireConnection;79;0;61;2
 WireConnection;79;1;80;0
 WireConnection;11;0;52;0
 WireConnection;11;1;69;0
-WireConnection;11;2;15;0
+WireConnection;11;2;102;0
 WireConnection;33;0;52;0
 WireConnection;33;1;69;0
 WireConnection;33;2;41;0
@@ -2852,18 +2861,21 @@ WireConnection;93;0;65;0
 WireConnection;14;0;13;0
 WireConnection;14;1;89;0
 WireConnection;14;2;86;0
-WireConnection;74;0;13;4
-WireConnection;74;1;92;0
-WireConnection;74;2;97;0
 WireConnection;92;0;90;0
 WireConnection;90;0;89;1
 WireConnection;90;1;91;0
 WireConnection;89;1;57;0
-WireConnection;96;0;88;0
-WireConnection;96;1;14;0
-WireConnection;2;2;96;0
+WireConnection;2;2;14;0
 WireConnection;2;3;74;0
-WireConnection;88;0;94;0
+WireConnection;74;0;13;4
+WireConnection;74;1;92;0
+WireConnection;74;2;99;0
+WireConnection;99;0;100;0
+WireConnection;99;1;97;0
 WireConnection;97;0;98;0
+WireConnection;102;0;15;0
+WireConnection;102;1;101;3
+WireConnection;103;0;38;0
+WireConnection;103;1;101;4
 ASEEND*/
-//CHKSM=89EF94DACA378B18B7D4667C6A923FB2FADA618B
+//CHKSM=7478822A9C6FCC0D8EE18F9AC0E1D26EA723CA84
