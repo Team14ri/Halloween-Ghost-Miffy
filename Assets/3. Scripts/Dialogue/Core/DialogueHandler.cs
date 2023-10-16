@@ -60,7 +60,7 @@ namespace DS.Core
                 return;
             }
             
-            _animator.CrossFade(id, 0.1f);
+            _animator.CrossFade(id, 0f);
         }
 
         public void PlayDialogue(string text, bool skipTyping = false)
