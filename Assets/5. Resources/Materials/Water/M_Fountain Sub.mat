@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_fountain Sub
+  m_Name: M_Fountain Sub
   m_Shader: {fileID: 4800000, guid: f1ef49e6de1ac4f49a4252e3aa1b6321, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -20,6 +20,18 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _MainTexture:
+        m_Texture: {fileID: 2800000, guid: 124060c698b8fc34f81a041727c1ef4d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Noise_Line:
+        m_Texture: {fileID: 2800000, guid: 124060c698b8fc34f81a041727c1ef4d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Noise_Line1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _T_CloudScape_08_Details:
         m_Texture: {fileID: 2800000, guid: 1838b2a51b9c31d4dbde5933b64ea701, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -41,6 +53,15 @@ Material:
     - _AlphaCutoff: 0.5
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Step: 0.15
     m_Colors:
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MainTextureTiling: {r: 1, g: 1, b: 0, a: 0}
+    - _MainTextureTiling01: {r: 1, g: 1, b: 0, a: 0}
+    - _MainTextureTiling02: {r: 1, g: 1, b: 0, a: 0}
+    - _MainTextureTiling2: {r: 2, g: 1, b: 0, a: 0}
+    - _PannerSpeed: {r: 0.005, g: 0.1, b: 0, a: 0}
+    - _PannerSpeed01: {r: 0.01, g: 0.1, b: 0, a: 0}
+    - _PannerSpeed02: {r: 0.005, g: 0.05, b: 0, a: 0}
+    - _PannerSpeed2: {r: 0.005, g: 0.1, b: 0, a: 0}
   m_BuildTextureStacks: []
