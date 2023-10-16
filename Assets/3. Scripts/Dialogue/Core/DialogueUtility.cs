@@ -24,7 +24,8 @@ namespace DS.Core
             Pause,
             TextSpeedChange,
             Size,
-            Animation
+            Animation,
+            State
         }
 
         public enum TextAnimationType
@@ -74,6 +75,12 @@ namespace DS.Core
                 else if (input.StartsWith("<size:"))
                 {
                     var (command, len) = ParseSizeTag(input, currentIndex);
+                    commands.Add(command);
+                    input = input.Substring(len);
+                }
+                else if (input.StartsWith("<state:"))
+                {
+                    var (command, len) = ParseStateTag(input, currentIndex);
                     commands.Add(command);
                     input = input.Substring(len);
                 }
@@ -146,6 +153,21 @@ namespace DS.Core
                 textAnimationType = TextAnimationType.None,
                 stringValue = "",
                 floatValue = float.Parse(match.Groups[1].Value),
+                startIndex = currentIndex,
+                endIndex = currentIndex
+            };
+            return (command, match.Length);
+        }
+        
+        private static (Command, int) ParseStateTag(string input, int currentIndex)
+        {
+            var match = Regex.Match(input, @"<state:([^<]+)>");
+            var command = new Command
+            {
+                commandType = CommandType.State,
+                textAnimationType = TextAnimationType.None,
+                stringValue = match.Groups[1].Value,
+                floatValue = 0f,
                 startIndex = currentIndex,
                 endIndex = currentIndex
             };

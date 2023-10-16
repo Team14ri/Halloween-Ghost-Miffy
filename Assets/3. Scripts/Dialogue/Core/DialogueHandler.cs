@@ -14,6 +14,13 @@ namespace DS.Core
 
         [SerializeField] private CinemachineFreeLook cinemachineFreeLook;
 
+        private Animator _animator;
+
+        private void Awake()
+        {
+            _animator = GetComponentInChildren<Animator>();
+        }
+
         private void Start()
         {
             DialogueManager.Instance.Handlers.TryAdd(ID, this);
@@ -40,6 +47,20 @@ namespace DS.Core
             if (cinemachineFreeLook == null)
                 return 0f;
             return cinemachineFreeLook.m_XAxis.Value;
+        }
+
+        public void SetAnimation(string id)
+        {
+            if (_animator == null)
+                return;
+            
+            if (!_animator.HasState(0, Animator.StringToHash(id)))
+            {
+                Debug.LogWarning($"{id} 애니메이션이 존재하지 않습니다.");
+                return;
+            }
+            
+            _animator.CrossFade(id, 0f);
         }
 
         public void PlayDialogue(string text, bool skipTyping = false)
