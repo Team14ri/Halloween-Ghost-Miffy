@@ -14,8 +14,9 @@ public class PlayerInteractionState : IState
     private StateMachine stateMachine;
     
     private DialogueFlow dialogueFlow;
-
     private DialogueHandler lastestDialogueHandler;
+
+    private Animator animator;
 
     private float currentXAxis;
 
@@ -24,12 +25,27 @@ public class PlayerInteractionState : IState
         this.player = player;
         this.stateMachine = stateMachine;
         dialogueFlow = new DialogueFlow(dialogueContainer);
+        
+        animator = player.model.GetComponent<Animator>();
+    }
+    
+    private void SetAnimation(int stateID)
+    {
+        if (animator == null)
+            return;
+            
+        if (!animator.HasState(0, stateID))
+        {
+            Debug.LogWarning($"{stateID} 애니메이션이 존재하지 않습니다.");
+            return;
+        }
+            
+        animator.CrossFade(stateID, 0f);
     }
 
     public void Enter()
     {
         player.Interaction.Enabled = false;
-        // CameraZoomController.Instance.ZoomIn();
         currentXAxis = VirtualCameraController.Instance.GetXAxis();
         PlayCurrentNode();
     }
@@ -131,7 +147,6 @@ public class PlayerInteractionState : IState
         }
         
         player.Interaction.SetInteractionEnableAfterDelay();
-        // CameraZoomController.Instance.ZoomOut();
         DialogueManager.Instance.StopDialogue();
     }
 }

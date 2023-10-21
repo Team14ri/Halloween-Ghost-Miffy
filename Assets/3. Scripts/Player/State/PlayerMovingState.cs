@@ -1,20 +1,41 @@
 using System;
 using UnityEngine;
 
-public class PlayerWalkingState : IState
+public class PlayerMovingState : IState
 {
     private PlayerController player;
     private StateMachine stateMachine;
 
-    public PlayerWalkingState(PlayerController player, StateMachine stateMachine)
+    private Animator animator;
+    
+    private readonly int MovingState;
+    
+    public PlayerMovingState(PlayerController player, StateMachine stateMachine)
     {
         this.player = player;
         this.stateMachine = stateMachine;
+        animator = player.model.GetComponent<Animator>();
+        
+        MovingState = Animator.StringToHash("Miffy@Move_Connect");
+    }
+    
+    private void SetAnimation(int stateID)
+    {
+        if (animator == null)
+            return;
+            
+        if (!animator.HasState(0, stateID))
+        {
+            Debug.LogWarning($"{stateID} 애니메이션이 존재하지 않습니다.");
+            return;
+        }
+            
+        animator.CrossFade(stateID, 0f);
     }
 
     public void Enter()
     {
-        // Todo: 이동 애니메이션 시작 등 초기화
+        SetAnimation(MovingState);
     }
 
     public void Execute()
