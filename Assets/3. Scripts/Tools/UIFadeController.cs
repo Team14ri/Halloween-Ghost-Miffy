@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,6 +7,8 @@ using UnityEngine.UI;
 
 public class UIFadeController : MonoBehaviour
 {
+    [SerializeField] private bool runOnEnable = false;
+    
     [SerializeField] private List<GameObject> activeTarget;
 
     [SerializeField] private float autoFadeWaitTime = 4f;
@@ -20,6 +23,14 @@ public class UIFadeController : MonoBehaviour
     [SerializeField] private List<TMP_Text> texts;
     
     private Coroutine _fadeRoutine;
+
+    private void OnEnable()
+    {
+        if (!runOnEnable)
+            return;
+
+        AutoFadeInAndOut();
+    }
 
     public void AutoFadeInAndOut()
     {
