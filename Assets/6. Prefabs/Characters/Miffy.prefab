@@ -40,7 +40,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1858751259938157171}
-  - component: {fileID: 1858751259938157168}
   - component: {fileID: 1858751259938157175}
   - component: {fileID: 1858751259938157172}
   - component: {fileID: 1858751259938157174}
@@ -73,20 +72,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1858751259938157168
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1858751259938157170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f7557f01c519384cb8ea6ea02b6f460, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  followX: 1
-  followY: 0
 --- !u!54 &1858751259938157175
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -220,6 +205,7 @@ GameObject:
   - component: {fileID: 1858751260572468201}
   - component: {fileID: 1858751260572468206}
   - component: {fileID: 2100947231}
+  - component: {fileID: 1818608997}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -315,6 +301,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &1818608997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858751260572468200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f7557f01c519384cb8ea6ea02b6f460, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followX: 1
+  followY: 0
 --- !u!1001 &1143261250670997232
 PrefabInstance:
   m_ObjectHideFlags: 0
