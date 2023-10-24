@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using DS.Core;
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
@@ -8,7 +10,10 @@ public class VoiceManager : MonoBehaviour
 {
     public static VoiceManager Instance { get; private set; }
     
-    private Dictionary<string, EventInstance> eventInstances;
+    private Dictionary<string, EventInstance> eventInstances = new();
+    
+    private Coroutine _eventRoutine;
+    private float textSpeed;
 
     private void LoadEventReferences()
     {
@@ -43,13 +48,49 @@ public class VoiceManager : MonoBehaviour
         LoadEventReferences();
     }
 
-    // private void Update()
-    // {
-    //     if (Input.GetKeyDown(KeyCode.A))
-    //     {
-    //         VoicePlay('아', "Miffy");
-    //     }
-    // }
+    public void VoiceSentenceIn(List<DialogueUtility.Command> commands)
+    {
+        this.EnsureCoroutineStopped(ref _eventRoutine);
+        _eventRoutine = StartCoroutine(VoiceSentenceExecute(commands));
+    }
+
+    private IEnumerator VoiceSentenceExecute(List<DialogueUtility.Command> commands)
+    {
+        textSpeed = DialogueUtility.TextAnimationSpeed["normal"];
+        foreach (var command in commands)
+        {
+            yield return ExecuteCommand(command);
+        }
+    }
+    
+    private IEnumerator ExecuteCommand(DialogueUtility.Command command)
+    {
+        switch (command.commandType)
+        {
+            case DialogueUtility.CommandType.Pause:
+                yield return new WaitForSeconds(command.floatValue);
+                break;
+            case DialogueUtility.CommandType.TextSpeedChange:
+                textSpeed = command.floatValue;
+                break;
+            case DialogueUtility.CommandType.Size:
+                break;
+            case DialogueUtility.CommandType.State:
+                break;
+            default:
+                yield return RunSentence(command.stringValue);
+                break;
+        }
+    }
+    
+    private IEnumerator RunSentence(string sentence)
+    {
+        foreach (var ch in sentence)
+        {
+            VoicePlay(ch, "Miffy");
+            yield return new WaitForSeconds(textSpeed * 1.6f);
+        }
+    }
 
     public void VoicePlay(char inputText, string characterName)
     {
