@@ -5,6 +5,7 @@ using DS.Core;
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class VoiceManager : MonoBehaviour
 {
@@ -88,78 +89,85 @@ public class VoiceManager : MonoBehaviour
         foreach (var ch in sentence)
         {
             VoicePlay(ch, "Miffy");
-            yield return new WaitForSeconds(textSpeed * 1.6f);
+            yield return new WaitForSeconds(textSpeed * 2f);
         }
     }
 
     public void VoicePlay(char inputText, string characterName)
     {
         char vowel = ParsingKorean(inputText);
-        int conv = ConvertingVowel(vowel);
+        int conv = ConvertingInitialConsonant(vowel);
+        
+        Debug.Log($"{inputText} => {vowel} => {conv}");
 
         // 발음 파라미터 설정
         eventInstances[characterName].setParameterByName("vowel type", conv);
+        eventInstances[characterName].setPitch(2.8f * Random.Range(0.96f, 1.15f));
         eventInstances[characterName].start();
     }
 
-    private char ParsingKorean(char inputText)
+    private char ParsingKorean(char hangul)
     {
-        const int startOfKoreanUnicode = 0xAC00;
-        const int endOfKoreanUnicode = 0xD7A3;
-
-        int charCode = (int)inputText;
-
-        // 주어진 문자가 한글 문자인지 확인
-        if (charCode >= startOfKoreanUnicode && charCode <= endOfKoreanUnicode)
+        char[] initialConsonants = 
         {
-            // 초성은 19자, 중성은 21자, 종성은 28자
-            // 따라서 중성은 ((charCode - startOfKoreanUnicode) / 종성개수) % 중성개수
-            int vowelIndex = (charCode - startOfKoreanUnicode) / 28 % 21;
-
-            // 한글 모음을 반환
-            // 시작 유니코드(12623) + 모음 인덱스
-            return (char)(12623 + vowelIndex);
-        }
-        else
+            'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
+        };
+        
+        if (hangul < '가' || hangul > '힣')  // 한글 범위 외의 문자인 경우
         {
-            Debug.Log("ParsingKorean(): 파싱하려는 글자가 한글이 아닙니다.");
+            Debug.LogWarning("Given character is not a valid Hangul syllable.");
             return '\0';
         }
+
+        int initialIndex = (hangul - '가') / (21 * 28);
+        return initialConsonants[initialIndex];
     }
-
-    private int ConvertingVowel(char vowel)
+    
+    private int ConvertingInitialConsonant(char initialConsonant)
     {
-        switch (vowel)
+        switch (initialConsonant)
         {
-            case 'ㅏ':
-            case 'ㅑ':
+            case 'ㄱ':
                 return 0;
-
-            case 'ㅓ':
-            case 'ㅕ':
+            case 'ㄲ':
                 return 1;
-
-            case 'ㅗ':
-            case 'ㅛ':
+            case 'ㄴ':
                 return 2;
-
-            case 'ㅜ':
-            case 'ㅠ':
-            case 'ㅡ':
+            case 'ㄷ':
                 return 3;
-
-            case 'ㅣ':
-            case 'ㅟ':
+            case 'ㄸ':
                 return 4;
-
-            case 'ㅐ':
-            case 'ㅔ':
-            case 'ㅚ':
+            case 'ㄹ':
                 return 5;
-
-            default:
-                Debug.Log("ConvertingVowel(): 해당되는 모음이 없습니다.");
+            case 'ㅁ':
+                return 6;
+            case 'ㅂ':
+                return 7;
+            case 'ㅃ':
+                return 8;
+            case 'ㅅ':
                 return 9;
+            case 'ㅆ':
+                return 10;
+            case 'ㅇ':
+                return 11;
+            case 'ㅈ':
+                return 12;
+            case 'ㅉ':
+                return 13;
+            case 'ㅊ':
+                return 14;
+            case 'ㅋ':
+                return 15;
+            case 'ㅌ':
+                return 16;
+            case 'ㅍ':
+                return 17;
+            case 'ㅎ':
+                return 18;
+            default:
+                Debug.Log("ConvertingInitialConsonant(): 해당되는 초성이 없습니다.");
+                return 19;
         }
     }
 }
