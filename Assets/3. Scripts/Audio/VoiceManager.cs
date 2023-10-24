@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FMOD.Studio;
 using FMODUnity;
@@ -41,6 +42,14 @@ public class VoiceManager : MonoBehaviour
     {
         LoadEventReferences();
     }
+
+    // private void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.A))
+    //     {
+    //         VoicePlay('아', "Miffy");
+    //     }
+    // }
 
     public void VoicePlay(char inputText, string characterName)
     {
