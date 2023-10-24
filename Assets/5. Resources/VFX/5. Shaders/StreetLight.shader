@@ -1,23 +1,16 @@
 // Made with Amplify Shader Editor v1.9.1.5
 // Available at the Unity Asset Store - http://u3d.as/y3X 
-Shader "Sphere Noise"
+Shader "StreetLight"
 {
 	Properties
 	{
 		[HideInInspector] _AlphaCutoff("Alpha Cutoff ", Range(0, 1)) = 0.5
 		[HideInInspector] _EmissionColor("Emission Color", Color) = (1,1,1,1)
-		[ASEBegin]_InnerColor("Inner Color", Color) = (0.9960785,0.9960785,0.9960785,1)
-		_OuterColor("Outer Color", Color) = (0.5921569,0.854902,0.7529413,1)
-		_InnerStep("Inner Step", Float) = 0.25
-		_OuterStep("Outer Step", Float) = 0.1
-		_NoiseScale("Noise Scale", Float) = 4
-		_NoiseStrength("Noise Strength", Float) = 0.1
-		_PannerSpeed("Panner Speed", Range( 0 , 1)) = 0.1
-		_SpherePower("Sphere Power", Float) = 30
-		_Float5("Float 5", Float) = 8
-		[Toggle]_UseRamdomNoise("Use Ramdom Noise", Float) = 0
-		[Toggle]_UseRamdomSpeed("Use Ramdom Speed", Float) = 0
-		[ASEEnd]_Intensity("Intensity", Range( 0 , 5)) = 1
+		[ASEBegin][HDR]_Color("Color", Color) = (1,1,1,0)
+		_SphereSize("Sphere Size", Float) = 10
+		_SphereStrength("Sphere Strength", Float) = 50
+		[Toggle]_UseDepthFade("Use Depth Fade", Float) = 0
+		[ASEEnd]_Distance("Distance", Float) = 15
 
 
 		//_TessPhongStrength( "Tess Phong Strength", Range( 0, 1 ) ) = 0.5
@@ -166,7 +159,7 @@ Shader "Sphere Noise"
 			Name "Forward"
 			Tags { "LightMode"="UniversalForwardOnly" }
 
-			Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
+			Blend One One, One OneMinusSrcAlpha
 			ZWrite Off
 			ZTest LEqual
 			Offset 0 , 0
@@ -179,6 +172,7 @@ Shader "Sphere Noise"
 			#pragma multi_compile_instancing
 			#define _SURFACE_TYPE_TRANSPARENT 1
 			#define ASE_SRP_VERSION 120110
+			#define REQUIRE_DEPTH_TEXTURE 1
 
 
 			#pragma multi_compile _ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
@@ -231,24 +225,18 @@ Shader "Sphere Noise"
 					float fogFactor : TEXCOORD2;
 				#endif
 				float4 ase_texcoord3 : TEXCOORD3;
+				float4 ase_texcoord4 : TEXCOORD4;
 				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _OuterColor;
-			float4 _InnerColor;
-			float _Intensity;
-			float _NoiseStrength;
-			float _UseRamdomSpeed;
-			float _PannerSpeed;
-			float _UseRamdomNoise;
-			float _NoiseScale;
-			float _SpherePower;
-			float _Float5;
-			float _OuterStep;
-			float _InnerStep;
+			float4 _Color;
+			float _UseDepthFade;
+			float _SphereSize;
+			float _SphereStrength;
+			float _Distance;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
 				float _TessValue;
@@ -259,37 +247,10 @@ Shader "Sphere Noise"
 			#endif
 			CBUFFER_END
 
-			
+			uniform float4 _CameraDepthTexture_TexelSize;
 
-			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float3 permute( float3 x ) { return mod2D289( ( ( x * 34.0 ) + 1.0 ) * x ); }
-			float snoise( float2 v )
-			{
-				const float4 C = float4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
-				float2 i = floor( v + dot( v, C.yy ) );
-				float2 x0 = v - i + dot( i, C.xx );
-				float2 i1;
-				i1 = ( x0.x > x0.y ) ? float2( 1.0, 0.0 ) : float2( 0.0, 1.0 );
-				float4 x12 = x0.xyxy + C.xxzz;
-				x12.xy -= i1;
-				i = mod2D289( i );
-				float3 p = permute( permute( i.y + float3( 0.0, i1.y, 1.0 ) ) + i.x + float3( 0.0, i1.x, 1.0 ) );
-				float3 m = max( 0.5 - float3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
-				m = m * m;
-				m = m * m;
-				float3 x = 2.0 * frac( p * C.www ) - 1.0;
-				float3 h = abs( x ) - 0.5;
-				float3 ox = floor( x + 0.5 );
-				float3 a0 = x - ox;
-				m *= 1.79284291400159 - 0.85373472095314 * ( a0 * a0 + h * h );
-				float3 g;
-				g.x = a0.x * x0.x + h.x * x0.y;
-				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-				return 130.0 * dot( m, g );
-			}
-			
 
+			
 			VertexOutput VertexFunction ( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -297,8 +258,15 @@ Shader "Sphere Noise"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				o.ase_texcoord3 = v.ase_texcoord;
+				float4 ase_clipPos = TransformObjectToHClip((v.vertex).xyz);
+				float4 screenPos = ComputeScreenPos(ase_clipPos);
+				o.ase_texcoord4 = screenPos;
+				
+				o.ase_texcoord3.xy = v.ase_texcoord.xy;
 				o.ase_color = v.ase_color;
+				
+				//setting value to unused interpolator channels and avoid initialization warnings
+				o.ase_texcoord3.zw = 0;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -441,23 +409,19 @@ Shader "Sphere Noise"
 					#endif
 				#endif
 
-				float4 texCoord65 = IN.ase_texcoord3;
-				texCoord65.xy = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 temp_cast_0 = ((( _UseRamdomSpeed )?( texCoord65.z ):( _PannerSpeed ))).xx;
-				float2 texCoord48 = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner50 = ( 1.0 * _Time.y * temp_cast_0 + texCoord48);
-				float simplePerlin2D30 = snoise( panner50*(( _UseRamdomNoise )?( texCoord65.w ):( _NoiseScale )) );
-				simplePerlin2D30 = simplePerlin2D30*0.5 + 0.5;
-				float2 texCoord33 = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 temp_cast_1 = (0.5).xx;
-				float2 temp_cast_2 = (0.0).xx;
-				float temp_output_43_0 = ( pow( ( 1.0 - distance( ( ( ( _NoiseStrength * simplePerlin2D30 ) + texCoord33 ) - temp_cast_1 ) , temp_cast_2 ) ) , _SpherePower ) * _Float5 );
-				float4 temp_output_56_0 = saturate( ( ( _OuterColor * ( 1.0 - step( temp_output_43_0 , _OuterStep ) ) ) + ( ( 1.0 - step( temp_output_43_0 , _InnerStep ) ) * _InnerColor ) ) );
+				float2 texCoord20 = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
+				float2 temp_cast_0 = (0.5).xx;
+				float temp_output_27_0 = saturate( ( pow( ( 1.0 - distance( ( texCoord20 - temp_cast_0 ) , float2( 0,0 ) ) ) , _SphereSize ) * _SphereStrength ) );
+				float4 screenPos = IN.ase_texcoord4;
+				float4 ase_screenPosNorm = screenPos / screenPos.w;
+				ase_screenPosNorm.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm.z : ase_screenPosNorm.z * 0.5 + 0.5;
+				float screenDepth11 = LinearEyeDepth(SHADERGRAPH_SAMPLE_SCENE_DEPTH( ase_screenPosNorm.xy ),_ZBufferParams);
+				float distanceDepth11 = saturate( abs( ( screenDepth11 - LinearEyeDepth( ase_screenPosNorm.z,_ZBufferParams ) ) / ( _Distance ) ) );
 				
 				float3 BakedAlbedo = 0;
 				float3 BakedEmission = 0;
-				float3 Color = ( _Intensity * temp_output_56_0 * IN.ase_color ).rgb;
-				float Alpha = ( temp_output_56_0 * IN.ase_color.a ).r;
+				float3 Color = ( _Color * (( _UseDepthFade )?( ( temp_output_27_0 * distanceDepth11 ) ):( temp_output_27_0 )) * IN.ase_color ).rgb;
+				float Alpha = IN.ase_color.a;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -523,7 +487,6 @@ Shader "Sphere Noise"
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
 				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -537,25 +500,17 @@ Shader "Sphere Noise"
 				#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR) && defined(ASE_NEEDS_FRAG_SHADOWCOORDS)
 					float4 shadowCoord : TEXCOORD1;
 				#endif
-				float4 ase_texcoord2 : TEXCOORD2;
 				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _OuterColor;
-			float4 _InnerColor;
-			float _Intensity;
-			float _NoiseStrength;
-			float _UseRamdomSpeed;
-			float _PannerSpeed;
-			float _UseRamdomNoise;
-			float _NoiseScale;
-			float _SpherePower;
-			float _Float5;
-			float _OuterStep;
-			float _InnerStep;
+			float4 _Color;
+			float _UseDepthFade;
+			float _SphereSize;
+			float _SphereStrength;
+			float _Distance;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
 				float _TessValue;
@@ -568,35 +523,7 @@ Shader "Sphere Noise"
 
 			
 
-			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float3 permute( float3 x ) { return mod2D289( ( ( x * 34.0 ) + 1.0 ) * x ); }
-			float snoise( float2 v )
-			{
-				const float4 C = float4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
-				float2 i = floor( v + dot( v, C.yy ) );
-				float2 x0 = v - i + dot( i, C.xx );
-				float2 i1;
-				i1 = ( x0.x > x0.y ) ? float2( 1.0, 0.0 ) : float2( 0.0, 1.0 );
-				float4 x12 = x0.xyxy + C.xxzz;
-				x12.xy -= i1;
-				i = mod2D289( i );
-				float3 p = permute( permute( i.y + float3( 0.0, i1.y, 1.0 ) ) + i.x + float3( 0.0, i1.x, 1.0 ) );
-				float3 m = max( 0.5 - float3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
-				m = m * m;
-				m = m * m;
-				float3 x = 2.0 * frac( p * C.www ) - 1.0;
-				float3 h = abs( x ) - 0.5;
-				float3 ox = floor( x + 0.5 );
-				float3 a0 = x - ox;
-				m *= 1.79284291400159 - 0.85373472095314 * ( a0 * a0 + h * h );
-				float3 g;
-				g.x = a0.x * x0.x + h.x * x0.y;
-				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-				return 130.0 * dot( m, g );
-			}
 			
-
 			float3 _LightDirection;
 			float3 _LightPosition;
 
@@ -607,7 +534,6 @@ Shader "Sphere Noise"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
-				o.ase_texcoord2 = v.ase_texcoord;
 				o.ase_color = v.ase_color;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -665,7 +591,6 @@ Shader "Sphere Noise"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
 				float4 ase_color : COLOR;
 
 				UNITY_VERTEX_INPUT_INSTANCE_ID
@@ -684,7 +609,6 @@ Shader "Sphere Noise"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				o.ase_texcoord = v.ase_texcoord;
 				o.ase_color = v.ase_color;
 				return o;
 			}
@@ -724,7 +648,6 @@ Shader "Sphere Noise"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
 				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
@@ -762,21 +685,9 @@ Shader "Sphere Noise"
 					#endif
 				#endif
 
-				float4 texCoord65 = IN.ase_texcoord2;
-				texCoord65.xy = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 temp_cast_0 = ((( _UseRamdomSpeed )?( texCoord65.z ):( _PannerSpeed ))).xx;
-				float2 texCoord48 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner50 = ( 1.0 * _Time.y * temp_cast_0 + texCoord48);
-				float simplePerlin2D30 = snoise( panner50*(( _UseRamdomNoise )?( texCoord65.w ):( _NoiseScale )) );
-				simplePerlin2D30 = simplePerlin2D30*0.5 + 0.5;
-				float2 texCoord33 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 temp_cast_1 = (0.5).xx;
-				float2 temp_cast_2 = (0.0).xx;
-				float temp_output_43_0 = ( pow( ( 1.0 - distance( ( ( ( _NoiseStrength * simplePerlin2D30 ) + texCoord33 ) - temp_cast_1 ) , temp_cast_2 ) ) , _SpherePower ) * _Float5 );
-				float4 temp_output_56_0 = saturate( ( ( _OuterColor * ( 1.0 - step( temp_output_43_0 , _OuterStep ) ) ) + ( ( 1.0 - step( temp_output_43_0 , _InnerStep ) ) * _InnerColor ) ) );
 				
 
-				float Alpha = ( temp_output_56_0 * IN.ase_color.a ).r;
+				float Alpha = IN.ase_color.a;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -828,7 +739,6 @@ Shader "Sphere Noise"
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
 				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -842,25 +752,17 @@ Shader "Sphere Noise"
 				#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR) && defined(ASE_NEEDS_FRAG_SHADOWCOORDS)
 				float4 shadowCoord : TEXCOORD1;
 				#endif
-				float4 ase_texcoord2 : TEXCOORD2;
 				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _OuterColor;
-			float4 _InnerColor;
-			float _Intensity;
-			float _NoiseStrength;
-			float _UseRamdomSpeed;
-			float _PannerSpeed;
-			float _UseRamdomNoise;
-			float _NoiseScale;
-			float _SpherePower;
-			float _Float5;
-			float _OuterStep;
-			float _InnerStep;
+			float4 _Color;
+			float _UseDepthFade;
+			float _SphereSize;
+			float _SphereStrength;
+			float _Distance;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
 				float _TessValue;
@@ -873,35 +775,7 @@ Shader "Sphere Noise"
 
 			
 
-			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float3 permute( float3 x ) { return mod2D289( ( ( x * 34.0 ) + 1.0 ) * x ); }
-			float snoise( float2 v )
-			{
-				const float4 C = float4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
-				float2 i = floor( v + dot( v, C.yy ) );
-				float2 x0 = v - i + dot( i, C.xx );
-				float2 i1;
-				i1 = ( x0.x > x0.y ) ? float2( 1.0, 0.0 ) : float2( 0.0, 1.0 );
-				float4 x12 = x0.xyxy + C.xxzz;
-				x12.xy -= i1;
-				i = mod2D289( i );
-				float3 p = permute( permute( i.y + float3( 0.0, i1.y, 1.0 ) ) + i.x + float3( 0.0, i1.x, 1.0 ) );
-				float3 m = max( 0.5 - float3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
-				m = m * m;
-				m = m * m;
-				float3 x = 2.0 * frac( p * C.www ) - 1.0;
-				float3 h = abs( x ) - 0.5;
-				float3 ox = floor( x + 0.5 );
-				float3 a0 = x - ox;
-				m *= 1.79284291400159 - 0.85373472095314 * ( a0 * a0 + h * h );
-				float3 g;
-				g.x = a0.x * x0.x + h.x * x0.y;
-				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-				return 130.0 * dot( m, g );
-			}
 			
-
 			VertexOutput VertexFunction( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -909,7 +783,6 @@ Shader "Sphere Noise"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				o.ase_texcoord2 = v.ase_texcoord;
 				o.ase_color = v.ase_color;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -950,7 +823,6 @@ Shader "Sphere Noise"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
 				float4 ase_color : COLOR;
 
 				UNITY_VERTEX_INPUT_INSTANCE_ID
@@ -969,7 +841,6 @@ Shader "Sphere Noise"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				o.ase_texcoord = v.ase_texcoord;
 				o.ase_color = v.ase_color;
 				return o;
 			}
@@ -1009,7 +880,6 @@ Shader "Sphere Noise"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
 				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
@@ -1047,21 +917,9 @@ Shader "Sphere Noise"
 					#endif
 				#endif
 
-				float4 texCoord65 = IN.ase_texcoord2;
-				texCoord65.xy = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 temp_cast_0 = ((( _UseRamdomSpeed )?( texCoord65.z ):( _PannerSpeed ))).xx;
-				float2 texCoord48 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner50 = ( 1.0 * _Time.y * temp_cast_0 + texCoord48);
-				float simplePerlin2D30 = snoise( panner50*(( _UseRamdomNoise )?( texCoord65.w ):( _NoiseScale )) );
-				simplePerlin2D30 = simplePerlin2D30*0.5 + 0.5;
-				float2 texCoord33 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 temp_cast_1 = (0.5).xx;
-				float2 temp_cast_2 = (0.0).xx;
-				float temp_output_43_0 = ( pow( ( 1.0 - distance( ( ( ( _NoiseStrength * simplePerlin2D30 ) + texCoord33 ) - temp_cast_1 ) , temp_cast_2 ) ) , _SpherePower ) * _Float5 );
-				float4 temp_output_56_0 = saturate( ( ( _OuterColor * ( 1.0 - step( temp_output_43_0 , _OuterStep ) ) ) + ( ( 1.0 - step( temp_output_43_0 , _InnerStep ) ) * _InnerColor ) ) );
 				
 
-				float Alpha = ( temp_output_56_0 * IN.ase_color.a ).r;
+				float Alpha = IN.ase_color.a;
 				float AlphaClipThreshold = 0.5;
 
 				#ifdef _ALPHATEST_ON
@@ -1113,7 +971,6 @@ Shader "Sphere Noise"
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
 				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -1121,25 +978,17 @@ Shader "Sphere Noise"
 			struct VertexOutput
 			{
 				float4 clipPos : SV_POSITION;
-				float4 ase_texcoord : TEXCOORD0;
 				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _OuterColor;
-			float4 _InnerColor;
-			float _Intensity;
-			float _NoiseStrength;
-			float _UseRamdomSpeed;
-			float _PannerSpeed;
-			float _UseRamdomNoise;
-			float _NoiseScale;
-			float _SpherePower;
-			float _Float5;
-			float _OuterStep;
-			float _InnerStep;
+			float4 _Color;
+			float _UseDepthFade;
+			float _SphereSize;
+			float _SphereStrength;
+			float _Distance;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
 				float _TessValue;
@@ -1152,35 +1001,7 @@ Shader "Sphere Noise"
 
 			
 
-			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float3 permute( float3 x ) { return mod2D289( ( ( x * 34.0 ) + 1.0 ) * x ); }
-			float snoise( float2 v )
-			{
-				const float4 C = float4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
-				float2 i = floor( v + dot( v, C.yy ) );
-				float2 x0 = v - i + dot( i, C.xx );
-				float2 i1;
-				i1 = ( x0.x > x0.y ) ? float2( 1.0, 0.0 ) : float2( 0.0, 1.0 );
-				float4 x12 = x0.xyxy + C.xxzz;
-				x12.xy -= i1;
-				i = mod2D289( i );
-				float3 p = permute( permute( i.y + float3( 0.0, i1.y, 1.0 ) ) + i.x + float3( 0.0, i1.x, 1.0 ) );
-				float3 m = max( 0.5 - float3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
-				m = m * m;
-				m = m * m;
-				float3 x = 2.0 * frac( p * C.www ) - 1.0;
-				float3 h = abs( x ) - 0.5;
-				float3 ox = floor( x + 0.5 );
-				float3 a0 = x - ox;
-				m *= 1.79284291400159 - 0.85373472095314 * ( a0 * a0 + h * h );
-				float3 g;
-				g.x = a0.x * x0.x + h.x * x0.y;
-				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-				return 130.0 * dot( m, g );
-			}
 			
-
 			int _ObjectId;
 			int _PassValue;
 
@@ -1199,7 +1020,6 @@ Shader "Sphere Noise"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				o.ase_texcoord = v.ase_texcoord;
 				o.ase_color = v.ase_color;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -1229,7 +1049,6 @@ Shader "Sphere Noise"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
 				float4 ase_color : COLOR;
 
 				UNITY_VERTEX_INPUT_INSTANCE_ID
@@ -1248,7 +1067,6 @@ Shader "Sphere Noise"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				o.ase_texcoord = v.ase_texcoord;
 				o.ase_color = v.ase_color;
 				return o;
 			}
@@ -1288,7 +1106,6 @@ Shader "Sphere Noise"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
 				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
@@ -1311,21 +1128,9 @@ Shader "Sphere Noise"
 			{
 				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
 
-				float4 texCoord65 = IN.ase_texcoord;
-				texCoord65.xy = IN.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 temp_cast_0 = ((( _UseRamdomSpeed )?( texCoord65.z ):( _PannerSpeed ))).xx;
-				float2 texCoord48 = IN.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner50 = ( 1.0 * _Time.y * temp_cast_0 + texCoord48);
-				float simplePerlin2D30 = snoise( panner50*(( _UseRamdomNoise )?( texCoord65.w ):( _NoiseScale )) );
-				simplePerlin2D30 = simplePerlin2D30*0.5 + 0.5;
-				float2 texCoord33 = IN.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 temp_cast_1 = (0.5).xx;
-				float2 temp_cast_2 = (0.0).xx;
-				float temp_output_43_0 = ( pow( ( 1.0 - distance( ( ( ( _NoiseStrength * simplePerlin2D30 ) + texCoord33 ) - temp_cast_1 ) , temp_cast_2 ) ) , _SpherePower ) * _Float5 );
-				float4 temp_output_56_0 = saturate( ( ( _OuterColor * ( 1.0 - step( temp_output_43_0 , _OuterStep ) ) ) + ( ( 1.0 - step( temp_output_43_0 , _InnerStep ) ) * _InnerColor ) ) );
 				
 
-				surfaceDescription.Alpha = ( temp_output_56_0 * IN.ase_color.a ).r;
+				surfaceDescription.Alpha = IN.ase_color.a;
 				surfaceDescription.AlphaClipThreshold = 0.5;
 
 				#if _ALPHATEST_ON
@@ -1377,7 +1182,6 @@ Shader "Sphere Noise"
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
 				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -1385,25 +1189,17 @@ Shader "Sphere Noise"
 			struct VertexOutput
 			{
 				float4 clipPos : SV_POSITION;
-				float4 ase_texcoord : TEXCOORD0;
 				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _OuterColor;
-			float4 _InnerColor;
-			float _Intensity;
-			float _NoiseStrength;
-			float _UseRamdomSpeed;
-			float _PannerSpeed;
-			float _UseRamdomNoise;
-			float _NoiseScale;
-			float _SpherePower;
-			float _Float5;
-			float _OuterStep;
-			float _InnerStep;
+			float4 _Color;
+			float _UseDepthFade;
+			float _SphereSize;
+			float _SphereStrength;
+			float _Distance;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
 				float _TessValue;
@@ -1416,35 +1212,7 @@ Shader "Sphere Noise"
 
 			
 
-			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float3 permute( float3 x ) { return mod2D289( ( ( x * 34.0 ) + 1.0 ) * x ); }
-			float snoise( float2 v )
-			{
-				const float4 C = float4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
-				float2 i = floor( v + dot( v, C.yy ) );
-				float2 x0 = v - i + dot( i, C.xx );
-				float2 i1;
-				i1 = ( x0.x > x0.y ) ? float2( 1.0, 0.0 ) : float2( 0.0, 1.0 );
-				float4 x12 = x0.xyxy + C.xxzz;
-				x12.xy -= i1;
-				i = mod2D289( i );
-				float3 p = permute( permute( i.y + float3( 0.0, i1.y, 1.0 ) ) + i.x + float3( 0.0, i1.x, 1.0 ) );
-				float3 m = max( 0.5 - float3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
-				m = m * m;
-				m = m * m;
-				float3 x = 2.0 * frac( p * C.www ) - 1.0;
-				float3 h = abs( x ) - 0.5;
-				float3 ox = floor( x + 0.5 );
-				float3 a0 = x - ox;
-				m *= 1.79284291400159 - 0.85373472095314 * ( a0 * a0 + h * h );
-				float3 g;
-				g.x = a0.x * x0.x + h.x * x0.y;
-				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-				return 130.0 * dot( m, g );
-			}
 			
-
 			float4 _SelectionID;
 
 
@@ -1463,7 +1231,6 @@ Shader "Sphere Noise"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				o.ase_texcoord = v.ase_texcoord;
 				o.ase_color = v.ase_color;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -1488,7 +1255,6 @@ Shader "Sphere Noise"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
 				float4 ase_color : COLOR;
 
 				UNITY_VERTEX_INPUT_INSTANCE_ID
@@ -1507,7 +1273,6 @@ Shader "Sphere Noise"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				o.ase_texcoord = v.ase_texcoord;
 				o.ase_color = v.ase_color;
 				return o;
 			}
@@ -1547,7 +1312,6 @@ Shader "Sphere Noise"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
 				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
@@ -1570,21 +1334,9 @@ Shader "Sphere Noise"
 			{
 				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
 
-				float4 texCoord65 = IN.ase_texcoord;
-				texCoord65.xy = IN.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 temp_cast_0 = ((( _UseRamdomSpeed )?( texCoord65.z ):( _PannerSpeed ))).xx;
-				float2 texCoord48 = IN.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner50 = ( 1.0 * _Time.y * temp_cast_0 + texCoord48);
-				float simplePerlin2D30 = snoise( panner50*(( _UseRamdomNoise )?( texCoord65.w ):( _NoiseScale )) );
-				simplePerlin2D30 = simplePerlin2D30*0.5 + 0.5;
-				float2 texCoord33 = IN.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 temp_cast_1 = (0.5).xx;
-				float2 temp_cast_2 = (0.0).xx;
-				float temp_output_43_0 = ( pow( ( 1.0 - distance( ( ( ( _NoiseStrength * simplePerlin2D30 ) + texCoord33 ) - temp_cast_1 ) , temp_cast_2 ) ) , _SpherePower ) * _Float5 );
-				float4 temp_output_56_0 = saturate( ( ( _OuterColor * ( 1.0 - step( temp_output_43_0 , _OuterStep ) ) ) + ( ( 1.0 - step( temp_output_43_0 , _InnerStep ) ) * _InnerColor ) ) );
 				
 
-				surfaceDescription.Alpha = ( temp_output_56_0 * IN.ase_color.a ).r;
+				surfaceDescription.Alpha = IN.ase_color.a;
 				surfaceDescription.AlphaClipThreshold = 0.5;
 
 				#if _ALPHATEST_ON
@@ -1645,7 +1397,6 @@ Shader "Sphere Noise"
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
 				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -1654,25 +1405,17 @@ Shader "Sphere Noise"
 			{
 				float4 clipPos : SV_POSITION;
 				float3 normalWS : TEXCOORD0;
-				float4 ase_texcoord1 : TEXCOORD1;
 				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _OuterColor;
-			float4 _InnerColor;
-			float _Intensity;
-			float _NoiseStrength;
-			float _UseRamdomSpeed;
-			float _PannerSpeed;
-			float _UseRamdomNoise;
-			float _NoiseScale;
-			float _SpherePower;
-			float _Float5;
-			float _OuterStep;
-			float _InnerStep;
+			float4 _Color;
+			float _UseDepthFade;
+			float _SphereSize;
+			float _SphereStrength;
+			float _Distance;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
 				float _TessValue;
@@ -1685,35 +1428,7 @@ Shader "Sphere Noise"
 
 			
 
-			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float3 permute( float3 x ) { return mod2D289( ( ( x * 34.0 ) + 1.0 ) * x ); }
-			float snoise( float2 v )
-			{
-				const float4 C = float4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
-				float2 i = floor( v + dot( v, C.yy ) );
-				float2 x0 = v - i + dot( i, C.xx );
-				float2 i1;
-				i1 = ( x0.x > x0.y ) ? float2( 1.0, 0.0 ) : float2( 0.0, 1.0 );
-				float4 x12 = x0.xyxy + C.xxzz;
-				x12.xy -= i1;
-				i = mod2D289( i );
-				float3 p = permute( permute( i.y + float3( 0.0, i1.y, 1.0 ) ) + i.x + float3( 0.0, i1.x, 1.0 ) );
-				float3 m = max( 0.5 - float3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
-				m = m * m;
-				m = m * m;
-				float3 x = 2.0 * frac( p * C.www ) - 1.0;
-				float3 h = abs( x ) - 0.5;
-				float3 ox = floor( x + 0.5 );
-				float3 a0 = x - ox;
-				m *= 1.79284291400159 - 0.85373472095314 * ( a0 * a0 + h * h );
-				float3 g;
-				g.x = a0.x * x0.x + h.x * x0.y;
-				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-				return 130.0 * dot( m, g );
-			}
 			
-
 			struct SurfaceDescription
 			{
 				float Alpha;
@@ -1729,7 +1444,6 @@ Shader "Sphere Noise"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				o.ase_texcoord1 = v.ase_texcoord;
 				o.ase_color = v.ase_color;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -1761,7 +1475,6 @@ Shader "Sphere Noise"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
 				float4 ase_color : COLOR;
 
 				UNITY_VERTEX_INPUT_INSTANCE_ID
@@ -1780,7 +1493,6 @@ Shader "Sphere Noise"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				o.ase_texcoord = v.ase_texcoord;
 				o.ase_color = v.ase_color;
 				return o;
 			}
@@ -1820,7 +1532,6 @@ Shader "Sphere Noise"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
 				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
@@ -1843,21 +1554,9 @@ Shader "Sphere Noise"
 			{
 				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
 
-				float4 texCoord65 = IN.ase_texcoord1;
-				texCoord65.xy = IN.ase_texcoord1.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 temp_cast_0 = ((( _UseRamdomSpeed )?( texCoord65.z ):( _PannerSpeed ))).xx;
-				float2 texCoord48 = IN.ase_texcoord1.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner50 = ( 1.0 * _Time.y * temp_cast_0 + texCoord48);
-				float simplePerlin2D30 = snoise( panner50*(( _UseRamdomNoise )?( texCoord65.w ):( _NoiseScale )) );
-				simplePerlin2D30 = simplePerlin2D30*0.5 + 0.5;
-				float2 texCoord33 = IN.ase_texcoord1.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 temp_cast_1 = (0.5).xx;
-				float2 temp_cast_2 = (0.0).xx;
-				float temp_output_43_0 = ( pow( ( 1.0 - distance( ( ( ( _NoiseStrength * simplePerlin2D30 ) + texCoord33 ) - temp_cast_1 ) , temp_cast_2 ) ) , _SpherePower ) * _Float5 );
-				float4 temp_output_56_0 = saturate( ( ( _OuterColor * ( 1.0 - step( temp_output_43_0 , _OuterStep ) ) ) + ( ( 1.0 - step( temp_output_43_0 , _InnerStep ) ) * _InnerColor ) ) );
 				
 
-				surfaceDescription.Alpha = ( temp_output_56_0 * IN.ase_color.a ).r;
+				surfaceDescription.Alpha = IN.ase_color.a;
 				surfaceDescription.AlphaClipThreshold = 0.5;
 
 				#if _ALPHATEST_ON
@@ -1919,7 +1618,6 @@ Shader "Sphere Noise"
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
 				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -1928,25 +1626,17 @@ Shader "Sphere Noise"
 			{
 				float4 clipPos : SV_POSITION;
 				float3 normalWS : TEXCOORD0;
-				float4 ase_texcoord1 : TEXCOORD1;
 				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _OuterColor;
-			float4 _InnerColor;
-			float _Intensity;
-			float _NoiseStrength;
-			float _UseRamdomSpeed;
-			float _PannerSpeed;
-			float _UseRamdomNoise;
-			float _NoiseScale;
-			float _SpherePower;
-			float _Float5;
-			float _OuterStep;
-			float _InnerStep;
+			float4 _Color;
+			float _UseDepthFade;
+			float _SphereSize;
+			float _SphereStrength;
+			float _Distance;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
 				float _TessValue;
@@ -1958,35 +1648,7 @@ Shader "Sphere Noise"
 			CBUFFER_END
 			
 
-			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float3 permute( float3 x ) { return mod2D289( ( ( x * 34.0 ) + 1.0 ) * x ); }
-			float snoise( float2 v )
-			{
-				const float4 C = float4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
-				float2 i = floor( v + dot( v, C.yy ) );
-				float2 x0 = v - i + dot( i, C.xx );
-				float2 i1;
-				i1 = ( x0.x > x0.y ) ? float2( 1.0, 0.0 ) : float2( 0.0, 1.0 );
-				float4 x12 = x0.xyxy + C.xxzz;
-				x12.xy -= i1;
-				i = mod2D289( i );
-				float3 p = permute( permute( i.y + float3( 0.0, i1.y, 1.0 ) ) + i.x + float3( 0.0, i1.x, 1.0 ) );
-				float3 m = max( 0.5 - float3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
-				m = m * m;
-				m = m * m;
-				float3 x = 2.0 * frac( p * C.www ) - 1.0;
-				float3 h = abs( x ) - 0.5;
-				float3 ox = floor( x + 0.5 );
-				float3 a0 = x - ox;
-				m *= 1.79284291400159 - 0.85373472095314 * ( a0 * a0 + h * h );
-				float3 g;
-				g.x = a0.x * x0.x + h.x * x0.y;
-				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-				return 130.0 * dot( m, g );
-			}
 			
-
 			struct SurfaceDescription
 			{
 				float Alpha;
@@ -2002,7 +1664,6 @@ Shader "Sphere Noise"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				o.ase_texcoord1 = v.ase_texcoord;
 				o.ase_color = v.ase_color;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -2034,7 +1695,6 @@ Shader "Sphere Noise"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
 				float4 ase_color : COLOR;
 
 				UNITY_VERTEX_INPUT_INSTANCE_ID
@@ -2053,7 +1713,6 @@ Shader "Sphere Noise"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				o.ase_texcoord = v.ase_texcoord;
 				o.ase_color = v.ase_color;
 				return o;
 			}
@@ -2093,7 +1752,6 @@ Shader "Sphere Noise"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
 				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
@@ -2116,21 +1774,9 @@ Shader "Sphere Noise"
 			{
 				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
 
-				float4 texCoord65 = IN.ase_texcoord1;
-				texCoord65.xy = IN.ase_texcoord1.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 temp_cast_0 = ((( _UseRamdomSpeed )?( texCoord65.z ):( _PannerSpeed ))).xx;
-				float2 texCoord48 = IN.ase_texcoord1.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner50 = ( 1.0 * _Time.y * temp_cast_0 + texCoord48);
-				float simplePerlin2D30 = snoise( panner50*(( _UseRamdomNoise )?( texCoord65.w ):( _NoiseScale )) );
-				simplePerlin2D30 = simplePerlin2D30*0.5 + 0.5;
-				float2 texCoord33 = IN.ase_texcoord1.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 temp_cast_1 = (0.5).xx;
-				float2 temp_cast_2 = (0.0).xx;
-				float temp_output_43_0 = ( pow( ( 1.0 - distance( ( ( ( _NoiseStrength * simplePerlin2D30 ) + texCoord33 ) - temp_cast_1 ) , temp_cast_2 ) ) , _SpherePower ) * _Float5 );
-				float4 temp_output_56_0 = saturate( ( ( _OuterColor * ( 1.0 - step( temp_output_43_0 , _OuterStep ) ) ) + ( ( 1.0 - step( temp_output_43_0 , _InnerStep ) ) * _InnerColor ) ) );
 				
 
-				surfaceDescription.Alpha = ( temp_output_56_0 * IN.ase_color.a ).r;
+				surfaceDescription.Alpha = IN.ase_color.a;
 				surfaceDescription.AlphaClipThreshold = 0.5;
 
 				#if _ALPHATEST_ON
@@ -2166,105 +1812,43 @@ Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;7;0,0;Float;False;False;-1;
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;8;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;13;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;ScenePickingPass;0;7;ScenePickingPass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Unlit;True;3;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Picking;False;False;0;;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;9;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;13;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;DepthNormals;0;8;DepthNormals;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Unlit;True;3;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=DepthNormalsOnly;False;False;0;;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;10;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;13;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;DepthNormalsOnly;0;9;DepthNormalsOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Unlit;True;3;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=DepthNormalsOnly;False;True;9;d3d11;metal;vulkan;xboxone;xboxseries;playstation;ps4;ps5;switch;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;52;63.63242,-1243.102;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.TextureCoordinatesNode;33;52.09531,-1143.252;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleAddOpNode;47;293.9796,-1242.392;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT2;0,0;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.SimpleSubtractOpNode;34;422.9819,-1241.796;Inherit;False;2;0;FLOAT2;0,0;False;1;FLOAT;0;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.RangedFloatNode;39;392.778,-1092.147;Inherit;False;Constant;_Float4;Float 4;2;0;Create;True;0;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.DistanceOpNode;38;565.778,-1242.146;Inherit;False;2;0;FLOAT2;0,0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;42;566.8823,-1143.738;Inherit;False;Property;_SpherePower;Sphere Power;9;0;Create;True;0;0;0;False;0;False;30;12.7;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.NoiseGeneratorNode;30;-220.9859,-1165.818;Inherit;True;Simplex2D;True;False;2;0;FLOAT2;0,0;False;1;FLOAT;1;False;1;FLOAT;0
-Node;AmplifyShaderEditor.TextureCoordinatesNode;24;-2163.205,608.2919;Inherit;False;0;-1;4;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.RangedFloatNode;49;-692.4622,-935.2014;Inherit;False;Property;_NoiseScale;Noise Scale;6;0;Create;True;0;0;0;False;0;False;4;8;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SamplerNode;29;-723.4611,92.28291;Inherit;True;Property;_Circle_06;Circle_06;1;0;Create;True;0;0;0;False;0;False;-1;316488862bcb87847ab82b0509220548;316488862bcb87847ab82b0509220548;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;-842.8705,359.0005;Float;False;False;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;13;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Unlit;True;3;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;0;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.PowerNode;13;-1561.907,428.6523;Inherit;True;False;2;0;COLOR;0,0,0,0;False;1;FLOAT;1;False;1;COLOR;0
-Node;AmplifyShaderEditor.RangedFloatNode;20;-1460.714,786.5364;Inherit;False;Constant;_Float1;Float 1;1;0;Create;True;0;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.VertexColorNode;21;-1220.814,205.4356;Inherit;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;22;-977.2424,329.8441;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.TFHCRemapNode;25;-1473.135,902.3017;Inherit;True;5;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;1;False;3;FLOAT;0;False;4;FLOAT;1;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;26;-1772.763,1076.48;Inherit;False;Constant;_Float2;Float 2;1;0;Create;True;0;0;0;False;0;False;0.32;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;12;-1266.8,427.3835;Inherit;True;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
-Node;AmplifyShaderEditor.SamplerNode;11;-1909.138,422.976;Inherit;True;Property;_T_Lensflare_02;T_Lensflare_02;0;0;Create;True;0;0;0;False;0;False;-1;3df401c3a767b1e4d9b3654516241d72;3df401c3a767b1e4d9b3654516241d72;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.RangedFloatNode;14;-1807.031,672.8965;Inherit;False;Constant;_Float0;Float 0;1;0;Create;True;0;0;0;False;0;False;1.53;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.VoronoiNode;31;-967.2023,-98.36166;Inherit;True;0;0;1;0;1;False;1;False;False;False;4;0;FLOAT2;0,0;False;1;FLOAT;0;False;2;FLOAT;1;False;3;FLOAT;0;False;3;FLOAT;0;FLOAT2;1;FLOAT2;2
-Node;AmplifyShaderEditor.ToggleSwitchNode;63;-519.3926,-935.3168;Inherit;False;Property;_UseRamdomNoise;Use Ramdom Noise;11;0;Create;True;0;0;0;False;0;False;0;True;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.TextureCoordinatesNode;48;-664.9254,-1248.125;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.ToggleSwitchNode;66;-675.2321,-1119.753;Inherit;False;Property;_UseRamdomSpeed;Use Ramdom Speed;12;0;Create;True;0;0;0;False;0;False;0;True;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.PannerNode;50;-425.7169,-1248.203;Inherit;False;3;0;FLOAT2;0,0;False;2;FLOAT2;0,0;False;1;FLOAT;1;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.TextureCoordinatesNode;65;-970.6678,-1003.335;Inherit;False;0;-1;4;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.OneMinusNode;40;694.1756,-1240.797;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;51;-937.5814,-1119.128;Inherit;False;Property;_PannerSpeed;Panner Speed;8;0;Create;True;0;0;0;False;0;False;0.1;0;0;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;53;-125.5098,-1247.557;Inherit;False;Property;_NoiseStrength;Noise Strength;7;0;Create;True;0;0;0;False;0;False;0.1;0.1;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;43;1098.045,-1240.189;Inherit;True;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;36;258.7526,-1093.039;Inherit;False;Constant;_Float3;Float 3;2;0;Create;True;0;0;0;False;0;False;0.5;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.PowerNode;41;846.1826,-1240.337;Inherit;True;False;2;0;FLOAT;0;False;1;FLOAT;1;False;1;FLOAT;0
-Node;AmplifyShaderEditor.StepOpNode;45;1384.323,-1238.929;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.OneMinusNode;54;1504.695,-1238.705;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.StepOpNode;67;1383.447,-1027.166;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.OneMinusNode;70;1501.836,-1026.55;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.ColorNode;75;1436.883,-1416.383;Inherit;False;Property;_OuterColor;Outer Color;3;0;Create;True;0;0;0;False;0;False;0.5921569,0.854902,0.7529413,1;1,1,1,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;74;1667.896,-1026.03;Inherit;False;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.ColorNode;61;1446.338,-936.4169;Inherit;False;Property;_InnerColor;Inner Color;2;0;Create;True;0;0;0;False;0;False;0.9960785,0.9960785,0.9960785,1;1,1,1,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;73;1680.581,-1262.304;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
-Node;AmplifyShaderEditor.RangedFloatNode;68;1152.64,-876.6541;Inherit;False;Property;_InnerStep;Inner Step;4;0;Create;True;0;0;0;False;0;False;0.25;0.1;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;46;1149.771,-1025.792;Inherit;False;Property;_OuterStep;Outer Step;5;0;Create;True;0;0;0;False;0;False;0.1;0.1;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;44;870.4941,-1026.931;Inherit;False;Property;_Float5;Float 5;10;0;Create;True;0;0;0;False;0;False;8;8;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleAddOpNode;76;1834.535,-1264.427;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.SaturateNode;56;1966.01,-1264.285;Inherit;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;62;2210.546,-1287.918;Inherit;False;3;3;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;2;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;2;2356.05,-1287.03;Float;False;True;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;13;Sphere Noise;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;4;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;UniversalMaterialType=Unlit;True;3;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForwardOnly;False;False;0;;0;0;Standard;23;Surface;1;638317098231325254;  Blend;0;638325409849032209;Two Sided;1;0;Forward Only;0;0;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;10;False;True;True;True;False;False;True;True;True;True;False;;False;0
-Node;AmplifyShaderEditor.VertexColorNode;55;1994.547,-1042.892;Inherit;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.RangedFloatNode;78;1856.778,-1378.245;Inherit;False;Property;_Intensity;Intensity;13;0;Create;True;0;0;0;False;0;False;1;0;0;5;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;79;2217.675,-1122.466;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
-WireConnection;52;0;53;0
-WireConnection;52;1;30;0
-WireConnection;47;0;52;0
-WireConnection;47;1;33;0
-WireConnection;34;0;47;0
-WireConnection;34;1;36;0
-WireConnection;38;0;34;0
-WireConnection;38;1;39;0
-WireConnection;30;0;50;0
-WireConnection;30;1;63;0
-WireConnection;13;0;11;0
-WireConnection;13;1;14;0
-WireConnection;22;0;21;0
-WireConnection;22;1;12;0
-WireConnection;25;0;11;1
-WireConnection;25;4;26;0
-WireConnection;12;0;13;0
-WireConnection;12;1;20;0
-WireConnection;63;0;49;0
-WireConnection;63;1;65;4
-WireConnection;66;0;51;0
-WireConnection;66;1;65;3
-WireConnection;50;0;48;0
-WireConnection;50;2;66;0
-WireConnection;40;0;38;0
-WireConnection;43;0;41;0
-WireConnection;43;1;44;0
-WireConnection;41;0;40;0
-WireConnection;41;1;42;0
-WireConnection;45;0;43;0
-WireConnection;45;1;46;0
-WireConnection;54;0;45;0
-WireConnection;67;0;43;0
-WireConnection;67;1;68;0
-WireConnection;70;0;67;0
-WireConnection;74;0;70;0
-WireConnection;74;1;61;0
-WireConnection;73;0;75;0
-WireConnection;73;1;54;0
-WireConnection;76;0;73;0
-WireConnection;76;1;74;0
-WireConnection;56;0;76;0
-WireConnection;62;0;78;0
-WireConnection;62;1;56;0
-WireConnection;62;2;55;0
-WireConnection;2;2;62;0
-WireConnection;2;3;79;0
-WireConnection;79;0;56;0
-WireConnection;79;1;55;4
+Node;AmplifyShaderEditor.ColorNode;13;93.80442,-447.278;Inherit;False;Property;_Color;Color;0;1;[HDR];Create;True;0;0;0;False;0;False;1,1,1,0;0,0.5093145,1,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.ToggleSwitchNode;28;-41.62209,-264.4802;Inherit;False;Property;_UseDepthFade;Use Depth Fade;3;0;Create;True;0;0;0;False;0;False;0;True;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleSubtractOpNode;19;-1400.833,-261.4379;Inherit;True;2;0;FLOAT2;0,0;False;1;FLOAT;0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.TextureCoordinatesNode;20;-1613.809,-258.0734;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RangedFloatNode;21;-1612.553,-140.8414;Inherit;False;Constant;_Float0;Float 0;2;0;Create;True;0;0;0;False;0;False;0.5;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.DistanceOpNode;18;-1201.074,-261.6667;Inherit;True;2;0;FLOAT2;0,0;False;1;FLOAT2;0,0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.OneMinusNode;22;-991.0649,-260.8965;Inherit;True;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.PowerNode;23;-811.7584,-261.1196;Inherit;True;False;2;0;FLOAT;0;False;1;FLOAT;1;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;24;-585.652,-262.0217;Inherit;True;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;25;-982.026,-47.39595;Inherit;False;Property;_SphereSize;Sphere Size;1;0;Create;True;0;0;0;False;0;False;10;25.38;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;26;-807.1882,-47.24269;Inherit;False;Property;_SphereStrength;Sphere Strength;2;0;Create;True;0;0;0;False;0;False;50;1;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SaturateNode;27;-384.5861,-260.3841;Inherit;True;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;31;-208.3848,-113.3682;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;12;-614.993,-14.6629;Inherit;False;Property;_Distance;Distance;4;0;Create;True;0;0;0;False;0;False;15;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.DepthFade;11;-486.5776,-34.25203;Inherit;False;True;True;True;2;1;FLOAT3;0,0,0;False;0;FLOAT;1;False;1;FLOAT;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;468.1171,-191.011;Float;False;False;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;13;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Unlit;True;3;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;0;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.VertexColorNode;14;161.4933,-157.8484;Inherit;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;2;542.1859,-197.3597;Float;False;True;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;13;StreetLight;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;4;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;UniversalMaterialType=Unlit;True;3;True;12;all;0;False;True;1;1;False;;1;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForwardOnly;False;False;0;;0;0;Standard;23;Surface;1;638329591938832920;  Blend;2;638329598292494314;Two Sided;1;0;Forward Only;0;0;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;10;False;True;True;True;False;False;True;True;True;True;False;;False;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;15;360.9212,-284.7759;Inherit;False;3;3;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;2;COLOR;0,0,0,0;False;1;COLOR;0
+WireConnection;28;0;27;0
+WireConnection;28;1;31;0
+WireConnection;19;0;20;0
+WireConnection;19;1;21;0
+WireConnection;18;0;19;0
+WireConnection;22;0;18;0
+WireConnection;23;0;22;0
+WireConnection;23;1;25;0
+WireConnection;24;0;23;0
+WireConnection;24;1;26;0
+WireConnection;27;0;24;0
+WireConnection;31;0;27;0
+WireConnection;31;1;11;0
+WireConnection;11;0;12;0
+WireConnection;2;2;15;0
+WireConnection;2;3;14;4
+WireConnection;15;0;13;0
+WireConnection;15;1;28;0
+WireConnection;15;2;14;0
 ASEEND*/
-//CHKSM=4B601C884BF9151D4812C3E3348196CBBC684E2F
+//CHKSM=B7438DBF42D8DF5552E5D1F90E775F2E7EEAC75B
