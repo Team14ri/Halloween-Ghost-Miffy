@@ -462,6 +462,7 @@ GameObject:
   - component: {fileID: 344365831}
   - component: {fileID: 344365830}
   - component: {fileID: 344365832}
+  - component: {fileID: 344365833}
   m_Layer: 0
   m_Name: CM FreeLook
   m_TagString: Untagged
@@ -1065,6 +1066,23 @@ MonoBehaviour:
   cameraZoomTime: 0.8
   cameraZoomMinLength: 1
   cameraZoomMaxLength: 12
+--- !u!320 &344365833
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344365829}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: e52a7dea760a55046966b7b4a9e3751c, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings: []
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &351528424
 GameObject:
   m_ObjectHideFlags: 0
