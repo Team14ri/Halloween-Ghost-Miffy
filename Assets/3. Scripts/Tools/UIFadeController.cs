@@ -5,9 +5,17 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum UIFadeControllerMode
+{
+    None,
+    AutoFadeInAndOut,
+    FadeIn,
+    FadeOut
+}
+
 public class UIFadeController : MonoBehaviour
 {
-    [SerializeField] private bool runOnEnable = false;
+    [SerializeField] private UIFadeControllerMode modeOnEnable = UIFadeControllerMode.None;
     
     [SerializeField] private List<GameObject> activeTarget;
 
@@ -26,10 +34,20 @@ public class UIFadeController : MonoBehaviour
 
     private void OnEnable()
     {
-        if (!runOnEnable)
-            return;
-
-        AutoFadeInAndOut();
+        switch (modeOnEnable)
+        {
+            case UIFadeControllerMode.None:
+                break;
+            case UIFadeControllerMode.AutoFadeInAndOut:
+                AutoFadeInAndOut();
+                break;
+            case UIFadeControllerMode.FadeIn:
+                FadeIn();
+                break;
+            case UIFadeControllerMode.FadeOut:
+                FadeOut();
+                break;
+        }
     }
 
     public void AutoFadeInAndOut()
