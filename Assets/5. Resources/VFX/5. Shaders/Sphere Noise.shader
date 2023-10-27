@@ -15,7 +15,7 @@ Shader "Sphere Noise"
 		_Float5("Float 5", Float) = 8
 		[Toggle]_UseRamdomNoise("Use Ramdom Noise", Float) = 0
 		[Toggle]_UseRamdomSpeed("Use Ramdom Speed", Float) = 0
-		[ASEEnd]_Intensity("Intensity", Range( 0 , 5)) = 1
+		[ASEEnd]_Intensity("Intensity", Range( 0 , 10)) = 1
 
 
 		//_TessPhongStrength( "Tess Phong Strength", Range( 0, 1 ) ) = 0.5
@@ -448,12 +448,12 @@ Shader "Sphere Noise"
 				float2 temp_cast_1 = (0.5).xx;
 				float2 temp_cast_2 = (0.0).xx;
 				float temp_output_43_0 = ( pow( ( 1.0 - distance( ( ( ( _NoiseStrength * simplePerlin2D30 ) + texCoord33 ) - temp_cast_1 ) , temp_cast_2 ) ) , _SpherePower ) * _Float5 );
-				float4 temp_output_56_0 = saturate( ( ( 1.0 - step( temp_output_43_0 , _InnerStep ) ) * _InnerColor ) );
+				float4 temp_output_74_0 = ( ( 1.0 - step( temp_output_43_0 , _InnerStep ) ) * _InnerColor );
 				
 				float3 BakedAlbedo = 0;
 				float3 BakedEmission = 0;
-				float3 Color = ( _Intensity * temp_output_56_0 * IN.ase_color ).rgb;
-				float Alpha = ( temp_output_56_0 * IN.ase_color.a ).r;
+				float3 Color = ( _Intensity * temp_output_74_0 * IN.ase_color ).rgb;
+				float Alpha = ( saturate( temp_output_74_0 ) * IN.ase_color.a ).r;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -767,10 +767,10 @@ Shader "Sphere Noise"
 				float2 temp_cast_1 = (0.5).xx;
 				float2 temp_cast_2 = (0.0).xx;
 				float temp_output_43_0 = ( pow( ( 1.0 - distance( ( ( ( _NoiseStrength * simplePerlin2D30 ) + texCoord33 ) - temp_cast_1 ) , temp_cast_2 ) ) , _SpherePower ) * _Float5 );
-				float4 temp_output_56_0 = saturate( ( ( 1.0 - step( temp_output_43_0 , _InnerStep ) ) * _InnerColor ) );
+				float4 temp_output_74_0 = ( ( 1.0 - step( temp_output_43_0 , _InnerStep ) ) * _InnerColor );
 				
 
-				float Alpha = ( temp_output_56_0 * IN.ase_color.a ).r;
+				float Alpha = ( saturate( temp_output_74_0 ) * IN.ase_color.a ).r;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -1050,10 +1050,10 @@ Shader "Sphere Noise"
 				float2 temp_cast_1 = (0.5).xx;
 				float2 temp_cast_2 = (0.0).xx;
 				float temp_output_43_0 = ( pow( ( 1.0 - distance( ( ( ( _NoiseStrength * simplePerlin2D30 ) + texCoord33 ) - temp_cast_1 ) , temp_cast_2 ) ) , _SpherePower ) * _Float5 );
-				float4 temp_output_56_0 = saturate( ( ( 1.0 - step( temp_output_43_0 , _InnerStep ) ) * _InnerColor ) );
+				float4 temp_output_74_0 = ( ( 1.0 - step( temp_output_43_0 , _InnerStep ) ) * _InnerColor );
 				
 
-				float Alpha = ( temp_output_56_0 * IN.ase_color.a ).r;
+				float Alpha = ( saturate( temp_output_74_0 ) * IN.ase_color.a ).r;
 				float AlphaClipThreshold = 0.5;
 
 				#ifdef _ALPHATEST_ON
@@ -1312,10 +1312,10 @@ Shader "Sphere Noise"
 				float2 temp_cast_1 = (0.5).xx;
 				float2 temp_cast_2 = (0.0).xx;
 				float temp_output_43_0 = ( pow( ( 1.0 - distance( ( ( ( _NoiseStrength * simplePerlin2D30 ) + texCoord33 ) - temp_cast_1 ) , temp_cast_2 ) ) , _SpherePower ) * _Float5 );
-				float4 temp_output_56_0 = saturate( ( ( 1.0 - step( temp_output_43_0 , _InnerStep ) ) * _InnerColor ) );
+				float4 temp_output_74_0 = ( ( 1.0 - step( temp_output_43_0 , _InnerStep ) ) * _InnerColor );
 				
 
-				surfaceDescription.Alpha = ( temp_output_56_0 * IN.ase_color.a ).r;
+				surfaceDescription.Alpha = ( saturate( temp_output_74_0 ) * IN.ase_color.a ).r;
 				surfaceDescription.AlphaClipThreshold = 0.5;
 
 				#if _ALPHATEST_ON
@@ -1569,10 +1569,10 @@ Shader "Sphere Noise"
 				float2 temp_cast_1 = (0.5).xx;
 				float2 temp_cast_2 = (0.0).xx;
 				float temp_output_43_0 = ( pow( ( 1.0 - distance( ( ( ( _NoiseStrength * simplePerlin2D30 ) + texCoord33 ) - temp_cast_1 ) , temp_cast_2 ) ) , _SpherePower ) * _Float5 );
-				float4 temp_output_56_0 = saturate( ( ( 1.0 - step( temp_output_43_0 , _InnerStep ) ) * _InnerColor ) );
+				float4 temp_output_74_0 = ( ( 1.0 - step( temp_output_43_0 , _InnerStep ) ) * _InnerColor );
 				
 
-				surfaceDescription.Alpha = ( temp_output_56_0 * IN.ase_color.a ).r;
+				surfaceDescription.Alpha = ( saturate( temp_output_74_0 ) * IN.ase_color.a ).r;
 				surfaceDescription.AlphaClipThreshold = 0.5;
 
 				#if _ALPHATEST_ON
@@ -1840,10 +1840,10 @@ Shader "Sphere Noise"
 				float2 temp_cast_1 = (0.5).xx;
 				float2 temp_cast_2 = (0.0).xx;
 				float temp_output_43_0 = ( pow( ( 1.0 - distance( ( ( ( _NoiseStrength * simplePerlin2D30 ) + texCoord33 ) - temp_cast_1 ) , temp_cast_2 ) ) , _SpherePower ) * _Float5 );
-				float4 temp_output_56_0 = saturate( ( ( 1.0 - step( temp_output_43_0 , _InnerStep ) ) * _InnerColor ) );
+				float4 temp_output_74_0 = ( ( 1.0 - step( temp_output_43_0 , _InnerStep ) ) * _InnerColor );
 				
 
-				surfaceDescription.Alpha = ( temp_output_56_0 * IN.ase_color.a ).r;
+				surfaceDescription.Alpha = ( saturate( temp_output_74_0 ) * IN.ase_color.a ).r;
 				surfaceDescription.AlphaClipThreshold = 0.5;
 
 				#if _ALPHATEST_ON
@@ -2111,10 +2111,10 @@ Shader "Sphere Noise"
 				float2 temp_cast_1 = (0.5).xx;
 				float2 temp_cast_2 = (0.0).xx;
 				float temp_output_43_0 = ( pow( ( 1.0 - distance( ( ( ( _NoiseStrength * simplePerlin2D30 ) + texCoord33 ) - temp_cast_1 ) , temp_cast_2 ) ) , _SpherePower ) * _Float5 );
-				float4 temp_output_56_0 = saturate( ( ( 1.0 - step( temp_output_43_0 , _InnerStep ) ) * _InnerColor ) );
+				float4 temp_output_74_0 = ( ( 1.0 - step( temp_output_43_0 , _InnerStep ) ) * _InnerColor );
 				
 
-				surfaceDescription.Alpha = ( temp_output_56_0 * IN.ase_color.a ).r;
+				surfaceDescription.Alpha = ( saturate( temp_output_74_0 ) * IN.ase_color.a ).r;
 				surfaceDescription.AlphaClipThreshold = 0.5;
 
 				#if _ALPHATEST_ON
@@ -2187,9 +2187,7 @@ Node;AmplifyShaderEditor.StepOpNode;45;1384.323,-1238.929;Inherit;False;2;0;FLOA
 Node;AmplifyShaderEditor.OneMinusNode;54;1504.695,-1238.705;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.StepOpNode;67;1383.447,-1027.166;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.OneMinusNode;70;1501.836,-1026.55;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.ColorNode;75;1436.883,-1416.383;Inherit;False;Property;_OuterColor;Outer Color;3;0;Create;True;0;0;0;False;0;False;0.5921569,0.854902,0.7529413,1;1,1,1,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;74;1667.896,-1026.03;Inherit;False;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.ColorNode;61;1446.338,-936.4169;Inherit;False;Property;_InnerColor;Inner Color;2;0;Create;True;0;0;0;False;0;False;0.9960785,0.9960785,0.9960785,1;1,1,1,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;73;1680.581,-1262.304;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.RangedFloatNode;68;1152.64,-876.6541;Inherit;False;Property;_InnerStep;Inner Step;4;0;Create;True;0;0;0;False;0;False;0.25;0.1;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;46;1149.771,-1025.792;Inherit;False;Property;_OuterStep;Outer Step;5;0;Create;True;0;0;0;False;0;False;0.1;0.1;0;0;0;1;FLOAT;0
@@ -2199,8 +2197,10 @@ Node;AmplifyShaderEditor.SaturateNode;56;1966.01,-1264.285;Inherit;True;1;0;COLO
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;62;2210.546,-1287.918;Inherit;False;3;3;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;2;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;2;2356.05,-1287.03;Float;False;True;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;13;Sphere Noise;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;4;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;UniversalMaterialType=Unlit;True;3;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForwardOnly;False;False;0;;0;0;Standard;23;Surface;1;638317098231325254;  Blend;0;638325409849032209;Two Sided;1;0;Forward Only;0;0;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;10;False;True;True;True;False;False;True;True;True;True;False;;False;0
 Node;AmplifyShaderEditor.VertexColorNode;55;1994.547,-1042.892;Inherit;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.RangedFloatNode;78;1856.778,-1378.245;Inherit;False;Property;_Intensity;Intensity;13;0;Create;True;0;0;0;False;0;False;1;0;0;5;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;78;1856.778,-1378.245;Inherit;False;Property;_Intensity;Intensity;13;0;Create;True;0;0;0;False;0;False;1;0;0;10;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;79;2217.675,-1122.466;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
+Node;AmplifyShaderEditor.ColorNode;75;1436.883,-1416.383;Inherit;False;Property;_OuterColor;Outer Color;3;1;[HDR];Create;True;0;0;0;False;0;False;0.5921569,0.854902,0.7529413,1;1,1,1,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.ColorNode;61;1446.338,-936.4169;Inherit;False;Property;_InnerColor;Inner Color;2;0;Create;True;0;0;0;False;0;False;0.9960785,0.9960785,0.9960785,1;1,1,1,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 WireConnection;52;0;53;0
 WireConnection;52;1;30;0
 WireConnection;47;0;52;0
@@ -2243,11 +2243,11 @@ WireConnection;73;1;54;0
 WireConnection;76;0;73;0
 WireConnection;56;0;74;0
 WireConnection;62;0;78;0
-WireConnection;62;1;56;0
+WireConnection;62;1;74;0
 WireConnection;62;2;55;0
 WireConnection;2;2;62;0
 WireConnection;2;3;79;0
 WireConnection;79;0;56;0
 WireConnection;79;1;55;4
 ASEEND*/
-//CHKSM=7DDCC82E2D4002DE532BE45BF93A2C9B46004068
+//CHKSM=8946D9B3EA021080A7EB7C3ABA300A34E1DC127E
