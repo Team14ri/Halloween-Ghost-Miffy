@@ -8,14 +8,16 @@ public class PlayerMovingState : IState
 
     private Animator animator;
     
+    private readonly int IdleState;
     private readonly int MovingState;
-    
+
     public PlayerMovingState(PlayerController player, StateMachine stateMachine)
     {
         this.player = player;
         this.stateMachine = stateMachine;
         animator = player.model.GetComponent<Animator>();
         
+        IdleState = Animator.StringToHash("Miffy@Idle");
         MovingState = Animator.StringToHash("Miffy@Move_Connect");
     }
     
@@ -63,18 +65,12 @@ public class PlayerMovingState : IState
 
         if (player.MovementInput.x == 0f)
             return;
-
-        float newScaleX = MathF.Abs(player.model.transform.localScale.x);
-        newScaleX *= player.MovementInput.x < 0f ? -1f : 1f;
         
-        player.model.transform.localScale = new Vector3(
-            newScaleX, 
-            player.model.transform.localScale.y, 
-            player.model.transform.localScale.z);
+        player.ChangePlayerFacing(player.MovementInput.x < 0f ? -1 : 1);
     }
 
     public void Exit()
     {
-        // Todo: 이동 애니메이션 정지 등 정리
+        SetAnimation(IdleState);
     }
 }
