@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SceneTransitionController : MonoBehaviour
 {
-    [SerializeField] private bool initOpenOnEnable = false;
+    [SerializeField] private bool initOpenOnEnable;
 
     [SerializeField] private RectTransform transitionUI;
 
@@ -31,6 +31,11 @@ public class SceneTransitionController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        IrisOpen(null);
     }
 
     private void OnEnable()

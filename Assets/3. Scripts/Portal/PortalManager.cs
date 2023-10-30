@@ -4,10 +4,9 @@ using UnityEngine;
 public class PortalManager : MonoBehaviour
 {
     public static PortalManager Instance { get; private set; }
-    public GameObject Player { get; private set; }
+
+    private GameObject Player { get; set; }
     
-    [Tooltip("포탈이 활성화 되는 거리 (반지름)")]
-    public float portalActivationRange = 5.0f;
     public readonly Dictionary<int, Portal> PortalDictionary = new();
 
     private void Awake()
@@ -19,7 +18,8 @@ public class PortalManager : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            transform.parent = null;
+            DontDestroyOnLoad(transform.gameObject);
             FindPlayer();
         }
     }
