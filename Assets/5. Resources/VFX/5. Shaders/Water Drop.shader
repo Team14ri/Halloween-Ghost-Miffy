@@ -1,30 +1,19 @@
 // Made with Amplify Shader Editor v1.9.1.5
 // Available at the Unity Asset Store - http://u3d.as/y3X 
-Shader "Water"
+Shader "Water Drop"
 {
 	Properties
 	{
-		[HideInInspector] _EmissionColor("Emission Color", Color) = (1,1,1,1)
 		[HideInInspector] _AlphaCutoff("Alpha Cutoff ", Range(0, 1)) = 0.5
-		[ASEBegin][HDR]_WaterColor("Water Color", Color) = (0,1.011765,1.498039,0.5490196)
-		[HDR]_DeepWaterColor("Deep Water Color", Color) = (0,0.25,1,1)
-		_WaterDistance("Water Distance", Range( 0 , 5)) = 1
-		[HDR]_WaterLineColor("Water Line Color", Color) = (1,1,1,1)
-		_WaterLineScale("Water Line Scale", Float) = 25
-		_WaterLineSpeed("Water Line Speed", Range( 0 , 1)) = 0
-		_WaterLineDistance("Water Line Distance", Float) = 0.2
-		_NormalTexture("Normal Texture", 2D) = "bump" {}
-		_NormalScale("Normal Scale", Float) = 0.2
-		_NormalTiling("Normal Tiling", Float) = 1.5
-		_NormalSpeed("Normal Speed", Vector) = (0.1,0,0,0)
-		_WaveMaskTexture("Wave Mask Texture", 2D) = "white" {}
-		_WaveNoise("Wave Noise", Float) = 1.5
-		_WaveSpeed("Wave Speed", Vector) = (0.2,0.2,0,0)
-		_WaveHeight("Wave Height", Float) = 0.3
+		[HideInInspector] _EmissionColor("Emission Color", Color) = (1,1,1,1)
+		[ASEBegin]_Color("Color", Color) = (0.6179246,1,0.978667,0.6156863)
+		_FresnelPower("Fresnel Power", Float) = 1.98
+		_FresnelScale("Fresnel Scale", Float) = 1.98
+		_Smoothness("Smoothness", Range( 0 , 1)) = 1
 		_NormalNoiseTexture("Normal Noise Texture", 2D) = "bump" {}
 		_NormalNoiseStrength("Normal Noise Strength", Range( 0 , 1)) = 0.2
+		_NormalTiling("Normal Tiling", Vector) = (0.5,0.5,0,0)
 		[ASEEnd]_NormalNoiseSpeed("Normal Noise Speed", Range( 0 , 1)) = 0.02
-		[HideInInspector] _texcoord( "", 2D ) = "white" {}
 
 
 		//_TransmissionShadow( "Transmission Shadow", Range( 0, 1 ) ) = 0.5
@@ -185,9 +174,9 @@ Shader "Water"
 		{
 			
 			Name "Forward"
-			Tags { "LightMode"="UniversalForwardOnly" }
+			Tags { "LightMode"="UniversalForward" }
 
-			Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
+			Blend One One, One OneMinusSrcAlpha
 			ZWrite On
 			ZTest LEqual
 			Offset 0 , 0
@@ -205,10 +194,9 @@ Shader "Water"
 			#define ASE_FOG 1
 			#define _SURFACE_TYPE_TRANSPARENT 1
 			#define _RECEIVE_SHADOWS_OFF 1
-			#define _EMISSION
+			#define _NORMALMAP 1
 			#define ASE_SRP_VERSION 120110
 			#define REQUIRE_OPAQUE_TEXTURE 1
-			#define REQUIRE_DEPTH_TEXTURE 1
 
 
 			#pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
@@ -253,9 +241,10 @@ Shader "Water"
 				#define ENABLE_TERRAIN_PERPIXEL_NORMAL
 			#endif
 
-			#define ASE_NEEDS_VERT_POSITION
-			#define ASE_NEEDS_VERT_NORMAL
+			#define ASE_NEEDS_FRAG_WORLD_VIEW_DIR
+			#define ASE_NEEDS_FRAG_WORLD_NORMAL
 			#define ASE_NEEDS_FRAG_SCREEN_POSITION
+			#define ASE_NEEDS_FRAG_COLOR
 
 
 			struct VertexInput
@@ -266,7 +255,7 @@ Shader "Water"
 				float4 texcoord : TEXCOORD0;
 				float4 texcoord1 : TEXCOORD1;
 				float4 texcoord2 : TEXCOORD2;
-				
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -287,28 +276,20 @@ Shader "Water"
 				#if defined(DYNAMICLIGHTMAP_ON)
 					float2 dynamicLightmapUV : TEXCOORD7;
 				#endif
+				float4 ase_color : COLOR;
 				float4 ase_texcoord8 : TEXCOORD8;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _WaveMaskTexture_ST;
-			float4 _DeepWaterColor;
-			float4 _WaterColor;
-			float4 _WaterLineColor;
-			float2 _WaveSpeed;
-			float2 _NormalSpeed;
-			float _WaveNoise;
-			float _WaveHeight;
-			float _NormalTiling;
-			float _NormalScale;
-			float _WaterDistance;
-			float _WaterLineDistance;
-			float _WaterLineSpeed;
-			float _WaterLineScale;
+			float4 _Color;
+			float2 _NormalTiling;
+			float _FresnelScale;
+			float _FresnelPower;
 			float _NormalNoiseSpeed;
 			float _NormalNoiseStrength;
+			float _Smoothness;
 			#ifdef ASE_TRANSMISSION
 				float _TransmissionShadow;
 			#endif
@@ -341,9 +322,6 @@ Shader "Water"
 				int _PassValue;
 			#endif
 
-			sampler2D _WaveMaskTexture;
-			sampler2D _NormalTexture;
-			uniform float4 _CameraDepthTexture_TexelSize;
 			sampler2D _NormalNoiseTexture;
 
 
@@ -354,34 +332,6 @@ Shader "Water"
 			//#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/VisualEffectVertex.hlsl"
 			//#endif
 
-			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float3 permute( float3 x ) { return mod2D289( ( ( x * 34.0 ) + 1.0 ) * x ); }
-			float snoise( float2 v )
-			{
-				const float4 C = float4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
-				float2 i = floor( v + dot( v, C.yy ) );
-				float2 x0 = v - i + dot( i, C.xx );
-				float2 i1;
-				i1 = ( x0.x > x0.y ) ? float2( 1.0, 0.0 ) : float2( 0.0, 1.0 );
-				float4 x12 = x0.xyxy + C.xxzz;
-				x12.xy -= i1;
-				i = mod2D289( i );
-				float3 p = permute( permute( i.y + float3( 0.0, i1.y, 1.0 ) ) + i.x + float3( 0.0, i1.x, 1.0 ) );
-				float3 m = max( 0.5 - float3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
-				m = m * m;
-				m = m * m;
-				float3 x = 2.0 * frac( p * C.www ) - 1.0;
-				float3 h = abs( x ) - 0.5;
-				float3 ox = floor( x + 0.5 );
-				float3 a0 = x - ox;
-				m *= 1.79284291400159 - 0.85373472095314 * ( a0 * a0 + h * h );
-				float3 g;
-				g.x = a0.x * x0.x + h.x * x0.y;
-				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-				return 130.0 * dot( m, g );
-			}
-			
 			inline float4 ASE_ComputeGrabScreenPos( float4 pos )
 			{
 				#if UNITY_UV_STARTS_AT_TOP
@@ -395,53 +345,6 @@ Shader "Water"
 				return o;
 			}
 			
-			float3 mod3D289( float3 x ) { return x - floor( x / 289.0 ) * 289.0; }
-			float4 mod3D289( float4 x ) { return x - floor( x / 289.0 ) * 289.0; }
-			float4 permute( float4 x ) { return mod3D289( ( x * 34.0 + 1.0 ) * x ); }
-			float4 taylorInvSqrt( float4 r ) { return 1.79284291400159 - r * 0.85373472095314; }
-			float snoise( float3 v )
-			{
-				const float2 C = float2( 1.0 / 6.0, 1.0 / 3.0 );
-				float3 i = floor( v + dot( v, C.yyy ) );
-				float3 x0 = v - i + dot( i, C.xxx );
-				float3 g = step( x0.yzx, x0.xyz );
-				float3 l = 1.0 - g;
-				float3 i1 = min( g.xyz, l.zxy );
-				float3 i2 = max( g.xyz, l.zxy );
-				float3 x1 = x0 - i1 + C.xxx;
-				float3 x2 = x0 - i2 + C.yyy;
-				float3 x3 = x0 - 0.5;
-				i = mod3D289( i);
-				float4 p = permute( permute( permute( i.z + float4( 0.0, i1.z, i2.z, 1.0 ) ) + i.y + float4( 0.0, i1.y, i2.y, 1.0 ) ) + i.x + float4( 0.0, i1.x, i2.x, 1.0 ) );
-				float4 j = p - 49.0 * floor( p / 49.0 );  // mod(p,7*7)
-				float4 x_ = floor( j / 7.0 );
-				float4 y_ = floor( j - 7.0 * x_ );  // mod(j,N)
-				float4 x = ( x_ * 2.0 + 0.5 ) / 7.0 - 1.0;
-				float4 y = ( y_ * 2.0 + 0.5 ) / 7.0 - 1.0;
-				float4 h = 1.0 - abs( x ) - abs( y );
-				float4 b0 = float4( x.xy, y.xy );
-				float4 b1 = float4( x.zw, y.zw );
-				float4 s0 = floor( b0 ) * 2.0 + 1.0;
-				float4 s1 = floor( b1 ) * 2.0 + 1.0;
-				float4 sh = -step( h, 0.0 );
-				float4 a0 = b0.xzyw + s0.xzyw * sh.xxyy;
-				float4 a1 = b1.xzyw + s1.xzyw * sh.zzww;
-				float3 g0 = float3( a0.xy, h.x );
-				float3 g1 = float3( a0.zw, h.y );
-				float3 g2 = float3( a1.xy, h.z );
-				float3 g3 = float3( a1.zw, h.w );
-				float4 norm = taylorInvSqrt( float4( dot( g0, g0 ), dot( g1, g1 ), dot( g2, g2 ), dot( g3, g3 ) ) );
-				g0 *= norm.x;
-				g1 *= norm.y;
-				g2 *= norm.z;
-				g3 *= norm.w;
-				float4 m = max( 0.6 - float4( dot( x0, x0 ), dot( x1, x1 ), dot( x2, x2 ), dot( x3, x3 ) ), 0.0 );
-				m = m* m;
-				m = m* m;
-				float4 px = float4( dot( x0, g0 ), dot( x1, g1 ), dot( x2, g2 ), dot( x3, g3 ) );
-				return 42.0 * dot( m, px);
-			}
-			
 
 			VertexOutput VertexFunction( VertexInput v  )
 			{
@@ -450,12 +353,7 @@ Shader "Water"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float2 texCoord593 = v.texcoord.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner485 = ( 1.0 * _Time.y * _WaveSpeed + texCoord593);
-				float simplePerlin2D480 = snoise( ( float3( panner485 ,  0.0 ) + v.vertex.xyz ).xy*_WaveNoise );
-				simplePerlin2D480 = simplePerlin2D480*0.5 + 0.5;
-				float2 uv_WaveMaskTexture = v.texcoord.xy * _WaveMaskTexture_ST.xy + _WaveMaskTexture_ST.zw;
-				
+				o.ase_color = v.ase_color;
 				o.ase_texcoord8.xy = v.texcoord.xy;
 				
 				//setting value to unused interpolator channels and avoid initialization warnings
@@ -467,7 +365,7 @@ Shader "Water"
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
 
-				float3 vertexValue = ( float4( ( simplePerlin2D480 * v.ase_normal * _WaveHeight ) , 0.0 ) * tex2Dlod( _WaveMaskTexture, float4( uv_WaveMaskTexture, 0, 0.0) ) ).rgb;
+				float3 vertexValue = defaultVertexValue;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
@@ -538,7 +436,8 @@ Shader "Water"
 				float4 texcoord : TEXCOORD0;
 				float4 texcoord1 : TEXCOORD1;
 				float4 texcoord2 : TEXCOORD2;
-				
+				float4 ase_color : COLOR;
+
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -559,7 +458,7 @@ Shader "Water"
 				o.texcoord = v.texcoord;
 				o.texcoord1 = v.texcoord1;
 				o.texcoord2 = v.texcoord2;
-				
+				o.ase_color = v.ase_color;
 				return o;
 			}
 
@@ -602,7 +501,7 @@ Shader "Water"
 				o.texcoord = patch[0].texcoord * bary.x + patch[1].texcoord * bary.y + patch[2].texcoord * bary.z;
 				o.texcoord1 = patch[0].texcoord1 * bary.x + patch[1].texcoord1 * bary.y + patch[2].texcoord1 * bary.z;
 				o.texcoord2 = patch[0].texcoord2 * bary.x + patch[1].texcoord2 * bary.y + patch[2].texcoord2 * bary.z;
-				
+				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -668,45 +567,25 @@ Shader "Water"
 
 				WorldViewDirection = SafeNormalize( WorldViewDirection );
 
+				float fresnelNdotV1 = dot( WorldNormal, WorldViewDirection );
+				float fresnelNode1 = ( 0.0 + _FresnelScale * pow( 1.0 - fresnelNdotV1, _FresnelPower ) );
+				
 				float4 ase_grabScreenPos = ASE_ComputeGrabScreenPos( ScreenPos );
 				float4 ase_grabScreenPosNorm = ase_grabScreenPos / ase_grabScreenPos.w;
-				float2 temp_cast_0 = (_NormalTiling).xx;
-				float2 texCoord533 = IN.ase_texcoord8.xy * temp_cast_0 + float2( 0,0 );
-				float2 panner531 = ( 1.0 * _Time.y * _NormalSpeed + texCoord533);
-				float3 unpack536 = UnpackNormalScale( tex2D( _NormalTexture, panner531 ), _NormalScale );
-				unpack536.z = lerp( 1, unpack536.z, saturate(_NormalScale) );
-				float4 fetchOpaqueVal542 = float4( SHADERGRAPH_SAMPLE_SCENE_COLOR( ( ase_grabScreenPosNorm + float4( unpack536 , 0.0 ) ).xy ), 1.0 );
-				float4 temp_cast_3 = (( fetchOpaqueVal542.r + fetchOpaqueVal542.g + fetchOpaqueVal542.b )).xxxx;
-				float4 ase_screenPosNorm = ScreenPos / ScreenPos.w;
-				ase_screenPosNorm.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm.z : ase_screenPosNorm.z * 0.5 + 0.5;
-				float screenDepth335 = LinearEyeDepth(SHADERGRAPH_SAMPLE_SCENE_DEPTH( ase_screenPosNorm.xy ),_ZBufferParams);
-				float distanceDepth335 = saturate( abs( ( screenDepth335 - LinearEyeDepth( ase_screenPosNorm.z,_ZBufferParams ) ) / ( _WaterDistance ) ) );
-				float4 lerpResult294 = lerp( _DeepWaterColor , _WaterColor , distanceDepth335);
-				float screenDepth623 = LinearEyeDepth(SHADERGRAPH_SAMPLE_SCENE_DEPTH( ase_screenPosNorm.xy ),_ZBufferParams);
-				float distanceDepth623 = saturate( abs( ( screenDepth623 - LinearEyeDepth( ase_screenPosNorm.z,_ZBufferParams ) ) / ( _WaterLineDistance ) ) );
-				float2 temp_cast_4 = (_WaterLineSpeed).xx;
-				float2 texCoord610 = IN.ase_texcoord8.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner608 = ( 1.0 * _Time.y * temp_cast_4 + texCoord610);
-				float simplePerlin3D607 = snoise( float3( panner608 ,  0.0 )*_WaterLineScale );
-				simplePerlin3D607 = simplePerlin3D607*0.5 + 0.5;
-				float4 color617 = IsGammaSpace() ? float4(1,1,1,1) : float4(1,1,1,1);
-				float4 lerpResult618 = lerp( lerpResult294 , _WaterLineColor , ( step( distanceDepth623 , simplePerlin3D607 ) * color617.a ));
-				float4 lerpResult549 = lerp( temp_cast_3 , lerpResult618 , lerpResult618.a);
-				
-				float2 temp_cast_7 = (_NormalNoiseSpeed).xx;
-				float2 texCoord671 = IN.ase_texcoord8.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner673 = ( 1.0 * _Time.y * temp_cast_7 + texCoord671);
-				float4 fetchOpaqueVal665 = float4( SHADERGRAPH_SAMPLE_SCENE_COLOR( ( ase_grabScreenPosNorm + float4( ( UnpackNormalScale( tex2D( _NormalNoiseTexture, panner673 ), 1.0f ) * _NormalNoiseStrength ) , 0.0 ) ).xy ), 1.0 );
+				float2 temp_cast_1 = (_NormalNoiseSpeed).xx;
+				float2 texCoord74 = IN.ase_texcoord8.xy * _NormalTiling + float2( 0,0 );
+				float2 panner75 = ( 1.0 * _Time.y * temp_cast_1 + texCoord74);
+				float4 fetchOpaqueVal73 = float4( SHADERGRAPH_SAMPLE_SCENE_COLOR( ( ase_grabScreenPosNorm + float4( ( UnpackNormalScale( tex2D( _NormalNoiseTexture, panner75 ), 1.0f ) * _NormalNoiseStrength ) , 0.0 ) ).xy ), 1.0 );
 				
 
-				float3 BaseColor = ( lerpResult549 + float4( 0,0,0,0 ) ).rgb;
-				float3 Normal = float3(0, 0, 1);
-				float3 Emission = fetchOpaqueVal665.rgb;
+				float3 BaseColor = ( ( fresnelNode1 + _Color ) * IN.ase_color ).rgb;
+				float3 Normal = fetchOpaqueVal73.rgb;
+				float3 Emission = 0;
 				float3 Specular = 0.5;
 				float Metallic = 0;
-				float Smoothness = 0.5;
+				float Smoothness = _Smoothness;
 				float Occlusion = 1;
-				float Alpha = 1;
+				float Alpha = IN.ase_color.a;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 				float3 BakedGI = 0;
@@ -922,7 +801,7 @@ Shader "Water"
 			#define ASE_FOG 1
 			#define _SURFACE_TYPE_TRANSPARENT 1
 			#define _RECEIVE_SHADOWS_OFF 1
-			#define _EMISSION
+			#define _NORMALMAP 1
 			#define ASE_SRP_VERSION 120110
 
 
@@ -942,15 +821,13 @@ Shader "Water"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
 
-			#define ASE_NEEDS_VERT_POSITION
-			#define ASE_NEEDS_VERT_NORMAL
-
+			
 
 			struct VertexInput
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -963,28 +840,19 @@ Shader "Water"
 				#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR) && defined(ASE_NEEDS_FRAG_SHADOWCOORDS)
 					float4 shadowCoord : TEXCOORD1;
 				#endif
-				
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _WaveMaskTexture_ST;
-			float4 _DeepWaterColor;
-			float4 _WaterColor;
-			float4 _WaterLineColor;
-			float2 _WaveSpeed;
-			float2 _NormalSpeed;
-			float _WaveNoise;
-			float _WaveHeight;
-			float _NormalTiling;
-			float _NormalScale;
-			float _WaterDistance;
-			float _WaterLineDistance;
-			float _WaterLineSpeed;
-			float _WaterLineScale;
+			float4 _Color;
+			float2 _NormalTiling;
+			float _FresnelScale;
+			float _FresnelPower;
 			float _NormalNoiseSpeed;
 			float _NormalNoiseStrength;
+			float _Smoothness;
 			#ifdef ASE_TRANSMISSION
 				float _TransmissionShadow;
 			#endif
@@ -1017,8 +885,7 @@ Shader "Water"
 				int _PassValue;
 			#endif
 
-			sampler2D _WaveMaskTexture;
-
+			
 
 			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/Varyings.hlsl"
 			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShadowCasterPass.hlsl"
@@ -1027,35 +894,7 @@ Shader "Water"
 			//#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/VisualEffectVertex.hlsl"
 			//#endif
 
-			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float3 permute( float3 x ) { return mod2D289( ( ( x * 34.0 ) + 1.0 ) * x ); }
-			float snoise( float2 v )
-			{
-				const float4 C = float4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
-				float2 i = floor( v + dot( v, C.yy ) );
-				float2 x0 = v - i + dot( i, C.xx );
-				float2 i1;
-				i1 = ( x0.x > x0.y ) ? float2( 1.0, 0.0 ) : float2( 0.0, 1.0 );
-				float4 x12 = x0.xyxy + C.xxzz;
-				x12.xy -= i1;
-				i = mod2D289( i );
-				float3 p = permute( permute( i.y + float3( 0.0, i1.y, 1.0 ) ) + i.x + float3( 0.0, i1.x, 1.0 ) );
-				float3 m = max( 0.5 - float3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
-				m = m * m;
-				m = m * m;
-				float3 x = 2.0 * frac( p * C.www ) - 1.0;
-				float3 h = abs( x ) - 0.5;
-				float3 ox = floor( x + 0.5 );
-				float3 a0 = x - ox;
-				m *= 1.79284291400159 - 0.85373472095314 * ( a0 * a0 + h * h );
-				float3 g;
-				g.x = a0.x * x0.x + h.x * x0.y;
-				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-				return 130.0 * dot( m, g );
-			}
 			
-
 			float3 _LightDirection;
 			float3 _LightPosition;
 
@@ -1066,12 +905,7 @@ Shader "Water"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
-				float2 texCoord593 = v.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner485 = ( 1.0 * _Time.y * _WaveSpeed + texCoord593);
-				float simplePerlin2D480 = snoise( ( float3( panner485 ,  0.0 ) + v.vertex.xyz ).xy*_WaveNoise );
-				simplePerlin2D480 = simplePerlin2D480*0.5 + 0.5;
-				float2 uv_WaveMaskTexture = v.ase_texcoord.xy * _WaveMaskTexture_ST.xy + _WaveMaskTexture_ST.zw;
-				
+				o.ase_color = v.ase_color;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -1079,7 +913,7 @@ Shader "Water"
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
 
-				float3 vertexValue = ( float4( ( simplePerlin2D480 * v.ase_normal * _WaveHeight ) , 0.0 ) * tex2Dlod( _WaveMaskTexture, float4( uv_WaveMaskTexture, 0, 0.0) ) ).rgb;
+				float3 vertexValue = defaultVertexValue;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
@@ -1127,7 +961,7 @@ Shader "Water"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
+				float4 ase_color : COLOR;
 
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -1145,7 +979,7 @@ Shader "Water"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				o.ase_texcoord = v.ase_texcoord;
+				o.ase_color = v.ase_color;
 				return o;
 			}
 
@@ -1184,7 +1018,7 @@ Shader "Water"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
+				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -1233,7 +1067,7 @@ Shader "Water"
 
 				
 
-				float Alpha = 1;
+				float Alpha = IN.ase_color.a;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -1281,7 +1115,7 @@ Shader "Water"
 			#define ASE_FOG 1
 			#define _SURFACE_TYPE_TRANSPARENT 1
 			#define _RECEIVE_SHADOWS_OFF 1
-			#define _EMISSION
+			#define _NORMALMAP 1
 			#define ASE_SRP_VERSION 120110
 
 
@@ -1299,15 +1133,13 @@ Shader "Water"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
 
-			#define ASE_NEEDS_VERT_POSITION
-			#define ASE_NEEDS_VERT_NORMAL
-
+			
 
 			struct VertexInput
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1320,28 +1152,19 @@ Shader "Water"
 				#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR) && defined(ASE_NEEDS_FRAG_SHADOWCOORDS)
 				float4 shadowCoord : TEXCOORD1;
 				#endif
-				
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _WaveMaskTexture_ST;
-			float4 _DeepWaterColor;
-			float4 _WaterColor;
-			float4 _WaterLineColor;
-			float2 _WaveSpeed;
-			float2 _NormalSpeed;
-			float _WaveNoise;
-			float _WaveHeight;
-			float _NormalTiling;
-			float _NormalScale;
-			float _WaterDistance;
-			float _WaterLineDistance;
-			float _WaterLineSpeed;
-			float _WaterLineScale;
+			float4 _Color;
+			float2 _NormalTiling;
+			float _FresnelScale;
+			float _FresnelPower;
 			float _NormalNoiseSpeed;
 			float _NormalNoiseStrength;
+			float _Smoothness;
 			#ifdef ASE_TRANSMISSION
 				float _TransmissionShadow;
 			#endif
@@ -1374,8 +1197,7 @@ Shader "Water"
 				int _PassValue;
 			#endif
 
-			sampler2D _WaveMaskTexture;
-
+			
 
 			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/Varyings.hlsl"
 			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/DepthOnlyPass.hlsl"
@@ -1384,35 +1206,7 @@ Shader "Water"
 			//#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/VisualEffectVertex.hlsl"
 			//#endif
 
-			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float3 permute( float3 x ) { return mod2D289( ( ( x * 34.0 ) + 1.0 ) * x ); }
-			float snoise( float2 v )
-			{
-				const float4 C = float4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
-				float2 i = floor( v + dot( v, C.yy ) );
-				float2 x0 = v - i + dot( i, C.xx );
-				float2 i1;
-				i1 = ( x0.x > x0.y ) ? float2( 1.0, 0.0 ) : float2( 0.0, 1.0 );
-				float4 x12 = x0.xyxy + C.xxzz;
-				x12.xy -= i1;
-				i = mod2D289( i );
-				float3 p = permute( permute( i.y + float3( 0.0, i1.y, 1.0 ) ) + i.x + float3( 0.0, i1.x, 1.0 ) );
-				float3 m = max( 0.5 - float3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
-				m = m * m;
-				m = m * m;
-				float3 x = 2.0 * frac( p * C.www ) - 1.0;
-				float3 h = abs( x ) - 0.5;
-				float3 ox = floor( x + 0.5 );
-				float3 a0 = x - ox;
-				m *= 1.79284291400159 - 0.85373472095314 * ( a0 * a0 + h * h );
-				float3 g;
-				g.x = a0.x * x0.x + h.x * x0.y;
-				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-				return 130.0 * dot( m, g );
-			}
 			
-
 			VertexOutput VertexFunction( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -1420,12 +1214,7 @@ Shader "Water"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float2 texCoord593 = v.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner485 = ( 1.0 * _Time.y * _WaveSpeed + texCoord593);
-				float simplePerlin2D480 = snoise( ( float3( panner485 ,  0.0 ) + v.vertex.xyz ).xy*_WaveNoise );
-				simplePerlin2D480 = simplePerlin2D480*0.5 + 0.5;
-				float2 uv_WaveMaskTexture = v.ase_texcoord.xy * _WaveMaskTexture_ST.xy + _WaveMaskTexture_ST.zw;
-				
+				o.ase_color = v.ase_color;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -1433,7 +1222,7 @@ Shader "Water"
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
 
-				float3 vertexValue = ( float4( ( simplePerlin2D480 * v.ase_normal * _WaveHeight ) , 0.0 ) * tex2Dlod( _WaveMaskTexture, float4( uv_WaveMaskTexture, 0, 0.0) ) ).rgb;
+				float3 vertexValue = defaultVertexValue;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
@@ -1466,7 +1255,7 @@ Shader "Water"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
+				float4 ase_color : COLOR;
 
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -1484,7 +1273,7 @@ Shader "Water"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				o.ase_texcoord = v.ase_texcoord;
+				o.ase_color = v.ase_color;
 				return o;
 			}
 
@@ -1523,7 +1312,7 @@ Shader "Water"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
+				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -1572,7 +1361,7 @@ Shader "Water"
 
 				
 
-				float Alpha = 1;
+				float Alpha = IN.ase_color.a;
 				float AlphaClipThreshold = 0.5;
 				#ifdef ASE_DEPTH_WRITE_ON
 					float DepthValue = 0;
@@ -1610,10 +1399,8 @@ Shader "Water"
 			#define ASE_FOG 1
 			#define _SURFACE_TYPE_TRANSPARENT 1
 			#define _RECEIVE_SHADOWS_OFF 1
-			#define _EMISSION
+			#define _NORMALMAP 1
 			#define ASE_SRP_VERSION 120110
-			#define REQUIRE_OPAQUE_TEXTURE 1
-			#define REQUIRE_DEPTH_TEXTURE 1
 
 
 			#pragma vertex vert
@@ -1633,8 +1420,9 @@ Shader "Water"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/MetaInput.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
 
-			#define ASE_NEEDS_VERT_POSITION
+			#define ASE_NEEDS_FRAG_WORLD_POSITION
 			#define ASE_NEEDS_VERT_NORMAL
+			#define ASE_NEEDS_FRAG_COLOR
 
 
 			struct VertexInput
@@ -1644,7 +1432,7 @@ Shader "Water"
 				float4 texcoord0 : TEXCOORD0;
 				float4 texcoord1 : TEXCOORD1;
 				float4 texcoord2 : TEXCOORD2;
-				
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1662,28 +1450,19 @@ Shader "Water"
 					float4 LightCoord : TEXCOORD3;
 				#endif
 				float4 ase_texcoord4 : TEXCOORD4;
-				float4 ase_texcoord5 : TEXCOORD5;
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _WaveMaskTexture_ST;
-			float4 _DeepWaterColor;
-			float4 _WaterColor;
-			float4 _WaterLineColor;
-			float2 _WaveSpeed;
-			float2 _NormalSpeed;
-			float _WaveNoise;
-			float _WaveHeight;
-			float _NormalTiling;
-			float _NormalScale;
-			float _WaterDistance;
-			float _WaterLineDistance;
-			float _WaterLineSpeed;
-			float _WaterLineScale;
+			float4 _Color;
+			float2 _NormalTiling;
+			float _FresnelScale;
+			float _FresnelPower;
 			float _NormalNoiseSpeed;
 			float _NormalNoiseStrength;
+			float _Smoothness;
 			#ifdef ASE_TRANSMISSION
 				float _TransmissionShadow;
 			#endif
@@ -1716,11 +1495,7 @@ Shader "Water"
 				int _PassValue;
 			#endif
 
-			sampler2D _WaveMaskTexture;
-			sampler2D _NormalTexture;
-			uniform float4 _CameraDepthTexture_TexelSize;
-			sampler2D _NormalNoiseTexture;
-
+			
 
 			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/Varyings.hlsl"
 			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/LightingMetaPass.hlsl"
@@ -1729,95 +1504,7 @@ Shader "Water"
 			//#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/VisualEffectVertex.hlsl"
 			//#endif
 
-			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float3 permute( float3 x ) { return mod2D289( ( ( x * 34.0 ) + 1.0 ) * x ); }
-			float snoise( float2 v )
-			{
-				const float4 C = float4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
-				float2 i = floor( v + dot( v, C.yy ) );
-				float2 x0 = v - i + dot( i, C.xx );
-				float2 i1;
-				i1 = ( x0.x > x0.y ) ? float2( 1.0, 0.0 ) : float2( 0.0, 1.0 );
-				float4 x12 = x0.xyxy + C.xxzz;
-				x12.xy -= i1;
-				i = mod2D289( i );
-				float3 p = permute( permute( i.y + float3( 0.0, i1.y, 1.0 ) ) + i.x + float3( 0.0, i1.x, 1.0 ) );
-				float3 m = max( 0.5 - float3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
-				m = m * m;
-				m = m * m;
-				float3 x = 2.0 * frac( p * C.www ) - 1.0;
-				float3 h = abs( x ) - 0.5;
-				float3 ox = floor( x + 0.5 );
-				float3 a0 = x - ox;
-				m *= 1.79284291400159 - 0.85373472095314 * ( a0 * a0 + h * h );
-				float3 g;
-				g.x = a0.x * x0.x + h.x * x0.y;
-				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-				return 130.0 * dot( m, g );
-			}
 			
-			inline float4 ASE_ComputeGrabScreenPos( float4 pos )
-			{
-				#if UNITY_UV_STARTS_AT_TOP
-				float scale = -1.0;
-				#else
-				float scale = 1.0;
-				#endif
-				float4 o = pos;
-				o.y = pos.w * 0.5f;
-				o.y = ( pos.y - o.y ) * _ProjectionParams.x * scale + o.y;
-				return o;
-			}
-			
-			float3 mod3D289( float3 x ) { return x - floor( x / 289.0 ) * 289.0; }
-			float4 mod3D289( float4 x ) { return x - floor( x / 289.0 ) * 289.0; }
-			float4 permute( float4 x ) { return mod3D289( ( x * 34.0 + 1.0 ) * x ); }
-			float4 taylorInvSqrt( float4 r ) { return 1.79284291400159 - r * 0.85373472095314; }
-			float snoise( float3 v )
-			{
-				const float2 C = float2( 1.0 / 6.0, 1.0 / 3.0 );
-				float3 i = floor( v + dot( v, C.yyy ) );
-				float3 x0 = v - i + dot( i, C.xxx );
-				float3 g = step( x0.yzx, x0.xyz );
-				float3 l = 1.0 - g;
-				float3 i1 = min( g.xyz, l.zxy );
-				float3 i2 = max( g.xyz, l.zxy );
-				float3 x1 = x0 - i1 + C.xxx;
-				float3 x2 = x0 - i2 + C.yyy;
-				float3 x3 = x0 - 0.5;
-				i = mod3D289( i);
-				float4 p = permute( permute( permute( i.z + float4( 0.0, i1.z, i2.z, 1.0 ) ) + i.y + float4( 0.0, i1.y, i2.y, 1.0 ) ) + i.x + float4( 0.0, i1.x, i2.x, 1.0 ) );
-				float4 j = p - 49.0 * floor( p / 49.0 );  // mod(p,7*7)
-				float4 x_ = floor( j / 7.0 );
-				float4 y_ = floor( j - 7.0 * x_ );  // mod(j,N)
-				float4 x = ( x_ * 2.0 + 0.5 ) / 7.0 - 1.0;
-				float4 y = ( y_ * 2.0 + 0.5 ) / 7.0 - 1.0;
-				float4 h = 1.0 - abs( x ) - abs( y );
-				float4 b0 = float4( x.xy, y.xy );
-				float4 b1 = float4( x.zw, y.zw );
-				float4 s0 = floor( b0 ) * 2.0 + 1.0;
-				float4 s1 = floor( b1 ) * 2.0 + 1.0;
-				float4 sh = -step( h, 0.0 );
-				float4 a0 = b0.xzyw + s0.xzyw * sh.xxyy;
-				float4 a1 = b1.xzyw + s1.xzyw * sh.zzww;
-				float3 g0 = float3( a0.xy, h.x );
-				float3 g1 = float3( a0.zw, h.y );
-				float3 g2 = float3( a1.xy, h.z );
-				float3 g3 = float3( a1.zw, h.w );
-				float4 norm = taylorInvSqrt( float4( dot( g0, g0 ), dot( g1, g1 ), dot( g2, g2 ), dot( g3, g3 ) ) );
-				g0 *= norm.x;
-				g1 *= norm.y;
-				g2 *= norm.z;
-				g3 *= norm.w;
-				float4 m = max( 0.6 - float4( dot( x0, x0 ), dot( x1, x1 ), dot( x2, x2 ), dot( x3, x3 ) ), 0.0 );
-				m = m* m;
-				m = m* m;
-				float4 px = float4( dot( x0, g0 ), dot( x1, g1 ), dot( x2, g2 ), dot( x3, g3 ) );
-				return 42.0 * dot( m, px);
-			}
-			
-
 			VertexOutput VertexFunction( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -1825,20 +1512,13 @@ Shader "Water"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float2 texCoord593 = v.texcoord0.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner485 = ( 1.0 * _Time.y * _WaveSpeed + texCoord593);
-				float simplePerlin2D480 = snoise( ( float3( panner485 ,  0.0 ) + v.vertex.xyz ).xy*_WaveNoise );
-				simplePerlin2D480 = simplePerlin2D480*0.5 + 0.5;
-				float2 uv_WaveMaskTexture = v.texcoord0.xy * _WaveMaskTexture_ST.xy + _WaveMaskTexture_ST.zw;
+				float3 ase_worldNormal = TransformObjectToWorldNormal(v.ase_normal);
+				o.ase_texcoord4.xyz = ase_worldNormal;
 				
-				float4 ase_clipPos = TransformObjectToHClip((v.vertex).xyz);
-				float4 screenPos = ComputeScreenPos(ase_clipPos);
-				o.ase_texcoord4 = screenPos;
-				
-				o.ase_texcoord5.xy = v.texcoord0.xy;
+				o.ase_color = v.ase_color;
 				
 				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord5.zw = 0;
+				o.ase_texcoord4.w = 0;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -1846,7 +1526,7 @@ Shader "Water"
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
 
-				float3 vertexValue = ( float4( ( simplePerlin2D480 * v.ase_normal * _WaveHeight ) , 0.0 ) * tex2Dlod( _WaveMaskTexture, float4( uv_WaveMaskTexture, 0, 0.0) ) ).rgb;
+				float3 vertexValue = defaultVertexValue;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
@@ -1890,7 +1570,8 @@ Shader "Water"
 				float4 texcoord0 : TEXCOORD0;
 				float4 texcoord1 : TEXCOORD1;
 				float4 texcoord2 : TEXCOORD2;
-				
+				float4 ase_color : COLOR;
+
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1910,7 +1591,7 @@ Shader "Water"
 				o.texcoord0 = v.texcoord0;
 				o.texcoord1 = v.texcoord1;
 				o.texcoord2 = v.texcoord2;
-				
+				o.ase_color = v.ase_color;
 				return o;
 			}
 
@@ -1952,7 +1633,7 @@ Shader "Water"
 				o.texcoord0 = patch[0].texcoord0 * bary.x + patch[1].texcoord0 * bary.y + patch[2].texcoord0 * bary.z;
 				o.texcoord1 = patch[0].texcoord1 * bary.x + patch[1].texcoord1 * bary.y + patch[2].texcoord1 * bary.z;
 				o.texcoord2 = patch[0].texcoord2 * bary.x + patch[1].texcoord2 * bary.y + patch[2].texcoord2 * bary.z;
-				
+				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -1989,41 +1670,16 @@ Shader "Water"
 					#endif
 				#endif
 
-				float4 screenPos = IN.ase_texcoord4;
-				float4 ase_grabScreenPos = ASE_ComputeGrabScreenPos( screenPos );
-				float4 ase_grabScreenPosNorm = ase_grabScreenPos / ase_grabScreenPos.w;
-				float2 temp_cast_0 = (_NormalTiling).xx;
-				float2 texCoord533 = IN.ase_texcoord5.xy * temp_cast_0 + float2( 0,0 );
-				float2 panner531 = ( 1.0 * _Time.y * _NormalSpeed + texCoord533);
-				float3 unpack536 = UnpackNormalScale( tex2D( _NormalTexture, panner531 ), _NormalScale );
-				unpack536.z = lerp( 1, unpack536.z, saturate(_NormalScale) );
-				float4 fetchOpaqueVal542 = float4( SHADERGRAPH_SAMPLE_SCENE_COLOR( ( ase_grabScreenPosNorm + float4( unpack536 , 0.0 ) ).xy ), 1.0 );
-				float4 temp_cast_3 = (( fetchOpaqueVal542.r + fetchOpaqueVal542.g + fetchOpaqueVal542.b )).xxxx;
-				float4 ase_screenPosNorm = screenPos / screenPos.w;
-				ase_screenPosNorm.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm.z : ase_screenPosNorm.z * 0.5 + 0.5;
-				float screenDepth335 = LinearEyeDepth(SHADERGRAPH_SAMPLE_SCENE_DEPTH( ase_screenPosNorm.xy ),_ZBufferParams);
-				float distanceDepth335 = saturate( abs( ( screenDepth335 - LinearEyeDepth( ase_screenPosNorm.z,_ZBufferParams ) ) / ( _WaterDistance ) ) );
-				float4 lerpResult294 = lerp( _DeepWaterColor , _WaterColor , distanceDepth335);
-				float screenDepth623 = LinearEyeDepth(SHADERGRAPH_SAMPLE_SCENE_DEPTH( ase_screenPosNorm.xy ),_ZBufferParams);
-				float distanceDepth623 = saturate( abs( ( screenDepth623 - LinearEyeDepth( ase_screenPosNorm.z,_ZBufferParams ) ) / ( _WaterLineDistance ) ) );
-				float2 temp_cast_4 = (_WaterLineSpeed).xx;
-				float2 texCoord610 = IN.ase_texcoord5.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner608 = ( 1.0 * _Time.y * temp_cast_4 + texCoord610);
-				float simplePerlin3D607 = snoise( float3( panner608 ,  0.0 )*_WaterLineScale );
-				simplePerlin3D607 = simplePerlin3D607*0.5 + 0.5;
-				float4 color617 = IsGammaSpace() ? float4(1,1,1,1) : float4(1,1,1,1);
-				float4 lerpResult618 = lerp( lerpResult294 , _WaterLineColor , ( step( distanceDepth623 , simplePerlin3D607 ) * color617.a ));
-				float4 lerpResult549 = lerp( temp_cast_3 , lerpResult618 , lerpResult618.a);
-				
-				float2 temp_cast_7 = (_NormalNoiseSpeed).xx;
-				float2 texCoord671 = IN.ase_texcoord5.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner673 = ( 1.0 * _Time.y * temp_cast_7 + texCoord671);
-				float4 fetchOpaqueVal665 = float4( SHADERGRAPH_SAMPLE_SCENE_COLOR( ( ase_grabScreenPosNorm + float4( ( UnpackNormalScale( tex2D( _NormalNoiseTexture, panner673 ), 1.0f ) * _NormalNoiseStrength ) , 0.0 ) ).xy ), 1.0 );
+				float3 ase_worldViewDir = ( _WorldSpaceCameraPos.xyz - WorldPosition );
+				ase_worldViewDir = normalize(ase_worldViewDir);
+				float3 ase_worldNormal = IN.ase_texcoord4.xyz;
+				float fresnelNdotV1 = dot( ase_worldNormal, ase_worldViewDir );
+				float fresnelNode1 = ( 0.0 + _FresnelScale * pow( 1.0 - fresnelNdotV1, _FresnelPower ) );
 				
 
-				float3 BaseColor = ( lerpResult549 + float4( 0,0,0,0 ) ).rgb;
-				float3 Emission = fetchOpaqueVal665.rgb;
-				float Alpha = 1;
+				float3 BaseColor = ( ( fresnelNode1 + _Color ) * IN.ase_color ).rgb;
+				float3 Emission = 0;
+				float Alpha = IN.ase_color.a;
 				float AlphaClipThreshold = 0.5;
 
 				#ifdef _ALPHATEST_ON
@@ -2050,7 +1706,7 @@ Shader "Water"
 			Name "Universal2D"
 			Tags { "LightMode"="Universal2D" }
 
-			Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
+			Blend One One, One OneMinusSrcAlpha
 			ZWrite On
 			ZTest LEqual
 			Offset 0 , 0
@@ -2062,10 +1718,8 @@ Shader "Water"
 			#define ASE_FOG 1
 			#define _SURFACE_TYPE_TRANSPARENT 1
 			#define _RECEIVE_SHADOWS_OFF 1
-			#define _EMISSION
+			#define _NORMALMAP 1
 			#define ASE_SRP_VERSION 120110
-			#define REQUIRE_OPAQUE_TEXTURE 1
-			#define REQUIRE_DEPTH_TEXTURE 1
 
 
 			#pragma vertex vert
@@ -2082,15 +1736,16 @@ Shader "Water"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
 
-			#define ASE_NEEDS_VERT_POSITION
+			#define ASE_NEEDS_FRAG_WORLD_POSITION
 			#define ASE_NEEDS_VERT_NORMAL
+			#define ASE_NEEDS_FRAG_COLOR
 
 
 			struct VertexInput
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -2104,28 +1759,19 @@ Shader "Water"
 					float4 shadowCoord : TEXCOORD1;
 				#endif
 				float4 ase_texcoord2 : TEXCOORD2;
-				float4 ase_texcoord3 : TEXCOORD3;
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _WaveMaskTexture_ST;
-			float4 _DeepWaterColor;
-			float4 _WaterColor;
-			float4 _WaterLineColor;
-			float2 _WaveSpeed;
-			float2 _NormalSpeed;
-			float _WaveNoise;
-			float _WaveHeight;
-			float _NormalTiling;
-			float _NormalScale;
-			float _WaterDistance;
-			float _WaterLineDistance;
-			float _WaterLineSpeed;
-			float _WaterLineScale;
+			float4 _Color;
+			float2 _NormalTiling;
+			float _FresnelScale;
+			float _FresnelPower;
 			float _NormalNoiseSpeed;
 			float _NormalNoiseStrength;
+			float _Smoothness;
 			#ifdef ASE_TRANSMISSION
 				float _TransmissionShadow;
 			#endif
@@ -2158,10 +1804,7 @@ Shader "Water"
 				int _PassValue;
 			#endif
 
-			sampler2D _WaveMaskTexture;
-			sampler2D _NormalTexture;
-			uniform float4 _CameraDepthTexture_TexelSize;
-
+			
 
 			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/Varyings.hlsl"
 			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/PBR2DPass.hlsl"
@@ -2170,95 +1813,7 @@ Shader "Water"
 			//#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/VisualEffectVertex.hlsl"
 			//#endif
 
-			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float3 permute( float3 x ) { return mod2D289( ( ( x * 34.0 ) + 1.0 ) * x ); }
-			float snoise( float2 v )
-			{
-				const float4 C = float4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
-				float2 i = floor( v + dot( v, C.yy ) );
-				float2 x0 = v - i + dot( i, C.xx );
-				float2 i1;
-				i1 = ( x0.x > x0.y ) ? float2( 1.0, 0.0 ) : float2( 0.0, 1.0 );
-				float4 x12 = x0.xyxy + C.xxzz;
-				x12.xy -= i1;
-				i = mod2D289( i );
-				float3 p = permute( permute( i.y + float3( 0.0, i1.y, 1.0 ) ) + i.x + float3( 0.0, i1.x, 1.0 ) );
-				float3 m = max( 0.5 - float3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
-				m = m * m;
-				m = m * m;
-				float3 x = 2.0 * frac( p * C.www ) - 1.0;
-				float3 h = abs( x ) - 0.5;
-				float3 ox = floor( x + 0.5 );
-				float3 a0 = x - ox;
-				m *= 1.79284291400159 - 0.85373472095314 * ( a0 * a0 + h * h );
-				float3 g;
-				g.x = a0.x * x0.x + h.x * x0.y;
-				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-				return 130.0 * dot( m, g );
-			}
 			
-			inline float4 ASE_ComputeGrabScreenPos( float4 pos )
-			{
-				#if UNITY_UV_STARTS_AT_TOP
-				float scale = -1.0;
-				#else
-				float scale = 1.0;
-				#endif
-				float4 o = pos;
-				o.y = pos.w * 0.5f;
-				o.y = ( pos.y - o.y ) * _ProjectionParams.x * scale + o.y;
-				return o;
-			}
-			
-			float3 mod3D289( float3 x ) { return x - floor( x / 289.0 ) * 289.0; }
-			float4 mod3D289( float4 x ) { return x - floor( x / 289.0 ) * 289.0; }
-			float4 permute( float4 x ) { return mod3D289( ( x * 34.0 + 1.0 ) * x ); }
-			float4 taylorInvSqrt( float4 r ) { return 1.79284291400159 - r * 0.85373472095314; }
-			float snoise( float3 v )
-			{
-				const float2 C = float2( 1.0 / 6.0, 1.0 / 3.0 );
-				float3 i = floor( v + dot( v, C.yyy ) );
-				float3 x0 = v - i + dot( i, C.xxx );
-				float3 g = step( x0.yzx, x0.xyz );
-				float3 l = 1.0 - g;
-				float3 i1 = min( g.xyz, l.zxy );
-				float3 i2 = max( g.xyz, l.zxy );
-				float3 x1 = x0 - i1 + C.xxx;
-				float3 x2 = x0 - i2 + C.yyy;
-				float3 x3 = x0 - 0.5;
-				i = mod3D289( i);
-				float4 p = permute( permute( permute( i.z + float4( 0.0, i1.z, i2.z, 1.0 ) ) + i.y + float4( 0.0, i1.y, i2.y, 1.0 ) ) + i.x + float4( 0.0, i1.x, i2.x, 1.0 ) );
-				float4 j = p - 49.0 * floor( p / 49.0 );  // mod(p,7*7)
-				float4 x_ = floor( j / 7.0 );
-				float4 y_ = floor( j - 7.0 * x_ );  // mod(j,N)
-				float4 x = ( x_ * 2.0 + 0.5 ) / 7.0 - 1.0;
-				float4 y = ( y_ * 2.0 + 0.5 ) / 7.0 - 1.0;
-				float4 h = 1.0 - abs( x ) - abs( y );
-				float4 b0 = float4( x.xy, y.xy );
-				float4 b1 = float4( x.zw, y.zw );
-				float4 s0 = floor( b0 ) * 2.0 + 1.0;
-				float4 s1 = floor( b1 ) * 2.0 + 1.0;
-				float4 sh = -step( h, 0.0 );
-				float4 a0 = b0.xzyw + s0.xzyw * sh.xxyy;
-				float4 a1 = b1.xzyw + s1.xzyw * sh.zzww;
-				float3 g0 = float3( a0.xy, h.x );
-				float3 g1 = float3( a0.zw, h.y );
-				float3 g2 = float3( a1.xy, h.z );
-				float3 g3 = float3( a1.zw, h.w );
-				float4 norm = taylorInvSqrt( float4( dot( g0, g0 ), dot( g1, g1 ), dot( g2, g2 ), dot( g3, g3 ) ) );
-				g0 *= norm.x;
-				g1 *= norm.y;
-				g2 *= norm.z;
-				g3 *= norm.w;
-				float4 m = max( 0.6 - float4( dot( x0, x0 ), dot( x1, x1 ), dot( x2, x2 ), dot( x3, x3 ) ), 0.0 );
-				m = m* m;
-				m = m* m;
-				float4 px = float4( dot( x0, g0 ), dot( x1, g1 ), dot( x2, g2 ), dot( x3, g3 ) );
-				return 42.0 * dot( m, px);
-			}
-			
-
 			VertexOutput VertexFunction( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -2266,20 +1821,13 @@ Shader "Water"
 				UNITY_TRANSFER_INSTANCE_ID( v, o );
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
-				float2 texCoord593 = v.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner485 = ( 1.0 * _Time.y * _WaveSpeed + texCoord593);
-				float simplePerlin2D480 = snoise( ( float3( panner485 ,  0.0 ) + v.vertex.xyz ).xy*_WaveNoise );
-				simplePerlin2D480 = simplePerlin2D480*0.5 + 0.5;
-				float2 uv_WaveMaskTexture = v.ase_texcoord.xy * _WaveMaskTexture_ST.xy + _WaveMaskTexture_ST.zw;
+				float3 ase_worldNormal = TransformObjectToWorldNormal(v.ase_normal);
+				o.ase_texcoord2.xyz = ase_worldNormal;
 				
-				float4 ase_clipPos = TransformObjectToHClip((v.vertex).xyz);
-				float4 screenPos = ComputeScreenPos(ase_clipPos);
-				o.ase_texcoord2 = screenPos;
-				
-				o.ase_texcoord3.xy = v.ase_texcoord.xy;
+				o.ase_color = v.ase_color;
 				
 				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord3.zw = 0;
+				o.ase_texcoord2.w = 0;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -2287,7 +1835,7 @@ Shader "Water"
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
 
-				float3 vertexValue = ( float4( ( simplePerlin2D480 * v.ase_normal * _WaveHeight ) , 0.0 ) * tex2Dlod( _WaveMaskTexture, float4( uv_WaveMaskTexture, 0, 0.0) ) ).rgb;
+				float3 vertexValue = defaultVertexValue;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
@@ -2321,7 +1869,7 @@ Shader "Water"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
+				float4 ase_color : COLOR;
 
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -2339,7 +1887,7 @@ Shader "Water"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				o.ase_texcoord = v.ase_texcoord;
+				o.ase_color = v.ase_color;
 				return o;
 			}
 
@@ -2378,7 +1926,7 @@ Shader "Water"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
+				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -2415,35 +1963,15 @@ Shader "Water"
 					#endif
 				#endif
 
-				float4 screenPos = IN.ase_texcoord2;
-				float4 ase_grabScreenPos = ASE_ComputeGrabScreenPos( screenPos );
-				float4 ase_grabScreenPosNorm = ase_grabScreenPos / ase_grabScreenPos.w;
-				float2 temp_cast_0 = (_NormalTiling).xx;
-				float2 texCoord533 = IN.ase_texcoord3.xy * temp_cast_0 + float2( 0,0 );
-				float2 panner531 = ( 1.0 * _Time.y * _NormalSpeed + texCoord533);
-				float3 unpack536 = UnpackNormalScale( tex2D( _NormalTexture, panner531 ), _NormalScale );
-				unpack536.z = lerp( 1, unpack536.z, saturate(_NormalScale) );
-				float4 fetchOpaqueVal542 = float4( SHADERGRAPH_SAMPLE_SCENE_COLOR( ( ase_grabScreenPosNorm + float4( unpack536 , 0.0 ) ).xy ), 1.0 );
-				float4 temp_cast_3 = (( fetchOpaqueVal542.r + fetchOpaqueVal542.g + fetchOpaqueVal542.b )).xxxx;
-				float4 ase_screenPosNorm = screenPos / screenPos.w;
-				ase_screenPosNorm.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm.z : ase_screenPosNorm.z * 0.5 + 0.5;
-				float screenDepth335 = LinearEyeDepth(SHADERGRAPH_SAMPLE_SCENE_DEPTH( ase_screenPosNorm.xy ),_ZBufferParams);
-				float distanceDepth335 = saturate( abs( ( screenDepth335 - LinearEyeDepth( ase_screenPosNorm.z,_ZBufferParams ) ) / ( _WaterDistance ) ) );
-				float4 lerpResult294 = lerp( _DeepWaterColor , _WaterColor , distanceDepth335);
-				float screenDepth623 = LinearEyeDepth(SHADERGRAPH_SAMPLE_SCENE_DEPTH( ase_screenPosNorm.xy ),_ZBufferParams);
-				float distanceDepth623 = saturate( abs( ( screenDepth623 - LinearEyeDepth( ase_screenPosNorm.z,_ZBufferParams ) ) / ( _WaterLineDistance ) ) );
-				float2 temp_cast_4 = (_WaterLineSpeed).xx;
-				float2 texCoord610 = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner608 = ( 1.0 * _Time.y * temp_cast_4 + texCoord610);
-				float simplePerlin3D607 = snoise( float3( panner608 ,  0.0 )*_WaterLineScale );
-				simplePerlin3D607 = simplePerlin3D607*0.5 + 0.5;
-				float4 color617 = IsGammaSpace() ? float4(1,1,1,1) : float4(1,1,1,1);
-				float4 lerpResult618 = lerp( lerpResult294 , _WaterLineColor , ( step( distanceDepth623 , simplePerlin3D607 ) * color617.a ));
-				float4 lerpResult549 = lerp( temp_cast_3 , lerpResult618 , lerpResult618.a);
+				float3 ase_worldViewDir = ( _WorldSpaceCameraPos.xyz - WorldPosition );
+				ase_worldViewDir = normalize(ase_worldViewDir);
+				float3 ase_worldNormal = IN.ase_texcoord2.xyz;
+				float fresnelNdotV1 = dot( ase_worldNormal, ase_worldViewDir );
+				float fresnelNode1 = ( 0.0 + _FresnelScale * pow( 1.0 - fresnelNdotV1, _FresnelPower ) );
 				
 
-				float3 BaseColor = ( lerpResult549 + float4( 0,0,0,0 ) ).rgb;
-				float Alpha = 1;
+				float3 BaseColor = ( ( fresnelNode1 + _Color ) * IN.ase_color ).rgb;
+				float Alpha = IN.ase_color.a;
 				float AlphaClipThreshold = 0.5;
 
 				half4 color = half4(BaseColor, Alpha );
@@ -2462,7 +1990,7 @@ Shader "Water"
 		{
 			
 			Name "DepthNormals"
-			Tags { "LightMode"="DepthNormalsOnly" }
+			Tags { "LightMode"="DepthNormals" }
 
 			ZWrite On
 			Blend One Zero
@@ -2477,8 +2005,9 @@ Shader "Water"
 			#define ASE_FOG 1
 			#define _SURFACE_TYPE_TRANSPARENT 1
 			#define _RECEIVE_SHADOWS_OFF 1
-			#define _EMISSION
+			#define _NORMALMAP 1
 			#define ASE_SRP_VERSION 120110
+			#define REQUIRE_OPAQUE_TEXTURE 1
 
 
 			#pragma vertex vert
@@ -2495,9 +2024,7 @@ Shader "Water"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
 
-			#define ASE_NEEDS_VERT_POSITION
-			#define ASE_NEEDS_VERT_NORMAL
-
+			
 
 			struct VertexInput
 			{
@@ -2505,6 +2032,7 @@ Shader "Water"
 				float3 ase_normal : NORMAL;
 				float4 ase_tangent : TANGENT;
 				float4 ase_texcoord : TEXCOORD0;
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -2519,28 +2047,21 @@ Shader "Water"
 				#endif
 				float3 worldNormal : TEXCOORD2;
 				float4 worldTangent : TEXCOORD3;
-				
+				float4 ase_texcoord4 : TEXCOORD4;
+				float4 ase_texcoord5 : TEXCOORD5;
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _WaveMaskTexture_ST;
-			float4 _DeepWaterColor;
-			float4 _WaterColor;
-			float4 _WaterLineColor;
-			float2 _WaveSpeed;
-			float2 _NormalSpeed;
-			float _WaveNoise;
-			float _WaveHeight;
-			float _NormalTiling;
-			float _NormalScale;
-			float _WaterDistance;
-			float _WaterLineDistance;
-			float _WaterLineSpeed;
-			float _WaterLineScale;
+			float4 _Color;
+			float2 _NormalTiling;
+			float _FresnelScale;
+			float _FresnelPower;
 			float _NormalNoiseSpeed;
 			float _NormalNoiseStrength;
+			float _Smoothness;
 			#ifdef ASE_TRANSMISSION
 				float _TransmissionShadow;
 			#endif
@@ -2573,7 +2094,7 @@ Shader "Water"
 				int _PassValue;
 			#endif
 
-			sampler2D _WaveMaskTexture;
+			sampler2D _NormalNoiseTexture;
 
 
 			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/Varyings.hlsl"
@@ -2583,32 +2104,17 @@ Shader "Water"
 			//#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/VisualEffectVertex.hlsl"
 			//#endif
 
-			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float3 permute( float3 x ) { return mod2D289( ( ( x * 34.0 ) + 1.0 ) * x ); }
-			float snoise( float2 v )
+			inline float4 ASE_ComputeGrabScreenPos( float4 pos )
 			{
-				const float4 C = float4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
-				float2 i = floor( v + dot( v, C.yy ) );
-				float2 x0 = v - i + dot( i, C.xx );
-				float2 i1;
-				i1 = ( x0.x > x0.y ) ? float2( 1.0, 0.0 ) : float2( 0.0, 1.0 );
-				float4 x12 = x0.xyxy + C.xxzz;
-				x12.xy -= i1;
-				i = mod2D289( i );
-				float3 p = permute( permute( i.y + float3( 0.0, i1.y, 1.0 ) ) + i.x + float3( 0.0, i1.x, 1.0 ) );
-				float3 m = max( 0.5 - float3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
-				m = m * m;
-				m = m * m;
-				float3 x = 2.0 * frac( p * C.www ) - 1.0;
-				float3 h = abs( x ) - 0.5;
-				float3 ox = floor( x + 0.5 );
-				float3 a0 = x - ox;
-				m *= 1.79284291400159 - 0.85373472095314 * ( a0 * a0 + h * h );
-				float3 g;
-				g.x = a0.x * x0.x + h.x * x0.y;
-				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-				return 130.0 * dot( m, g );
+				#if UNITY_UV_STARTS_AT_TOP
+				float scale = -1.0;
+				#else
+				float scale = 1.0;
+				#endif
+				float4 o = pos;
+				o.y = pos.w * 0.5f;
+				o.y = ( pos.y - o.y ) * _ProjectionParams.x * scale + o.y;
+				return o;
 			}
 			
 
@@ -2619,19 +2125,22 @@ Shader "Water"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float2 texCoord593 = v.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner485 = ( 1.0 * _Time.y * _WaveSpeed + texCoord593);
-				float simplePerlin2D480 = snoise( ( float3( panner485 ,  0.0 ) + v.vertex.xyz ).xy*_WaveNoise );
-				simplePerlin2D480 = simplePerlin2D480*0.5 + 0.5;
-				float2 uv_WaveMaskTexture = v.ase_texcoord.xy * _WaveMaskTexture_ST.xy + _WaveMaskTexture_ST.zw;
+				float4 ase_clipPos = TransformObjectToHClip((v.vertex).xyz);
+				float4 screenPos = ComputeScreenPos(ase_clipPos);
+				o.ase_texcoord4 = screenPos;
 				
+				o.ase_texcoord5.xy = v.ase_texcoord.xy;
+				o.ase_color = v.ase_color;
+				
+				//setting value to unused interpolator channels and avoid initialization warnings
+				o.ase_texcoord5.zw = 0;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
 
-				float3 vertexValue = ( float4( ( simplePerlin2D480 * v.ase_normal * _WaveHeight ) , 0.0 ) * tex2Dlod( _WaveMaskTexture, float4( uv_WaveMaskTexture, 0, 0.0) ) ).rgb;
+				float3 vertexValue = defaultVertexValue;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
@@ -2671,6 +2180,7 @@ Shader "Water"
 				float3 ase_normal : NORMAL;
 				float4 ase_tangent : TANGENT;
 				float4 ase_texcoord : TEXCOORD0;
+				float4 ase_color : COLOR;
 
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -2690,6 +2200,7 @@ Shader "Water"
 				o.ase_normal = v.ase_normal;
 				o.ase_tangent = v.ase_tangent;
 				o.ase_texcoord = v.ase_texcoord;
+				o.ase_color = v.ase_color;
 				return o;
 			}
 
@@ -2730,6 +2241,7 @@ Shader "Water"
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
 				o.ase_tangent = patch[0].ase_tangent * bary.x + patch[1].ase_tangent * bary.y + patch[2].ase_tangent * bary.z;
 				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
+				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -2778,10 +2290,17 @@ Shader "Water"
 					#endif
 				#endif
 
+				float4 screenPos = IN.ase_texcoord4;
+				float4 ase_grabScreenPos = ASE_ComputeGrabScreenPos( screenPos );
+				float4 ase_grabScreenPosNorm = ase_grabScreenPos / ase_grabScreenPos.w;
+				float2 temp_cast_0 = (_NormalNoiseSpeed).xx;
+				float2 texCoord74 = IN.ase_texcoord5.xy * _NormalTiling + float2( 0,0 );
+				float2 panner75 = ( 1.0 * _Time.y * temp_cast_0 + texCoord74);
+				float4 fetchOpaqueVal73 = float4( SHADERGRAPH_SAMPLE_SCENE_COLOR( ( ase_grabScreenPosNorm + float4( ( UnpackNormalScale( tex2D( _NormalNoiseTexture, panner75 ), 1.0f ) * _NormalNoiseStrength ) , 0.0 ) ).xy ), 1.0 );
 				
 
-				float3 Normal = float3(0, 0, 1);
-				float Alpha = 1;
+				float3 Normal = fetchOpaqueVal73.rgb;
+				float Alpha = IN.ase_color.a;
 				float AlphaClipThreshold = 0.5;
 				#ifdef ASE_DEPTH_WRITE_ON
 					float DepthValue = 0;
@@ -2831,7 +2350,7 @@ Shader "Water"
 			Name "GBuffer"
 			Tags { "LightMode"="UniversalGBuffer" }
 
-			Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
+			Blend One One, One OneMinusSrcAlpha
 			ZWrite On
 			ZTest LEqual
 			Offset 0 , 0
@@ -2848,10 +2367,9 @@ Shader "Water"
 			#define ASE_FOG 1
 			#define _SURFACE_TYPE_TRANSPARENT 1
 			#define _RECEIVE_SHADOWS_OFF 1
-			#define _EMISSION
+			#define _NORMALMAP 1
 			#define ASE_SRP_VERSION 120110
 			#define REQUIRE_OPAQUE_TEXTURE 1
-			#define REQUIRE_DEPTH_TEXTURE 1
 
 
 			#pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
@@ -2892,9 +2410,10 @@ Shader "Water"
 				#define ENABLE_TERRAIN_PERPIXEL_NORMAL
 			#endif
 
-			#define ASE_NEEDS_VERT_POSITION
-			#define ASE_NEEDS_VERT_NORMAL
+			#define ASE_NEEDS_FRAG_WORLD_VIEW_DIR
+			#define ASE_NEEDS_FRAG_WORLD_NORMAL
 			#define ASE_NEEDS_FRAG_SCREEN_POSITION
+			#define ASE_NEEDS_FRAG_COLOR
 
 
 			struct VertexInput
@@ -2905,7 +2424,7 @@ Shader "Water"
 				float4 texcoord : TEXCOORD0;
 				float4 texcoord1 : TEXCOORD1;
 				float4 texcoord2 : TEXCOORD2;
-				
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -2926,28 +2445,20 @@ Shader "Water"
 				#if defined(DYNAMICLIGHTMAP_ON)
 				float2 dynamicLightmapUV : TEXCOORD7;
 				#endif
+				float4 ase_color : COLOR;
 				float4 ase_texcoord8 : TEXCOORD8;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _WaveMaskTexture_ST;
-			float4 _DeepWaterColor;
-			float4 _WaterColor;
-			float4 _WaterLineColor;
-			float2 _WaveSpeed;
-			float2 _NormalSpeed;
-			float _WaveNoise;
-			float _WaveHeight;
-			float _NormalTiling;
-			float _NormalScale;
-			float _WaterDistance;
-			float _WaterLineDistance;
-			float _WaterLineSpeed;
-			float _WaterLineScale;
+			float4 _Color;
+			float2 _NormalTiling;
+			float _FresnelScale;
+			float _FresnelPower;
 			float _NormalNoiseSpeed;
 			float _NormalNoiseStrength;
+			float _Smoothness;
 			#ifdef ASE_TRANSMISSION
 				float _TransmissionShadow;
 			#endif
@@ -2980,9 +2491,6 @@ Shader "Water"
 				int _PassValue;
 			#endif
 
-			sampler2D _WaveMaskTexture;
-			sampler2D _NormalTexture;
-			uniform float4 _CameraDepthTexture_TexelSize;
 			sampler2D _NormalNoiseTexture;
 
 
@@ -2990,34 +2498,6 @@ Shader "Water"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/UnityGBuffer.hlsl"
 			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/PBRGBufferPass.hlsl"
 
-			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float3 permute( float3 x ) { return mod2D289( ( ( x * 34.0 ) + 1.0 ) * x ); }
-			float snoise( float2 v )
-			{
-				const float4 C = float4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
-				float2 i = floor( v + dot( v, C.yy ) );
-				float2 x0 = v - i + dot( i, C.xx );
-				float2 i1;
-				i1 = ( x0.x > x0.y ) ? float2( 1.0, 0.0 ) : float2( 0.0, 1.0 );
-				float4 x12 = x0.xyxy + C.xxzz;
-				x12.xy -= i1;
-				i = mod2D289( i );
-				float3 p = permute( permute( i.y + float3( 0.0, i1.y, 1.0 ) ) + i.x + float3( 0.0, i1.x, 1.0 ) );
-				float3 m = max( 0.5 - float3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
-				m = m * m;
-				m = m * m;
-				float3 x = 2.0 * frac( p * C.www ) - 1.0;
-				float3 h = abs( x ) - 0.5;
-				float3 ox = floor( x + 0.5 );
-				float3 a0 = x - ox;
-				m *= 1.79284291400159 - 0.85373472095314 * ( a0 * a0 + h * h );
-				float3 g;
-				g.x = a0.x * x0.x + h.x * x0.y;
-				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-				return 130.0 * dot( m, g );
-			}
-			
 			inline float4 ASE_ComputeGrabScreenPos( float4 pos )
 			{
 				#if UNITY_UV_STARTS_AT_TOP
@@ -3031,53 +2511,6 @@ Shader "Water"
 				return o;
 			}
 			
-			float3 mod3D289( float3 x ) { return x - floor( x / 289.0 ) * 289.0; }
-			float4 mod3D289( float4 x ) { return x - floor( x / 289.0 ) * 289.0; }
-			float4 permute( float4 x ) { return mod3D289( ( x * 34.0 + 1.0 ) * x ); }
-			float4 taylorInvSqrt( float4 r ) { return 1.79284291400159 - r * 0.85373472095314; }
-			float snoise( float3 v )
-			{
-				const float2 C = float2( 1.0 / 6.0, 1.0 / 3.0 );
-				float3 i = floor( v + dot( v, C.yyy ) );
-				float3 x0 = v - i + dot( i, C.xxx );
-				float3 g = step( x0.yzx, x0.xyz );
-				float3 l = 1.0 - g;
-				float3 i1 = min( g.xyz, l.zxy );
-				float3 i2 = max( g.xyz, l.zxy );
-				float3 x1 = x0 - i1 + C.xxx;
-				float3 x2 = x0 - i2 + C.yyy;
-				float3 x3 = x0 - 0.5;
-				i = mod3D289( i);
-				float4 p = permute( permute( permute( i.z + float4( 0.0, i1.z, i2.z, 1.0 ) ) + i.y + float4( 0.0, i1.y, i2.y, 1.0 ) ) + i.x + float4( 0.0, i1.x, i2.x, 1.0 ) );
-				float4 j = p - 49.0 * floor( p / 49.0 );  // mod(p,7*7)
-				float4 x_ = floor( j / 7.0 );
-				float4 y_ = floor( j - 7.0 * x_ );  // mod(j,N)
-				float4 x = ( x_ * 2.0 + 0.5 ) / 7.0 - 1.0;
-				float4 y = ( y_ * 2.0 + 0.5 ) / 7.0 - 1.0;
-				float4 h = 1.0 - abs( x ) - abs( y );
-				float4 b0 = float4( x.xy, y.xy );
-				float4 b1 = float4( x.zw, y.zw );
-				float4 s0 = floor( b0 ) * 2.0 + 1.0;
-				float4 s1 = floor( b1 ) * 2.0 + 1.0;
-				float4 sh = -step( h, 0.0 );
-				float4 a0 = b0.xzyw + s0.xzyw * sh.xxyy;
-				float4 a1 = b1.xzyw + s1.xzyw * sh.zzww;
-				float3 g0 = float3( a0.xy, h.x );
-				float3 g1 = float3( a0.zw, h.y );
-				float3 g2 = float3( a1.xy, h.z );
-				float3 g3 = float3( a1.zw, h.w );
-				float4 norm = taylorInvSqrt( float4( dot( g0, g0 ), dot( g1, g1 ), dot( g2, g2 ), dot( g3, g3 ) ) );
-				g0 *= norm.x;
-				g1 *= norm.y;
-				g2 *= norm.z;
-				g3 *= norm.w;
-				float4 m = max( 0.6 - float4( dot( x0, x0 ), dot( x1, x1 ), dot( x2, x2 ), dot( x3, x3 ) ), 0.0 );
-				m = m* m;
-				m = m* m;
-				float4 px = float4( dot( x0, g0 ), dot( x1, g1 ), dot( x2, g2 ), dot( x3, g3 ) );
-				return 42.0 * dot( m, px);
-			}
-			
 
 			VertexOutput VertexFunction( VertexInput v  )
 			{
@@ -3086,12 +2519,7 @@ Shader "Water"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float2 texCoord593 = v.texcoord.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner485 = ( 1.0 * _Time.y * _WaveSpeed + texCoord593);
-				float simplePerlin2D480 = snoise( ( float3( panner485 ,  0.0 ) + v.vertex.xyz ).xy*_WaveNoise );
-				simplePerlin2D480 = simplePerlin2D480*0.5 + 0.5;
-				float2 uv_WaveMaskTexture = v.texcoord.xy * _WaveMaskTexture_ST.xy + _WaveMaskTexture_ST.zw;
-				
+				o.ase_color = v.ase_color;
 				o.ase_texcoord8.xy = v.texcoord.xy;
 				
 				//setting value to unused interpolator channels and avoid initialization warnings
@@ -3102,7 +2530,7 @@ Shader "Water"
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
 
-				float3 vertexValue = ( float4( ( simplePerlin2D480 * v.ase_normal * _WaveHeight ) , 0.0 ) * tex2Dlod( _WaveMaskTexture, float4( uv_WaveMaskTexture, 0, 0.0) ) ).rgb;
+				float3 vertexValue = defaultVertexValue;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
@@ -3168,7 +2596,8 @@ Shader "Water"
 				float4 texcoord : TEXCOORD0;
 				float4 texcoord1 : TEXCOORD1;
 				float4 texcoord2 : TEXCOORD2;
-				
+				float4 ase_color : COLOR;
+
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -3189,7 +2618,7 @@ Shader "Water"
 				o.texcoord = v.texcoord;
 				o.texcoord1 = v.texcoord1;
 				o.texcoord2 = v.texcoord2;
-				
+				o.ase_color = v.ase_color;
 				return o;
 			}
 
@@ -3232,7 +2661,7 @@ Shader "Water"
 				o.texcoord = patch[0].texcoord * bary.x + patch[1].texcoord * bary.y + patch[2].texcoord * bary.z;
 				o.texcoord1 = patch[0].texcoord1 * bary.x + patch[1].texcoord1 * bary.y + patch[2].texcoord1 * bary.z;
 				o.texcoord2 = patch[0].texcoord2 * bary.x + patch[1].texcoord2 * bary.y + patch[2].texcoord2 * bary.z;
-				
+				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -3300,45 +2729,25 @@ Shader "Water"
 
 				WorldViewDirection = SafeNormalize( WorldViewDirection );
 
+				float fresnelNdotV1 = dot( WorldNormal, WorldViewDirection );
+				float fresnelNode1 = ( 0.0 + _FresnelScale * pow( 1.0 - fresnelNdotV1, _FresnelPower ) );
+				
 				float4 ase_grabScreenPos = ASE_ComputeGrabScreenPos( ScreenPos );
 				float4 ase_grabScreenPosNorm = ase_grabScreenPos / ase_grabScreenPos.w;
-				float2 temp_cast_0 = (_NormalTiling).xx;
-				float2 texCoord533 = IN.ase_texcoord8.xy * temp_cast_0 + float2( 0,0 );
-				float2 panner531 = ( 1.0 * _Time.y * _NormalSpeed + texCoord533);
-				float3 unpack536 = UnpackNormalScale( tex2D( _NormalTexture, panner531 ), _NormalScale );
-				unpack536.z = lerp( 1, unpack536.z, saturate(_NormalScale) );
-				float4 fetchOpaqueVal542 = float4( SHADERGRAPH_SAMPLE_SCENE_COLOR( ( ase_grabScreenPosNorm + float4( unpack536 , 0.0 ) ).xy ), 1.0 );
-				float4 temp_cast_3 = (( fetchOpaqueVal542.r + fetchOpaqueVal542.g + fetchOpaqueVal542.b )).xxxx;
-				float4 ase_screenPosNorm = ScreenPos / ScreenPos.w;
-				ase_screenPosNorm.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm.z : ase_screenPosNorm.z * 0.5 + 0.5;
-				float screenDepth335 = LinearEyeDepth(SHADERGRAPH_SAMPLE_SCENE_DEPTH( ase_screenPosNorm.xy ),_ZBufferParams);
-				float distanceDepth335 = saturate( abs( ( screenDepth335 - LinearEyeDepth( ase_screenPosNorm.z,_ZBufferParams ) ) / ( _WaterDistance ) ) );
-				float4 lerpResult294 = lerp( _DeepWaterColor , _WaterColor , distanceDepth335);
-				float screenDepth623 = LinearEyeDepth(SHADERGRAPH_SAMPLE_SCENE_DEPTH( ase_screenPosNorm.xy ),_ZBufferParams);
-				float distanceDepth623 = saturate( abs( ( screenDepth623 - LinearEyeDepth( ase_screenPosNorm.z,_ZBufferParams ) ) / ( _WaterLineDistance ) ) );
-				float2 temp_cast_4 = (_WaterLineSpeed).xx;
-				float2 texCoord610 = IN.ase_texcoord8.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner608 = ( 1.0 * _Time.y * temp_cast_4 + texCoord610);
-				float simplePerlin3D607 = snoise( float3( panner608 ,  0.0 )*_WaterLineScale );
-				simplePerlin3D607 = simplePerlin3D607*0.5 + 0.5;
-				float4 color617 = IsGammaSpace() ? float4(1,1,1,1) : float4(1,1,1,1);
-				float4 lerpResult618 = lerp( lerpResult294 , _WaterLineColor , ( step( distanceDepth623 , simplePerlin3D607 ) * color617.a ));
-				float4 lerpResult549 = lerp( temp_cast_3 , lerpResult618 , lerpResult618.a);
-				
-				float2 temp_cast_7 = (_NormalNoiseSpeed).xx;
-				float2 texCoord671 = IN.ase_texcoord8.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner673 = ( 1.0 * _Time.y * temp_cast_7 + texCoord671);
-				float4 fetchOpaqueVal665 = float4( SHADERGRAPH_SAMPLE_SCENE_COLOR( ( ase_grabScreenPosNorm + float4( ( UnpackNormalScale( tex2D( _NormalNoiseTexture, panner673 ), 1.0f ) * _NormalNoiseStrength ) , 0.0 ) ).xy ), 1.0 );
+				float2 temp_cast_1 = (_NormalNoiseSpeed).xx;
+				float2 texCoord74 = IN.ase_texcoord8.xy * _NormalTiling + float2( 0,0 );
+				float2 panner75 = ( 1.0 * _Time.y * temp_cast_1 + texCoord74);
+				float4 fetchOpaqueVal73 = float4( SHADERGRAPH_SAMPLE_SCENE_COLOR( ( ase_grabScreenPosNorm + float4( ( UnpackNormalScale( tex2D( _NormalNoiseTexture, panner75 ), 1.0f ) * _NormalNoiseStrength ) , 0.0 ) ).xy ), 1.0 );
 				
 
-				float3 BaseColor = ( lerpResult549 + float4( 0,0,0,0 ) ).rgb;
-				float3 Normal = float3(0, 0, 1);
-				float3 Emission = fetchOpaqueVal665.rgb;
+				float3 BaseColor = ( ( fresnelNode1 + _Color ) * IN.ase_color ).rgb;
+				float3 Normal = fetchOpaqueVal73.rgb;
+				float3 Emission = 0;
 				float3 Specular = 0.5;
 				float Metallic = 0;
-				float Smoothness = 0.5;
+				float Smoothness = _Smoothness;
 				float Occlusion = 1;
-				float Alpha = 1;
+				float Alpha = IN.ase_color.a;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 				float3 BakedGI = 0;
@@ -3456,7 +2865,7 @@ Shader "Water"
 			#define ASE_FOG 1
 			#define _SURFACE_TYPE_TRANSPARENT 1
 			#define _RECEIVE_SHADOWS_OFF 1
-			#define _EMISSION
+			#define _NORMALMAP 1
 			#define ASE_SRP_VERSION 120110
 
 
@@ -3478,43 +2887,32 @@ Shader "Water"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
 
-			#define ASE_NEEDS_VERT_POSITION
-			#define ASE_NEEDS_VERT_NORMAL
-
+			
 
 			struct VertexInput
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
 			struct VertexOutput
 			{
 				float4 clipPos : SV_POSITION;
-				
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _WaveMaskTexture_ST;
-			float4 _DeepWaterColor;
-			float4 _WaterColor;
-			float4 _WaterLineColor;
-			float2 _WaveSpeed;
-			float2 _NormalSpeed;
-			float _WaveNoise;
-			float _WaveHeight;
-			float _NormalTiling;
-			float _NormalScale;
-			float _WaterDistance;
-			float _WaterLineDistance;
-			float _WaterLineSpeed;
-			float _WaterLineScale;
+			float4 _Color;
+			float2 _NormalTiling;
+			float _FresnelScale;
+			float _FresnelPower;
 			float _NormalNoiseSpeed;
 			float _NormalNoiseStrength;
+			float _Smoothness;
 			#ifdef ASE_TRANSMISSION
 				float _TransmissionShadow;
 			#endif
@@ -3547,8 +2945,7 @@ Shader "Water"
 				int _PassValue;
 			#endif
 
-			sampler2D _WaveMaskTexture;
-
+			
 
 			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/Varyings.hlsl"
 			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/SelectionPickingPass.hlsl"
@@ -3557,35 +2954,7 @@ Shader "Water"
 			//#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/VisualEffectVertex.hlsl"
 			//#endif
 
-			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float3 permute( float3 x ) { return mod2D289( ( ( x * 34.0 ) + 1.0 ) * x ); }
-			float snoise( float2 v )
-			{
-				const float4 C = float4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
-				float2 i = floor( v + dot( v, C.yy ) );
-				float2 x0 = v - i + dot( i, C.xx );
-				float2 i1;
-				i1 = ( x0.x > x0.y ) ? float2( 1.0, 0.0 ) : float2( 0.0, 1.0 );
-				float4 x12 = x0.xyxy + C.xxzz;
-				x12.xy -= i1;
-				i = mod2D289( i );
-				float3 p = permute( permute( i.y + float3( 0.0, i1.y, 1.0 ) ) + i.x + float3( 0.0, i1.x, 1.0 ) );
-				float3 m = max( 0.5 - float3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
-				m = m * m;
-				m = m * m;
-				float3 x = 2.0 * frac( p * C.www ) - 1.0;
-				float3 h = abs( x ) - 0.5;
-				float3 ox = floor( x + 0.5 );
-				float3 a0 = x - ox;
-				m *= 1.79284291400159 - 0.85373472095314 * ( a0 * a0 + h * h );
-				float3 g;
-				g.x = a0.x * x0.x + h.x * x0.y;
-				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-				return 130.0 * dot( m, g );
-			}
 			
-
 			struct SurfaceDescription
 			{
 				float Alpha;
@@ -3601,12 +2970,7 @@ Shader "Water"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float2 texCoord593 = v.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner485 = ( 1.0 * _Time.y * _WaveSpeed + texCoord593);
-				float simplePerlin2D480 = snoise( ( float3( panner485 ,  0.0 ) + v.vertex.xyz ).xy*_WaveNoise );
-				simplePerlin2D480 = simplePerlin2D480*0.5 + 0.5;
-				float2 uv_WaveMaskTexture = v.ase_texcoord.xy * _WaveMaskTexture_ST.xy + _WaveMaskTexture_ST.zw;
-				
+				o.ase_color = v.ase_color;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -3614,7 +2978,7 @@ Shader "Water"
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
 
-				float3 vertexValue = ( float4( ( simplePerlin2D480 * v.ase_normal * _WaveHeight ) , 0.0 ) * tex2Dlod( _WaveMaskTexture, float4( uv_WaveMaskTexture, 0, 0.0) ) ).rgb;
+				float3 vertexValue = defaultVertexValue;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
@@ -3636,7 +3000,7 @@ Shader "Water"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
+				float4 ase_color : COLOR;
 
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -3654,7 +3018,7 @@ Shader "Water"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				o.ase_texcoord = v.ase_texcoord;
+				o.ase_color = v.ase_color;
 				return o;
 			}
 
@@ -3693,7 +3057,7 @@ Shader "Water"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
+				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -3717,7 +3081,7 @@ Shader "Water"
 
 				
 
-				surfaceDescription.Alpha = 1;
+				surfaceDescription.Alpha = IN.ase_color.a;
 				surfaceDescription.AlphaClipThreshold = 0.5;
 
 				#if _ALPHATEST_ON
@@ -3755,7 +3119,7 @@ Shader "Water"
 			#define ASE_FOG 1
 			#define _SURFACE_TYPE_TRANSPARENT 1
 			#define _RECEIVE_SHADOWS_OFF 1
-			#define _EMISSION
+			#define _NORMALMAP 1
 			#define ASE_SRP_VERSION 120110
 
 
@@ -3777,43 +3141,32 @@ Shader "Water"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
 
-			#define ASE_NEEDS_VERT_POSITION
-			#define ASE_NEEDS_VERT_NORMAL
-
+			
 
 			struct VertexInput
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
 			struct VertexOutput
 			{
 				float4 clipPos : SV_POSITION;
-				
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _WaveMaskTexture_ST;
-			float4 _DeepWaterColor;
-			float4 _WaterColor;
-			float4 _WaterLineColor;
-			float2 _WaveSpeed;
-			float2 _NormalSpeed;
-			float _WaveNoise;
-			float _WaveHeight;
-			float _NormalTiling;
-			float _NormalScale;
-			float _WaterDistance;
-			float _WaterLineDistance;
-			float _WaterLineSpeed;
-			float _WaterLineScale;
+			float4 _Color;
+			float2 _NormalTiling;
+			float _FresnelScale;
+			float _FresnelPower;
 			float _NormalNoiseSpeed;
 			float _NormalNoiseStrength;
+			float _Smoothness;
 			#ifdef ASE_TRANSMISSION
 				float _TransmissionShadow;
 			#endif
@@ -3846,8 +3199,7 @@ Shader "Water"
 				int _PassValue;
 			#endif
 
-			sampler2D _WaveMaskTexture;
-
+			
 
 			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/Varyings.hlsl"
 			//#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/SelectionPickingPass.hlsl"
@@ -3856,35 +3208,7 @@ Shader "Water"
 			//#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/VisualEffectVertex.hlsl"
 			//#endif
 
-			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float3 permute( float3 x ) { return mod2D289( ( ( x * 34.0 ) + 1.0 ) * x ); }
-			float snoise( float2 v )
-			{
-				const float4 C = float4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
-				float2 i = floor( v + dot( v, C.yy ) );
-				float2 x0 = v - i + dot( i, C.xx );
-				float2 i1;
-				i1 = ( x0.x > x0.y ) ? float2( 1.0, 0.0 ) : float2( 0.0, 1.0 );
-				float4 x12 = x0.xyxy + C.xxzz;
-				x12.xy -= i1;
-				i = mod2D289( i );
-				float3 p = permute( permute( i.y + float3( 0.0, i1.y, 1.0 ) ) + i.x + float3( 0.0, i1.x, 1.0 ) );
-				float3 m = max( 0.5 - float3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
-				m = m * m;
-				m = m * m;
-				float3 x = 2.0 * frac( p * C.www ) - 1.0;
-				float3 h = abs( x ) - 0.5;
-				float3 ox = floor( x + 0.5 );
-				float3 a0 = x - ox;
-				m *= 1.79284291400159 - 0.85373472095314 * ( a0 * a0 + h * h );
-				float3 g;
-				g.x = a0.x * x0.x + h.x * x0.y;
-				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-				return 130.0 * dot( m, g );
-			}
 			
-
 			struct SurfaceDescription
 			{
 				float Alpha;
@@ -3900,12 +3224,7 @@ Shader "Water"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float2 texCoord593 = v.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner485 = ( 1.0 * _Time.y * _WaveSpeed + texCoord593);
-				float simplePerlin2D480 = snoise( ( float3( panner485 ,  0.0 ) + v.vertex.xyz ).xy*_WaveNoise );
-				simplePerlin2D480 = simplePerlin2D480*0.5 + 0.5;
-				float2 uv_WaveMaskTexture = v.ase_texcoord.xy * _WaveMaskTexture_ST.xy + _WaveMaskTexture_ST.zw;
-				
+				o.ase_color = v.ase_color;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -3913,7 +3232,7 @@ Shader "Water"
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
 
-				float3 vertexValue = ( float4( ( simplePerlin2D480 * v.ase_normal * _WaveHeight ) , 0.0 ) * tex2Dlod( _WaveMaskTexture, float4( uv_WaveMaskTexture, 0, 0.0) ) ).rgb;
+				float3 vertexValue = defaultVertexValue;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
@@ -3934,7 +3253,7 @@ Shader "Water"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
+				float4 ase_color : COLOR;
 
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -3952,7 +3271,7 @@ Shader "Water"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				o.ase_texcoord = v.ase_texcoord;
+				o.ase_color = v.ase_color;
 				return o;
 			}
 
@@ -3991,7 +3310,7 @@ Shader "Water"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
+				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -4015,7 +3334,7 @@ Shader "Water"
 
 				
 
-				surfaceDescription.Alpha = 1;
+				surfaceDescription.Alpha = IN.ase_color.a;
 				surfaceDescription.AlphaClipThreshold = 0.5;
 
 				#if _ALPHATEST_ON
@@ -4049,166 +3368,52 @@ Shader "Water"
 }
 /*ASEBEGIN
 Version=19105
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;459;-1134.268,-1799.848;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;3;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;0;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;460;2300.792,-786.5255;Float;False;True;-1;2;UnityEditor.ShaderGraphLitGUI;0;12;Water;94348b07e5e8bab40bd6c8a1e3df54cd;True;Forward;0;1;Forward;19;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;UniversalMaterialType=Lit;True;3;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForwardOnly;False;False;0;;0;0;Standard;41;Workflow;1;0;Surface;1;638310845017756046;  Refraction Model;0;0;  Blend;0;638322249953382436;Two Sided;1;0;Fragment Normal Space,InvertActionOnDeselection;0;0;Forward Only;1;0;Transmission;0;0;  Transmission Shadow;0.5,False,;0;Translucency;0;638310864054521368;  Translucency Strength;1,False,;0;  Normal Distortion;0.5,False,;0;  Scattering;2,False,;0;  Direct;0.9,False,;0;  Ambient;0.1,False,;0;  Shadow;0.5,False,;0;Cast Shadows;1;638328447725110328;  Use Shadow Threshold;0;638323795785072754;Receive Shadows;0;638328447737048002;GPU Instancing;1;0;LOD CrossFade;1;0;Built-in Fog;1;0;_FinalColorxAlpha;0;0;Meta Pass;1;0;Override Baked GI;0;0;Extra Pre Pass;0;0;DOTS Instancing;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Write Depth;0;0;  Early Z;0;0;Vertex Position,InvertActionOnDeselection;1;0;Debug Display;0;0;Clear Coat;0;0;0;10;False;True;True;True;True;True;True;True;True;True;False;;False;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;622;1975.592,472.7981;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;478;1762.236,472.3459;Inherit;True;3;3;0;FLOAT;0;False;1;FLOAT3;0,0,0;False;2;FLOAT;0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.NormalVertexDataNode;475;1550.51,575.6345;Inherit;False;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.PosVertexDataNode;477;1095.357,588.8022;Inherit;False;0;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleAddOpNode;482;1425.195,472.6914;Inherit;False;2;2;0;FLOAT2;0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.NoiseGeneratorNode;480;1550.43,467.0843;Inherit;False;Simplex2D;True;False;2;0;FLOAT2;0,0;False;1;FLOAT;1;False;1;FLOAT;0
-Node;AmplifyShaderEditor.PannerNode;485;1093.302,472.9041;Inherit;False;3;0;FLOAT2;0,0;False;2;FLOAT2;0,0;False;1;FLOAT;1;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.SamplerNode;621;1550.124,802.1611;Inherit;True;Property;_WaveMaskTexture;Wave Mask Texture;14;0;Create;True;0;0;0;False;0;False;-1;ef898b925dfeb1a41b3be19b85431986;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.Vector2Node;594;917.8816,592.7332;Inherit;False;Property;_WaveSpeed;Wave Speed;16;0;Create;True;0;0;0;False;0;False;0.2,0.2;0.2,0.2;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
-Node;AmplifyShaderEditor.TextureCoordinatesNode;593;865.057,472.5734;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.RangedFloatNode;479;1548.757,720.8963;Inherit;False;Property;_WaveHeight;Wave Height;17;0;Create;True;0;0;0;False;0;False;0.3;0.3;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;481;1327.612,570.449;Inherit;False;Property;_WaveNoise;Wave Noise;15;0;Create;True;0;0;0;False;0;False;1.5;1;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.OneMinusNode;507;-1682.964,-338.9366;Inherit;False;1;0;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.StepOpNode;505;-2106.621,-340.1952;Inherit;True;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.ColorNode;511;-2156.27,-121.1911;Inherit;False;Constant;_WaterCausticsColor02;Water Caustics Color 02;4;0;Create;True;0;0;0;False;0;False;1,1,1,1;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;515;-1526.449,-339.1291;Inherit;True;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;506;-1892.156,-337.753;Inherit;True;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.StepOpNode;451;-1859.269,94.19297;Inherit;True;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;453;-1657.026,94.59635;Inherit;True;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.ColorNode;454;-1908.918,313.1937;Inherit;False;Constant;_WaterCausticsColor01;Water Caustics Color 01;4;0;Create;True;0;0;0;False;0;False;1,1,1,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.RangedFloatNode;452;-2117.403,310.1843;Inherit;False;Constant;_WaterCausticsSize01;Water Caustics Size 01;4;0;Create;True;0;0;0;False;0;False;0.93;0.95;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;450;-2344.404,212.184;Inherit;False;Property;_WaterCausticsScale01;Water Caustics Scale 01;12;0;Create;True;0;0;0;False;0;False;7;7;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.NoiseGeneratorNode;446;-2118.119,89.19315;Inherit;True;Simplex3D;True;False;2;0;FLOAT3;0,0,0;False;1;FLOAT;1;False;1;FLOAT;0
-Node;AmplifyShaderEditor.PannerNode;447;-2301.919,94.19315;Inherit;False;3;0;FLOAT2;0,0;False;2;FLOAT2;0,0;False;1;FLOAT;1;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.OneMinusNode;471;-1433.834,97.22797;Inherit;False;1;0;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.SimpleAddOpNode;627;-1269.293,-338.8401;Inherit;True;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.RangedFloatNode;510;-2364.754,-124.2004;Inherit;False;Constant;_WaterCausticsSize02;Water Caustics Size 02;4;0;Create;True;0;0;0;False;0;False;0.95;0.95;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;516;-1902.448,-124.1275;Inherit;False;Constant;_WaterCaustics02Intensity;Water Caustics 02 Intensity;11;0;Create;True;0;0;0;False;0;False;0.1;0;0;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RegisterLocalVarNode;677;-1047.155,-347.8182;Inherit;True;WaterCaustics;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.NoiseGeneratorNode;508;-2365.469,-345.1952;Inherit;True;Simplex2D;True;False;2;0;FLOAT2;0,0;False;1;FLOAT;1;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;512;-2591.754,-222.2028;Inherit;False;Property;_WaterCausticsScale02;Water Caustics Scale 02;13;0;Create;True;0;0;0;False;0;False;7;7.15;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.PannerNode;509;-2549.269,-340.1952;Inherit;False;3;0;FLOAT2;0,0;False;2;FLOAT2;0,0;False;1;FLOAT;1;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.TextureCoordinatesNode;514;-2892.151,-195.6077;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.Vector2Node;513;-2899.635,-76.61474;Inherit;False;Property;_WaterCausticsSpeed1;Water Caustics Speed;6;0;Create;True;0;0;0;False;0;False;0.1,0;0.1,0;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
-Node;AmplifyShaderEditor.LerpOp;549;1882.885,-870.7617;Inherit;False;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
-Node;AmplifyShaderEditor.BreakToComponentsNode;550;1720.874,-754.8696;Inherit;False;COLOR;1;0;COLOR;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;461;863.3016,-197.8877;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ShadowCaster;0;2;ShadowCaster;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;3;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;False;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=ShadowCaster;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;462;863.3016,-197.8877;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthOnly;0;3;DepthOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;3;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;False;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;False;False;True;1;LightMode=DepthOnly;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;463;863.3016,-197.8877;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Meta;0;4;Meta;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;3;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;464;863.3016,-197.8877;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Universal2D;0;5;Universal2D;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;3;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=Universal2D;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;465;863.3016,-197.8877;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthNormals;0;6;DepthNormals;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;3;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=DepthNormalsOnly;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;466;863.3016,-197.8877;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;GBuffer;0;7;GBuffer;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;3;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalGBuffer;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;467;863.3016,-197.8877;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;SceneSelectionPass;0;8;SceneSelectionPass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;3;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=SceneSelectionPass;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;468;863.3016,-197.8877;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ScenePickingPass;0;9;ScenePickingPass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;3;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Picking;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.LerpOp;618;1510.714,-845.0499;Inherit;False;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
-Node;AmplifyShaderEditor.LerpOp;294;1286.676,-980.718;Inherit;False;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
-Node;AmplifyShaderEditor.ColorNode;292;1046.89,-961.5963;Inherit;False;Property;_WaterColor;Water Color;0;1;[HDR];Create;True;0;0;0;False;0;False;0,1.011765,1.498039,0.5490196;0,1.011765,1.498039,0.5490196;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.ColorNode;620;1056.948,-683.2847;Inherit;False;Property;_WaterLineColor;Water Line Color;3;1;[HDR];Create;True;0;0;0;False;0;False;1,1,1,1;1,1,1,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.RangedFloatNode;609;592.5122,-271.8086;Inherit;False;Property;_WaterLineScale;Water Line Scale;4;0;Create;True;0;0;0;False;0;False;25;40;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.ColorNode;617;791.5611,-279.0072;Inherit;False;Constant;_Color0;Color 0;11;0;Create;True;0;0;0;False;0;False;1,1,1,1;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleAddOpNode;628;2117.467,-782.5915;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.NoiseGeneratorNode;607;760.6028,-400.4987;Inherit;False;Simplex3D;True;False;2;0;FLOAT3;0,0,0;False;1;FLOAT;1;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;613;504.3065,-498.9042;Inherit;False;Property;_WaterLineDistance;Water Line Distance;7;0;Create;True;0;0;0;False;0;False;0.2;0.5;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.StepOpNode;606;979.5131,-502.0084;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;616;1127.772,-500.8841;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.TextureCoordinatesNode;610;361.9892,-396.2514;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.RangedFloatNode;611;306.3274,-275.1368;Inherit;False;Property;_WaterLineSpeed;Water Line Speed;5;0;Create;True;0;0;0;False;0;False;0;0.005;0;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.PannerNode;608;574.6122,-396.3089;Inherit;False;3;0;FLOAT2;0,0;False;2;FLOAT2;0,0;False;1;FLOAT;1;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.RangedFloatNode;323;590.4084,-787.462;Inherit;False;Property;_WaterDistance;Water Distance;2;0;Create;True;0;0;0;False;0;False;1;1.2;0;5;0;1;FLOAT;0
-Node;AmplifyShaderEditor.GetLocalVarNode;630;1796.923,-602.7202;Inherit;False;677;WaterCaustics;1;0;OBJECT;;False;1;COLOR;0
-Node;AmplifyShaderEditor.DepthFade;335;853.4838,-788.9401;Inherit;False;True;True;True;2;1;FLOAT3;0,0,0;False;0;FLOAT;1;False;1;FLOAT;0
-Node;AmplifyShaderEditor.DepthFade;623;717.0032,-502.4862;Inherit;False;True;True;True;2;1;FLOAT3;0,0,0;False;0;FLOAT;1;False;1;FLOAT;0
-Node;AmplifyShaderEditor.GrabScreenPosition;666;1513.359,-174.7685;Inherit;False;0;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleAddOpNode;667;1785.359,-158.7685;Inherit;False;2;2;0;FLOAT4;0,0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.ScreenColorNode;665;1929.359,-158.7685;Inherit;False;Global;_GrabScreen0;Grab Screen 0;18;0;Create;True;0;0;0;False;0;False;Object;-1;False;False;False;False;2;0;FLOAT2;0,0;False;1;FLOAT;0;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.TextureCoordinatesNode;671;767.1002,2.649679;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.PannerNode;673;979.723,2.592184;Inherit;False;3;0;FLOAT2;0,0;False;2;FLOAT2;0,0;False;1;FLOAT;1;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.RangedFloatNode;672;711.4384,123.7643;Inherit;False;Property;_NormalNoiseSpeed;Normal Noise Speed;20;0;Create;True;0;0;0;False;0;False;0.02;0.005;0;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SamplerNode;669;1147.682,-6.121895;Inherit;True;Property;_NormalNoiseTexture;Normal Noise Texture;18;0;Create;True;0;0;0;False;0;False;-1;83383402e673d6c4380931ab6a7e4d87;None;True;0;True;bump;Auto;True;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.PannerNode;531;685.9139,-1465.241;Inherit;False;3;0;FLOAT2;0,0;False;2;FLOAT2;0,0;False;1;FLOAT;1;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.TextureCoordinatesNode;533;429.9138,-1466.241;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.ScreenColorNode;542;1473.241,-1472.208;Inherit;False;Global;_GrabScreen1;Grab Screen 1;13;0;Create;True;0;0;0;False;0;False;Object;-1;False;False;False;False;2;0;FLOAT2;0,0;False;1;FLOAT;0;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleAddOpNode;551;1674.565,-1447.837;Inherit;False;3;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.GrabScreenPosition;576;948.5881,-1684.396;Inherit;False;0;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleAddOpNode;541;1242.241,-1512.508;Inherit;True;2;2;0;FLOAT4;0,0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.SamplerNode;536;916.7656,-1493.604;Inherit;True;Property;_NormalTexture;Normal Texture;8;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;True;bump;Auto;True;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.RangedFloatNode;629;273.4816,-1466.742;Inherit;False;Property;_NormalTiling;Normal Tiling;10;0;Create;True;0;0;0;False;0;False;1.5;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.ColorNode;293;1049.179,-1135.85;Inherit;False;Property;_DeepWaterColor;Deep Water Color;1;1;[HDR];Create;True;0;0;0;False;0;False;0,0.25,1,1;0,0.25,1,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.Vector2Node;532;422.4288,-1347.25;Inherit;False;Property;_NormalSpeed;Normal Speed;11;0;Create;True;0;0;0;False;0;False;0.1,0;0.08,0;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
-Node;AmplifyShaderEditor.RangedFloatNode;535;696.7659,-1342.604;Inherit;False;Property;_NormalScale;Normal Scale;9;0;Create;True;0;0;0;False;0;False;0.2;0.1;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;678;1593.395,16.87634;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT;0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.RangedFloatNode;670;1171.331,187.4541;Inherit;False;Property;_NormalNoiseStrength;Normal Noise Strength;19;0;Create;True;0;0;0;False;0;False;0.2;0.2;0;1;0;1;FLOAT;0
-WireConnection;460;0;628;0
-WireConnection;460;2;665;0
-WireConnection;460;8;622;0
-WireConnection;622;0;478;0
-WireConnection;622;1;621;0
-WireConnection;478;0;480;0
-WireConnection;478;1;475;0
-WireConnection;478;2;479;0
-WireConnection;482;0;485;0
-WireConnection;482;1;477;0
-WireConnection;480;0;482;0
-WireConnection;480;1;481;0
-WireConnection;485;0;593;0
-WireConnection;485;2;594;0
-WireConnection;507;0;506;0
-WireConnection;505;0;508;0
-WireConnection;505;1;510;0
-WireConnection;515;0;507;0
-WireConnection;515;1;516;0
-WireConnection;506;0;505;0
-WireConnection;506;1;511;0
-WireConnection;451;0;446;0
-WireConnection;451;1;452;0
-WireConnection;453;0;451;0
-WireConnection;453;1;454;0
-WireConnection;446;0;447;0
-WireConnection;446;1;450;0
-WireConnection;447;0;514;0
-WireConnection;447;2;513;0
-WireConnection;471;0;453;0
-WireConnection;627;0;515;0
-WireConnection;627;1;471;0
-WireConnection;677;0;627;0
-WireConnection;508;0;509;0
-WireConnection;508;1;512;0
-WireConnection;509;0;514;0
-WireConnection;509;2;513;0
-WireConnection;549;0;551;0
-WireConnection;549;1;618;0
-WireConnection;549;2;550;3
-WireConnection;550;0;618;0
-WireConnection;618;0;294;0
-WireConnection;618;1;620;0
-WireConnection;618;2;616;0
-WireConnection;294;0;293;0
-WireConnection;294;1;292;0
-WireConnection;294;2;335;0
-WireConnection;628;0;549;0
-WireConnection;607;0;608;0
-WireConnection;607;1;609;0
-WireConnection;606;0;623;0
-WireConnection;606;1;607;0
-WireConnection;616;0;606;0
-WireConnection;616;1;617;4
-WireConnection;608;0;610;0
-WireConnection;608;2;611;0
-WireConnection;335;0;323;0
-WireConnection;623;0;613;0
-WireConnection;667;0;666;0
-WireConnection;667;1;678;0
-WireConnection;665;0;667;0
-WireConnection;673;0;671;0
-WireConnection;673;2;672;0
-WireConnection;669;1;673;0
-WireConnection;531;0;533;0
-WireConnection;531;2;532;0
-WireConnection;533;0;629;0
-WireConnection;542;0;541;0
-WireConnection;551;0;542;1
-WireConnection;551;1;542;2
-WireConnection;551;2;542;3
-WireConnection;541;0;576;0
-WireConnection;541;1;536;0
-WireConnection;536;1;531;0
-WireConnection;536;5;535;0
-WireConnection;678;0;669;0
-WireConnection;678;1;670;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;43;529.8657,-169.2088;Float;False;True;-1;2;UnityEditor.ShaderGraphLitGUI;0;12;Water Drop;94348b07e5e8bab40bd6c8a1e3df54cd;True;Forward;0;1;Forward;19;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;UniversalMaterialType=Lit;True;3;True;12;all;0;False;True;1;1;False;;1;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;;0;0;Standard;41;Workflow;1;0;Surface;1;638341666021286867;  Refraction Model;0;0;  Blend;2;638343199298516366;Two Sided;1;0;Fragment Normal Space,InvertActionOnDeselection;0;0;Forward Only;0;0;Transmission;0;0;  Transmission Shadow;0.5,False,;0;Translucency;0;0;  Translucency Strength;1,False,;0;  Normal Distortion;0.5,False,;0;  Scattering;2,False,;0;  Direct;0.9,False,;0;  Ambient;0.1,False,;0;  Shadow;0.5,False,;0;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;0;638343150454934731;GPU Instancing;1;0;LOD CrossFade;1;0;Built-in Fog;1;0;_FinalColorxAlpha;0;0;Meta Pass;1;0;Override Baked GI;0;0;Extra Pre Pass;0;0;DOTS Instancing;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Write Depth;0;0;  Early Z;0;0;Vertex Position,InvertActionOnDeselection;1;0;Debug Display;0;0;Clear Coat;0;0;0;10;False;True;True;True;True;True;True;True;True;True;False;;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;42;-191.7364,-153.7291;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;3;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;0;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;44;61.76637,-153.7291;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ShadowCaster;0;2;ShadowCaster;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;3;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;False;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=ShadowCaster;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;45;61.76637,-153.7291;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthOnly;0;3;DepthOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;3;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;False;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;False;False;True;1;LightMode=DepthOnly;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;46;61.76637,-153.7291;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Meta;0;4;Meta;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;3;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;47;61.76637,-153.7291;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Universal2D;0;5;Universal2D;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;3;True;12;all;0;False;True;1;1;False;;1;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=Universal2D;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;48;61.76637,-153.7291;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthNormals;0;6;DepthNormals;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;3;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=DepthNormals;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;49;61.76637,-153.7291;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;GBuffer;0;7;GBuffer;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;3;True;12;all;0;False;True;1;1;False;;1;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalGBuffer;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;50;61.76637,-153.7291;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;SceneSelectionPass;0;8;SceneSelectionPass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;3;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=SceneSelectionPass;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;51;61.76637,-153.7291;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ScenePickingPass;0;9;ScenePickingPass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;3;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Picking;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;69;-125.4066,-173.041;Inherit;True;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.GrabScreenPosition;70;-238.1422,303.7708;Inherit;False;0;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleAddOpNode;72;33.85774,319.7708;Inherit;False;2;2;0;FLOAT4;0,0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.ScreenColorNode;73;177.8578,319.7708;Inherit;False;Global;_GrabScreen0;Grab Screen 0;18;0;Create;True;0;0;0;False;0;False;Object;-1;False;False;False;False;2;0;FLOAT2;0,0;False;1;FLOAT;0;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.TextureCoordinatesNode;74;-984.401,481.189;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.PannerNode;75;-771.7781,481.1315;Inherit;False;3;0;FLOAT2;0,0;False;2;FLOAT2;0,0;False;1;FLOAT;1;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.SamplerNode;77;-603.8192,472.4175;Inherit;True;Property;_NormalNoiseTexture;Normal Noise Texture;4;0;Create;True;0;0;0;False;0;False;-1;83383402e673d6c4380931ab6a7e4d87;83383402e673d6c4380931ab6a7e4d87;True;0;True;bump;Auto;True;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RangedFloatNode;78;-592.1701,663.9935;Inherit;False;Property;_NormalNoiseStrength;Normal Noise Strength;5;0;Create;True;0;0;0;False;0;False;0.2;0.2;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;119;147.0495,-171.647;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.FresnelNode;1;-440.3174,-179.2446;Inherit;True;Standard;WorldNormal;ViewDir;False;False;5;0;FLOAT3;0,0,1;False;4;FLOAT3;0,0,0;False;1;FLOAT;0;False;2;FLOAT;1;False;3;FLOAT;5;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;41;-679.1308,-43.46017;Inherit;False;Property;_FresnelPower;Fresnel Power;1;0;Create;True;0;0;0;False;0;False;1.98;1.98;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;53;-677.8998,-133.2927;Inherit;False;Property;_FresnelScale;Fresnel Scale;2;0;Create;True;0;0;0;False;0;False;1.98;1.98;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.VertexColorNode;66;-80.65419,45.75399;Inherit;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;120;-153.553,481.4208;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT;0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.Vector2Node;123;-1206.6,500.4344;Inherit;False;Property;_NormalTiling;Normal Tiling;6;0;Create;True;0;0;0;False;0;False;0.5,0.5;0,0;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
+Node;AmplifyShaderEditor.RangedFloatNode;76;-1042.063,603.3036;Inherit;False;Property;_NormalNoiseSpeed;Normal Noise Speed;7;0;Create;True;0;0;0;False;0;False;0.02;0.005;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.ColorNode;68;-360.7646,46.39253;Inherit;False;Property;_Color;Color;0;0;Create;True;0;0;0;False;0;False;0.6179246,1,0.978667,0.6156863;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RangedFloatNode;52;243.5054,-57.70352;Inherit;False;Property;_Smoothness;Smoothness;3;0;Create;True;0;0;0;False;0;False;1;1;0;1;0;1;FLOAT;0
+WireConnection;43;0;119;0
+WireConnection;43;1;73;0
+WireConnection;43;4;52;0
+WireConnection;43;6;66;4
+WireConnection;69;0;1;0
+WireConnection;69;1;68;0
+WireConnection;72;0;70;0
+WireConnection;72;1;120;0
+WireConnection;73;0;72;0
+WireConnection;74;0;123;0
+WireConnection;75;0;74;0
+WireConnection;75;2;76;0
+WireConnection;77;1;75;0
+WireConnection;119;0;69;0
+WireConnection;119;1;66;0
+WireConnection;1;2;53;0
+WireConnection;1;3;41;0
+WireConnection;120;0;77;0
+WireConnection;120;1;78;0
 ASEEND*/
-//CHKSM=2AFA2AB86CF7D31A1317EEDDF105D0A243C986BE
+//CHKSM=A49D96F527BACFC11B1F0D4A01E072D59F760A0A
