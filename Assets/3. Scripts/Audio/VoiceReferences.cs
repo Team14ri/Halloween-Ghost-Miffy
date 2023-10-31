@@ -12,31 +12,31 @@ public class VoiceReferences : MonoBehaviour
         public EventReference eventReference;
     }
     public VoiceData[] voiceDataArray;
-    public Dictionary<string, EventReference> voiceDictionary;
+    public Dictionary<string, EventReference> VoiceDictionary;
 
-    public static VoiceReferences instance { get; private set; }
+    public static VoiceReferences Instance { get; private set; }
 
     private void Awake()
     {
-        if (instance != null)
+        if (Instance != null)
         {
             Debug.LogError("한 씬에 VoiceReferences가 여러 개 있습니다.");
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
         else
         {
-            instance = this;
+            Instance = this;
             InitVoiceDictionary();
         }
     }
     
     private void InitVoiceDictionary()
     {
-        voiceDictionary = new Dictionary<string, EventReference>();
+        VoiceDictionary = new Dictionary<string, EventReference>();
 
         foreach (var data in voiceDataArray)
         {
-            voiceDictionary[data.name] = data.eventReference;
+            VoiceDictionary[data.name] = data.eventReference;
         }
     }
 }

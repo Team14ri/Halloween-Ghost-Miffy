@@ -20,7 +20,7 @@ public class VoiceManager : MonoBehaviour
     {
         eventInstances = new Dictionary<string, EventInstance>();
 
-        foreach (var data in VoiceReferences.instance.voiceDictionary)
+        foreach (var data in VoiceReferences.Instance.VoiceDictionary)
         {
             string eventName = data.Key;
             EventReference eventReference = data.Value;
@@ -35,12 +35,13 @@ public class VoiceManager : MonoBehaviour
         if (Instance != null)
         {
             Debug.LogError("한 씬에 VoiceManager가 여러 개 있습니다.");
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
         else
         {
             Instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            transform.parent = null;
+            DontDestroyOnLoad(transform.gameObject);
         }
     }
 

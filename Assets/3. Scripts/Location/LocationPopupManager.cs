@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LocationPopupManager : MonoBehaviour
 {
+    [SerializeField] private float showDelay;
+    
     [SerializeField] private string locationType = "WELCOME TO";
     [SerializeField] private string locationName;
     
@@ -17,8 +16,8 @@ public class LocationPopupManager : MonoBehaviour
     {
         _locationTmpTextEditor = locationUI.GetComponent<TmpTextEditor>();
         _locationFadeController = locationUI.GetComponent<UIFadeController>();
-
-        SceneTransitionController.Instance.IrisOpen(Show);
+        
+        Invoke(nameof(Show), showDelay);
     }
         
     public void Show()
