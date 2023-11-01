@@ -54,9 +54,27 @@ public class PlayerInteractionState : IState
     {
         if (!player.InteractionInput)
             return;
+        
         player.InteractionInput = false;
 
         CheckDialoguePlaying(PlayCurrentNode);
+    }
+    
+    public void SelectChoice(string guid)
+    {
+        player.StopInteractionInput = false;
+        
+        var nodeLinks = dialogueFlow.GetCurrentNodeLinks();
+        
+        if (nodeLinks.Count == 0)
+        {
+            stateMachine.ChangeState(new PlayerIdleState(player, stateMachine));
+            return;
+        }
+        
+        dialogueFlow.ChangeCurrentNodeData(guid);
+        
+        PlayCurrentNode();
     }
 
     private void CheckDialoguePlaying(Action<bool> action)
@@ -110,7 +128,8 @@ public class PlayerInteractionState : IState
                 }
                 break;
             case NodeTypes.NodeType.MultiChoice:
-                // player.StopInteractionInput = true;
+                player.StopInteractionInput = true;
+                
                 var multiChoiceNodeData = nodeData as MultiChoiceNodeData;
                 lastestDialogueHandler = DialogueManager.Instance.GetHandler(multiChoiceNodeData.TargetObjectID);
 
@@ -124,10 +143,8 @@ public class PlayerInteractionState : IState
                 lastestDialogueHandler.PlayDialogue(multiChoiceNodeData.DialogueText, skipTyping);
                 
                 var nodeLinks = dialogueFlow.GetCurrentNodeLinks();
-                foreach (var nodeLink in nodeLinks)
-                {
-                    Debug.Log(nodeLink.PortName);
-                }
+                
+                MultiDialogueHandler.Instance.Init(this, nodeLinks);
                 break;
             case NodeTypes.NodeType.StartQuest:
                 var startQuestNodeData = dialogueFlow.GetCurrentNodeData() as StartQuestNodeData;

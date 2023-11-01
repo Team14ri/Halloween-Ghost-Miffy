@@ -22,12 +22,9 @@ MonoBehaviour:
   - BaseNodeGuid: ea5aaea0-512d-488e-ba05-5872805e449c
     PortName: Next
     TargetNodeGuid: a572e5ed-3e39-4609-a913-eb9ec45fafb4
-  - BaseNodeGuid: 2302414b-c2ef-4531-8b12-c7ec20fa09e1
-    PortName: Next
-    TargetNodeGuid: ca951531-5923-4d29-a9cd-69bd95538a31
   - BaseNodeGuid: 3e7f8bf6-a8b9-4733-a821-c8dbb6dd516a
     PortName: Next
-    TargetNodeGuid: 2302414b-c2ef-4531-8b12-c7ec20fa09e1
+    TargetNodeGuid: 4b0d59bf-4073-4f86-917c-a13bf8c8abc7
   - BaseNodeGuid: 00606e84-93a8-4a9a-936a-d05f6d93ac2b
     PortName: Next
     TargetNodeGuid: 758c0469-e76e-4578-93d1-497b47860855
@@ -52,25 +49,35 @@ MonoBehaviour:
   - BaseNodeGuid: d963ff11-eb38-4f00-b27b-7d902beaedb7
     PortName: Next
     TargetNodeGuid: 5594f0fc-aa45-4b8e-b8e6-b00b077b2c2f
+  - BaseNodeGuid: 4b0d59bf-4073-4f86-917c-a13bf8c8abc7
+    PortName: "\uC2EB\uC5B4"
+    TargetNodeGuid: 2c45ac46-898f-4b8d-8bd2-c5d6e3cfceb6
+  - BaseNodeGuid: 4b0d59bf-4073-4f86-917c-a13bf8c8abc7
+    PortName: "\uADF8\uB798"
+    TargetNodeGuid: ca951531-5923-4d29-a9cd-69bd95538a31
+  - BaseNodeGuid: 2c45ac46-898f-4b8d-8bd2-c5d6e3cfceb6
+    PortName: Next
+    TargetNodeGuid: 0fcbed17-a317-4cbb-8742-a4ba61d90efb
   NodeData:
-  - rid: 7667219173105468413
-  - rid: 7667219173105468414
-  - rid: 7667219173105468415
-  - rid: 7667219180599902208
-  - rid: 7667219180599902209
-  - rid: 7667219180599902210
-  - rid: 7667219180599902211
-  - rid: 7667219180599902212
-  - rid: 7667219180599902213
-  - rid: 7667219180599902214
-  - rid: 7667219180599902215
-  - rid: 7667219180599902216
-  - rid: 7667219180599902217
-  - rid: 7667219180599902218
+  - rid: 4135296242311233868
+  - rid: 4135296242311233869
+  - rid: 4135296242311233870
+  - rid: 4135296242311233871
+  - rid: 4135296242311233872
+  - rid: 4135296242311233873
+  - rid: 4135296242311233874
+  - rid: 4135296242311233875
+  - rid: 4135296242311233876
+  - rid: 4135296242311233877
+  - rid: 4135296242311233878
+  - rid: 4135296242311233879
+  - rid: 4135296242311233880
+  - rid: 4135296242311233881
+  - rid: 4135296242311233882
   references:
     version: 2
     RefIds:
-    - rid: 7667219173105468413
+    - rid: 4135296242311233868
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 0fcbed17-a317-4cbb-8742-a4ba61d90efb
@@ -80,16 +87,8 @@ MonoBehaviour:
         TargetObjectID: Roide
         DialogueText: "\uC5B8\uB355 \uC704\uC5D0 \uC788\uB294\n\uC800 \uB140\uC11D\uC744
           \uBD10."
-    - rid: 7667219173105468414
-      type: {class: StartQuestNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: ca951531-5923-4d29-a9cd-69bd95538a31
-        NodeTitle: StartQuest Node
-        NodeType: 2
-        Position: {x: 1613, y: 245}
-        QuestType: SUB QUEST
-        QuestID: "\uD38C\uD0A8\uB9E8\uC5D0\uAC8C \uC548\uBD80 \uBB3B\uAE30"
-    - rid: 7667219173105468415
+        SkipDelay: 0
+    - rid: 4135296242311233869
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: ea5aaea0-512d-488e-ba05-5872805e449c
@@ -98,17 +97,8 @@ MonoBehaviour:
         Position: {x: 753, y: 465}
         TargetObjectID: Roide
         DialogueText: "\uC9C0\uAE08\uBD80\uD130 \uBE68\uB9AC \uB9D0\uD558\uACA0\uC2B5\uB2C8\uB2E4.\r\n\uC790<speed:0.03>\uC774<speed:0.06>\uC81C<speed:0.09>\uC2DC<speed:1>\uC791<speed:0.02>\uC774\uC57C\uB0B4\uAFC8\uC744\uC704\uD55C\uC5EC\uD589\uD53C\uCE74\uCE04"
-    - rid: 7667219180599902208
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: 2302414b-c2ef-4531-8b12-c7ec20fa09e1
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 1114, y: 253}
-        TargetObjectID: Roide
-        DialogueText: "<pause:1.6>\uACE7 \uB5A8\uC5B4\uC9C4\uB2E4\uC5D0 \uB9CC \uC6D0\uC744
-          \uAC78\uC9C0"
-    - rid: 7667219180599902209
+        SkipDelay: 0
+    - rid: 4135296242311233870
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 3e7f8bf6-a8b9-4733-a821-c8dbb6dd516a
@@ -117,7 +107,8 @@ MonoBehaviour:
         Position: {x: 561, y: 259}
         TargetObjectID: Pumkinman
         DialogueText: "<pause:1.8><size:2>\uD558!<pause:0.2>\uD558!<pause:0.2>\uD558!"
-    - rid: 7667219180599902210
+        SkipDelay: 0
+    - rid: 4135296242311233871
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 00606e84-93a8-4a9a-936a-d05f6d93ac2b
@@ -126,7 +117,8 @@ MonoBehaviour:
         Position: {x: 726, y: 931}
         TargetObjectID: Roide
         DialogueText: hi i'm Roide1231231234242424
-    - rid: 7667219180599902211
+        SkipDelay: 0
+    - rid: 4135296242311233872
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 6b9e381f-1a0f-4cdc-9fca-b11fecc97200
@@ -135,7 +127,8 @@ MonoBehaviour:
         Position: {x: 1443, y: 972}
         TargetObjectID: Roide
         DialogueText: i'm sad :(
-    - rid: 7667219180599902212
+        SkipDelay: 0
+    - rid: 4135296242311233873
       type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 758c0469-e76e-4578-93d1-497b47860855
@@ -144,7 +137,7 @@ MonoBehaviour:
         Position: {x: 1086, y: 981}
         TargetObjectID: Roide
         DialogueText: are you good today?
-    - rid: 7667219180599902213
+    - rid: 4135296242311233874
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 118f8500-84f5-4e52-8c4d-3df444715608
@@ -153,7 +146,8 @@ MonoBehaviour:
         Position: {x: 941, y: 1226}
         TargetObjectID: Miffy
         DialogueText: hihihihihi
-    - rid: 7667219180599902214
+        SkipDelay: 0
+    - rid: 4135296242311233875
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: a572e5ed-3e39-4609-a913-eb9ec45fafb4
@@ -163,7 +157,8 @@ MonoBehaviour:
         TargetObjectID: Roide
         DialogueText: "<anim:wave>\uC774\uAC83\uC740 \uC6E8\uC774\uBE0C</anim>\r\n<anim:shake>\uC774\uAC83\uC774
           \uC250\uC774\uD06C</anim>\r\n<anim:wave>\uD55C</anim><anim:shake>\uAE00</anim><anim:wave>\uC790</anim><anim:shake>\uC529</anim><anim:wave>\uB9D0</anim><anim:shake>\uD574</anim><anim:wave>\uBCF4</anim><anim:shake>\uC544</anim><anim:wave>\uC694</anim>\r\n<anim:shake>!!!!</anim>"
-    - rid: 7667219180599902215
+        SkipDelay: 0
+    - rid: 4135296242311233876
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: be0f5b3a-9eec-4919-b977-8f3ab08e2d1c
@@ -172,7 +167,8 @@ MonoBehaviour:
         Position: {x: 276, y: 463}
         TargetObjectID: Roide
         DialogueText: "\uC548<size:0.5>\uB155<size:2>\uD558<size:3>\uC138<size:4>\uC694"
-    - rid: 7667219180599902216
+        SkipDelay: 0
+    - rid: 4135296242311233877
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 5594f0fc-aa45-4b8e-b8e6-b00b077b2c2f
@@ -181,7 +177,8 @@ MonoBehaviour:
         Position: {x: 769, y: -14}
         TargetObjectID: Roide
         DialogueText: "<pause:1>\uC7A0\uAE50, \uC774\uAC83\uB3C4 \uAC00\uC838\uAC00!"
-    - rid: 7667219180599902217
+        SkipDelay: 0
+    - rid: 4135296242311233878
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: d963ff11-eb38-4f00-b27b-7d902beaedb7
@@ -192,7 +189,8 @@ MonoBehaviour:
         DialogueText: "\uC548\uB155. \uB0B4 \uC774\uB984\uC740 \uB85C\uC774\uB4DC\uC57C.\r\n\uC800\uAE30
           \uB4A4\uCABD\uC73C\uB85C \uAC00\uBA74 \uB108\uB97C \uAE30\uB2E4\uB9AC\uB294
           \uC0AC\uB78C\uC774 \uC788\uC5B4."
-    - rid: 7667219180599902218
+        SkipDelay: 0
+    - rid: 4135296242311233879
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 1bfdba66-ec67-4cb2-9cfc-5b289a97ac50
@@ -201,3 +199,33 @@ MonoBehaviour:
         Position: {x: 1237, y: -23}
         TargetObjectID: Roide
         DialogueText: "<speed:1>\uC774\uB807\uAC8C \uB9D0\uD558\uBA74 \uB290\uB824\uC9C0\uB098?"
+        SkipDelay: 0
+    - rid: 4135296242311233880
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 2c45ac46-898f-4b8d-8bd2-c5d6e3cfceb6
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1576, y: 346}
+        TargetObjectID: Roide
+        DialogueText: "\uD760..."
+        SkipDelay: 0
+    - rid: 4135296242311233881
+      type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 4b0d59bf-4073-4f86-917c-a13bf8c8abc7
+        NodeTitle: MultiChoice Node
+        NodeType: 1
+        Position: {x: 1101, y: 219}
+        TargetObjectID: Roide
+        DialogueText: "<pause:1.6>\uACE7 \uB5A8\uC5B4\uC9C4\uB2E4\uC5D0 \uB9CC \uC6D0\uC744
+          \uAC78\uC9C0"
+    - rid: 4135296242311233882
+      type: {class: StartQuestNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: ca951531-5923-4d29-a9cd-69bd95538a31
+        NodeTitle: StartQuest Node
+        NodeType: 2
+        Position: {x: 1576, y: 182}
+        QuestType: SUB QUEST
+        QuestID: "\uD38C\uD0A8\uB9E8\uC5D0\uAC8C \uC548\uBD80 \uBB3B\uAE30"
