@@ -52,7 +52,7 @@ namespace DS.Core
             if (DialogueManager.Instance.CheckDialogueEnd())
             {
                 _observeDialogueEnd = false;
-                UpdateIndex(0);
+                Invoke(nameof(InitIndex), 1f);
             }
         }
 
@@ -62,18 +62,7 @@ namespace DS.Core
             
             _interactionState = state;
             _links = links;
-            
-            // var oldDialogueHandler = state.lastestDialogueHandler;
-            // state.lastestDialogueHandler = GetComponent<DialogueHandler>();
-            //
-            // if (oldDialogueHandler != null)
-            // {
-            //     state.currentXAxis = oldDialogueHandler.GetXAxis();
-            //     oldDialogueHandler.DisableLookTarget();
-            // }
-            //     
-            // state.lastestDialogueHandler.LookTarget(state.currentXAxis);
-            
+
             choiceDataList.Clear();
             
             foreach (var link in links)
@@ -97,6 +86,11 @@ namespace DS.Core
             dialogueSetter.nameBox.text = "";
             dialogueSetter.textBox.text = "";
             choiceDataList.Clear();
+        }
+        
+        private void InitIndex()
+        {
+            UpdateIndex(0);
         }
         
         public void UpdateIndex(int updateIdx)

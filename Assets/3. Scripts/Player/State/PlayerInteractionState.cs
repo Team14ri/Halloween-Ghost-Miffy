@@ -61,8 +61,6 @@ public class PlayerInteractionState : IState
     
     public void SelectChoice(string guid)
     {
-        dialogueFlow.ChangeCurrentNodeData(guid);
-        
         var nodeLinks = dialogueFlow.GetCurrentNodeLinks();
         
         if (nodeLinks.Count == 0)
@@ -70,7 +68,9 @@ public class PlayerInteractionState : IState
             stateMachine.ChangeState(new PlayerIdleState(player, stateMachine));
             return;
         }
-
+        
+        dialogueFlow.ChangeCurrentNodeData(guid);
+        
         PlayCurrentNode();
     }
 
