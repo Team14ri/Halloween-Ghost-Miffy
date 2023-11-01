@@ -14,11 +14,11 @@ public class PlayerInteractionState : IState
     private StateMachine stateMachine;
     
     private DialogueFlow dialogueFlow;
-    private DialogueHandler lastestDialogueHandler;
+    public DialogueHandler lastestDialogueHandler;
 
     private Animator animator;
 
-    private float currentXAxis;
+    public float currentXAxis;
 
     public PlayerInteractionState(PlayerController player, StateMachine stateMachine, DialogueContainer dialogueContainer)
     {
@@ -57,6 +57,21 @@ public class PlayerInteractionState : IState
         player.InteractionInput = false;
 
         CheckDialoguePlaying(PlayCurrentNode);
+    }
+    
+    public void SelectChoice(string guid)
+    {
+        dialogueFlow.ChangeCurrentNodeData(guid);
+        
+        var nodeLinks = dialogueFlow.GetCurrentNodeLinks();
+        
+        if (nodeLinks.Count == 0)
+        {
+            stateMachine.ChangeState(new PlayerIdleState(player, stateMachine));
+            return;
+        }
+
+        PlayCurrentNode();
     }
 
     private void CheckDialoguePlaying(Action<bool> action)
@@ -110,7 +125,8 @@ public class PlayerInteractionState : IState
                 }
                 break;
             case NodeTypes.NodeType.MultiChoice:
-                // player.StopInteractionInput = true;
+                player.StopInteractionInput = true;
+                
                 var multiChoiceNodeData = nodeData as MultiChoiceNodeData;
                 lastestDialogueHandler = DialogueManager.Instance.GetHandler(multiChoiceNodeData.TargetObjectID);
 
@@ -124,10 +140,10 @@ public class PlayerInteractionState : IState
                 lastestDialogueHandler.PlayDialogue(multiChoiceNodeData.DialogueText, skipTyping);
                 
                 var nodeLinks = dialogueFlow.GetCurrentNodeLinks();
-                foreach (var nodeLink in nodeLinks)
-                {
-                    Debug.Log(nodeLink.PortName);
-                }
+
+                var multiDialogueHandler = PlayerController.Instance.gameObject.GetComponent<MultiDialogueHandler>();
+                multiDialogueHandler.Init(this, nodeLinks);
+                
                 break;
             case NodeTypes.NodeType.StartQuest:
                 var startQuestNodeData = dialogueFlow.GetCurrentNodeData() as StartQuestNodeData;
