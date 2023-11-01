@@ -8,7 +8,7 @@ namespace DS.Core
     public class MultiDialogueHandler : MonoBehaviour
     {
         [SerializeField] private DialogueHandler dialogueHandler;
-        [SerializeField] private DialogueSetter dialogueSetter;
+        [SerializeField] private MultiDialogueSetter dialogueSetter;
 
         public void PlayDialogue(string text, bool skipTyping = false)
         {
