@@ -85,7 +85,6 @@ namespace DS.Core
         {
             dialogueSetter.nameBox.text = "";
             dialogueSetter.textBox.text = "";
-            choiceDataList.Clear();
         }
         
         private void InitIndex()
