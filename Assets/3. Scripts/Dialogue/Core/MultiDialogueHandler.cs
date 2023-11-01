@@ -14,42 +14,65 @@ namespace DS.Core
     
     public class MultiDialogueHandler : MonoBehaviour
     {
-        [SerializeField] private DialogueHandler dialogueHandler;
+        private DialogueHandler _dialogueHandler;
         [SerializeField] private MultiDialogueSetter dialogueSetter;
 
+        [SerializeField] private int _currentIndex;
         [SerializeField] private List<ChoiceData> choiceDataList;
 
         private PlayerInteractionState _interactionState;
         private List<NodeLinkData> _links;
 
-        private bool _observeSelectChoice;
+        private bool _observeDialogueEnd;
         
+        public static MultiDialogueHandler Instance;
+        
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else if (Instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        private void Start()
+        {
+            _dialogueHandler = PlayerController.Instance.GetComponent<DialogueHandler>();
+        }
+
         private void Update()
         {
-            if (!_observeSelectChoice)
+            if (!_observeDialogueEnd)
                 return; 
             
             if (DialogueManager.Instance.CheckDialogueEnd())
             {
-                _interactionState.SelectChoice("");
+                _observeDialogueEnd = false;
+                UpdateIndex(0);
             }
         }
 
         public void Init(PlayerInteractionState state, List<NodeLinkData> links)
         {
+            _currentIndex = 0;
+            
             _interactionState = state;
             _links = links;
             
-            var oldDialogueHandler = state.lastestDialogueHandler;
-            state.lastestDialogueHandler = GetComponent<DialogueHandler>();
-
-            if (oldDialogueHandler != null)
-            {
-                state.currentXAxis = oldDialogueHandler.GetXAxis();
-                oldDialogueHandler.DisableLookTarget();
-            }
-                
-            state.lastestDialogueHandler.LookTarget(state.currentXAxis);
+            // var oldDialogueHandler = state.lastestDialogueHandler;
+            // state.lastestDialogueHandler = GetComponent<DialogueHandler>();
+            //
+            // if (oldDialogueHandler != null)
+            // {
+            //     state.currentXAxis = oldDialogueHandler.GetXAxis();
+            //     oldDialogueHandler.DisableLookTarget();
+            // }
+            //     
+            // state.lastestDialogueHandler.LookTarget(state.currentXAxis);
             
             choiceDataList.Clear();
             
@@ -61,14 +84,53 @@ namespace DS.Core
                     guid = link.TargetNodeGuid
                 });
             }
+            
+            dialogueSetter.leftButton.interactable = true;
+            dialogueSetter.rightButton.interactable = true;
+            dialogueSetter.selectButton.interactable = true;
 
-            _observeSelectChoice = true;
+            _observeDialogueEnd = true;
+        }
+        
+        private void Exit()
+        {
+            dialogueSetter.nameBox.text = "";
+            dialogueSetter.textBox.text = "";
+            choiceDataList.Clear();
+        }
+        
+        public void UpdateIndex(int updateIdx)
+        {
+            _currentIndex += updateIdx;
+            _currentIndex = Mathf.Clamp(_currentIndex, 0, choiceDataList.Count - 1);
+
+            dialogueSetter.leftButton.interactable = true;
+            dialogueSetter.rightButton.interactable = true;
+
+            if (_currentIndex == 0)
+            {
+                dialogueSetter.leftButton.interactable = false;
+            }
+            
+            if (_currentIndex == choiceDataList.Count - 1)
+            {
+                dialogueSetter.rightButton.interactable = false;
+            }
+            
+            ShowMultiDialogue();
         }
 
-        public void PlayDialogue(string text, bool skipTyping = false)
+        private void ShowMultiDialogue()
         {
-            dialogueSetter.nameBox.text = dialogueHandler.name;
-            DialogueManager.Instance.PlayDialogue(dialogueSetter.textBox, text, skipTyping);
+            dialogueSetter.nameBox.text = _dialogueHandler.GetName();
+            dialogueSetter.textBox.text = choiceDataList[_currentIndex].text;
+        }
+        
+        public void SelectChoice()
+        {
+            dialogueSetter.selectButton.interactable = false;
+            _interactionState.SelectChoice(choiceDataList[_currentIndex].guid);
+            Exit();
         }
     }
 }

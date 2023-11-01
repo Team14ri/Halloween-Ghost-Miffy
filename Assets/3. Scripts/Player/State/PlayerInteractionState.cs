@@ -140,9 +140,8 @@ public class PlayerInteractionState : IState
                 lastestDialogueHandler.PlayDialogue(multiChoiceNodeData.DialogueText, skipTyping);
                 
                 var nodeLinks = dialogueFlow.GetCurrentNodeLinks();
-
-                var multiDialogueHandler = PlayerController.Instance.gameObject.GetComponent<MultiDialogueHandler>();
-                multiDialogueHandler.Init(this, nodeLinks);
+                
+                MultiDialogueHandler.Instance.Init(this, nodeLinks);
                 
                 break;
             case NodeTypes.NodeType.StartQuest:

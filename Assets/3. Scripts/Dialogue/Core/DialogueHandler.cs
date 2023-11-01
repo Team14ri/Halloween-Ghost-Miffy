@@ -49,6 +49,11 @@ namespace DS.Core
             return cinemachineFreeLook.m_XAxis.Value;
         }
 
+        public string GetName()
+        {
+            return Name;
+        }
+
         public void SetAnimation(string id)
         {
             if (_animator == null)
