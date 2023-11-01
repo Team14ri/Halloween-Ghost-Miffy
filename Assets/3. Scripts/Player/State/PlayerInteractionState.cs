@@ -14,11 +14,11 @@ public class PlayerInteractionState : IState
     private StateMachine stateMachine;
     
     private DialogueFlow dialogueFlow;
-    public DialogueHandler lastestDialogueHandler;
+    private DialogueHandler lastestDialogueHandler;
 
     private Animator animator;
 
-    public float currentXAxis;
+    private float currentXAxis;
 
     public PlayerInteractionState(PlayerController player, StateMachine stateMachine, DialogueContainer dialogueContainer)
     {
@@ -54,6 +54,7 @@ public class PlayerInteractionState : IState
     {
         if (!player.InteractionInput)
             return;
+        
         player.InteractionInput = false;
 
         CheckDialoguePlaying(PlayCurrentNode);
@@ -61,6 +62,8 @@ public class PlayerInteractionState : IState
     
     public void SelectChoice(string guid)
     {
+        player.StopInteractionInput = false;
+        
         var nodeLinks = dialogueFlow.GetCurrentNodeLinks();
         
         if (nodeLinks.Count == 0)
@@ -142,7 +145,6 @@ public class PlayerInteractionState : IState
                 var nodeLinks = dialogueFlow.GetCurrentNodeLinks();
                 
                 MultiDialogueHandler.Instance.Init(this, nodeLinks);
-                
                 break;
             case NodeTypes.NodeType.StartQuest:
                 var startQuestNodeData = dialogueFlow.GetCurrentNodeData() as StartQuestNodeData;

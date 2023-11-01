@@ -21,7 +21,6 @@ namespace DS.Core
         [SerializeField] private List<ChoiceData> choiceDataList;
 
         private PlayerInteractionState _interactionState;
-        private List<NodeLinkData> _links;
 
         private bool _observeDialogueEnd;
         
@@ -61,7 +60,6 @@ namespace DS.Core
             _currentIndex = 0;
             
             _interactionState = state;
-            _links = links;
 
             choiceDataList.Clear();
             
