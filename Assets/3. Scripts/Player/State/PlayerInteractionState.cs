@@ -16,8 +16,6 @@ public class PlayerInteractionState : IState
     private DialogueFlow dialogueFlow;
     private DialogueHandler lastestDialogueHandler;
 
-    private Animator animator;
-
     private float currentXAxis;
 
     public PlayerInteractionState(PlayerController player, StateMachine stateMachine, DialogueContainer dialogueContainer)
@@ -25,22 +23,8 @@ public class PlayerInteractionState : IState
         this.player = player;
         this.stateMachine = stateMachine;
         dialogueFlow = new DialogueFlow(dialogueContainer);
-        
-        animator = player.model.GetComponent<Animator>();
-    }
-    
-    private void SetAnimation(int stateID)
-    {
-        if (animator == null)
-            return;
-            
-        if (!animator.HasState(0, stateID))
-        {
-            Debug.LogWarning($"{stateID} 애니메이션이 존재하지 않습니다.");
-            return;
-        }
-            
-        animator.CrossFade(stateID, 0f);
+
+        player.Rb.velocity = Vector3.zero;
     }
 
     public void Enter()
