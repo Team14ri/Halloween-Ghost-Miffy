@@ -61,6 +61,9 @@ public class PortalManager : MonoBehaviour
     
     private void SetPlayerPosition(Vector3 portalPos)
     {
+        if (Player == null)
+            return;
+        
         Player.transform.position = portalPos;
     }
 }
