@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using DS.Core;
@@ -90,7 +90,7 @@ public class VoiceManager : MonoBehaviour
         foreach (var ch in sentence)
         {
             VoicePlay(ch, "Miffy");
-            yield return new WaitForSeconds(textSpeed * 2f);
+            yield return new WaitForSeconds(textSpeed);
         }
     }
 
@@ -103,7 +103,7 @@ public class VoiceManager : MonoBehaviour
 
         // 발음 파라미터 설정
         eventInstances[characterName].setParameterByName("vowel type", conv);
-        eventInstances[characterName].setPitch(2.8f * Random.Range(0.96f, 1.15f));
+        //eventInstances[characterName].setPitch(2.8f * Random.Range(0.96f, 1.15f));
         eventInstances[characterName].start();
     }
 
