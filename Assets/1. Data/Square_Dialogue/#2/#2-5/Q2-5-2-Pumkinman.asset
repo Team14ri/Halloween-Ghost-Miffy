@@ -1,0 +1,179 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Q2-5-2-Pumkinman
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: 61226ef9-1eb0-4e9c-8f97-f01e1a498482
+    PortName: Execute
+    TargetNodeGuid: 4dcc08cc-3f01-4f9f-a1d0-9ef851b01137
+  - BaseNodeGuid: 313f3518-ead7-457c-8f16-9fb57d56e11a
+    PortName: Next
+    TargetNodeGuid: 863e3707-17b4-480b-8471-ee06f8851e73
+  - BaseNodeGuid: 12130fdb-145f-4bfc-9558-1c4b56e99cbc
+    PortName: Next
+    TargetNodeGuid: 313f3518-ead7-457c-8f16-9fb57d56e11a
+  - BaseNodeGuid: a40b6fa9-a53a-4757-a4bb-70d022b49415
+    PortName: Next
+    TargetNodeGuid: 12130fdb-145f-4bfc-9558-1c4b56e99cbc
+  - BaseNodeGuid: f0988a88-0db1-4cf0-8cb1-95bba54abb73
+    PortName: Next
+    TargetNodeGuid: a40b6fa9-a53a-4757-a4bb-70d022b49415
+  - BaseNodeGuid: c4abb0a8-e243-400a-87a2-6dda88729cf0
+    PortName: Next
+    TargetNodeGuid: f0988a88-0db1-4cf0-8cb1-95bba54abb73
+  - BaseNodeGuid: 279c0968-4ade-4eec-b562-43e28ac3f717
+    PortName: Next
+    TargetNodeGuid: c4abb0a8-e243-400a-87a2-6dda88729cf0
+  - BaseNodeGuid: 23c0682b-ce93-4cab-a09a-32c66b9cf1b0
+    PortName: Next
+    TargetNodeGuid: 279c0968-4ade-4eec-b562-43e28ac3f717
+  - BaseNodeGuid: 47c54193-5b92-407e-806f-950faaf8a1d0
+    PortName: Next
+    TargetNodeGuid: 23c0682b-ce93-4cab-a09a-32c66b9cf1b0
+  - BaseNodeGuid: 672482f7-7da2-4bd1-bf8e-48467a2e66a0
+    PortName: Next
+    TargetNodeGuid: 47c54193-5b92-407e-806f-950faaf8a1d0
+  - BaseNodeGuid: 4dcc08cc-3f01-4f9f-a1d0-9ef851b01137
+    PortName: Next
+    TargetNodeGuid: 672482f7-7da2-4bd1-bf8e-48467a2e66a0
+  NodeData:
+  - rid: 3681219999403343951
+  - rid: 3681219999403343952
+  - rid: 3681219999403343953
+  - rid: 3681219999403343954
+  - rid: 3681219999403343955
+  - rid: 3681219999403343956
+  - rid: 3681219999403343957
+  - rid: 3681219999403343958
+  - rid: 3681219999403343959
+  - rid: 3681219999403343960
+  - rid: 3681219999403343961
+  references:
+    version: 2
+    RefIds:
+    - rid: 3681219999403343951
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 4dcc08cc-3f01-4f9f-a1d0-9ef851b01137
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 266, y: 228}
+        TargetObjectID: pumkinman
+        DialogueText: "\uC774\uAC70, \uC544\uC8FC \uC6A9\uAC10\uD55C \uCE5C\uAD6C\uC600\uAD70!"
+        SkipDelay: 0
+    - rid: 3681219999403343952
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 672482f7-7da2-4bd1-bf8e-48467a2e66a0
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 649, y: 228}
+        TargetObjectID: pumkinman
+        DialogueText: "\uBBF8\uD53C! \uB108\uC758 \uB3C4\uC6C0\uC744 \uBC1B\uC558\uC5B4!
+          \uC815\uB9D0 \uACE0\uB9D9\uAD70!"
+        SkipDelay: 0
+    - rid: 3681219999403343953
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 23c0682b-ce93-4cab-a09a-32c66b9cf1b0
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1584, y: 228}
+        TargetObjectID: pumkinman
+        DialogueText: "\uC774 \uD38C\uD0A8\uB9E8\uC758 \uC720\uC77C\uBB34\uC774\uD55C!!!!!!!!!!!!"
+        SkipDelay: 0
+    - rid: 3681219999403343954
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 47c54193-5b92-407e-806f-950faaf8a1d0
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1199, y: 228}
+        TargetObjectID: pumkinman
+        DialogueText: "\uC774\uAC74 \uB0B4\uAC00 \uB108\uC5D0\uAC8C \uC8FC\uB294!!!"
+        SkipDelay: 0
+    - rid: 3681219999403343955
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 279c0968-4ade-4eec-b562-43e28ac3f717
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2050, y: 228}
+        TargetObjectID: pumkinman
+        DialogueText: "\uCE6D\uCC2C \uCE94\uB514 \uC2A4\uD2F0\uCEE4\uB2E4!!!!!!!!!!!!!!!"
+        SkipDelay: 0
+    - rid: 3681219999403343956
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: c4abb0a8-e243-400a-87a2-6dda88729cf0
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2536, y: 228}
+        TargetObjectID: pumkinman
+        DialogueText: "\uC640\uD558\uD558! \uB098\uB294 \uC544\uBB34\uC5D0\uAC8C\uB098
+          \uC27D\uAC8C \uC2A4\uD2F0\uCEE4\uB97C \uC8FC\uC9C0 \uC54A\uB294\uB2E4\uACE0?"
+        SkipDelay: 0
+    - rid: 3681219999403343957
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: f0988a88-0db1-4cf0-8cb1-95bba54abb73
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 3151, y: 247}
+        TargetObjectID: pumkinman
+        DialogueText: "...\uC751? \uC544\uC9C1 \uC2A4\uD2F0\uCEE4\uAC00 2\uAC1C\uAD70?"
+        SkipDelay: 0
+    - rid: 3681219999403343958
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: a40b6fa9-a53a-4757-a4bb-70d022b49415
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 3664, y: 288}
+        TargetObjectID: pumkinman
+        DialogueText: "\uADF8\uB807\uB2E4\uBA74.. \"\uACE4\uB780\uD55C \uD45C\uC815\"\uC744
+          \uC0AC\uB78C\uC744 \uCC3E\uB294 \uAC8C \uBE60\uB97C\uC9C0\uB3C4 \uBAA8\uB974\uACA0\uC5B4."
+        SkipDelay: 0
+    - rid: 3681219999403343959
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 863e3707-17b4-480b-8471-ee06f8851e73
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 5713, y: 365}
+        TargetObjectID: pumkinman
+        DialogueText: "\uC544\uBB34\uD2BC, \uACE0\uB9C8\uC6CC! \uB355\uBD84\uC5D0
+          \uC62C\uD574\uB3C4 \uC548\uC804\uD55C \uD560\uB85C\uC708\uC774\uACA0\uAD6C\uBA3C!"
+        SkipDelay: 0
+    - rid: 3681219999403343960
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 313f3518-ead7-457c-8f16-9fb57d56e11a
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 5081, y: 352}
+        TargetObjectID: pumkinman
+        DialogueText: "\uADF8\uAC8C '\uBCD1\uC544\uB9AC'\uB4E0, \uC0AC\uB78C\uC774\uB4E0
+          \uB9D0\uC774\uC57C! \uC640\uD558\uD56B!"
+        SkipDelay: 0
+    - rid: 3681219999403343961
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 12130fdb-145f-4bfc-9558-1c4b56e99cbc
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 4502, y: 322}
+        TargetObjectID: pumkinman
+        DialogueText: "\uC608\uB97C \uB4E4\uBA74, \uAE38\uC744 \uC783\uC740 \uBCD1\uC544\uB9AC\uB77C\uB358\uC9C0!
+          \uC640\uD558\uD56B!"
+        SkipDelay: 0

@@ -1,11 +1,8 @@
 using System;
-using System.Collections;
-using Cinemachine;
 using DS;
 using DS.Core;
 using DS.Runtime;
 using Quest;
-using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
 public class PlayerInteractionState : IState
