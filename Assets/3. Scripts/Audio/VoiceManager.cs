@@ -15,6 +15,7 @@ public class VoiceManager : MonoBehaviour
     
     private Coroutine _eventRoutine;
     private float textSpeed;
+    private float textSize;
 
     private void LoadEventReferences()
     {
@@ -59,6 +60,7 @@ public class VoiceManager : MonoBehaviour
     private IEnumerator VoiceSentenceExecute(List<DialogueUtility.Command> commands)
     {
         textSpeed = DialogueUtility.TextAnimationSpeed["normal"];
+        textSize = 1;
         foreach (var command in commands)
         {
             yield return ExecuteCommand(command);
@@ -76,6 +78,7 @@ public class VoiceManager : MonoBehaviour
                 textSpeed = command.floatValue;
                 break;
             case DialogueUtility.CommandType.Size:
+                textSize = command.floatValue;
                 break;
             case DialogueUtility.CommandType.State:
                 break;
@@ -103,7 +106,9 @@ public class VoiceManager : MonoBehaviour
 
         // 발음 파라미터 설정
         eventInstances[characterName].setParameterByName("vowel type", conv);
-        //eventInstances[characterName].setPitch(2.8f * Random.Range(0.96f, 1.15f));
+        eventInstances[characterName].setPitch(1.4f * Random.Range(0.96f, 1.15f));
+        // eventInstances[characterName].getVolume(out float currentVol);
+        // eventInstances[characterName].setVolume(currentVol * textSize);
         eventInstances[characterName].start();
     }
 
