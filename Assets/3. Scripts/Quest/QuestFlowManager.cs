@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,22 +9,34 @@ namespace Quest
     [Serializable]
     public class QuestFlow
     {
+        [TabGroup("Settings", "Quest Info")]
         public string QuestName;
-        
-        [Space(10)]
+        [TabGroup("Settings", "Quest Info"), Space(10)]
         public QuestLocation QuestLocationID; 
+        [TabGroup("Settings", "Quest Info"), Space(5)]
         public int QuestID; 
+        [TabGroup("Settings", "Quest Info"), Space(5)]
         public int QuestDetailID; 
-        public int QuestFlowID; 
-        
-        [Space(10)]
+        [TabGroup("Settings", "Quest Info"), Space(5)]
+        public int QuestFlowID;
+
+        [TabGroup("Settings", "Update Quest")]
         public List<GameObject> ActiveGameObjects;
-        
-        [Space(10)]
+        [TabGroup("Settings", "Update Quest"), Space(10)]
         public List<GameObject> InactiveGameObjects;
-        
-        [Space(10)]
+        [TabGroup("Settings", "Update Quest"), Space(10)]
         public UnityEvent ActiveEvents;
+        
+        [TabGroup("Settings", "Auto Clear Quest")]
+        public bool enableAutoQuestClear;
+        [TabGroup("Settings", "Auto Clear Quest"), ShowIf("enableAutoQuestClear"), Space(10)]
+        public QuestLocation NextQuestLocationID;
+        [TabGroup("Settings", "Auto Clear Quest"), ShowIf("enableAutoQuestClear"), Space(5)]
+        public int NextQuestID; 
+        [TabGroup("Settings", "Auto Clear Quest"), ShowIf("enableAutoQuestClear"), Space(5)]
+        public int NextQuestDetailID; 
+        [TabGroup("Settings", "Auto Clear Quest"), ShowIf("enableAutoQuestClear"), Space(5)]
+        public int NextQuestFlowID; 
     }
     
     public class QuestFlowManager : MonoBehaviour
