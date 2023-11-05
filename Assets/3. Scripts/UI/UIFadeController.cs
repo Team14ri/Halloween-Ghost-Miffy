@@ -63,12 +63,24 @@ public class UIFadeController : MonoBehaviour
         SetAlpha(texts, 0f);
         
         this.EnsureCoroutineStopped(ref _fadeRoutine);
+        if (gameObject.activeInHierarchy == false)
+        {
+            SetAlpha(images, 1);
+            SetAlpha(texts, 1);
+            return;
+        }
         _fadeRoutine = StartCoroutine(FadeInProcess());
     }
 
     public void FadeOut()
     {
         this.EnsureCoroutineStopped(ref _fadeRoutine);
+        if (gameObject.activeInHierarchy == false)
+        {
+            SetAlpha(images, 0);
+            SetAlpha(texts, 0);
+            return;
+        }
         _fadeRoutine = StartCoroutine(FadeOutProcess());
     }
 

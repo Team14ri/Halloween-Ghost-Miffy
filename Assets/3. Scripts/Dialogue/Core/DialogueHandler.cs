@@ -23,7 +23,6 @@ namespace DS.Core
 
         private void OnEnable()
         {
-            // DialogueManager.Instance.Handlers.TryAdd(ID, this);
             DialogueManager.Instance.Handlers[ID] = this;
         }
         

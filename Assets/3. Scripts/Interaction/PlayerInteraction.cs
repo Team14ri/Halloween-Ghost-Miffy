@@ -34,11 +34,12 @@ namespace Interaction
                 return;
             }
             
-            foreach (var trigger in interactionTriggers)
+            for (int i = interactionTriggers.Count - 1; i >= 0; i--)
             {
-                if (trigger.gameObject.activeInHierarchy == false)
+                var trigger = interactionTriggers[i];
+                if (!trigger.gameObject.activeInHierarchy)
                 {
-                    interactionTriggers.Remove(trigger);
+                    interactionTriggers.RemoveAt(i);
                     trigger.Exit();
                 }
             }
