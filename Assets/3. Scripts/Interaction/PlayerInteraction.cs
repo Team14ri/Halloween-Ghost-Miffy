@@ -33,6 +33,16 @@ namespace Interaction
                 }
                 return;
             }
+            
+            for (int i = interactionTriggers.Count - 1; i >= 0; i--)
+            {
+                var trigger = interactionTriggers[i];
+                if (!trigger.gameObject.activeInHierarchy)
+                {
+                    interactionTriggers.RemoveAt(i);
+                    trigger.Exit();
+                }
+            }
 
             var newClosestInteractionTrigger = interactionTriggers
                 .Where(c => !c.DisableInteraction)

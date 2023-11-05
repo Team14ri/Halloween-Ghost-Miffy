@@ -21,9 +21,9 @@ namespace DS.Core
             _animator = GetComponentInChildren<Animator>();
         }
 
-        private void Start()
+        private void OnEnable()
         {
-            DialogueManager.Instance.Handlers.TryAdd(ID, this);
+            DialogueManager.Instance.Handlers[ID] = this;
         }
         
         public void LookTarget(float xAxis)
