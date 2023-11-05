@@ -14,12 +14,14 @@ public class PlayerInteractionState : IState
     private DialogueHandler lastestDialogueHandler;
 
     private float currentXAxis;
+    private Action exitAction;
 
-    public PlayerInteractionState(PlayerController player, StateMachine stateMachine, DialogueContainer dialogueContainer)
+    public PlayerInteractionState(PlayerController player, StateMachine stateMachine, DialogueContainer dialogueContainer, Action exitAction)
     {
         this.player = player;
         this.stateMachine = stateMachine;
         dialogueFlow = new DialogueFlow(dialogueContainer);
+        this.exitAction = exitAction;
 
         player.Rb.velocity = Vector3.zero;
     }
@@ -146,5 +148,7 @@ public class PlayerInteractionState : IState
         
         player.Interaction.SetInteractionEnableAfterDelay();
         DialogueManager.Instance.StopDialogue();
+        
+        exitAction?.Invoke();
     }
 }

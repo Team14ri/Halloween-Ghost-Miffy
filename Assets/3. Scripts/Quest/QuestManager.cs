@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace Quest
@@ -31,10 +32,10 @@ namespace Quest
             };  
             set
             {
-                PlayerPrefs.GetInt("CurrentQuest@LocationID", value[0] );
-                PlayerPrefs.GetInt("CurrentQuest@ID", value[1]);
-                PlayerPrefs.GetInt("CurrentQuest@DetailID", value[2]);
-                PlayerPrefs.GetInt("CurrentQuest@FlowID", value[3]);
+                PlayerPrefs.SetInt("CurrentQuest@LocationID", value[0] );
+                PlayerPrefs.SetInt("CurrentQuest@ID", value[1]);
+                PlayerPrefs.SetInt("CurrentQuest@DetailID", value[2]);
+                PlayerPrefs.SetInt("CurrentQuest@FlowID", value[3]);
             }
         }
         
@@ -61,6 +62,19 @@ namespace Quest
             _questAcceptTmpTextEditor.Edit("Quest Type", questType)
                 .Edit("Quest Title", questTitle);
             _questAcceptFadeController.AutoFadeInAndOut();
+        }
+        
+        public void SetQuestID(string input)
+        {
+            var match = Regex.Match(input, @"(\w+)@(\d+)-(\d+)-(\d+)");
+            if (match.Success)
+            {
+                var locationID = Enum.Parse<QuestLocation>(match.Groups[1].Value, true);
+                var questID = int.Parse(match.Groups[2].Value);
+                var questDetailID = int.Parse(match.Groups[3].Value);
+                var questFlowID = int.Parse(match.Groups[4].Value);
+                CurrentQuestInfo = new[] { (int)locationID, questID, questDetailID, questFlowID };
+            }
         }
     }
 }

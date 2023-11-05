@@ -7,11 +7,23 @@ using UnityEngine.Events;
 namespace Quest
 {
     [Serializable]
+    public enum QuestClearDataType
+    {
+        SaveDataCondition
+    }
+    
+    [Serializable]
+    public class QuestClearData
+    {
+        public QuestClearDataType type;
+    }
+    
+    [Serializable]
     public class QuestFlow
     {
         [TabGroup("Settings", "Quest Info")]
         public string QuestName;
-        [TabGroup("Settings", "Quest Info"), Space(10)]
+        [TabGroup("Settings", "Quest Info"), Space(5)]
         public QuestLocation QuestLocationID; 
         [TabGroup("Settings", "Quest Info"), Space(5)]
         public int QuestID; 
@@ -22,9 +34,9 @@ namespace Quest
 
         [TabGroup("Settings", "Update Quest")]
         public List<GameObject> ActiveGameObjects;
-        [TabGroup("Settings", "Update Quest"), Space(10)]
+        [TabGroup("Settings", "Update Quest"), Space(5)]
         public List<GameObject> InactiveGameObjects;
-        [TabGroup("Settings", "Update Quest"), Space(10)]
+        [TabGroup("Settings", "Update Quest"), Space(5)]
         public UnityEvent ActiveEvents;
         
         [TabGroup("Settings", "Auto Clear Quest")]
@@ -36,7 +48,9 @@ namespace Quest
         [TabGroup("Settings", "Auto Clear Quest"), ShowIf("enableAutoQuestClear"), Space(5)]
         public int NextQuestDetailID; 
         [TabGroup("Settings", "Auto Clear Quest"), ShowIf("enableAutoQuestClear"), Space(5)]
-        public int NextQuestFlowID; 
+        public int NextQuestFlowID;
+        [TabGroup("Settings", "Auto Clear Quest"), ShowIf("enableAutoQuestClear"), Space(10)]
+        public List<QuestClearData> QuestClearData;
     }
     
     public class QuestFlowManager : MonoBehaviour
@@ -45,8 +59,6 @@ namespace Quest
 
         public static QuestFlowManager Instance;
 
-        public int changeQuestDetailID; 
-        
         private QuestLocation currentQuestLocation;
         private int currentQuestID; 
         private int currentQuestDetailID; 
@@ -54,6 +66,9 @@ namespace Quest
         
         private void Awake()
         {
+            // TODO: 삭제하기
+            // PlayerPrefs.DeleteAll();
+            
             if (Instance == null)
             {
                 Instance = this;
@@ -70,9 +85,8 @@ namespace Quest
             currentQuestLocation = (QuestLocation)questInfo[0];
             currentQuestID = questInfo[1];
             currentQuestDetailID = questInfo[2];
-            changeQuestDetailID = questInfo[2];
             currentQuestFlowID = questInfo[3];
-            
+
             UpdateScene();
         }
 
@@ -81,12 +95,12 @@ namespace Quest
             var questInfo = QuestManager.Instance.CurrentQuestInfo;
             if (currentQuestLocation != (QuestLocation)questInfo[0] || 
                 currentQuestID != questInfo[1] || 
-                currentQuestDetailID != changeQuestDetailID || 
+                currentQuestDetailID != questInfo[2] || 
                 currentQuestFlowID != questInfo[3])
             {
                 currentQuestLocation = (QuestLocation)questInfo[0];
                 currentQuestID = questInfo[1];
-                currentQuestDetailID = changeQuestDetailID;
+                currentQuestDetailID = questInfo[2];
                 currentQuestFlowID = questInfo[3];
                 
                 UpdateScene();
