@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Cinemachine;
 using TMPro;
 using UnityEngine;
@@ -23,7 +24,21 @@ namespace DS.Core
 
         private void OnEnable()
         {
-            DialogueManager.Instance.Handlers[ID] = this;
+            StartCoroutine(RegisterToDialogueManager());
+        }
+
+        private IEnumerator RegisterToDialogueManager()
+        {
+            yield return null;
+
+            if (DialogueManager.Instance != null)
+            {
+                DialogueManager.Instance.Handlers[ID] = this;
+            }
+            else
+            {
+                Debug.LogError("DialogueManager instance is not ready yet.");
+            }
         }
         
         public void LookTarget(float xAxis)
