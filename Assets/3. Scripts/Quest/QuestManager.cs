@@ -27,7 +27,7 @@ namespace Quest
             {
                 PlayerPrefs.GetInt("CurrentQuest@LocationID", (int)QuestLocation.Plaza),
                 PlayerPrefs.GetInt("CurrentQuest@ID", 1),
-                PlayerPrefs.GetInt("CurrentQuest@DetailID", 1),
+                PlayerPrefs.GetInt("CurrentQuest@DetailID", 3),
                 PlayerPrefs.GetInt("CurrentQuest@FlowID", 1)
             };  
             set
@@ -60,6 +60,20 @@ namespace Quest
         public void Accept(string questType, string questTitle)
         {
             _questAcceptTmpTextEditor.Edit("Quest Type", questType)
+                .Edit("Quest Title", questTitle);
+            _questAcceptFadeController.AutoFadeInAndOut();
+        }
+        
+        public void AcceptMainQuest(string questTitle)
+        {
+            _questAcceptTmpTextEditor.Edit("Quest Type", "MAIN QUEST")
+                .Edit("Quest Title", questTitle);
+            _questAcceptFadeController.AutoFadeInAndOut();
+        }
+        
+        public void AcceptSubQuest(string questTitle)
+        {
+            _questAcceptTmpTextEditor.Edit("Quest Type", "SUB QUEST")
                 .Edit("Quest Title", questTitle);
             _questAcceptFadeController.AutoFadeInAndOut();
         }
