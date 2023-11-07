@@ -27,7 +27,7 @@ namespace Quest
             {
                 PlayerPrefs.GetInt("CurrentQuest@LocationID", (int)QuestLocation.Plaza),
                 PlayerPrefs.GetInt("CurrentQuest@ID", 1),
-                PlayerPrefs.GetInt("CurrentQuest@DetailID", 3),
+                PlayerPrefs.GetInt("CurrentQuest@DetailID", 1),
                 PlayerPrefs.GetInt("CurrentQuest@FlowID", 1)
             };  
             set
