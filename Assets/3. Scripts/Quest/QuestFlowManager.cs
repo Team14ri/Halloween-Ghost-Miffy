@@ -67,7 +67,7 @@ namespace Quest
         private void Awake()
         {
             // TODO: 삭제하기
-            // PlayerPrefs.DeleteAll();
+            PlayerPrefs.DeleteAll();
             
             if (Instance == null)
             {
