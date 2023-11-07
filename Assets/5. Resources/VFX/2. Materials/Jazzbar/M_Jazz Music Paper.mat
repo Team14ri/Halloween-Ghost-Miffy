@@ -7,10 +7,12 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_Confetti
-  m_Shader: {fileID: 4800000, guid: 21b1e040c1f222d4a8118eae01df783b, type: 3}
+  m_Name: M_Jazz Music Paper
+  m_Shader: {fileID: 4800000, guid: 88a7fd2d631671842b7053d81c96bc72, type: 3}
   m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _USELINEPROGRESS_ON
+  - _USENOISEPOWER_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -21,11 +23,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTexture:
-        m_Texture: {fileID: 2800000, guid: 3e5d39489e1f76646a81781fa94a61b4, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _texcoord:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 1284a195887ddaf4d8d1b1bd36a4655e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -43,10 +41,17 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaCutoff: 0.5
-    - _Distance: 2
+    - _LineProgress: 0
+    - _NoisePower: 0.025
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _UseLineProgress: 1
+    - _UseNoisePower: 1
+    - _WaveHeight: 0.08
+    - _WaveNoise: 2
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MainColor: {r: 8.47419, g: 8.47419, b: 8.47419, a: 1}
+    - _NoiseSpeed: {r: 0.3, g: 0, b: 0, a: 0}
+    - _WaveSpeed: {r: 0.2, g: 0.2, b: 0, a: 0}
   m_BuildTextureStacks: []
