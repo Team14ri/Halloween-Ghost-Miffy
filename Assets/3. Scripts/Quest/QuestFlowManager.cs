@@ -7,15 +7,15 @@ using UnityEngine.Events;
 namespace Quest
 {
     [Serializable]
-    public enum QuestClearDataType
+    public enum QuestClearConditionType
     {
-        SaveDataCondition
+        ReachTargetValue
     }
     
     [Serializable]
-    public class QuestClearData
+    public class QuestClearCondition
     {
-        public QuestClearDataType type;
+        public QuestClearConditionType type;
     }
     
     [Serializable]
@@ -50,7 +50,7 @@ namespace Quest
         [TabGroup("Settings", "Auto Clear Quest"), ShowIf("enableAutoQuestClear"), Space(5)]
         public int NextQuestFlowID;
         [TabGroup("Settings", "Auto Clear Quest"), ShowIf("enableAutoQuestClear"), Space(10)]
-        public List<QuestClearData> QuestClearData;
+        public List<QuestClearCondition> QuestClearConditions;
     }
     
     public class QuestFlowManager : MonoBehaviour
