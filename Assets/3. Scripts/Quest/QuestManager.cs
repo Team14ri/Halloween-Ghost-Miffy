@@ -25,8 +25,8 @@ namespace Quest
         {
             get => new int[]
             {
-                PlayerPrefs.GetInt("CurrentQuest@LocationID", (int)QuestLocation.Plaza),
-                PlayerPrefs.GetInt("CurrentQuest@ID", 1),
+                PlayerPrefs.GetInt("CurrentQuest@LocationID", (int)QuestLocation.Cemetery),
+                PlayerPrefs.GetInt("CurrentQuest@ID", 0),
                 PlayerPrefs.GetInt("CurrentQuest@DetailID", 1),
                 PlayerPrefs.GetInt("CurrentQuest@FlowID", 1)
             };  

@@ -102,7 +102,7 @@ public class VoiceManager : MonoBehaviour
         char vowel = ParsingKorean(inputText);
         int conv = ConvertingInitialConsonant(vowel);
         
-        Debug.Log($"{inputText} => {vowel} => {conv}");
+        // Debug.Log($"{inputText} => {vowel} => {conv}");
 
         // 발음 파라미터 설정
         eventInstances[characterName].setParameterByName("vowel type", conv);
@@ -121,7 +121,6 @@ public class VoiceManager : MonoBehaviour
         
         if (hangul < '가' || hangul > '힣')  // 한글 범위 외의 문자인 경우
         {
-            Debug.LogWarning("Given character is not a valid Hangul syllable.");
             return '\0';
         }
 
@@ -172,7 +171,6 @@ public class VoiceManager : MonoBehaviour
             case 'ㅎ':
                 return 18;
             default:
-                Debug.Log("ConvertingInitialConsonant(): 해당되는 초성이 없습니다.");
                 return 19;
         }
     }

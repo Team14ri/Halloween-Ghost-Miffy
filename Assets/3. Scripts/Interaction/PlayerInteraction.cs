@@ -24,16 +24,6 @@ namespace Interaction
 
         private void Update()
         {
-            if (!Enabled || interactionTriggers.Count == 0)
-            {
-                closestInteractionTrigger = null;
-                foreach (var trigger in interactionTriggers)
-                {
-                    trigger.Exit();
-                }
-                return;
-            }
-            
             for (int i = interactionTriggers.Count - 1; i >= 0; i--)
             {
                 var trigger = interactionTriggers[i];
@@ -42,6 +32,16 @@ namespace Interaction
                     interactionTriggers.RemoveAt(i);
                     trigger.Exit();
                 }
+            }
+            
+            if (!Enabled || interactionTriggers.Count == 0)
+            {
+                closestInteractionTrigger = null;
+                foreach (var trigger in interactionTriggers)
+                {
+                    trigger.Exit();
+                }
+                return;
             }
 
             var newClosestInteractionTrigger = interactionTriggers
@@ -71,18 +71,17 @@ namespace Interaction
             }
         }
 
-        private IEnumerator SetInteractionEnable(float delay)
+        private void SetInteractionEnable()
         {
-            yield return new WaitForSeconds(delay);
             Enabled = true;
         }
         
         public void SetInteractionEnableAfterDelay()
         {
-            StartCoroutine(SetInteractionEnable(interactionDelay));
+            Invoke(nameof(SetInteractionEnable), interactionDelay);
         }
 
-       private void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
             var interactionTrigger = other.GetComponent<InteractionTrigger>();
             
