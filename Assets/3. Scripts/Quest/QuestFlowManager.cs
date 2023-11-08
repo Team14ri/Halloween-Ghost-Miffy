@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using DS.Core;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -55,6 +57,7 @@ namespace Quest
     
     public class QuestFlowManager : MonoBehaviour
     {
+        [SerializeField] private bool resetQuestData;
         [SerializeField] private List<QuestFlow> QuestFlows;
 
         public static QuestFlowManager Instance;
@@ -66,8 +69,11 @@ namespace Quest
         
         private void Awake()
         {
-            // TODO: 삭제하기
-            PlayerPrefs.DeleteAll();
+            if (resetQuestData)
+            {
+                // TODO: 삭제하기
+                PlayerPrefs.DeleteAll();
+            }
             
             if (Instance == null)
             {
@@ -106,6 +112,12 @@ namespace Quest
                 UpdateScene();
             }
         }
+        
+        private IEnumerator UpdateFlowEvent(QuestFlow flow)
+        {
+            yield return null;
+            flow.ActiveEvents?.Invoke();
+        }
 
         private void UpdateScene()
         {
@@ -132,7 +144,7 @@ namespace Quest
             if (currentFlow == null)
                 return;
             
-            currentFlow.ActiveEvents?.Invoke();
+            StartCoroutine(UpdateFlowEvent(currentFlow));
         }
     }
 }
