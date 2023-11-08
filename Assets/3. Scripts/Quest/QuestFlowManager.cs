@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using DS.Core;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -65,7 +64,9 @@ namespace Quest
         private QuestLocation currentQuestLocation;
         private int currentQuestID; 
         private int currentQuestDetailID; 
-        private int currentQuestFlowID; 
+        private int currentQuestFlowID;
+
+        private bool observeUpdate = true;
         
         private void Awake()
         {
@@ -75,16 +76,9 @@ namespace Quest
                 PlayerPrefs.DeleteAll();
             }
             
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else if (Instance != this)
-            {
-                Destroy(gameObject);
-            }
+            Instance = this;
         }
-        
+
         private void Start()
         {
             var questInfo = QuestManager.Instance.CurrentQuestInfo;
@@ -98,6 +92,9 @@ namespace Quest
 
         private void Update()
         {
+            if (!observeUpdate)
+                return;
+            
             var questInfo = QuestManager.Instance.CurrentQuestInfo;
             if (currentQuestLocation != (QuestLocation)questInfo[0] || 
                 currentQuestID != questInfo[1] || 
@@ -111,6 +108,12 @@ namespace Quest
                 
                 UpdateScene();
             }
+        }
+        
+        public void ChangeFlowManager(QuestFlowManager newManager)
+        {
+            observeUpdate = false;
+            newManager.gameObject.SetActive(true);
         }
         
         private IEnumerator UpdateFlowEvent(QuestFlow flow)
