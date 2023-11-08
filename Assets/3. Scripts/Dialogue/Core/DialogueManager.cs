@@ -39,6 +39,10 @@ namespace DS.Core
             _typeEndFlag = false;
             List<DialogueUtility.Command> commands = DialogueUtility.ParseCommands(value);
             DialogueAnimator.Instance.ChangeTextBox(textBox);
+            if (skipTyping == false)
+            {
+                VoiceManager.Instance.VoiceSentenceIn(commands);
+            }
             _typeRoutine = StartCoroutine(DialogueAnimator.Instance.AnimateTextIn(commands, () =>
             {
                 _typeEndFlag = true;

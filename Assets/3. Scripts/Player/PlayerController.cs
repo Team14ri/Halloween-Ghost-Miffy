@@ -1,9 +1,10 @@
+using System.Collections;
 using Cinemachine;
 using Interaction;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody), typeof(PlayerInput), typeof(PlayerInteraction))]
+[RequireComponent(typeof(Rigidbody), typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance;
@@ -65,8 +66,10 @@ public class PlayerController : MonoBehaviour
     {
         Rb = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
-        Interaction = GetComponent<PlayerInteraction>();
+        Interaction = GetComponentInChildren<PlayerInteraction>();
         StateMachine.ChangeState(new PlayerIdleState(this, StateMachine));
+
+        initModelScaleX = model.transform.localScale.x;
     }
 
     private void Update()
@@ -88,6 +91,18 @@ public class PlayerController : MonoBehaviour
         {
             playerInput.actions[actionName].Disable();
         }
+    }
+    
+    private IEnumerator _StopInteractionInputUntil(float delay)
+    {
+        StopInteractionInput = true;
+        yield return new WaitForSeconds(delay);
+        StopInteractionInput = false;
+    }
+    
+    public void StopInteractionInputUntil(float delay)
+    {
+        StartCoroutine(_StopInteractionInputUntil(delay));
     }
 
     #endregion
@@ -121,6 +136,45 @@ public class PlayerController : MonoBehaviour
         if (context.canceled)
         {
             InteractionInput = false;
+        }
+    }
+
+    #endregion
+
+    #region ETC
+    
+    private int lastFacing = 1;
+    private float initModelScaleX;
+    private Coroutine _scaleRoutine;
+
+    public void ChangePlayerFacing(int dir)
+    {
+        if (lastFacing == dir)
+            return;
+
+        lastFacing = dir;
+        this.EnsureCoroutineStopped(ref _scaleRoutine);
+        _scaleRoutine = StartCoroutine(SmoothReverseScaleX(dir));
+    }
+
+    private IEnumerator SmoothReverseScaleX(int dir)
+    {
+        float startTime = Time.time;
+        float targetScaleX = initModelScaleX * dir;
+        float elapsed = 0f;
+        
+        while (elapsed < data.ChangeFacingDuration)
+        {
+            elapsed = Time.time - startTime;
+            float progress = elapsed / data.ChangeFacingDuration;
+            float smoothScaleX = Mathf.Lerp(model.transform.localScale.x, targetScaleX, progress);
+            
+            model.transform.localScale = new Vector3(
+                smoothScaleX,
+                model.transform.localScale.y,
+                model.transform.localScale.z);
+
+            yield return null;
         }
     }
 

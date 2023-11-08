@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class SceneTransitionController : MonoBehaviour
 {
+    [SerializeField] private bool initOpenOnEnable;
+
     [SerializeField] private RectTransform transitionUI;
 
     [SerializeField] private float irisMaxValue = 2200f;
@@ -24,16 +26,24 @@ public class SceneTransitionController : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-
-            if (transitionUI == null)
-                return;
-            
-            transitionUI.sizeDelta = new Vector2(0f, 0f);
         }
         else if (Instance != this)
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        IrisOpen(null);
+    }
+
+    private void OnEnable()
+    {
+        if (transitionUI == null || initOpenOnEnable)
+            return;
+            
+        transitionUI.sizeDelta = new Vector2(0f, 0f);
     }
 
     public void IrisOpen(Action action)

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -9,6 +10,7 @@ namespace Interaction
 {
     public class PlayerInteraction : MonoBehaviour
     {
+        [SerializeField] private float interactionDelay = 0.8f;
         [SerializeField] private List<InteractionTrigger> interactionTriggers = new();
 
         public bool Enabled { get; set; }
@@ -22,6 +24,16 @@ namespace Interaction
 
         private void Update()
         {
+            for (int i = interactionTriggers.Count - 1; i >= 0; i--)
+            {
+                var trigger = interactionTriggers[i];
+                if (!trigger.gameObject.activeInHierarchy)
+                {
+                    interactionTriggers.RemoveAt(i);
+                    trigger.Exit();
+                }
+            }
+            
             if (!Enabled || interactionTriggers.Count == 0)
             {
                 closestInteractionTrigger = null;
@@ -57,6 +69,16 @@ namespace Interaction
                     closestInteractionTrigger = null;
                 }
             }
+        }
+
+        private void SetInteractionEnable()
+        {
+            Enabled = true;
+        }
+        
+        public void SetInteractionEnableAfterDelay()
+        {
+            Invoke(nameof(SetInteractionEnable), interactionDelay);
         }
 
         private void OnTriggerEnter(Collider other)

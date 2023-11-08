@@ -1,5 +1,4 @@
 using System;
-using Cinemachine;
 using DS;
 using DS.Core;
 using DS.Runtime;
@@ -12,22 +11,24 @@ public class PlayerInteractionState : IState
     private StateMachine stateMachine;
     
     private DialogueFlow dialogueFlow;
-
     private DialogueHandler lastestDialogueHandler;
 
     private float currentXAxis;
+    private Action exitAction;
 
-    public PlayerInteractionState(PlayerController player, StateMachine stateMachine, DialogueContainer dialogueContainer)
+    public PlayerInteractionState(PlayerController player, StateMachine stateMachine, DialogueContainer dialogueContainer, Action exitAction)
     {
         this.player = player;
         this.stateMachine = stateMachine;
         dialogueFlow = new DialogueFlow(dialogueContainer);
+        this.exitAction = exitAction;
+
+        player.Rb.velocity = Vector3.zero;
     }
 
     public void Enter()
     {
         player.Interaction.Enabled = false;
-        // CameraZoomController.Instance.ZoomIn();
         currentXAxis = VirtualCameraController.Instance.GetXAxis();
         PlayCurrentNode();
     }
@@ -36,15 +37,38 @@ public class PlayerInteractionState : IState
     {
         if (!player.InteractionInput)
             return;
+        
         player.InteractionInput = false;
 
         CheckDialoguePlaying(PlayCurrentNode);
+    }
+    
+    public void SelectChoice(string guid)
+    {
+        player.StopInteractionInput = false;
+        
+        var nodeLinks = dialogueFlow.GetCurrentNodeLinks();
+        
+        if (nodeLinks.Count == 0)
+        {
+            stateMachine.ChangeState(new PlayerIdleState(player, stateMachine));
+            return;
+        }
+        
+        dialogueFlow.ChangeCurrentNodeData(guid);
+        
+        PlayCurrentNode();
     }
 
     private void CheckDialoguePlaying(Action<bool> action)
     {
         if (!DialogueManager.Instance.CheckDialogueEnd())
         {
+            var nodeData = dialogueFlow.GetCurrentNodeData();
+            if (nodeData.NodeType == NodeTypes.NodeType.NoChoice
+                && (nodeData as NoChoiceNodeData).SkipDelay < 0f)
+                return;
+            
             action?.Invoke(true);
             return;
         }
@@ -80,9 +104,15 @@ public class PlayerInteractionState : IState
                 
                 lastestDialogueHandler.LookTarget(currentXAxis);
                 lastestDialogueHandler.PlayDialogue(noChoiceNodeData.DialogueText, skipTyping);
+
+                if (skipTyping == false && noChoiceNodeData.SkipDelay >= 0f)
+                {
+                    player.StopInteractionInputUntil(noChoiceNodeData.SkipDelay);
+                }
                 break;
             case NodeTypes.NodeType.MultiChoice:
-                // player.StopInteractionInput = true;
+                player.StopInteractionInput = true;
+                
                 var multiChoiceNodeData = nodeData as MultiChoiceNodeData;
                 lastestDialogueHandler = DialogueManager.Instance.GetHandler(multiChoiceNodeData.TargetObjectID);
 
@@ -96,10 +126,8 @@ public class PlayerInteractionState : IState
                 lastestDialogueHandler.PlayDialogue(multiChoiceNodeData.DialogueText, skipTyping);
                 
                 var nodeLinks = dialogueFlow.GetCurrentNodeLinks();
-                foreach (var nodeLink in nodeLinks)
-                {
-                    Debug.Log(nodeLink.PortName);
-                }
+                
+                MultiDialogueHandler.Instance.Init(this, nodeLinks);
                 break;
             case NodeTypes.NodeType.StartQuest:
                 var startQuestNodeData = dialogueFlow.GetCurrentNodeData() as StartQuestNodeData;
@@ -118,8 +146,9 @@ public class PlayerInteractionState : IState
             lastestDialogueHandler.DisableLookTarget();
         }
         
-        player.Interaction.Enabled = true;
-        // CameraZoomController.Instance.ZoomOut();
+        player.Interaction.SetInteractionEnableAfterDelay();
         DialogueManager.Instance.StopDialogue();
+        
+        exitAction?.Invoke();
     }
 }

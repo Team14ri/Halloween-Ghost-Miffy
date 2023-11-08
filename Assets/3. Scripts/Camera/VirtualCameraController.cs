@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Cinemachine;
 using UnityEngine;
@@ -34,15 +35,11 @@ public class VirtualCameraController : MonoBehaviour
         if (freeLookCamera == null)
             return;
 
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        GameObject player = GameObject.FindGameObjectWithTag("PlayerViewPoint");
         if (player)
         {
             freeLookCamera.Follow = player.transform;
             freeLookCamera.LookAt = player.transform;
-        }
-        else
-        {
-            Debug.LogWarning("Player object with 'Player' tag not found in the scene!");
         }
         
         initialYAxisValue = freeLookCamera.m_YAxis.Value;

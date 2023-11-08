@@ -1,0 +1,165 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Plaza@Q0-1-1-Sasin
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: 60144c2e-0e86-4f03-8652-01729239d81e
+    PortName: Execute
+    TargetNodeGuid: 410a6348-252a-475e-a5ee-95404104f483
+  - BaseNodeGuid: 9f19766c-f82c-4413-9489-d9b8dfb05ca4
+    PortName: Next
+    TargetNodeGuid: 2ce7212c-6830-4e0d-80d9-f4c356842709
+  - BaseNodeGuid: 5e676b21-4703-4c00-84e1-ca9b56b8a1ff
+    PortName: Next
+    TargetNodeGuid: 0a669bc3-b45a-4fcb-ac22-1aec5aa7f92c
+  - BaseNodeGuid: 0a669bc3-b45a-4fcb-ac22-1aec5aa7f92c
+    PortName: Next
+    TargetNodeGuid: 962b5d94-792a-44b2-94e0-71582cf2988a
+  - BaseNodeGuid: 962b5d94-792a-44b2-94e0-71582cf2988a
+    PortName: Next
+    TargetNodeGuid: 238b5abd-fda8-4a43-837c-350d8fc365a1
+  - BaseNodeGuid: ea0499df-aca4-4b04-b2f1-500c35834d76
+    PortName: Next
+    TargetNodeGuid: 21ab4f5d-3506-4a8c-903f-fc0b8a8c90c4
+  - BaseNodeGuid: 238b5abd-fda8-4a43-837c-350d8fc365a1
+    PortName: Next
+    TargetNodeGuid: ea0499df-aca4-4b04-b2f1-500c35834d76
+  - BaseNodeGuid: 2ce7212c-6830-4e0d-80d9-f4c356842709
+    PortName: Next
+    TargetNodeGuid: 5e676b21-4703-4c00-84e1-ca9b56b8a1ff
+  - BaseNodeGuid: 410a6348-252a-475e-a5ee-95404104f483
+    PortName: Next
+    TargetNodeGuid: 9f19766c-f82c-4413-9489-d9b8dfb05ca4
+  - BaseNodeGuid: 21ab4f5d-3506-4a8c-903f-fc0b8a8c90c4
+    PortName: Next
+    TargetNodeGuid: 6809ccd9-37d3-4e6a-9138-3799e5ff9b33
+  NodeData:
+  - rid: 4135296407397466121
+  - rid: 4135296407397466122
+  - rid: 4135296407397466123
+  - rid: 4135296407397466124
+  - rid: 4135296407397466125
+  - rid: 4135296407397466126
+  - rid: 4135296407397466127
+  - rid: 4135296407397466128
+  - rid: 4135296407397466129
+  - rid: 4135296407397466130
+  references:
+    version: 2
+    RefIds:
+    - rid: 4135296407397466121
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 9f19766c-f82c-4413-9489-d9b8dfb05ca4
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 679, y: 219}
+        TargetObjectID: Sasin
+        DialogueText: "\uC5ED\uC2DC\uB098, \uC544\uBB34\uB7F0 \uAE30\uC5B5\uC744
+          \uD558\uC9C0 \uBABB \uD558\uB294 \uAD6C\uB098."
+        SkipDelay: 0
+    - rid: 4135296407397466122
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 0a669bc3-b45a-4fcb-ac22-1aec5aa7f92c
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2263, y: 217}
+        TargetObjectID: Sasin
+        DialogueText: "\uD560\uB85C\uC708\uC774\uB2C8 \uC774\uC0C1\uD558\uAC8C \uBCF4\uC9C4
+          \uC54A\uC744\uAC8C\uC9C0."
+        SkipDelay: 0
+    - rid: 4135296407397466123
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 962b5d94-792a-44b2-94e0-71582cf2988a
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2780, y: 208}
+        TargetObjectID: Sasin
+        DialogueText: "\uB9C8\uC744\uC5D0 \uCD95\uC81C\uAC00 \uD55C\uCC3D\uC774\uB354\uAD70."
+        SkipDelay: 0
+    - rid: 4135296407397466124
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: ea0499df-aca4-4b04-b2f1-500c35834d76
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 3822, y: 280}
+        TargetObjectID: Sasin
+        DialogueText: "\uB098\uB294 \uC774\uB85C\uC368 \u2018\uC57D\uC18D\u2019\uC744
+          \uC9C0\uD0A8 \uAC8C\uB2E4."
+        SkipDelay: 0
+    - rid: 4135296407397466125
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 238b5abd-fda8-4a43-837c-350d8fc365a1
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 3337, y: 239}
+        TargetObjectID: Sasin
+        DialogueText: "\uB124\uAC00 \uBC14\uB77C\uB358 \uCE6D\uCC2C \uCE94\uB514
+          \uB300\uD68C\uB3C4 \uC9C4\uD589 \uC911\uC774\uB2E4."
+        SkipDelay: 0
+    - rid: 4135296407397466126
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 2ce7212c-6830-4e0d-80d9-f4c356842709
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1132, y: 219}
+        TargetObjectID: Sasin
+        DialogueText: "\uAE30\uC5B5\uC744 \uC783\uAE34 \uC804, \uB124 \uC18C\uC6D0\uB300\uB85C
+          \uBD80\uB984\uC5D0 \uC751\uB2F5\uD588\uB2E4."
+        SkipDelay: 0
+    - rid: 4135296407397466127
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 410a6348-252a-475e-a5ee-95404104f483
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 331, y: 219}
+        TargetObjectID: Sasin
+        DialogueText: "\uB208\uC744 \uB72C \uAC8C\uB0D0."
+        SkipDelay: 0
+    - rid: 4135296407397466128
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 5e676b21-4703-4c00-84e1-ca9b56b8a1ff
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1621, y: 219}
+        TargetObjectID: Sasin
+        DialogueText: "\uBE44\uB85D \uC720\uB839\uC758 \uBAB8\uC73C\uB85C \n'\uC560\uB108\uBBF8'\uC5D0
+          \uB3CC\uC544\uAC00\uAC8C \uB418\uC5C8\uC9C0\uB9CC,"
+        SkipDelay: 0
+    - rid: 4135296407397466129
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 21ab4f5d-3506-4a8c-903f-fc0b8a8c90c4
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 4320, y: 280}
+        TargetObjectID: Sasin
+        DialogueText: "\uC990\uAE30\uACE0 \uC2F6\uC5C8\uB358 \uAC83\uC744 \n\uBAA8\uB450
+          \uC990\uAE30\uACE0 \uB3CC\uC544\uC624\uAC70\uB77C."
+        SkipDelay: 0
+    - rid: 4135296407397466130
+      type: {class: StartQuestNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 6809ccd9-37d3-4e6a-9138-3799e5ff9b33
+        NodeTitle: StartQuest Node
+        NodeType: 2
+        Position: {x: 4755, y: 312}
+        QuestType: MAIN QUEST
+        QuestID: "#1-1 \uCE6D\uCC2C \uCE94\uB514 \uB300\uD68C\uC5D0 \uCC38\uAC00\uD558\uC790!"

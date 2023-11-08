@@ -285,7 +285,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.3
+      scalar: 0.15
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4233,9 +4233,9 @@ ParticleSystem:
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
   CustomDataModule:
-    enabled: 0
-    mode0: 0
-    vectorComponentCount0: 4
+    enabled: 1
+    mode0: 1
+    vectorComponentCount0: 1
     color0:
       serializedVersion: 2
       minMaxState: 0
@@ -4303,8 +4303,8 @@ ParticleSystem:
     vector0_0:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
-      minScalar: 0
+      scalar: 5
+      minScalar: 3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -4353,7 +4353,7 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    vectorLabel0_0: X
+    vectorLabel0_0: Voronoi Scale01
     vector0_1:
       serializedVersion: 2
       minMaxState: 0
@@ -4516,8 +4516,8 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel0_3: W
-    mode1: 0
-    vectorComponentCount1: 4
+    mode1: 1
+    vectorComponentCount1: 1
     color1:
       serializedVersion: 2
       minMaxState: 0
@@ -4585,8 +4585,8 @@ ParticleSystem:
     vector1_0:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
-      minScalar: 0
+      scalar: 3
+      minScalar: 2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -4635,7 +4635,7 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    vectorLabel1_0: X
+    vectorLabel1_0: Noise Scale
     vector1_1:
       serializedVersion: 2
       minMaxState: 0
@@ -4819,7 +4819,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d1608a764cff5534aaeeb463739aa2b3, type: 2}
+  - {fileID: 2100000, guid: 79ee7cb2e3b275b418d6e081109f4bef, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4838,7 +4838,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1872709521
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 100
   m_RenderMode: 3
   m_MeshDistribution: 0
@@ -4854,13 +4854,13 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
+  m_UseCustomVertexStreams: 1
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
-  m_VertexStreams: 00010304
+  m_VertexStreams: 000103041f23
   m_Mesh: {fileID: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
