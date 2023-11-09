@@ -57,6 +57,15 @@ namespace Quest
     public class QuestFlowManager : MonoBehaviour
     {
         [SerializeField] private bool resetQuestData;
+        [ShowIf("resetQuestData"), Space(10)]
+        public QuestLocation resetQuestLocationID;
+        [ShowIf("resetQuestData"), Space(5)]
+        public int resetQuestID; 
+        [ShowIf("resetQuestData"), Space(5)]
+        public int resetQuestDetailID = 1; 
+        [ShowIf("resetQuestData"), Space(5)]
+        public int resetQuestFlowID = 1;
+
         [SerializeField] private List<QuestFlow> QuestFlows;
 
         public static QuestFlowManager Instance;
@@ -72,8 +81,8 @@ namespace Quest
         {
             if (resetQuestData)
             {
-                // TODO: 삭제하기
-                PlayerPrefs.DeleteAll();
+                QuestManager.Instance.CurrentQuestInfo = new[]
+                    { (int)resetQuestLocationID, resetQuestID, resetQuestDetailID, resetQuestFlowID };
             }
             
             Instance = this;
