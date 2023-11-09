@@ -49,6 +49,21 @@ public class UIFadeController : MonoBehaviour
                 break;
         }
     }
+    
+    public float GetFadeInTime()
+    {
+        return fadeInTime;
+    }
+    
+    public float GetFadeOutTime()
+    {
+        return fadeOutTime;
+    }
+    
+    public void SetAutoFadeWaitTime(float delay)
+    {
+        autoFadeWaitTime = delay;
+    }
 
     public void AutoFadeInAndOut()
     {

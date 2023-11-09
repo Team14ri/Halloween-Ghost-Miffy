@@ -26,14 +26,14 @@ MonoBehaviour:
     PortName: Next
     TargetNodeGuid: b2c15a02-fea4-4cf6-814e-71dd4ab244ac
   NodeData:
-  - rid: 4135296429183729727
-  - rid: 4135296429183729728
-  - rid: 4135296429183729729
-  - rid: 4135296429183729730
+  - rid: 4135296429183729773
+  - rid: 4135296429183729774
+  - rid: 4135296429183729775
+  - rid: 4135296429183729776
   references:
     version: 2
     RefIds:
-    - rid: 4135296429183729727
+    - rid: 4135296429183729773
       type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: ebaf135f-6a9c-430a-9e01-bec5e5d2db4a
@@ -42,17 +42,7 @@ MonoBehaviour:
         Position: {x: 256, y: 233}
         TargetObjectID: Miffy
         DialogueText: "(\uD638\uBC15 \uBC31\uC791\uC744 \uCC3E\uC558\uB2E4..!)"
-    - rid: 4135296429183729728
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: 633c3597-e482-4796-b461-c80f881b0e86
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 865, y: 130}
-        TargetObjectID: Hobakbaekjak
-        DialogueText: "\uD765! \uC5B4\uB9BC\uB3C4 \uC5C6\uC9C0, \uB3C4\uB9DD\uC774\uB2E4!"
-        SkipDelay: 0
-    - rid: 4135296429183729729
+    - rid: 4135296429183729774
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: ceb5c82f-4058-4d9c-ba77-d3d246ae03e6
@@ -60,15 +50,27 @@ MonoBehaviour:
         NodeType: 0
         Position: {x: 916, y: 431}
         TargetObjectID: Hobakbaekjak
-        DialogueText: "\uD06C\uD558\uD558\uD558! \uC6A9\uCE90 \uC798 \uCC3E\uC558\uB2E4\uB9CC,"
+        DialogueText: "<state:Hobakbaekjak@Idle>\uD06C\uD558\uD558\uD558! \uC6A9\uCE90
+          \uC798 \uCC3E\uC558\uB2E4\uB9CC,"
         SkipDelay: 0
-    - rid: 4135296429183729730
+    - rid: 4135296429183729775
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 633c3597-e482-4796-b461-c80f881b0e86
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 865, y: 130}
+        TargetObjectID: Hobakbaekjak
+        DialogueText: "<state:Hobakbaekjak@Idle>\uD765! \uC5B4\uB9BC\uB3C4 \uC5C6\uC9C0,
+          \uB3C4\uB9DD\uC774\uB2E4!"
+        SkipDelay: 0
+    - rid: 4135296429183729776
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: b2c15a02-fea4-4cf6-814e-71dd4ab244ac
         NodeTitle: NoChoice Node
         NodeType: 0
-        Position: {x: 1351, y: 431}
+        Position: {x: 1457, y: 431}
         TargetObjectID: Hobakbaekjak
         DialogueText: "\uB290\uB824."
         SkipDelay: 0
