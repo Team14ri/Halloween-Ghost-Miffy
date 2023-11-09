@@ -79,17 +79,17 @@ namespace Quest
         
         private void Awake()
         {
+            Instance = this;
+        }
+
+        private void Start()
+        {
             if (resetQuestData)
             {
                 QuestManager.Instance.CurrentQuestInfo = new[]
                     { (int)resetQuestLocationID, resetQuestID, resetQuestDetailID, resetQuestFlowID };
             }
             
-            Instance = this;
-        }
-
-        private void Start()
-        {
             var questInfo = QuestManager.Instance.CurrentQuestInfo;
             currentQuestLocation = (QuestLocation)questInfo[0];
             currentQuestID = questInfo[1];
