@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Plaza@N3-3-3-Cliko
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: 61226ef9-1eb0-4e9c-8f97-f01e1a498482
+    PortName: Execute
+    TargetNodeGuid: 4a608c1c-2e99-4cc5-9c19-c31040549317
+  - BaseNodeGuid: 4a608c1c-2e99-4cc5-9c19-c31040549317
+    PortName: Next
+    TargetNodeGuid: f789cada-4b98-4fcb-900f-0e5e5565eb3c
+  NodeData:
+  - rid: 4135296429183729924
+  - rid: 4135296429183729925
+  references:
+    version: 2
+    RefIds:
+    - rid: 4135296429183729924
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 4a608c1c-2e99-4cc5-9c19-c31040549317
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 240, y: 191}
+        TargetObjectID: Cliko
+        DialogueText: "\uD070\uC77C\uC774 \uB09C \uC904 \uC54C\uACE0 \uC5BC\uB9C8\uB098
+          \uB9C8\uC74C\uC744 \uC878\uC600\uB294\uC9C0... \uAF2C\uAF2C..."
+        SkipDelay: 0
+    - rid: 4135296429183729925
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: f789cada-4b98-4fcb-900f-0e5e5565eb3c
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 749, y: 217}
+        TargetObjectID: Clito
+        DialogueText: "\uD6CC\uCA4D! \uC090\uC57D!"
+        SkipDelay: 0
