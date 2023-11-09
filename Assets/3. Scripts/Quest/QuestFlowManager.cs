@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using DS.Core;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -58,6 +57,15 @@ namespace Quest
     public class QuestFlowManager : MonoBehaviour
     {
         [SerializeField] private bool resetQuestData;
+        [ShowIf("resetQuestData"), Space(10)]
+        public QuestLocation resetQuestLocationID;
+        [ShowIf("resetQuestData"), Space(5)]
+        public int resetQuestID; 
+        [ShowIf("resetQuestData"), Space(5)]
+        public int resetQuestDetailID = 1; 
+        [ShowIf("resetQuestData"), Space(5)]
+        public int resetQuestFlowID = 1;
+
         [SerializeField] private List<QuestFlow> QuestFlows;
 
         public static QuestFlowManager Instance;
@@ -65,26 +73,21 @@ namespace Quest
         private QuestLocation currentQuestLocation;
         private int currentQuestID; 
         private int currentQuestDetailID; 
-        private int currentQuestFlowID; 
+        private int currentQuestFlowID;
+
+        private bool observeUpdate = true;
         
         private void Awake()
         {
             if (resetQuestData)
             {
-                // TODO: 삭제하기
-                PlayerPrefs.DeleteAll();
+                QuestManager.Instance.CurrentQuestInfo = new[]
+                    { (int)resetQuestLocationID, resetQuestID, resetQuestDetailID, resetQuestFlowID };
             }
             
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else if (Instance != this)
-            {
-                Destroy(gameObject);
-            }
+            Instance = this;
         }
-        
+
         private void Start()
         {
             var questInfo = QuestManager.Instance.CurrentQuestInfo;
@@ -98,6 +101,9 @@ namespace Quest
 
         private void Update()
         {
+            if (!observeUpdate)
+                return;
+            
             var questInfo = QuestManager.Instance.CurrentQuestInfo;
             if (currentQuestLocation != (QuestLocation)questInfo[0] || 
                 currentQuestID != questInfo[1] || 
@@ -111,6 +117,12 @@ namespace Quest
                 
                 UpdateScene();
             }
+        }
+        
+        public void ChangeFlowManager(QuestFlowManager newManager)
+        {
+            observeUpdate = false;
+            newManager.gameObject.SetActive(true);
         }
         
         private IEnumerator UpdateFlowEvent(QuestFlow flow)

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using DS.Runtime;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace DS.Core
 {
@@ -41,6 +42,38 @@ namespace DS.Core
         private void Start()
         {
             _dialogueHandler = PlayerController.Instance.GetComponent<DialogueHandler>();
+        }
+        
+        public void OnChangeSelect(InputAction.CallbackContext context)
+        {
+            if (dialogueSetter.nameBox.text == ""
+                && dialogueSetter.textBox.text == "")
+                return;
+            
+            if (context.started)
+            {
+                var input = context.ReadValue<Vector2>();
+                if (input.x >= 0)
+                {
+                    UpdateIndex(1);
+                }
+                else
+                {
+                    UpdateIndex(-1);
+                }
+            }
+        }
+        
+        public void OnInteraction(InputAction.CallbackContext context)
+        {
+            if (dialogueSetter.nameBox.text == ""
+                && dialogueSetter.textBox.text == "")
+                return;
+            
+            if (context.started)
+            {
+                SelectChoice();
+            }
         }
 
         private void Update()
@@ -92,6 +125,9 @@ namespace DS.Core
         
         public void UpdateIndex(int updateIdx)
         {
+            if (choiceDataList.Count == 0)
+                return;
+            
             _currentIndex += updateIdx;
             _currentIndex = Mathf.Clamp(_currentIndex, 0, choiceDataList.Count - 1);
 

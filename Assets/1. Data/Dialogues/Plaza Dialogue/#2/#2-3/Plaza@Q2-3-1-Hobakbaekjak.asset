@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
-  m_Name: Q2-4-1-Hobakbaekjak
+  m_Name: Plaza@Q2-3-1-Hobakbaekjak
   m_EditorClassIdentifier: 
   NodeLinks:
   - BaseNodeGuid: 61226ef9-1eb0-4e9c-8f97-f01e1a498482
@@ -26,33 +26,23 @@ MonoBehaviour:
     PortName: Next
     TargetNodeGuid: b2c15a02-fea4-4cf6-814e-71dd4ab244ac
   NodeData:
-  - rid: 3681219999403343942
-  - rid: 3681219999403343943
-  - rid: 3681219999403343944
-  - rid: 3681219999403343945
+  - rid: 4135296429183729773
+  - rid: 4135296429183729774
+  - rid: 4135296429183729775
+  - rid: 4135296429183729776
   references:
     version: 2
     RefIds:
-    - rid: 3681219999403343942
+    - rid: 4135296429183729773
       type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: ebaf135f-6a9c-430a-9e01-bec5e5d2db4a
         NodeTitle: MultiChoice Node
         NodeType: 1
         Position: {x: 256, y: 233}
-        TargetObjectID: Hobakbaekjak
+        TargetObjectID: Miffy
         DialogueText: "(\uD638\uBC15 \uBC31\uC791\uC744 \uCC3E\uC558\uB2E4..!)"
-    - rid: 3681219999403343943
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: 633c3597-e482-4796-b461-c80f881b0e86
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 865, y: 130}
-        TargetObjectID: Hobakbaekjak
-        DialogueText: "\uD765! \uC5B4\uB9BC\uB3C4 \uC5C6\uC9C0, \uB3C4\uB9DD\uC774\uB2E4!"
-        SkipDelay: 0
-    - rid: 3681219999403343944
+    - rid: 4135296429183729774
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: ceb5c82f-4058-4d9c-ba77-d3d246ae03e6
@@ -60,15 +50,27 @@ MonoBehaviour:
         NodeType: 0
         Position: {x: 916, y: 431}
         TargetObjectID: Hobakbaekjak
-        DialogueText: "\uD06C\uD558\uD558\uD558! \uC6A9\uCE90 \uC798 \uCC3E\uC558\uB2E4\uB9CC,"
+        DialogueText: "<state:Hobakbaekjak@Idle>\uD06C\uD558\uD558\uD558! \uC6A9\uCE90
+          \uC798 \uCC3E\uC558\uB2E4\uB9CC,"
         SkipDelay: 0
-    - rid: 3681219999403343945
+    - rid: 4135296429183729775
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 633c3597-e482-4796-b461-c80f881b0e86
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 865, y: 130}
+        TargetObjectID: Hobakbaekjak
+        DialogueText: "<state:Hobakbaekjak@Idle>\uD765! \uC5B4\uB9BC\uB3C4 \uC5C6\uC9C0,
+          \uB3C4\uB9DD\uC774\uB2E4!"
+        SkipDelay: 0
+    - rid: 4135296429183729776
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: b2c15a02-fea4-4cf6-814e-71dd4ab244ac
         NodeTitle: NoChoice Node
         NodeType: 0
-        Position: {x: 1351, y: 431}
+        Position: {x: 1457, y: 431}
         TargetObjectID: Hobakbaekjak
         DialogueText: "\uB290\uB824."
         SkipDelay: 0
