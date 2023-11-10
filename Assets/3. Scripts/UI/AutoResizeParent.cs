@@ -18,7 +18,7 @@ public class AutoResizeParent : MonoBehaviour
 
     private bool updateParentLayout;
 
-    private void OnEnable()
+    private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
         parentRectTransform = transform.parent.GetComponent<RectTransform>();
