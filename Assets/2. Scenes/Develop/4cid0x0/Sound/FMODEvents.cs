@@ -1,16 +1,15 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
 
 public class FMODEvents : MonoBehaviour
 {
-    [field:Header("Test BGM")]
-    [SerializeField] public EventReference testBGM { get; private set; }
+    //[field:Header("Test BGM1")]
+    public EventReference testBGM1;
     
-    public  static FMODEvents Instance { get; private set; }
+    //[field:Header("Test BGM2")]
+    public EventReference testBGM2;
+    
+    public static FMODEvents Instance { get; private set; }
     private void Awake()
     {
         if (Instance != null)
