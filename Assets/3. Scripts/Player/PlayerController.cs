@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
 
     #region PlayerInput
 
-    private PlayerInput playerInput { get; set; }
+    public PlayerInput PlayerInput { get; private set; }
 
     public Vector2 MovementInput { get; private set; }
 
@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         Rb = GetComponent<Rigidbody>();
-        playerInput = GetComponent<PlayerInput>();
+        PlayerInput = GetComponent<PlayerInput>();
         Interaction = GetComponentInChildren<PlayerInteraction>();
         StateMachine.ChangeState(new PlayerIdleState(this, StateMachine));
 
@@ -85,11 +85,11 @@ public class PlayerController : MonoBehaviour
     {
         if (toggleEnabled)
         {
-            playerInput.actions[actionName].Enable();
+            PlayerInput.actions[actionName].Enable();
         }
         else
         {
-            playerInput.actions[actionName].Disable();
+            PlayerInput.actions[actionName].Disable();
         }
     }
     
