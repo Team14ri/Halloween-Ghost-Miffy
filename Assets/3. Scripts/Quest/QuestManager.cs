@@ -32,7 +32,7 @@ namespace Quest
             };  
             set
             {
-                PlayerPrefs.SetInt("CurrentQuest@LocationID", value[0] );
+                PlayerPrefs.SetInt("CurrentQuest@LocationID", value[0]);
                 PlayerPrefs.SetInt("CurrentQuest@ID", value[1]);
                 PlayerPrefs.SetInt("CurrentQuest@DetailID", value[2]);
                 PlayerPrefs.SetInt("CurrentQuest@FlowID", value[3]);

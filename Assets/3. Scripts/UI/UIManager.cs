@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -5,8 +6,28 @@ using UnityEngine.InputSystem;
 
 public class UIManager : MonoBehaviour
 {
-    private readonly Stack<GameObject> _uiStack = new();
+    public static UIManager Instance;
+    public PlayerInput PlayerInput { get; private set; }
     
+    private readonly Stack<GameObject> _uiStack = new();
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+    
+    private void Start()
+    {
+        PlayerInput = GetComponent<PlayerInput>();
+    }
+
     public void EnterUI(GameObject obj)
     {
         _uiStack.Push(obj);

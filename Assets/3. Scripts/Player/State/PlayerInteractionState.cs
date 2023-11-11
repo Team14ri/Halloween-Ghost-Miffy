@@ -29,6 +29,7 @@ public class PlayerInteractionState : IState
     public void Enter()
     {
         player.Interaction.Enabled = false;
+        UIManager.Instance.PlayerInput.enabled = false;
         currentXAxis = VirtualCameraController.Instance.GetXAxis();
         PlayCurrentNode();
     }
@@ -147,6 +148,7 @@ public class PlayerInteractionState : IState
         }
         
         player.Interaction.SetInteractionEnableAfterDelay();
+        UIManager.Instance.PlayerInput.enabled = true;
         DialogueManager.Instance.StopDialogue();
         
         exitAction?.Invoke();
