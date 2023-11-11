@@ -35,6 +35,12 @@ public class SceneTransitionController : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(StartOneFrameLate());
+    }
+
+    private IEnumerator StartOneFrameLate()
+    {
+        yield return null;
         IrisOpen(null);
     }
 
