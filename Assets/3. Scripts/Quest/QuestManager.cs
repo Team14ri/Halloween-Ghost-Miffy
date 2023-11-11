@@ -9,7 +9,7 @@ namespace Quest
     {
         Cemetery = 0,
         Plaza = 1,
-        Valley = 2,
+        Mall = 2,
         Forest = 3
     }
     

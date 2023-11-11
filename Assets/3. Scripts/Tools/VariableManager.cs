@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class VariableManager : MonoBehaviour
 {
+    [TabGroup("Variables", "Stickers"), SerializeField]
+    private List<StickerData> stickerData;
+    
     [TabGroup("Variables", "Items"), SerializeField]
     private List<ItemData> itemData;
     
@@ -19,6 +22,11 @@ public class VariableManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+    
+    public List<StickerData> GetStickersList()
+    {
+        return stickerData;
     }
 
     public List<ItemData> GetItemsList()

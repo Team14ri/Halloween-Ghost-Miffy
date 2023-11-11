@@ -1,3 +1,4 @@
+using Quest;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -12,6 +13,10 @@ public class StickerData : ScriptableObject
     [BoxGroup("Sticker Settings"), Title("Sticker Name")]
     [SerializeField] private new string name;
     public string Name => name;
+    
+    [BoxGroup("Sticker Settings"), Title("Sticker Type")]
+    [SerializeField] private QuestLocation type;
+    public QuestLocation Type => type;
     
     [BoxGroup("Sticker Settings"), Title("Sticker Description")]
     [SerializeField, TextArea(3, 10)] private string description;
