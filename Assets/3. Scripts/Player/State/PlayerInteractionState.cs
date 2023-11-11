@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using DS;
 using DS.Core;
 using DS.Runtime;
@@ -135,6 +136,21 @@ public class PlayerInteractionState : IState
                 QuestManager.Instance.Accept(startQuestNodeData.QuestType, startQuestNodeData.QuestID);
 
                 CheckDialoguePlaying(PlayCurrentNode);
+                break;
+            case NodeTypes.NodeType.AddItem:
+                var addItemNodeData = dialogueFlow.GetCurrentNodeData() as AddItemNodeData;
+                VariableManager.Instance.AddItems(addItemNodeData.ItemID, addItemNodeData.ItemCount);
+                
+                CheckDialoguePlaying(PlayCurrentNode);
+                break;
+            case NodeTypes.NodeType.Condition:
+                var conditionNodeData = dialogueFlow.GetCurrentNodeData() as ConditionNodeData;
+                var conditionLinks = dialogueFlow.GetCurrentNodeLinks();
+
+                var conditionResult = VariableManager.Instance.GetVariableValue(conditionNodeData.ItemID) >= conditionNodeData.EqualOrMany;
+
+                SelectChoice(conditionLinks.FirstOrDefault(link => link.PortName == (conditionResult ? "True" : "False")).TargetNodeGuid);
+                
                 break;
         }
     }

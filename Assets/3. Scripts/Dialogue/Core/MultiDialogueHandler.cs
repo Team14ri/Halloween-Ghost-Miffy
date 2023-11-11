@@ -15,11 +15,10 @@ namespace DS.Core
     
     public class MultiDialogueHandler : MonoBehaviour
     {
-        private DialogueHandler _dialogueHandler;
         [SerializeField] private MultiDialogueSetter dialogueSetter;
 
-        [SerializeField] private int _currentIndex;
-        [SerializeField] private List<ChoiceData> choiceDataList;
+        private int _currentIndex;
+        [SerializeField] private List<ChoiceData> choiceDataList = new();
 
         private PlayerInteractionState _interactionState;
 
@@ -39,15 +38,9 @@ namespace DS.Core
             }
         }
 
-        private void Start()
-        {
-            _dialogueHandler = PlayerController.Instance.GetComponent<DialogueHandler>();
-        }
-        
         public void OnChangeSelect(InputAction.CallbackContext context)
         {
-            if (dialogueSetter.nameBox.text == ""
-                && dialogueSetter.textBox.text == "")
+            if (dialogueSetter.textBox.text == "")
                 return;
             
             if (context.started)
@@ -66,8 +59,7 @@ namespace DS.Core
         
         public void OnInteraction(InputAction.CallbackContext context)
         {
-            if (dialogueSetter.nameBox.text == ""
-                && dialogueSetter.textBox.text == "")
+            if (dialogueSetter.textBox.text == "")
                 return;
             
             if (context.started)
@@ -95,7 +87,7 @@ namespace DS.Core
             _interactionState = state;
 
             choiceDataList.Clear();
-            
+
             foreach (var link in links)
             {
                 choiceDataList.Add(new ChoiceData
@@ -104,17 +96,15 @@ namespace DS.Core
                     guid = link.TargetNodeGuid
                 });
             }
-            
+
             dialogueSetter.leftButton.interactable = true;
             dialogueSetter.rightButton.interactable = true;
-            dialogueSetter.selectButton.interactable = true;
 
             _observeDialogueEnd = true;
         }
         
         private void Exit()
         {
-            dialogueSetter.nameBox.text = "";
             dialogueSetter.textBox.text = "";
         }
         
@@ -149,15 +139,18 @@ namespace DS.Core
 
         private void ShowMultiDialogue()
         {
-            dialogueSetter.nameBox.text = _dialogueHandler.GetName();
             dialogueSetter.textBox.text = choiceDataList[_currentIndex].text;
         }
         
         public void SelectChoice()
         {
-            dialogueSetter.selectButton.interactable = false;
             _interactionState.SelectChoice(choiceDataList[_currentIndex].guid);
             Exit();
+        }
+
+        public (int, int) GetInfo()
+        {
+            return (choiceDataList.Count, _currentIndex);
         }
     }
 }

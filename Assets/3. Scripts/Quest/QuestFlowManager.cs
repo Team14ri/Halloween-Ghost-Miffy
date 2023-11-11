@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,13 +11,27 @@ namespace Quest
     [Serializable]
     public enum QuestClearConditionType
     {
-        ReachTargetValue
+        Item,
+        Variable
     }
     
     [Serializable]
     public class QuestClearCondition
     {
         public QuestClearConditionType type;
+        public string variableID;
+        public int equalOrMany;
+
+        public bool IsClear()
+        {
+            switch (type)
+            {
+                case QuestClearConditionType.Item:
+                    return VariableManager.Instance.GetItemValue(variableID) >= equalOrMany;
+                default:
+                    return PlayerPrefs.GetInt(variableID, 0) >= equalOrMany;
+            }
+        }
     }
     
     [Serializable]
@@ -52,6 +67,20 @@ namespace Quest
         public int NextQuestFlowID;
         [TabGroup("Settings", "Auto Clear Quest"), ShowIf("enableAutoQuestClear"), Space(10)]
         public List<QuestClearCondition> QuestClearConditions;
+        
+        public bool QuestClearConditionsState()
+        {
+            bool result = true;
+            foreach (var condition in QuestClearConditions)
+            {
+                if (!condition.IsClear())
+                {
+                    result = false;
+                    break;
+                }
+            }
+            return result;
+        }
     }
     
     public class QuestFlowManager : MonoBehaviour
@@ -116,7 +145,23 @@ namespace Quest
                 currentQuestFlowID = questInfo[3];
                 
                 UpdateScene();
+                
+                return;
             }
+
+            var currentQuest = QuestFlows.FirstOrDefault(flow => 
+                flow.QuestLocationID == currentQuestLocation && 
+                flow.QuestID == currentQuestID && 
+                flow.QuestDetailID == currentQuestDetailID && 
+                flow.QuestFlowID == currentQuestFlowID);
+
+            if (currentQuest == null ||
+                !currentQuest.enableAutoQuestClear ||
+                !currentQuest.QuestClearConditionsState())
+                return;
+            
+            QuestManager.Instance.CurrentQuestInfo = new[]
+                { (int)currentQuest.NextQuestLocationID, currentQuest.NextQuestID, currentQuest.NextQuestDetailID, currentQuest.NextQuestFlowID };
         }
         
         public void ChangeFlowManager(QuestFlowManager newManager)
