@@ -20,6 +20,7 @@ public class SoundManager : MonoBehaviour
         else
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
             eventInstances = new List<EventInstance>();
         }
     }

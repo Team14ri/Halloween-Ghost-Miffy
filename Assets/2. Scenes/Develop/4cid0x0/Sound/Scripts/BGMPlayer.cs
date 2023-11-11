@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using FMOD.Studio;
 using UnityEngine;
 
 public class BGMPlayer : MonoBehaviour
 {
     private EventInstance bgmInstance;
+    public string bgmEventName = null;
     
     public static BGMPlayer Instance { get; private set; }
     private void Awake()
@@ -23,7 +22,20 @@ public class BGMPlayer : MonoBehaviour
     
     void Start()
     {
-        bgmInstance = SoundManager.Instance.CreateInstance(FMODEvents.Instance.testBGM1);
+        if (bgmEventName == null)
+        {
+            Debug.Log("bgmName에 해당하는 event가 존재하지 않습니다.");
+            return;
+        }
+        
+        bgmInstance = SoundManager.Instance.CreateInstance(FMODEvents.Instance.eventDictionary[bgmEventName]);
+
+        if (!bgmInstance.isValid())
+        {
+            Debug.Log("FMODEvents로부터 event를 받아오는데 실패했습니다.");
+            return;
+        }
+        
         bgmInstance.start();
     }
 }
