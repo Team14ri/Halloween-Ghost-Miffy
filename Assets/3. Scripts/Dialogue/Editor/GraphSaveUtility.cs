@@ -144,6 +144,18 @@ namespace DS.Editor
                             QuestID = startQuestNode.QuestID
                         });
                         break;
+                    case NodeTypes.NodeType.AddItem:
+                        var addItemNode = dialogueNode as AddItemNode;
+                        container.NodeData.Add(new AddItemNodeData
+                        {
+                            GUID = addItemNode.GUID,
+                            NodeTitle = addItemNode.NodeTitle,
+                            NodeType = addItemNode.NodeType,
+                            Position = addItemNode.GetPosition().position,
+                            ItemID = addItemNode.ItemID,
+                            ItemCount = addItemNode.ItemCount
+                        });
+                        break;
                 }
             }
         }
@@ -211,6 +223,9 @@ namespace DS.Editor
                     case NodeTypes.NodeType.StartQuest:
                         CreateStartQuestNode(nodeData as StartQuestNodeData);
                         break;
+                    case NodeTypes.NodeType.AddItem:
+                        CreateAddItemNode(nodeData as AddItemNodeData);
+                        break;
                 }
             }
         }
@@ -243,6 +258,15 @@ namespace DS.Editor
             tempNode.GUID = nodeData.GUID;
             tempNode.QuestType = nodeData.QuestType;
             tempNode.QuestID = nodeData.QuestID;
+            _targetGraphView.AddElement(tempNode);
+        }
+        
+        private void CreateAddItemNode(AddItemNodeData nodeData)
+        {
+            var tempNode = _targetGraphView.CreateAddItemNode(nodeData.NodeTitle, nodeData.Position) as AddItemNode;
+            tempNode.GUID = nodeData.GUID;
+            tempNode.ItemID = nodeData.ItemID;
+            tempNode.ItemCount = nodeData.ItemCount;
             _targetGraphView.AddElement(tempNode);
         }
 

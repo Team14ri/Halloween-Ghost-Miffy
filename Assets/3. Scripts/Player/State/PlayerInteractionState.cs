@@ -136,6 +136,12 @@ public class PlayerInteractionState : IState
 
                 CheckDialoguePlaying(PlayCurrentNode);
                 break;
+            case NodeTypes.NodeType.AddItem:
+                var addItemNodeData = dialogueFlow.GetCurrentNodeData() as AddItemNodeData;
+                VariableManager.Instance.AddItems(addItemNodeData.ItemID, addItemNodeData.ItemCount);
+                
+                CheckDialoguePlaying(PlayCurrentNode);
+                break;
         }
     }
 

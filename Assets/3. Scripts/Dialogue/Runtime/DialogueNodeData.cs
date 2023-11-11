@@ -102,4 +102,27 @@ namespace DS.Runtime
             return true;
         }
     }
+    
+    [Serializable]
+    public class AddItemNodeData : DialogueNodeData
+    {
+        public string ItemID;
+        public int ItemCount;
+        
+        public override bool IsEqual(DialogueNodeData other)
+        {
+            if (!base.IsEqual(other))
+                return false;
+
+            var otherNode = other as AddItemNodeData;
+            
+            if (ItemID != otherNode.ItemID)
+                return false;
+            
+            if (ItemCount != otherNode.ItemCount)
+                return false;
+
+            return true;
+        }
+    }
 }
