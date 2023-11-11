@@ -4,8 +4,7 @@ using UnityEngine;
 public class BGMPlayer : MonoBehaviour
 {
     private EventInstance bgmInstance;
-    public string bgmEventName = null;
-    
+
     public static BGMPlayer Instance { get; private set; }
     private void Awake()
     {
@@ -20,15 +19,23 @@ public class BGMPlayer : MonoBehaviour
         }
     }
     
-    void Start()
+    private void Start()
     {
-        if (bgmEventName == null)
+        ChangeBGM("Stage1");
+    }
+
+    public void ChangeBGM(string eventName)
+    {
+        bgmInstance.stop(STOP_MODE.IMMEDIATE);
+        SoundManager.Instance.CleanUp();
+        
+        if (eventName == null)
         {
-            Debug.Log("bgmName에 해당하는 event가 존재하지 않습니다.");
+            Debug.Log("eventName에 해당하는 event가 존재하지 않습니다.");
             return;
         }
         
-        bgmInstance = SoundManager.Instance.CreateInstance(FMODEvents.Instance.eventDictionary[bgmEventName]);
+        bgmInstance = SoundManager.Instance.CreateInstance(FMODEvents.Instance.eventDictionary[eventName]);
 
         if (!bgmInstance.isValid())
         {
