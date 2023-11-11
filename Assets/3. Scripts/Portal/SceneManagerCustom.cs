@@ -44,6 +44,7 @@ public class SceneManagerCustom : MonoBehaviour
         {
             Debug.Log("씬 로드 완료");
             PortalManager.Instance.TeleportPlayerToExitPortal(sceneName, exitPortalNum);
+            BGMPlayer.Instance.ChangeBGM(SceneManager.GetActiveScene().name);
         }
         else
         {

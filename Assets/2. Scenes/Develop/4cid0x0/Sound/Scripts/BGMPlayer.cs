@@ -1,9 +1,12 @@
 using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
+using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 public class BGMPlayer : MonoBehaviour
 {
     private EventInstance bgmInstance;
+    private string currentEventName = null;
 
     public static BGMPlayer Instance { get; private set; }
     private void Awake()
@@ -21,28 +24,42 @@ public class BGMPlayer : MonoBehaviour
     
     private void Start()
     {
-        ChangeBGM("Stage1");
+        currentEventName = "TestMapA";
+        PlayBGM(currentEventName);
     }
 
-    public void ChangeBGM(string eventName)
+    public void PlayBGM(string eventName)
     {
-        bgmInstance.stop(STOP_MODE.IMMEDIATE);
-        SoundManager.Instance.CleanUp();
-        
         if (eventName == null)
         {
             Debug.Log("eventName에 해당하는 event가 존재하지 않습니다.");
             return;
         }
-        
         bgmInstance = SoundManager.Instance.CreateInstance(FMODEvents.Instance.eventDictionary[eventName]);
-
+        currentEventName = eventName;
+            
         if (!bgmInstance.isValid())
         {
             Debug.Log("FMODEvents로부터 event를 받아오는데 실패했습니다.");
             return;
         }
-        
         bgmInstance.start();
+    }
+
+    public void ChangeBGM(string eventName)
+    {
+        EventReference ref1 = FMODEvents.Instance.eventDictionary[eventName];
+        EventReference ref2 = FMODEvents.Instance.eventDictionary[currentEventName];
+        
+        if (ref1.Guid == ref2.Guid)
+        {
+            Debug.Log("같은 event이므로 BGM재생을 중단하지 않습니다.");
+            return;
+        }
+        
+        bgmInstance.stop(STOP_MODE.IMMEDIATE);
+        SoundManager.Instance.CleanUp();
+
+        PlayBGM(eventName);
     }
 }
