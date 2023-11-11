@@ -22,24 +22,26 @@ public class KingStickerViewer : MonoBehaviour
 
     private void OnEnable()
     {
-        plazaFieldImage.gameObject.SetActive(false);
-        mallFieldImage.gameObject.SetActive(false);
-        forestFieldImage.gameObject.SetActive(false);
+        plazaFieldImage.color = new Color(1f, 1f, 1f, 0.3f);
+        plazaFieldImage.sprite = plazaSticker.Sprite;
+        
+        mallFieldImage.color = new Color(1f, 1f, 1f, 0.3f);
+        mallFieldImage.sprite = mallSticker.Sprite;
+        
+        forestFieldImage.color = new Color(1f, 1f, 1f, 0.3f);
+        forestFieldImage.sprite = forestSticker.Sprite;
         
         if (plazaSticker.GetValue() > 0)
         {
-            plazaFieldImage.gameObject.SetActive(true);
-            plazaFieldImage.sprite = plazaSticker.Sprite;
+            plazaFieldImage.color = new Color(1f, 1f, 1f, 1f);
         }
         if (mallSticker.GetValue() > 0)
         {
-            mallFieldImage.gameObject.SetActive(true);
-            mallFieldImage.sprite = mallSticker.Sprite;
+            mallFieldImage.color = new Color(1f, 1f, 1f, 1f);
         }
         if (forestSticker.GetValue() > 0)
         {
-            forestFieldImage.gameObject.SetActive(true);
-            forestFieldImage.sprite = forestSticker.Sprite;
+            forestFieldImage.color = new Color(1f, 1f, 1f, 1f);
         }
     }
 }
