@@ -17,15 +17,15 @@ public class SerializableDictionary<T>
     {
         for (int i = 0; i < BGM.Count; i++)
         {
-            dict.Add(BGM[i].sceneName, BGM[i].eventReference);
+            dict.Add(BGM[i].key, BGM[i].eventReference);
         }
         for (int i = 0; i < AMB.Count; i++)
         {
-            dict.Add(AMB[i].sceneName, AMB[i].eventReference);
+            dict.Add(AMB[i].key, AMB[i].eventReference);
         }
         for (int i = 0; i < SFX.Count; i++)
         {
-            dict.Add(SFX[i].sceneName, SFX[i].eventReference);
+            dict.Add(SFX[i].key, SFX[i].eventReference);
         }
 
         return dict;
@@ -34,7 +34,7 @@ public class SerializableDictionary<T>
 [Serializable]
 public class SerializeData<T>
 {
-    public string sceneName;
+    public string key;
     public T eventReference;
 }
 
