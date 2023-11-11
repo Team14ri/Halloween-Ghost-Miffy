@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -32,5 +33,13 @@ public class VariableManager : MonoBehaviour
     public List<ItemData> GetItemsList()
     {
         return itemData;
+    }
+
+    public int GetItemValue(string id)
+    {
+        var firstOrDefault = itemData.FirstOrDefault(item => item.ID == id);
+        if (firstOrDefault == null)
+            return 0;
+        return firstOrDefault.GetValue();
     }
 }

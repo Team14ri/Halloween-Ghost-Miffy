@@ -3965,6 +3965,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2008408996}
+  - {fileID: 401881210}
   m_Father: {fileID: 901341477}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -22003,6 +22004,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 401713226}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &401881209
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 401881210}
+  m_Layer: 0
+  m_Name: Flow #4-1-2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &401881210
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401881209}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 64376771}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &402240776 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8959737709533192107, guid: 69fbab2f0e899f040ae2ba83573ee0e0, type: 3}
@@ -25245,7 +25277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resetQuestData: 0
   resetQuestLocationID: 1
-  resetQuestID: 2
+  resetQuestID: 4
   resetQuestDetailID: 1
   resetQuestFlowID: 1
   QuestFlows:
@@ -27335,6 +27367,27 @@ MonoBehaviour:
     ActiveGameObjects:
     - {fileID: 2008408995}
     InactiveGameObjects: []
+    ActiveEvents:
+      m_PersistentCalls:
+        m_Calls: []
+    enableAutoQuestClear: 1
+    NextQuestLocationID: 1
+    NextQuestID: 4
+    NextQuestDetailID: 1
+    NextQuestFlowID: 2
+    QuestClearConditions:
+    - type: 0
+      variableID: Item@SaraRing
+      equalOrMany: 1
+  - QuestName: '#4-1-2'
+    QuestLocationID: 1
+    QuestID: 4
+    QuestDetailID: 1
+    QuestFlowID: 2
+    ActiveGameObjects:
+    - {fileID: 401881209}
+    InactiveGameObjects:
+    - {fileID: 2008408995}
     ActiveEvents:
       m_PersistentCalls:
         m_Calls: []
@@ -39389,11 +39442,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4894413889204798561, guid: 2ce81d8b082d3874597b079a415f280e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0000028748686
+      value: 0.0000058662217
       objectReference: {fileID: 0}
     - target: {fileID: 4894413889204798561, guid: 2ce81d8b082d3874597b079a415f280e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.00001970469
+      value: -0.00003514601
       objectReference: {fileID: 0}
     - target: {fileID: 4894413889204798561, guid: 2ce81d8b082d3874597b079a415f280e, type: 3}
       propertyPath: m_LocalRotation.w
