@@ -647,6 +647,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 661925339491146168, guid: 2ce81d8b082d3874597b079a415f280e, type: 3}
+      propertyPath: attenuationObject
+      value: 
+      objectReference: {fileID: 1642495439}
     - target: {fileID: 4894413889248494112, guid: 2ce81d8b082d3874597b079a415f280e, type: 3}
       propertyPath: near clip plane
       value: 0.001
@@ -12176,6 +12180,42 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2396131992757172449, guid: 94e861012e291a9448aafbdf5e1c0857, type: 3}
   m_PrefabInstance: {fileID: 172043009}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &625896137 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5f9d04ddd40a6c847bda37e95fa7f3f1, type: 3}
+  m_PrefabInstance: {fileID: 1282155216}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &625896140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625896137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -80298519
+      Data2: 1118121979
+      Data3: -371397742
+      Data4: -15268732
+    Path: event:/SFX/Test
+  Event: 
+  PlayEvent: 1
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 1
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 15.12
 --- !u!1 &629276720
 GameObject:
   m_ObjectHideFlags: 0
@@ -31396,6 +31436,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f9d04ddd40a6c847bda37e95fa7f3f1, type: 3}
+--- !u!1 &1642495439 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1858751259938157170, guid: 9721e9bfde1f3084bbb3c744e2d08c53, type: 3}
+  m_PrefabInstance: {fileID: 1094641232}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1647971753
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42948,6 +42993,58 @@ PrefabInstance:
     - target: {fileID: 1651369668888037938, guid: c5762643f07630246b045021dc057f19, type: 3}
       propertyPath: m_Name
       value: Sound Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1651369668961349047, guid: c5762643f07630246b045021dc057f19, type: 3}
+      propertyPath: serializableDictionary.BGM.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1651369668961349047, guid: c5762643f07630246b045021dc057f19, type: 3}
+      propertyPath: serializableDictionary.BGM.Array.data[0].sceneName
+      value: TestMapA
+      objectReference: {fileID: 0}
+    - target: {fileID: 1651369668961349047, guid: c5762643f07630246b045021dc057f19, type: 3}
+      propertyPath: serializableDictionary.BGM.Array.data[1].sceneName
+      value: TestMapB
+      objectReference: {fileID: 0}
+    - target: {fileID: 1651369668961349047, guid: c5762643f07630246b045021dc057f19, type: 3}
+      propertyPath: serializableDictionary.BGM.Array.data[0].eventReference.Path
+      value: event:/BGM/testBGM1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1651369668961349047, guid: c5762643f07630246b045021dc057f19, type: 3}
+      propertyPath: serializableDictionary.BGM.Array.data[1].eventReference.Path
+      value: event:/BGM/testBGM2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1651369668961349047, guid: c5762643f07630246b045021dc057f19, type: 3}
+      propertyPath: serializableDictionary.BGM.Array.data[0].eventReference.Guid.Data1
+      value: 282390744
+      objectReference: {fileID: 0}
+    - target: {fileID: 1651369668961349047, guid: c5762643f07630246b045021dc057f19, type: 3}
+      propertyPath: serializableDictionary.BGM.Array.data[0].eventReference.Guid.Data2
+      value: 1132393584
+      objectReference: {fileID: 0}
+    - target: {fileID: 1651369668961349047, guid: c5762643f07630246b045021dc057f19, type: 3}
+      propertyPath: serializableDictionary.BGM.Array.data[0].eventReference.Guid.Data3
+      value: -874303100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1651369668961349047, guid: c5762643f07630246b045021dc057f19, type: 3}
+      propertyPath: serializableDictionary.BGM.Array.data[0].eventReference.Guid.Data4
+      value: -30224497
+      objectReference: {fileID: 0}
+    - target: {fileID: 1651369668961349047, guid: c5762643f07630246b045021dc057f19, type: 3}
+      propertyPath: serializableDictionary.BGM.Array.data[1].eventReference.Guid.Data1
+      value: 125567582
+      objectReference: {fileID: 0}
+    - target: {fileID: 1651369668961349047, guid: c5762643f07630246b045021dc057f19, type: 3}
+      propertyPath: serializableDictionary.BGM.Array.data[1].eventReference.Guid.Data2
+      value: 1319404429
+      objectReference: {fileID: 0}
+    - target: {fileID: 1651369668961349047, guid: c5762643f07630246b045021dc057f19, type: 3}
+      propertyPath: serializableDictionary.BGM.Array.data[1].eventReference.Guid.Data3
+      value: 510502560
+      objectReference: {fileID: 0}
+    - target: {fileID: 1651369668961349047, guid: c5762643f07630246b045021dc057f19, type: 3}
+      propertyPath: serializableDictionary.BGM.Array.data[1].eventReference.Guid.Data4
+      value: 2043712027
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5762643f07630246b045021dc057f19, type: 3}

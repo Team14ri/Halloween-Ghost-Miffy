@@ -42,7 +42,6 @@ public class FMODEvents : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
             eventDictionary = serializableDictionary.getDict();
         }
     }
