@@ -13,7 +13,7 @@ public class BGMPlayer : MonoBehaviour
     {
         if (Instance != null)
         {
-            Debug.LogError("한 씬에 BGMPlayer가 여러 개 있습니다.");
+            //Debug.LogError("한 씬에 BGMPlayer가 여러 개 있습니다.");
             Destroy(gameObject);
         }
         else
@@ -53,10 +53,11 @@ public class BGMPlayer : MonoBehaviour
         
         if (currentEventRef.Guid == newEventRef.Guid)
         {
-            Debug.Log("같은 event이므로 BGM재생을 중단하지 않습니다.");
+            Debug.Log("같은 event이므로 BGM재생을 재개합니다.");
             return;
         }
         
+        SoundManager.Instance.CleanUp();
         PlayBGM(eventName);
     }
 

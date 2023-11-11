@@ -14,7 +14,7 @@ public class SoundManager : MonoBehaviour
     {
         if (Instance != null)
         {
-            Debug.LogError("한 씬에 SoundManager가 여러 개 있습니다.");
+            //Debug.LogError("한 씬에 SoundManager가 여러 개 있습니다.");
             Destroy(gameObject);
         }
         else
@@ -46,5 +46,11 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-
+    public void SetVolume(float vol)
+    {
+        foreach (var instance in eventInstances)
+        {
+            instance.setVolume(vol);
+        }
+    }
 }
