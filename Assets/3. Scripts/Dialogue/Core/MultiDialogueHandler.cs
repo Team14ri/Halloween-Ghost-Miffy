@@ -46,8 +46,7 @@ namespace DS.Core
         
         public void OnChangeSelect(InputAction.CallbackContext context)
         {
-            if (dialogueSetter.nameBox.text == ""
-                && dialogueSetter.textBox.text == "")
+            if (dialogueSetter.textBox.text == "")
                 return;
             
             if (context.started)
@@ -66,8 +65,7 @@ namespace DS.Core
         
         public void OnInteraction(InputAction.CallbackContext context)
         {
-            if (dialogueSetter.nameBox.text == ""
-                && dialogueSetter.textBox.text == "")
+            if (dialogueSetter.textBox.text == "")
                 return;
             
             if (context.started)
@@ -107,14 +105,12 @@ namespace DS.Core
             
             dialogueSetter.leftButton.interactable = true;
             dialogueSetter.rightButton.interactable = true;
-            dialogueSetter.selectButton.interactable = true;
 
             _observeDialogueEnd = true;
         }
         
         private void Exit()
         {
-            dialogueSetter.nameBox.text = "";
             dialogueSetter.textBox.text = "";
         }
         
@@ -149,13 +145,11 @@ namespace DS.Core
 
         private void ShowMultiDialogue()
         {
-            dialogueSetter.nameBox.text = _dialogueHandler.GetName();
             dialogueSetter.textBox.text = choiceDataList[_currentIndex].text;
         }
         
         public void SelectChoice()
         {
-            dialogueSetter.selectButton.interactable = false;
             _interactionState.SelectChoice(choiceDataList[_currentIndex].guid);
             Exit();
         }
