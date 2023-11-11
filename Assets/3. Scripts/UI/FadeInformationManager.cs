@@ -32,11 +32,14 @@ public class FadeInformationManager : MonoBehaviour
     
     private void ExecuteEvent()
     {
+        PlayerController.Instance.PlayerInput.enabled = true;
         _unityEvent?.Invoke();
     }
         
     public void Show(string text, float delay, UnityEvent unityEvent)
     {
+        PlayerController.Instance.PlayerInput.enabled = false;
+        
         _unityEvent = unityEvent;
         
         Invoke(nameof(ExecuteEvent), _fadeInformationController.GetFadeInTime() + delay);
