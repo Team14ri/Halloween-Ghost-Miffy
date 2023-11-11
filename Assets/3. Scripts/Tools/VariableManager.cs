@@ -1,10 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Quest;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class VariableManager : MonoBehaviour
 {
+    [SerializeField] private bool resetVariablesOnStart;
+    
     [TabGroup("Variables", "Stickers"), SerializeField]
     private List<StickerData> stickerData;
     
@@ -24,7 +28,22 @@ public class VariableManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
+
+    private void Start()
+    {
+        if (!resetVariablesOnStart)
+            return;
+
+        foreach (var data in stickerData)
+        {
+            PlayerPrefs.DeleteKey(data.ID);
+        }
+        foreach (var data in itemData)
+        {
+            PlayerPrefs.DeleteKey(data.ID);
+        }
+    }
+
     public List<StickerData> GetStickersList()
     {
         return stickerData;
@@ -41,5 +60,24 @@ public class VariableManager : MonoBehaviour
         if (firstOrDefault == null)
             return 0;
         return firstOrDefault.GetValue();
+    }
+
+    public void AddOneItem(string id)
+    {
+        var sticker = stickerData.FirstOrDefault(obj => obj.ID == id);
+        if (sticker != null)
+        {
+            sticker.SetValue(sticker.GetValue() + 1);
+            ItemCollect.Instance.ShowPopup($"(<u>{sticker.Name} <size=50><color=red>x 1</color></size></u>) 스티커 획득!", sticker.Sprite);
+            return;
+        }
+
+        var item = itemData.FirstOrDefault(obj => obj.ID == id);
+        if (item != null)
+        {
+            item.SetValue(item.GetValue() + 1);
+            ItemCollect.Instance.ShowPopup($"(<u>{item.Name} <size=50><color=red>x 1</color></size></u>) 아이템 획득!", item.Sprite);
+            return;
+        }
     }
 }
