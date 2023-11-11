@@ -45,6 +45,7 @@ namespace DS.Editor
             this.AddManipulator(CreateMultiChoiceNodeContextualMenu());
             this.AddManipulator(CreateStartQuestNodeContextualMenu());
             this.AddManipulator(CreateAddItemNodeContextualMenu());
+            this.AddManipulator(CreateConditionNodeContextualMenu());
         }
 
         private IManipulator CreateNoChoiceNodeContextualMenu()
@@ -95,6 +96,19 @@ namespace DS.Editor
             });
         }
 
+
+        private IManipulator CreateConditionNodeContextualMenu()
+        {
+            return new ContextualMenuManipulator(menuEvent =>
+            {
+                // 현재 GraphView의 변형(줌 레벨과 스크롤 오프셋)을 가져옵니다.
+                Matrix4x4 transformationMatrix = contentViewContainer.worldTransform;
+                Vector2 mousePosition = menuEvent.mousePosition;
+                Vector2 localMousePosition = transformationMatrix.inverse.MultiplyPoint3x4(mousePosition);
+                menuEvent.menu.AppendAction("Add Condition Node", _ => CreateNode(NodeTypes.NodeType.Condition, "Condition Node", localMousePosition));
+            });
+        }
+
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
         {
             return ports.Where(port => startPort != port && startPort.node != port.node).ToList();
@@ -115,6 +129,9 @@ namespace DS.Editor
                     break;
                 case NodeTypes.NodeType.AddItem:
                     AddElement(CreateAddItemNode(nodeName, position));
+                    break;
+                case NodeTypes.NodeType.Condition:
+                    AddElement(CreateConditionNode(nodeName, position));
                     break;
             }
         }
@@ -154,6 +171,14 @@ namespace DS.Editor
         public DialogueNode CreateAddItemNode(string nodeName, Vector2 position)
         {
             var node = new AddItemNode(this, nodeName);
+            node.Build(position);
+
+            return node;
+        }
+        
+        public DialogueNode CreateConditionNode(string nodeName, Vector2 position)
+        {
+            var node = new ConditionNode(this, nodeName);
             node.Build(position);
 
             return node;

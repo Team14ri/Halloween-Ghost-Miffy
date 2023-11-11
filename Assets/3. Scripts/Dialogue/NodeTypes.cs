@@ -7,7 +7,8 @@ namespace DS
             NoChoice,
             MultiChoice,
             StartQuest,
-            AddItem
+            AddItem,
+            Condition
         }
     }
 }

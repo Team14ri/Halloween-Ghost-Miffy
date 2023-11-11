@@ -156,6 +156,18 @@ namespace DS.Editor
                             ItemCount = addItemNode.ItemCount
                         });
                         break;
+                    case NodeTypes.NodeType.Condition:
+                        var conditionNode = dialogueNode as ConditionNode;
+                        container.NodeData.Add(new ConditionNodeData
+                        {
+                            GUID = conditionNode.GUID,
+                            NodeTitle = conditionNode.NodeTitle,
+                            NodeType = conditionNode.NodeType,
+                            Position = conditionNode.GetPosition().position,
+                            ItemID = conditionNode.ItemID,
+                            EqualOrMany = conditionNode.EqualOrMany
+                        });
+                        break;
                 }
             }
         }
@@ -226,6 +238,9 @@ namespace DS.Editor
                     case NodeTypes.NodeType.AddItem:
                         CreateAddItemNode(nodeData as AddItemNodeData);
                         break;
+                    case NodeTypes.NodeType.Condition:
+                        CreateConditionNode(nodeData as ConditionNodeData);
+                        break;
                 }
             }
         }
@@ -267,6 +282,15 @@ namespace DS.Editor
             tempNode.GUID = nodeData.GUID;
             tempNode.ItemID = nodeData.ItemID;
             tempNode.ItemCount = nodeData.ItemCount;
+            _targetGraphView.AddElement(tempNode);
+        }
+        
+        private void CreateConditionNode(ConditionNodeData nodeData)
+        {
+            var tempNode = _targetGraphView.CreateConditionNode(nodeData.NodeTitle, nodeData.Position) as ConditionNode;
+            tempNode.GUID = nodeData.GUID;
+            tempNode.ItemID = nodeData.ItemID;
+            tempNode.EqualOrMany = nodeData.EqualOrMany;
             _targetGraphView.AddElement(tempNode);
         }
 

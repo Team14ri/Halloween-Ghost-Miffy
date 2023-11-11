@@ -125,4 +125,27 @@ namespace DS.Runtime
             return true;
         }
     }
+    
+    [Serializable]
+    public class ConditionNodeData : DialogueNodeData
+    {
+        public string ItemID;
+        public int EqualOrMany;
+        
+        public override bool IsEqual(DialogueNodeData other)
+        {
+            if (!base.IsEqual(other))
+                return false;
+
+            var otherNode = other as ConditionNodeData;
+            
+            if (ItemID != otherNode.ItemID)
+                return false;
+            
+            if (EqualOrMany != otherNode.EqualOrMany)
+                return false;
+
+            return true;
+        }
+    }
 }

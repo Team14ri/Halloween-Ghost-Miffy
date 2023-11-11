@@ -62,6 +62,23 @@ public class VariableManager : MonoBehaviour
         return firstOrDefault.GetValue();
     }
     
+    public int GetVariableValue(string id)
+    {
+        var sticker = stickerData.FirstOrDefault(obj => obj.ID == id);
+        if (sticker != null)
+        {
+            return sticker.GetValue();
+        }
+
+        var item = itemData.FirstOrDefault(obj => obj.ID == id);
+        if (item != null)
+        {
+            return item.GetValue();
+        }
+
+        return PlayerPrefs.GetInt(id, 0);
+    }
+    
     public void AddItems(string id, int value)
     {
         var sticker = stickerData.FirstOrDefault(obj => obj.ID == id);
@@ -104,5 +121,7 @@ public class VariableManager : MonoBehaviour
             ItemCollect.Instance.ShowPopup($"(<u>{item.Name} <size=50><color=red>x 1</color></size></u>) 아이템 획득!", item.Sprite);
             return;
         }
+        
+        PlayerPrefs.SetInt(id, PlayerPrefs.GetInt(id, 0) + 1);
     }
 }
