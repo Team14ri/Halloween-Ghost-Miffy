@@ -6,14 +6,26 @@ using System.Collections.Generic;
 [Serializable]
 public class SerializableDictionary<T>
 {
-    public List<SerializeData<T>> data;
+
+    public List<SerializeData<T>> BGM;
+    public List<SerializeData<T>> AMB;
+    public List<SerializeData<T>> SFX;
+
     private Dictionary<string, T> dict = new Dictionary<string, T>();
 
     public Dictionary<string, T> getDict()
     {
-        for (int i = 0; i < data.Count; i++)
+        for (int i = 0; i < BGM.Count; i++)
         {
-            dict.Add(data[i].key, data[i].value);
+            dict.Add(BGM[i].sceneName, BGM[i].eventReference);
+        }
+        for (int i = 0; i < AMB.Count; i++)
+        {
+            dict.Add(AMB[i].sceneName, AMB[i].eventReference);
+        }
+        for (int i = 0; i < SFX.Count; i++)
+        {
+            dict.Add(SFX[i].sceneName, SFX[i].eventReference);
         }
 
         return dict;
@@ -22,8 +34,8 @@ public class SerializableDictionary<T>
 [Serializable]
 public class SerializeData<T>
 {
-    public string key;
-    public T value;
+    public string sceneName;
+    public T eventReference;
 }
 
 public class FMODEvents : MonoBehaviour
