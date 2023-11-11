@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using FMOD.Studio;
 using FMODUnity;
@@ -8,6 +6,7 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     private List<EventInstance> eventInstances;
+    private float currentMasterVolume = 1.0f;
     
     public static SoundManager Instance { get; private set; }
     private void Awake()
@@ -33,6 +32,7 @@ public class SoundManager : MonoBehaviour
     public EventInstance CreateInstance(EventReference eventReference)
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
+        eventInstance.setVolume(currentMasterVolume);
         eventInstances.Add(eventInstance);
         return eventInstance;
     }
@@ -46,8 +46,10 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void SetVolume(float vol)
+    public void SetMasterVolume(float vol)
     {
+        currentMasterVolume = vol;
+        
         foreach (var instance in eventInstances)
         {
             instance.setVolume(vol);
