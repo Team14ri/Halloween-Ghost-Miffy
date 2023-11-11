@@ -57,9 +57,11 @@ public class BGMPlayer : MonoBehaviour
             return;
         }
         
-        bgmInstance.stop(STOP_MODE.ALLOWFADEOUT);
-        //SoundManager.Instance.CleanUp();
-
         PlayBGM(eventName);
+    }
+
+    public void StopBGM()
+    {
+        bgmInstance.stop(STOP_MODE.ALLOWFADEOUT);
     }
 }
