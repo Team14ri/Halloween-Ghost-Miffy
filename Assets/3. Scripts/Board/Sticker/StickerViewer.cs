@@ -27,7 +27,7 @@ public class StickerViewer : MonoBehaviour
                            data.LocationType == sticker.LocationType &&
                            data.Type == StickerType.Normal)
             .ToList();
-        
+
         for (int i = 0; i < stickerData.Count; ++i)
         {
             stickerStorage[i].gameObject.SetActive(true);
