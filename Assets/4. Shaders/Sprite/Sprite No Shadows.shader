@@ -1,6 +1,6 @@
 // Made with Amplify Shader Editor v1.9.1.5
 // Available at the Unity Asset Store - http://u3d.as/y3X 
-Shader "Miffy No Shadows"
+Shader "Sprite No Shadows"
 {
 	Properties
 	{
@@ -9,10 +9,7 @@ Shader "Miffy No Shadows"
 		[ASEBegin]_MainTex("MainTex", 2D) = "white" {}
 		_Color("Color", Color) = (1,1,1,0)
 		_Intensity("Intensity", Range( 0 , 3)) = 1.2
-		_Opacity("Opacity", Range( 0 , 1)) = 1
-		_NoisePower("Noise Power", Range( 0 , 0.1)) = 0.015
-		_NoiseScale("Noise Scale", Range( 0 , 10)) = 7
-		[ASEEnd]_PannerSpeed("Panner Speed", Range( 0 , 1.5)) = 0.1
+		[ASEEnd]_Opacity("Opacity", Range( 0 , 1)) = 1
 
 
 		//_TessPhongStrength( "Tess Phong Strength", Range( 0, 1 ) ) = 0.5
@@ -234,9 +231,6 @@ Shader "Miffy No Shadows"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _Color;
 			float _Intensity;
-			float _PannerSpeed;
-			float _NoiseScale;
-			float _NoisePower;
 			float _Opacity;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -251,35 +245,7 @@ Shader "Miffy No Shadows"
 			sampler2D _MainTex;
 
 
-			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float3 permute( float3 x ) { return mod2D289( ( ( x * 34.0 ) + 1.0 ) * x ); }
-			float snoise( float2 v )
-			{
-				const float4 C = float4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
-				float2 i = floor( v + dot( v, C.yy ) );
-				float2 x0 = v - i + dot( i, C.xx );
-				float2 i1;
-				i1 = ( x0.x > x0.y ) ? float2( 1.0, 0.0 ) : float2( 0.0, 1.0 );
-				float4 x12 = x0.xyxy + C.xxzz;
-				x12.xy -= i1;
-				i = mod2D289( i );
-				float3 p = permute( permute( i.y + float3( 0.0, i1.y, 1.0 ) ) + i.x + float3( 0.0, i1.x, 1.0 ) );
-				float3 m = max( 0.5 - float3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
-				m = m * m;
-				m = m * m;
-				float3 x = 2.0 * frac( p * C.www ) - 1.0;
-				float3 h = abs( x ) - 0.5;
-				float3 ox = floor( x + 0.5 );
-				float3 a0 = x - ox;
-				m *= 1.79284291400159 - 0.85373472095314 * ( a0 * a0 + h * h );
-				float3 g;
-				g.x = a0.x * x0.x + h.x * x0.y;
-				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-				return 130.0 * dot( m, g );
-			}
 			
-
 			VertexOutput VertexFunction ( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -434,13 +400,8 @@ Shader "Miffy No Shadows"
 					#endif
 				#endif
 
-				float2 temp_cast_0 = (_PannerSpeed).xx;
-				float2 texCoord100 = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner99 = ( 1.0 * _Time.y * temp_cast_0 + texCoord100);
-				float simplePerlin2D98 = snoise( panner99*_NoiseScale );
-				simplePerlin2D98 = simplePerlin2D98*0.5 + 0.5;
 				float2 texCoord89 = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
-				float4 tex2DNode97 = tex2D( _MainTex, ( ( simplePerlin2D98 * _NoisePower ) + texCoord89 ) );
+				float4 tex2DNode97 = tex2D( _MainTex, texCoord89 );
 				
 				float3 BakedAlbedo = 0;
 				float3 BakedEmission = 0;
@@ -529,9 +490,6 @@ Shader "Miffy No Shadows"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _Color;
 			float _Intensity;
-			float _PannerSpeed;
-			float _NoiseScale;
-			float _NoisePower;
 			float _Opacity;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -546,35 +504,7 @@ Shader "Miffy No Shadows"
 			sampler2D _MainTex;
 
 
-			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float3 permute( float3 x ) { return mod2D289( ( ( x * 34.0 ) + 1.0 ) * x ); }
-			float snoise( float2 v )
-			{
-				const float4 C = float4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
-				float2 i = floor( v + dot( v, C.yy ) );
-				float2 x0 = v - i + dot( i, C.xx );
-				float2 i1;
-				i1 = ( x0.x > x0.y ) ? float2( 1.0, 0.0 ) : float2( 0.0, 1.0 );
-				float4 x12 = x0.xyxy + C.xxzz;
-				x12.xy -= i1;
-				i = mod2D289( i );
-				float3 p = permute( permute( i.y + float3( 0.0, i1.y, 1.0 ) ) + i.x + float3( 0.0, i1.x, 1.0 ) );
-				float3 m = max( 0.5 - float3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
-				m = m * m;
-				m = m * m;
-				float3 x = 2.0 * frac( p * C.www ) - 1.0;
-				float3 h = abs( x ) - 0.5;
-				float3 ox = floor( x + 0.5 );
-				float3 a0 = x - ox;
-				m *= 1.79284291400159 - 0.85373472095314 * ( a0 * a0 + h * h );
-				float3 g;
-				g.x = a0.x * x0.x + h.x * x0.y;
-				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-				return 130.0 * dot( m, g );
-			}
 			
-
 			VertexOutput VertexFunction( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -723,13 +653,8 @@ Shader "Miffy No Shadows"
 					#endif
 				#endif
 
-				float2 temp_cast_0 = (_PannerSpeed).xx;
-				float2 texCoord100 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner99 = ( 1.0 * _Time.y * temp_cast_0 + texCoord100);
-				float simplePerlin2D98 = snoise( panner99*_NoiseScale );
-				simplePerlin2D98 = simplePerlin2D98*0.5 + 0.5;
 				float2 texCoord89 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float4 tex2DNode97 = tex2D( _MainTex, ( ( simplePerlin2D98 * _NoisePower ) + texCoord89 ) );
+				float4 tex2DNode97 = tex2D( _MainTex, texCoord89 );
 				
 
 				float Alpha = ( IN.ase_color.a * tex2DNode97.a * _Opacity );
@@ -801,9 +726,6 @@ Shader "Miffy No Shadows"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _Color;
 			float _Intensity;
-			float _PannerSpeed;
-			float _NoiseScale;
-			float _NoisePower;
 			float _Opacity;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -818,35 +740,7 @@ Shader "Miffy No Shadows"
 			sampler2D _MainTex;
 
 
-			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float3 permute( float3 x ) { return mod2D289( ( ( x * 34.0 ) + 1.0 ) * x ); }
-			float snoise( float2 v )
-			{
-				const float4 C = float4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
-				float2 i = floor( v + dot( v, C.yy ) );
-				float2 x0 = v - i + dot( i, C.xx );
-				float2 i1;
-				i1 = ( x0.x > x0.y ) ? float2( 1.0, 0.0 ) : float2( 0.0, 1.0 );
-				float4 x12 = x0.xyxy + C.xxzz;
-				x12.xy -= i1;
-				i = mod2D289( i );
-				float3 p = permute( permute( i.y + float3( 0.0, i1.y, 1.0 ) ) + i.x + float3( 0.0, i1.x, 1.0 ) );
-				float3 m = max( 0.5 - float3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
-				m = m * m;
-				m = m * m;
-				float3 x = 2.0 * frac( p * C.www ) - 1.0;
-				float3 h = abs( x ) - 0.5;
-				float3 ox = floor( x + 0.5 );
-				float3 a0 = x - ox;
-				m *= 1.79284291400159 - 0.85373472095314 * ( a0 * a0 + h * h );
-				float3 g;
-				g.x = a0.x * x0.x + h.x * x0.y;
-				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-				return 130.0 * dot( m, g );
-			}
 			
-
 			int _ObjectId;
 			int _PassValue;
 
@@ -980,13 +874,8 @@ Shader "Miffy No Shadows"
 			{
 				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
 
-				float2 temp_cast_0 = (_PannerSpeed).xx;
-				float2 texCoord100 = IN.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner99 = ( 1.0 * _Time.y * temp_cast_0 + texCoord100);
-				float simplePerlin2D98 = snoise( panner99*_NoiseScale );
-				simplePerlin2D98 = simplePerlin2D98*0.5 + 0.5;
 				float2 texCoord89 = IN.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
-				float4 tex2DNode97 = tex2D( _MainTex, ( ( simplePerlin2D98 * _NoisePower ) + texCoord89 ) );
+				float4 tex2DNode97 = tex2D( _MainTex, texCoord89 );
 				
 
 				surfaceDescription.Alpha = ( IN.ase_color.a * tex2DNode97.a * _Opacity );
@@ -1058,9 +947,6 @@ Shader "Miffy No Shadows"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _Color;
 			float _Intensity;
-			float _PannerSpeed;
-			float _NoiseScale;
-			float _NoisePower;
 			float _Opacity;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -1075,35 +961,7 @@ Shader "Miffy No Shadows"
 			sampler2D _MainTex;
 
 
-			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float3 permute( float3 x ) { return mod2D289( ( ( x * 34.0 ) + 1.0 ) * x ); }
-			float snoise( float2 v )
-			{
-				const float4 C = float4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
-				float2 i = floor( v + dot( v, C.yy ) );
-				float2 x0 = v - i + dot( i, C.xx );
-				float2 i1;
-				i1 = ( x0.x > x0.y ) ? float2( 1.0, 0.0 ) : float2( 0.0, 1.0 );
-				float4 x12 = x0.xyxy + C.xxzz;
-				x12.xy -= i1;
-				i = mod2D289( i );
-				float3 p = permute( permute( i.y + float3( 0.0, i1.y, 1.0 ) ) + i.x + float3( 0.0, i1.x, 1.0 ) );
-				float3 m = max( 0.5 - float3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
-				m = m * m;
-				m = m * m;
-				float3 x = 2.0 * frac( p * C.www ) - 1.0;
-				float3 h = abs( x ) - 0.5;
-				float3 ox = floor( x + 0.5 );
-				float3 a0 = x - ox;
-				m *= 1.79284291400159 - 0.85373472095314 * ( a0 * a0 + h * h );
-				float3 g;
-				g.x = a0.x * x0.x + h.x * x0.y;
-				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-				return 130.0 * dot( m, g );
-			}
 			
-
 			float4 _SelectionID;
 
 
@@ -1232,13 +1090,8 @@ Shader "Miffy No Shadows"
 			{
 				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
 
-				float2 temp_cast_0 = (_PannerSpeed).xx;
-				float2 texCoord100 = IN.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner99 = ( 1.0 * _Time.y * temp_cast_0 + texCoord100);
-				float simplePerlin2D98 = snoise( panner99*_NoiseScale );
-				simplePerlin2D98 = simplePerlin2D98*0.5 + 0.5;
 				float2 texCoord89 = IN.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
-				float4 tex2DNode97 = tex2D( _MainTex, ( ( simplePerlin2D98 * _NoisePower ) + texCoord89 ) );
+				float4 tex2DNode97 = tex2D( _MainTex, texCoord89 );
 				
 
 				surfaceDescription.Alpha = ( IN.ase_color.a * tex2DNode97.a * _Opacity );
@@ -1320,9 +1173,6 @@ Shader "Miffy No Shadows"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _Color;
 			float _Intensity;
-			float _PannerSpeed;
-			float _NoiseScale;
-			float _NoisePower;
 			float _Opacity;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -1337,35 +1187,7 @@ Shader "Miffy No Shadows"
 			sampler2D _MainTex;
 
 
-			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float3 permute( float3 x ) { return mod2D289( ( ( x * 34.0 ) + 1.0 ) * x ); }
-			float snoise( float2 v )
-			{
-				const float4 C = float4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
-				float2 i = floor( v + dot( v, C.yy ) );
-				float2 x0 = v - i + dot( i, C.xx );
-				float2 i1;
-				i1 = ( x0.x > x0.y ) ? float2( 1.0, 0.0 ) : float2( 0.0, 1.0 );
-				float4 x12 = x0.xyxy + C.xxzz;
-				x12.xy -= i1;
-				i = mod2D289( i );
-				float3 p = permute( permute( i.y + float3( 0.0, i1.y, 1.0 ) ) + i.x + float3( 0.0, i1.x, 1.0 ) );
-				float3 m = max( 0.5 - float3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
-				m = m * m;
-				m = m * m;
-				float3 x = 2.0 * frac( p * C.www ) - 1.0;
-				float3 h = abs( x ) - 0.5;
-				float3 ox = floor( x + 0.5 );
-				float3 a0 = x - ox;
-				m *= 1.79284291400159 - 0.85373472095314 * ( a0 * a0 + h * h );
-				float3 g;
-				g.x = a0.x * x0.x + h.x * x0.y;
-				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-				return 130.0 * dot( m, g );
-			}
 			
-
 			struct SurfaceDescription
 			{
 				float Alpha;
@@ -1498,13 +1320,8 @@ Shader "Miffy No Shadows"
 			{
 				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
 
-				float2 temp_cast_0 = (_PannerSpeed).xx;
-				float2 texCoord100 = IN.ase_texcoord1.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner99 = ( 1.0 * _Time.y * temp_cast_0 + texCoord100);
-				float simplePerlin2D98 = snoise( panner99*_NoiseScale );
-				simplePerlin2D98 = simplePerlin2D98*0.5 + 0.5;
 				float2 texCoord89 = IN.ase_texcoord1.xy * float2( 1,1 ) + float2( 0,0 );
-				float4 tex2DNode97 = tex2D( _MainTex, ( ( simplePerlin2D98 * _NoisePower ) + texCoord89 ) );
+				float4 tex2DNode97 = tex2D( _MainTex, texCoord89 );
 				
 
 				surfaceDescription.Alpha = ( IN.ase_color.a * tex2DNode97.a * _Opacity );
@@ -1587,9 +1404,6 @@ Shader "Miffy No Shadows"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _Color;
 			float _Intensity;
-			float _PannerSpeed;
-			float _NoiseScale;
-			float _NoisePower;
 			float _Opacity;
 			#ifdef ASE_TESSELLATION
 				float _TessPhongStrength;
@@ -1603,35 +1417,7 @@ Shader "Miffy No Shadows"
 			sampler2D _MainTex;
 
 
-			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-			float3 permute( float3 x ) { return mod2D289( ( ( x * 34.0 ) + 1.0 ) * x ); }
-			float snoise( float2 v )
-			{
-				const float4 C = float4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
-				float2 i = floor( v + dot( v, C.yy ) );
-				float2 x0 = v - i + dot( i, C.xx );
-				float2 i1;
-				i1 = ( x0.x > x0.y ) ? float2( 1.0, 0.0 ) : float2( 0.0, 1.0 );
-				float4 x12 = x0.xyxy + C.xxzz;
-				x12.xy -= i1;
-				i = mod2D289( i );
-				float3 p = permute( permute( i.y + float3( 0.0, i1.y, 1.0 ) ) + i.x + float3( 0.0, i1.x, 1.0 ) );
-				float3 m = max( 0.5 - float3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
-				m = m * m;
-				m = m * m;
-				float3 x = 2.0 * frac( p * C.www ) - 1.0;
-				float3 h = abs( x ) - 0.5;
-				float3 ox = floor( x + 0.5 );
-				float3 a0 = x - ox;
-				m *= 1.79284291400159 - 0.85373472095314 * ( a0 * a0 + h * h );
-				float3 g;
-				g.x = a0.x * x0.x + h.x * x0.y;
-				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-				return 130.0 * dot( m, g );
-			}
 			
-
 			struct SurfaceDescription
 			{
 				float Alpha;
@@ -1764,13 +1550,8 @@ Shader "Miffy No Shadows"
 			{
 				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
 
-				float2 temp_cast_0 = (_PannerSpeed).xx;
-				float2 texCoord100 = IN.ase_texcoord1.xy * float2( 1,1 ) + float2( 0,0 );
-				float2 panner99 = ( 1.0 * _Time.y * temp_cast_0 + texCoord100);
-				float simplePerlin2D98 = snoise( panner99*_NoiseScale );
-				simplePerlin2D98 = simplePerlin2D98*0.5 + 0.5;
 				float2 texCoord89 = IN.ase_texcoord1.xy * float2( 1,1 ) + float2( 0,0 );
-				float4 tex2DNode97 = tex2D( _MainTex, ( ( simplePerlin2D98 * _NoisePower ) + texCoord89 ) );
+				float4 tex2DNode97 = tex2D( _MainTex, texCoord89 );
 				
 
 				surfaceDescription.Alpha = ( IN.ase_color.a * tex2DNode97.a * _Opacity );
@@ -1825,9 +1606,9 @@ Node;AmplifyShaderEditor.TextureCoordinatesNode;100;-1511.744,-261.5017;Inherit;
 Node;AmplifyShaderEditor.RangedFloatNode;101;-1159.186,49.80243;Inherit;False;Property;_NoisePower;Noise Power;4;0;Create;True;0;0;0;False;0;False;0.015;0.05;0;0.1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;102;-1382.975,-47.72527;Inherit;False;Property;_NoiseScale;Noise Scale;5;0;Create;True;0;0;0;False;0;False;7;0.05;0;10;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;103;-1569.913,-144.3317;Inherit;False;Property;_PannerSpeed;Panner Speed;6;0;Create;True;0;0;0;False;0;False;0.1;0.05;0;1.5;0;1;FLOAT;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;56;324.6635,-146.2006;Float;False;True;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;13;Miffy No Shadows;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;2;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;4;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;UniversalMaterialType=Unlit;True;3;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForwardOnly;False;False;0;;0;0;Standard;23;Surface;1;638311638230639326;  Blend;0;638311675102914429;Two Sided;0;638311645741883391;Forward Only;0;0;Cast Shadows;0;638311680066100781;  Use Shadow Threshold;0;0;Receive Shadows;1;638311680170656074;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;10;False;True;False;True;False;False;True;True;True;True;False;;False;0
 Node;AmplifyShaderEditor.SamplerNode;97;-549.0955,-94.4452;Inherit;True;Property;_MainTex;MainTex;0;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RangedFloatNode;93;-391.3311,-176.8994;Inherit;False;Property;_Intensity;Intensity;2;0;Create;True;0;0;0;False;0;False;1.2;1;0;3;0;1;FLOAT;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;56;396.6635,-146.2006;Float;False;True;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;13;Sprite No Shadows;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;2;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;4;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;UniversalMaterialType=Unlit;True;3;True;12;all;0;False;True;1;5;False;;10;False;;1;1;False;;10;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;2;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForwardOnly;False;False;0;;0;0;Standard;23;Surface;1;638311638230639326;  Blend;0;638311675102914429;Two Sided;0;638311645741883391;Forward Only;0;0;Cast Shadows;0;638311680066100781;  Use Shadow Threshold;0;0;Receive Shadows;1;638311680170656074;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Vertex Position,InvertActionOnDeselection;1;0;0;10;False;True;False;True;False;False;True;True;True;True;False;;False;0
 WireConnection;87;0;88;0
 WireConnection;87;1;89;0
 WireConnection;88;0;98;0
@@ -1844,8 +1625,8 @@ WireConnection;98;0;99;0
 WireConnection;98;1;102;0
 WireConnection;99;0;100;0
 WireConnection;99;2;103;0
+WireConnection;97;1;89;0
 WireConnection;56;2;91;0
 WireConnection;56;3;92;0
-WireConnection;97;1;87;0
 ASEEND*/
-//CHKSM=9D6123A11BBF6E3F4387D11428A1838E7E3B295F
+//CHKSM=1DAAF2CFA36D2ABF751736096347C8130C25BB3B
