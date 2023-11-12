@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using FMOD.Studio;
 using FMODUnity;
@@ -6,11 +6,14 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    private Bus masterBus;
+    [SerializeField] private AnimationCurve crossfadeCurve;
+
     private List<EventInstance> eventInstances;
+    private Bus masterBus;
     private float currentMasterVolume = 1.0f;
-    
+
     public static SoundManager Instance { get; private set; }
+
     private void Awake()
     {
         if (Instance != null)
@@ -51,18 +54,33 @@ public class SoundManager : MonoBehaviour
 
     public void SetMasterVolume(float vol)
     {
+        currentMasterVolume = vol;
         masterBus.setVolume(vol);
     }
 
-    private void Update()
+    public void Crossfade(float goalVol, float goalTime)
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        StartCoroutine(CrossfadeCoroutine(goalVol, goalTime));
+    }
+
+    private IEnumerator CrossfadeCoroutine(float goalVol, float goalTime)
+    {
+        float startTime = Time.time;
+        float startVol = currentMasterVolume;
+
+        while (Time.time < startTime + goalTime)
         {
-            SetMasterVolume(0.1f);
+            float elapsed = Time.time - startTime;
+            float t = Mathf.Clamp01(elapsed / goalTime);
+
+            float curveValue = Mathf.Clamp01(SoundManager.Instance.crossfadeCurve.Evaluate(t));
+            currentMasterVolume = Mathf.Lerp(startVol, goalVol, curveValue);
+            masterBus.setVolume(currentMasterVolume);
+
+            yield return null;
         }
-        else if (Input.GetKeyDown(KeyCode.C))
-        {
-            SetMasterVolume(1f);
-        }
+
+        currentMasterVolume = goalVol;
+        masterBus.setVolume(currentMasterVolume);
     }
 }
