@@ -6,14 +6,26 @@ using System.Collections.Generic;
 [Serializable]
 public class SerializableDictionary<T>
 {
-    public List<SerializeData<T>> data;
+
+    public List<SerializeData<T>> BGM;
+    public List<SerializeData<T>> AMB;
+    public List<SerializeData<T>> SFX;
+
     private Dictionary<string, T> dict = new Dictionary<string, T>();
 
     public Dictionary<string, T> getDict()
     {
-        for (int i = 0; i < data.Count; i++)
+        for (int i = 0; i < BGM.Count; i++)
         {
-            dict.Add(data[i].key, data[i].value);
+            dict.Add(BGM[i].key, BGM[i].eventReference);
+        }
+        for (int i = 0; i < AMB.Count; i++)
+        {
+            dict.Add(AMB[i].key, AMB[i].eventReference);
+        }
+        for (int i = 0; i < SFX.Count; i++)
+        {
+            dict.Add(SFX[i].key, SFX[i].eventReference);
         }
 
         return dict;
@@ -23,7 +35,7 @@ public class SerializableDictionary<T>
 public class SerializeData<T>
 {
     public string key;
-    public T value;
+    public T eventReference;
 }
 
 public class FMODEvents : MonoBehaviour
@@ -36,13 +48,12 @@ public class FMODEvents : MonoBehaviour
     {
         if (Instance != null)
         {
-            Debug.LogError("한 씬에 FMODEvents가 여러 개 있습니다.");
+            //Debug.LogError("한 씬에 FMODEvents가 여러 개 있습니다.");
             Destroy(gameObject);
         }
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
             eventDictionary = serializableDictionary.getDict();
         }
     }

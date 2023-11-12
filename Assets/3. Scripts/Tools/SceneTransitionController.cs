@@ -68,6 +68,7 @@ public class SceneTransitionController : MonoBehaviour
         
         this.EnsureCoroutineStopped(ref _transitionRoutine);
         _transitionRoutine = StartCoroutine(IrisCloseProcess(action));
+        BGMPlayer.Instance.StopBGM();
     }
     
     private IEnumerator IrisOpenProcess(Action action)
