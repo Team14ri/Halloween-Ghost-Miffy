@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FMOD.Studio;
 using FMODUnity;
@@ -5,6 +6,7 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
+    private Bus masterBus;
     private List<EventInstance> eventInstances;
     private float currentMasterVolume = 1.0f;
     
@@ -21,6 +23,7 @@ public class SoundManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
             eventInstances = new List<EventInstance>();
+            masterBus = FMODUnity.RuntimeManager.GetBus("{adad2423-c25d-4945-9aeb-435077848bbd}");
         }
     }
 
@@ -48,11 +51,18 @@ public class SoundManager : MonoBehaviour
 
     public void SetMasterVolume(float vol)
     {
-        currentMasterVolume = vol;
-        
-        foreach (var instance in eventInstances)
+        masterBus.setVolume(vol);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            instance.setVolume(vol);
+            SetMasterVolume(0.1f);
+        }
+        else if (Input.GetKeyDown(KeyCode.C))
+        {
+            SetMasterVolume(1f);
         }
     }
 }
