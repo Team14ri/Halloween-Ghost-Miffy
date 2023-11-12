@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Plaza@Q4-1-1-Sara
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: 61226ef9-1eb0-4e9c-8f97-f01e1a498482
+    PortName: Execute
+    TargetNodeGuid: dbc0af57-a0d8-4d63-81f3-a700002e0a86
+  - BaseNodeGuid: 7910a8aa-2306-46ba-9426-9c6d842b68b4
+    PortName: Next
+    TargetNodeGuid: 8f7821b0-fd1e-4fb7-8ea5-56ca23dccd85
+  NodeData:
+  - rid: 4135296497778163715
+  - rid: 4135296497778163716
+  - rid: 4135296497778163717
+  references:
+    version: 2
+    RefIds:
+    - rid: 4135296497778163715
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: dbc0af57-a0d8-4d63-81f3-a700002e0a86
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 284, y: 191}
+        TargetObjectID: Sara
+        DialogueText: "\uAC70\uAE30 \uB108, \uC7A0\uAE50\uB9CC \uC774\uCABD\uC73C\uB85C
+          \uC640\uC904 \uC218 \uC788\uC744\uAE4C?"
+        SkipDelay: 0
+    - rid: 4135296497778163716
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 7910a8aa-2306-46ba-9426-9c6d842b68b4
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 4518, y: 250}
+        TargetObjectID: Sara
+        DialogueText: "\uACE0\uB9C8\uC6CC! \uB0B4 \uBC18\uC9C0\uB294 [\uBD89\uC740
+          \uC0C9\uC758 \uBCF4\uC11D\uC774 \uBC15\uD78C \uBC18\uC9C0]\uC57C!"
+        SkipDelay: 0
+    - rid: 4135296497778163717
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 8f7821b0-fd1e-4fb7-8ea5-56ca23dccd85
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 5084, y: 250}
+        TargetObjectID: Sara
+        DialogueText: "\uC798 \uBD80\uD0C1\uD574!"
+        SkipDelay: 0

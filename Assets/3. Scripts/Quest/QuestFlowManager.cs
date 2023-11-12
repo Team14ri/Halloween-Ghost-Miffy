@@ -164,6 +164,16 @@ namespace Quest
                 { (int)currentQuest.NextQuestLocationID, currentQuest.NextQuestID, currentQuest.NextQuestDetailID, currentQuest.NextQuestFlowID };
         }
         
+        public void SetQuestID(string id)
+        {
+            QuestManager.Instance.SetQuestID(id);
+        }
+        
+        public void AcceptMainQuest(string questTitle)
+        {
+            QuestManager.Instance.AcceptMainQuest(questTitle);
+        }
+        
         public void ChangeFlowManager(QuestFlowManager newManager)
         {
             observeUpdate = false;
