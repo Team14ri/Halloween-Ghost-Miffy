@@ -71,7 +71,7 @@ namespace Interaction
             }
         }
 
-        private void SetInteractionEnable()
+        public void SetInteractionEnable()
         {
             Enabled = true;
         }

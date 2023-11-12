@@ -53,6 +53,11 @@ public class VariableManager : MonoBehaviour
     {
         return itemData;
     }
+    
+    public void ResetEveryData()
+    {
+        PlayerPrefs.DeleteAll();
+    }
 
     public int GetItemValue(string id)
     {
