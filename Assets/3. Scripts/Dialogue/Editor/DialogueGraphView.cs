@@ -176,10 +176,10 @@ namespace DS.Editor
             return node;
         }
         
-        public DialogueNode CreateConditionNode(string nodeName, Vector2 position)
+        public DialogueNode CreateConditionNode(string nodeName, Vector2 position, bool withoutOutput = false)
         {
             var node = new ConditionNode(this, nodeName);
-            node.Build(position);
+            node.Build(position, withoutOutput);
 
             return node;
         }

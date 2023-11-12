@@ -124,4 +124,9 @@ public class VariableManager : MonoBehaviour
         
         PlayerPrefs.SetInt(id, PlayerPrefs.GetInt(id, 0) + 1);
     }
+    
+    public void ResetItem(string id)
+    {
+        PlayerPrefs.DeleteKey(id);
+    }
 }

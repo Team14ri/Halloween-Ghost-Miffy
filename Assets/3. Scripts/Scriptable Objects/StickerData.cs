@@ -3,6 +3,13 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [System.Serializable]
+public enum StickerType
+{
+    Normal,
+    Big
+}
+
+[System.Serializable]
 [CreateAssetMenu(fileName = "Sticker@Name", menuName = "Scriptable Objects/Sticker Data")]
 public class StickerData : ScriptableObject
 {
@@ -15,8 +22,12 @@ public class StickerData : ScriptableObject
     public string Name => name;
     
     [BoxGroup("Sticker Settings"), Title("Sticker Type")]
-    [SerializeField] private QuestLocation type;
-    public QuestLocation Type => type;
+    [SerializeField] private StickerType type;
+    public StickerType Type => type;
+    
+    [BoxGroup("Sticker Settings"), Title("Sticker Location Type")]
+    [SerializeField] private QuestLocation locationType;
+    public QuestLocation LocationType => locationType;
     
     [BoxGroup("Sticker Settings"), Title("Sticker Description")]
     [SerializeField, TextArea(3, 10)] private string description;

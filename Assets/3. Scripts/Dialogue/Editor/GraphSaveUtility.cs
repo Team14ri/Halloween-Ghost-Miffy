@@ -287,11 +287,14 @@ namespace DS.Editor
         
         private void CreateConditionNode(ConditionNodeData nodeData)
         {
-            var tempNode = _targetGraphView.CreateConditionNode(nodeData.NodeTitle, nodeData.Position) as ConditionNode;
+            var tempNode = _targetGraphView.CreateConditionNode(nodeData.NodeTitle, nodeData.Position, true) as ConditionNode;
             tempNode.GUID = nodeData.GUID;
             tempNode.ItemID = nodeData.ItemID;
             tempNode.EqualOrMany = nodeData.EqualOrMany;
             _targetGraphView.AddElement(tempNode);
+            
+            var nodePorts = _containerCache.NodeLinks.Where(x => x.BaseNodeGuid == nodeData.GUID).ToList();
+            nodePorts.ForEach(x => tempNode.AddConditionPort(x.PortName));
         }
 
         private void ConnectNodes()
