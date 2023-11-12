@@ -13,7 +13,7 @@ public class BGMPlayer : MonoBehaviour
     {
         if (Instance != null)
         {
-            Debug.LogError("한 씬에 BGMPlayer가 여러 개 있습니다.");
+            //Debug.LogError("한 씬에 BGMPlayer가 여러 개 있습니다.");
             Destroy(gameObject);
         }
         else
@@ -48,18 +48,21 @@ public class BGMPlayer : MonoBehaviour
 
     public void ChangeBGM(string eventName)
     {
-        EventReference ref1 = FMODEvents.Instance.eventDictionary[eventName];
-        EventReference ref2 = FMODEvents.Instance.eventDictionary[currentEventName];
+        EventReference currentEventRef = FMODEvents.Instance.eventDictionary[currentEventName];
+        EventReference newEventRef = FMODEvents.Instance.eventDictionary[eventName];
         
-        if (ref1.Guid == ref2.Guid)
+        if (currentEventRef.Guid == newEventRef.Guid)
         {
-            Debug.Log("같은 event이므로 BGM재생을 중단하지 않습니다.");
+            Debug.Log("같은 event이므로 BGM재생을 재개합니다.");
             return;
         }
         
-        bgmInstance.stop(STOP_MODE.IMMEDIATE);
         SoundManager.Instance.CleanUp();
-
         PlayBGM(eventName);
+    }
+
+    public void StopBGM()
+    {
+        bgmInstance.stop(STOP_MODE.ALLOWFADEOUT);
     }
 }
