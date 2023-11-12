@@ -41,70 +41,21 @@ namespace DS.Editor
             this.AddManipulator(new SelectionDragger());
             this.AddManipulator(new RectangleSelector());
             
-            this.AddManipulator(CreateNoChoiceNodeContextualMenu());
-            this.AddManipulator(CreateMultiChoiceNodeContextualMenu());
-            this.AddManipulator(CreateStartQuestNodeContextualMenu());
-            this.AddManipulator(CreateAddItemNodeContextualMenu());
-            this.AddManipulator(CreateConditionNodeContextualMenu());
+            this.AddManipulator(CreateNodeContextualMenu());
         }
 
-        private IManipulator CreateNoChoiceNodeContextualMenu()
+        private IManipulator CreateNodeContextualMenu()
         {
             return new ContextualMenuManipulator(menuEvent =>
             {
-                // 현재 GraphView의 변형(줌 레벨과 스크롤 오프셋)을 가져옵니다.
                 Matrix4x4 transformationMatrix = contentViewContainer.worldTransform;
                 Vector2 mousePosition = menuEvent.mousePosition;
                 Vector2 localMousePosition = transformationMatrix.inverse.MultiplyPoint3x4(mousePosition);
+                
                 menuEvent.menu.AppendAction("Add NoChoice Node", _ => CreateNode(NodeTypes.NodeType.NoChoice, "NoChoice Node", localMousePosition));
-            });
-        }
-
-        private IManipulator CreateMultiChoiceNodeContextualMenu()
-        {
-            return new ContextualMenuManipulator(menuEvent =>
-            {
-                // 현재 GraphView의 변형(줌 레벨과 스크롤 오프셋)을 가져옵니다.
-                Matrix4x4 transformationMatrix = contentViewContainer.worldTransform;
-                Vector2 mousePosition = menuEvent.mousePosition;
-                Vector2 localMousePosition = transformationMatrix.inverse.MultiplyPoint3x4(mousePosition);
                 menuEvent.menu.AppendAction("Add MultiChoice Node", _ => CreateNode(NodeTypes.NodeType.MultiChoice, "MultiChoice Node", localMousePosition));
-            });
-        }
-
-        private IManipulator CreateStartQuestNodeContextualMenu()
-        {
-            return new ContextualMenuManipulator(menuEvent =>
-            {
-                // 현재 GraphView의 변형(줌 레벨과 스크롤 오프셋)을 가져옵니다.
-                Matrix4x4 transformationMatrix = contentViewContainer.worldTransform;
-                Vector2 mousePosition = menuEvent.mousePosition;
-                Vector2 localMousePosition = transformationMatrix.inverse.MultiplyPoint3x4(mousePosition);
                 menuEvent.menu.AppendAction("Add StartQuest Node", _ => CreateNode(NodeTypes.NodeType.StartQuest, "StartQuest Node", localMousePosition));
-            });
-        }
-
-        private IManipulator CreateAddItemNodeContextualMenu()
-        {
-            return new ContextualMenuManipulator(menuEvent =>
-            {
-                // 현재 GraphView의 변형(줌 레벨과 스크롤 오프셋)을 가져옵니다.
-                Matrix4x4 transformationMatrix = contentViewContainer.worldTransform;
-                Vector2 mousePosition = menuEvent.mousePosition;
-                Vector2 localMousePosition = transformationMatrix.inverse.MultiplyPoint3x4(mousePosition);
                 menuEvent.menu.AppendAction("Add AddItem Node", _ => CreateNode(NodeTypes.NodeType.AddItem, "AddItem Node", localMousePosition));
-            });
-        }
-
-
-        private IManipulator CreateConditionNodeContextualMenu()
-        {
-            return new ContextualMenuManipulator(menuEvent =>
-            {
-                // 현재 GraphView의 변형(줌 레벨과 스크롤 오프셋)을 가져옵니다.
-                Matrix4x4 transformationMatrix = contentViewContainer.worldTransform;
-                Vector2 mousePosition = menuEvent.mousePosition;
-                Vector2 localMousePosition = transformationMatrix.inverse.MultiplyPoint3x4(mousePosition);
                 menuEvent.menu.AppendAction("Add Condition Node", _ => CreateNode(NodeTypes.NodeType.Condition, "Condition Node", localMousePosition));
             });
         }
@@ -140,7 +91,6 @@ namespace DS.Editor
         {
             var node = new EntryPointNode(nodeName);
             node.Build();
-
             return node;
         }
         
@@ -148,7 +98,6 @@ namespace DS.Editor
         {
             var node = new NoChoiceNode(this, nodeName);
             node.Build(position);
-
             return node;
         }
 
@@ -156,7 +105,6 @@ namespace DS.Editor
         {
             var node = new MultiChoiceNode(this, nodeName);
             node.Build(position);
-
             return node;
         }
         
@@ -164,7 +112,6 @@ namespace DS.Editor
         {
             var node = new StartQuestNode(this, nodeName);
             node.Build(position);
-
             return node;
         }
         
@@ -172,7 +119,6 @@ namespace DS.Editor
         {
             var node = new AddItemNode(this, nodeName);
             node.Build(position);
-
             return node;
         }
         
@@ -180,7 +126,6 @@ namespace DS.Editor
         {
             var node = new ConditionNode(this, nodeName);
             node.Build(position, withoutOutput);
-
             return node;
         }
     }

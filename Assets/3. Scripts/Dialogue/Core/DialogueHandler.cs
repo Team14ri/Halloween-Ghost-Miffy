@@ -69,6 +69,11 @@ namespace DS.Core
             return Name;
         }
 
+        public void SetName(string newName)
+        {
+            Name = newName;
+        }
+
         public void SetAnimation(string id)
         {
             if (_animator == null)
