@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Quest;
 using UnityEngine;
 
 [Serializable]
@@ -19,8 +21,7 @@ public class QuestRightViewEditor : MonoBehaviour
     [SerializeField] private GameObject itemPrefab;
     [SerializeField] private GameObject linePrefab;
 
-    [SerializeField] private string questTitle;
-    [SerializeField] private List<QuestRightData> questRightData;
+    [SerializeField] private int questID;
     
     private TmpTextEditor _textEditor;
 
@@ -28,13 +29,32 @@ public class QuestRightViewEditor : MonoBehaviour
     {
         _textEditor = GetComponent<TmpTextEditor>();
     }
-    
-    private void Start()
+
+    private void OnEnable()
     {
-        SetView(questTitle, questRightData);
+        UpdateQuestBoard(QuestLocation.Plaza, questID);
+    }
+    
+    public void UpdateQuestBoard(QuestLocation location, int id)
+    {
+        var currentQuestID = QuestManager.Instance.CurrentQuestInfo;
+        var (summary, data) = QuestManager.Instance.GetQuestData(location);
+        var targetSummary = summary.FirstOrDefault(item => item.QuestID == id);
+        
+        if (targetSummary == null)
+            return;
+
+        var targetData = data.Where(item => item.QuestID == id &&
+            ((int)location < currentQuestID[0] ||
+             ((int)location == currentQuestID[0] && item.QuestID < currentQuestID[1]) ||
+             ((int)location == currentQuestID[0] && item.QuestID == currentQuestID[1] && item.QuestDetailID < currentQuestID[2]) ||
+             ((int)location == currentQuestID[0] && item.QuestID == currentQuestID[1] && item.QuestDetailID == currentQuestID[2] && item.QuestFlowID <= currentQuestID[3])))
+             .Reverse().ToList();
+        
+        SetView(targetSummary.QuestTitle, location, targetData);
     }
 
-    public void SetView(string title, List<QuestRightData> data)
+    public void SetView(string title, QuestLocation location, List<QuestData> data)
     {
         _textEditor.Edit("Title", title);
         
@@ -43,13 +63,19 @@ public class QuestRightViewEditor : MonoBehaviour
             Destroy(child.gameObject);
         }
 
+        var currentQuestID = QuestManager.Instance.CurrentQuestInfo;
         for (int i = 0; i < data.Count; ++i)
         {
             GameObject temp = Instantiate(itemPrefab, parent.position, Quaternion.identity);
             temp.transform.SetParent(parent);
+
+            bool isQuestClear = (int)location < currentQuestID[0] ||
+                                ((int)location == currentQuestID[0] && data[i].QuestID < currentQuestID[1]) ||
+                                ((int)location == currentQuestID[0] && data[i].QuestID == currentQuestID[1] && data[i].QuestDetailID < currentQuestID[2]) ||
+                                ((int)location == currentQuestID[0] && data[i].QuestID == currentQuestID[1] && data[i].QuestDetailID == currentQuestID[2] && data[i].QuestFlowID < currentQuestID[3]);
             
-            temp.GetComponent<QuestRightItemEditor>().SetItem(questRightData[i].title, 
-                questRightData[i].description, questRightData[i].conditions, questRightData[i].clear);
+            temp.GetComponent<QuestRightItemEditor>().SetItem(data[i].QuestTitle, 
+                data[i].QuestDescription, data[i].QuestConditions, isQuestClear);
 
             if (i < data.Count - 1)
             {

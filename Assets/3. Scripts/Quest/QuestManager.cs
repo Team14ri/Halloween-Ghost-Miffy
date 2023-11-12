@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Quest
@@ -12,12 +14,52 @@ namespace Quest
         Mall = 2,
         Forest = 3
     }
+
+    [Serializable]
+    public class QuestCondition
+    {
+        public string ConditionText;
+        
+        public bool EnableVariable;
+        [ShowIf("EnableVariable")] public string VariableID;
+        [ShowIf("EnableVariable")] public int EqualOrMany;
+    }
+
+    [Serializable]
+    public class QuestData
+    {
+        [BoxGroup("Quest Info")] public string QuestTitle;
+        [BoxGroup("Quest Info"), TextArea(3, 10)] public string QuestDescription;
+        [BoxGroup("Quest Info")] public int QuestID;
+        [BoxGroup("Quest Info")] public int QuestDetailID;
+        [BoxGroup("Quest Info")] public int QuestFlowID;
+
+        [BoxGroup("Quest Condition")] public List<QuestCondition> QuestConditions;
+    }
+    
+    [Serializable]
+    public class QuestSummary
+    {
+        [BoxGroup("Quest Info")] public int QuestID;
+        [BoxGroup("Quest Condition")] public string QuestTitle;
+    }
     
     public class QuestManager : MonoBehaviour
     {
         public static QuestManager Instance;
 
         [SerializeField] private GameObject questAcceptUI;
+        
+        [TabGroup("Quest Data", "Plaza"), SerializeField]
+        private List<QuestSummary> plazaQuestSummary;
+        [TabGroup("Quest Data", "Plaza"), SerializeField]
+        private List<QuestData> plazaQuestData;
+        
+        [TabGroup("Quest Data", "Mall"), SerializeField]
+        private List<QuestSummary> mallQuestSummary;
+        [TabGroup("Quest Data", "Mall"), SerializeField]
+        private List<QuestData> mallQuestData;
+
         private TmpTextEditor _questAcceptTmpTextEditor;
         private UIFadeController _questAcceptFadeController;
         
@@ -39,6 +81,21 @@ namespace Quest
             }
         }
         
+        public (List<QuestSummary>, List<QuestData>) GetQuestData(QuestLocation location)
+        {
+            if (location == QuestLocation.Plaza)
+            {
+                return (plazaQuestSummary, plazaQuestData);
+            }
+
+            if (location == QuestLocation.Mall)
+            {
+                return (mallQuestSummary, mallQuestData);
+            }
+
+            return (null, null);
+        }
+
         private void Awake()
         {
             if (Instance == null)
