@@ -4,23 +4,22 @@ using UnityEngine;
 public class PortalManager : MonoBehaviour
 {
     public static PortalManager Instance { get; private set; }
-    public GameObject Player { get; private set; }
+
+    private GameObject Player { get; set; }
     
-    [Tooltip("포탈이 활성화 되는 거리 (반지름)")]
-    public float portalActivationRange = 5.0f;
     public readonly Dictionary<int, Portal> PortalDictionary = new();
 
     private void Awake()
     {
         if (Instance != null)
         {
-            Debug.LogWarning("한 씬에 PortalManager가 여러 개 있어 삭제합니다.");
             Destroy(gameObject);
         }
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            transform.parent = null;
+            DontDestroyOnLoad(transform.gameObject);
             FindPlayer();
         }
     }
@@ -62,6 +61,9 @@ public class PortalManager : MonoBehaviour
     
     private void SetPlayerPosition(Vector3 portalPos)
     {
+        if (Player == null)
+            return;
+        
         Player.transform.position = portalPos;
     }
 }

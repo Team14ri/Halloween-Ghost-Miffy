@@ -17,6 +17,9 @@ public class Portal : MonoBehaviour
 
     public void LoadScene()
     {
-        SceneManagerCustom.instance.LoadScene(exitSceneName, exitPortalNum);
+        SceneTransitionController.Instance.IrisClose(() =>
+        {
+            SceneManagerCustom.Instance.LoadScene(exitSceneName, exitPortalNum);
+        });
     }
 }

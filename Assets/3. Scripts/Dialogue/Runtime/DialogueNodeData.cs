@@ -35,6 +35,7 @@ namespace DS.Runtime
     {
         public string TargetObjectID;
         public string DialogueText;
+        public float SkipDelay;
 
         public override bool IsEqual(DialogueNodeData other)
         {
@@ -47,6 +48,9 @@ namespace DS.Runtime
                 return false;
             
             if (DialogueText != otherNode.DialogueText)
+                return false;
+            
+            if (!Mathf.Approximately(SkipDelay, otherNode.SkipDelay)) 
                 return false;
             
             return true;
@@ -93,6 +97,52 @@ namespace DS.Runtime
                 return false;
             
             if (QuestID != otherNode.QuestID)
+                return false;
+
+            return true;
+        }
+    }
+    
+    [Serializable]
+    public class AddItemNodeData : DialogueNodeData
+    {
+        public string ItemID;
+        public int ItemCount;
+        
+        public override bool IsEqual(DialogueNodeData other)
+        {
+            if (!base.IsEqual(other))
+                return false;
+
+            var otherNode = other as AddItemNodeData;
+            
+            if (ItemID != otherNode.ItemID)
+                return false;
+            
+            if (ItemCount != otherNode.ItemCount)
+                return false;
+
+            return true;
+        }
+    }
+    
+    [Serializable]
+    public class ConditionNodeData : DialogueNodeData
+    {
+        public string ItemID;
+        public int EqualOrMany;
+        
+        public override bool IsEqual(DialogueNodeData other)
+        {
+            if (!base.IsEqual(other))
+                return false;
+
+            var otherNode = other as ConditionNodeData;
+            
+            if (ItemID != otherNode.ItemID)
+                return false;
+            
+            if (EqualOrMany != otherNode.EqualOrMany)
                 return false;
 
             return true;

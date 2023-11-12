@@ -4,19 +4,19 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagerCustom : MonoBehaviour
 {
-    public static SceneManagerCustom instance { get; private set; }
-
+    public static SceneManagerCustom Instance { get; private set; }
+    
     private void Awake()
     {
-        if (instance != null)
+        if (Instance != null)
         {
-            Debug.LogWarning("한 씬에 SceneManagerCustom가 여러 개 있어 삭제합니다.");
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
         else
         {
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            Instance = this;
+            transform.parent = null;
+            DontDestroyOnLoad(transform.gameObject);
         }
     }
 
@@ -25,10 +25,10 @@ public class SceneManagerCustom : MonoBehaviour
     {
         // 기존 포탈 정보를 초기화
         PortalManager.Instance.PortalDictionary.Clear();
-        StartCoroutine(LoadSceneAsync(sceneName, exitPortalNum));
+        StartCoroutine(LoadSceneCoroutine(sceneName, exitPortalNum));
     }
     
-    private IEnumerator LoadSceneAsync(string sceneName, int exitPortalNum)
+    private IEnumerator LoadSceneCoroutine(string sceneName, int exitPortalNum)
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 
@@ -44,6 +44,7 @@ public class SceneManagerCustom : MonoBehaviour
         {
             Debug.Log("씬 로드 완료");
             PortalManager.Instance.TeleportPlayerToExitPortal(sceneName, exitPortalNum);
+            BGMPlayer.Instance.ChangeBGM(SceneManager.GetActiveScene().name);
         }
         else
         {

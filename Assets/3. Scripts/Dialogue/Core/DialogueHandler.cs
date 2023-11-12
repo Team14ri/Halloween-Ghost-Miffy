@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using Cinemachine;
 using TMPro;
 using UnityEngine;
 
@@ -9,18 +11,82 @@ namespace DS.Core
         [SerializeField] private string ID;
         [SerializeField] private string Name;
         
-        [SerializeField] private TMP_Text nameBox;
-        [SerializeField] private TMP_Text textBox;
+        [SerializeField] private DialogueSetter dialogueSetter;
 
-        private void Start()
+        [SerializeField] private CinemachineFreeLook cinemachineFreeLook;
+
+        private Animator _animator;
+
+        private void Awake()
         {
-            DialogueManager.Instance.Handlers.TryAdd(ID, this);
+            _animator = GetComponentInChildren<Animator>();
+        }
+
+        private void OnEnable()
+        {
+            StartCoroutine(RegisterToDialogueManager());
+        }
+
+        private IEnumerator RegisterToDialogueManager()
+        {
+            yield return null;
+
+            if (DialogueManager.Instance != null)
+            {
+                DialogueManager.Instance.Handlers[ID] = this;
+            }
+            else
+            {
+                Debug.LogError("DialogueManager instance is not ready yet.");
+            }
+        }
+        
+        public void LookTarget(float xAxis)
+        {
+            if (cinemachineFreeLook == null)
+                return;
+            
+            cinemachineFreeLook.m_XAxis.Value = xAxis;
+            cinemachineFreeLook.Priority = 11;
+        }
+        
+        public void DisableLookTarget()
+        {
+            if (cinemachineFreeLook == null)
+                return;
+            cinemachineFreeLook.Priority = 9;
+        }
+        
+        public float GetXAxis()
+        {
+            if (cinemachineFreeLook == null)
+                return 0f;
+            return cinemachineFreeLook.m_XAxis.Value;
+        }
+
+        public string GetName()
+        {
+            return Name;
+        }
+
+        public void SetAnimation(string id)
+        {
+            if (_animator == null)
+                return;
+            
+            if (!_animator.HasState(0, Animator.StringToHash(id)))
+            {
+                Debug.LogWarning($"{id} 애니메이션이 존재하지 않습니다.");
+                return;
+            }
+            
+            _animator.CrossFade(id, 0f);
         }
 
         public void PlayDialogue(string text, bool skipTyping = false)
         {
-            nameBox.text = Name;
-            DialogueManager.Instance.PlayDialogue(textBox, text, skipTyping);
+            dialogueSetter.nameBox.text = Name;
+            DialogueManager.Instance.PlayDialogue(dialogueSetter.textBox, text, skipTyping);
         }
     }
 }

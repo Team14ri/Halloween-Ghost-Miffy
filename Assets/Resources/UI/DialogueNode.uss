@@ -65,9 +65,39 @@ StartQuestNode #title {
     background-color: #8b853d;
 }
 
+/* AddItemNode */
+
+AddItemNode {
+    background-color: #111;
+}
+
+AddItemNode #title {
+    background-color: #59677d;
+}
+
+/* ConditionNode */
+
+ConditionNode {
+    background-color: #111;
+}
+
+ConditionNode #title {
+    background-color: #804f4b;
+}
+
 /* Unity */
 
 TextField
+{
+    padding: 4px;
+}
+
+FloatField
+{
+    padding: 4px;
+}
+
+IntegerField
 {
     padding: 4px;
 }
@@ -96,7 +126,25 @@ Button:active
     padding: 4px;
 }
 
+.unity-float-field__label {
+    padding: 4px;
+}
+
+.unity-integer-field__label {
+    padding: 4px;
+}
+
 TextField:focus > .unity-text-field__label
+{
+    color: #FDD057;
+}
+
+FloatField:focus > .unity-float-field__label
+{
+    color: #FDD057;
+}
+
+FloatField:focus > .unity-integer-field__label
 {
     color: #FDD057;
 }
@@ -112,7 +160,39 @@ TextField:focus > .unity-text-field__label
     padding-right: 3px;
 }
 
+.unity-float-field__input
+{
+    background-color: #1D1D1E;
+    border-color: #27292C;
+    border-radius: 4px;
+    max-height: 35px;
+    min-width: 30px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.unity-integer-field__input
+{
+    background-color: #1D1D1E;
+    border-color: #27292C;
+    border-radius: 4px;
+    max-height: 35px;
+    min-width: 30px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
 .unity-text-field__input:focus
+{
+    color: #FDD057;
+}
+
+.unity-float-field__input:focus
+{
+    color: #FDD057;
+}
+
+.unity-integer-field__input:focus
 {
     color: #FDD057;
 }

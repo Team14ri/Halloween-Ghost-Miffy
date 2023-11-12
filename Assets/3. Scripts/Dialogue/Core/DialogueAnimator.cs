@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -92,7 +93,6 @@ namespace DS.Core
             _commands = commands;
             _originTextFontSize = _textBox.fontSize;
             HandleTextSpeedChange(DialogueUtility.TextAnimationSpeed["normal"]);
-            AppendToTextBox($"<size={_originTextFontSize}>");
         }
 
         private IEnumerator ExecuteCommand(DialogueUtility.Command command)
@@ -107,6 +107,9 @@ namespace DS.Core
                     break;
                 case DialogueUtility.CommandType.Size:
                     AppendToTextBox($"</size><size={_originTextFontSize * command.floatValue}>");
+                    break;
+                case DialogueUtility.CommandType.State:
+                    HandleState(command.stringValue);
                     break;
                 default:
                     yield return TypeText(command.stringValue);
@@ -124,6 +127,9 @@ namespace DS.Core
                 case DialogueUtility.CommandType.Size:
                     AppendToTextBox($"</size><size={_originTextFontSize * command.floatValue}>");
                     break;
+                case DialogueUtility.CommandType.State:
+                    HandleState(command.stringValue);
+                    break;
                 default:
                     AppendToTextBox(command.stringValue);
                     break;
@@ -133,6 +139,18 @@ namespace DS.Core
         private void HandleTextSpeedChange(float newSpeed)
         {
             _currentTextSpeed = newSpeed;
+        }
+        
+        private void HandleState(string state)
+        {
+            var match = Regex.Match(state, @"(\w+)@(\w+)");
+            if (match.Success)
+            {
+                string id = match.Groups[1].Value;
+                string anim = match.Groups[2].Value; // 애니메이션은 'Idle'과 같은 형태로 들어가지 않고 'Player@Idle'처럼 들어갑니다
+
+                DialogueManager.Instance.Handlers[id].SetAnimation(state);
+            }
         }
 
         private IEnumerator TypeText(string text)
@@ -152,7 +170,7 @@ namespace DS.Core
         private void AppendToTextBox(string text)
         {
             _renderText += text;
-            _textBox.text = $"{_renderText}</size>";
+            _textBox.text = $"<size={_originTextFontSize}>{_renderText}</size>";
         }
 
         private void UpdateMeshInfo()

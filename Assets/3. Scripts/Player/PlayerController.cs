@@ -1,20 +1,24 @@
+using System.Collections;
+using Cinemachine;
 using Interaction;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody), typeof(PlayerInput), typeof(PlayerInteraction))]
+[RequireComponent(typeof(Rigidbody), typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance;
+    public readonly StateMachine StateMachine = new();
 
-    public StateMachine stateMachine = new();
+    public PlayerData data;
+    public GameObject model;
     
     public Rigidbody Rb { get; private set; }
     public PlayerInteraction Interaction { get; private set; }
 
     #region PlayerInput
 
-    private PlayerInput playerInput { get; set; }
+    public PlayerInput PlayerInput { get; private set; }
 
     public Vector2 MovementInput { get; private set; }
 
@@ -61,14 +65,16 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         Rb = GetComponent<Rigidbody>();
-        playerInput = GetComponent<PlayerInput>();
-        Interaction = GetComponent<PlayerInteraction>();
-        stateMachine.ChangeState(new PlayerIdleState(this, stateMachine));
+        PlayerInput = GetComponent<PlayerInput>();
+        Interaction = GetComponentInChildren<PlayerInteraction>();
+        StateMachine.ChangeState(new PlayerIdleState(this, StateMachine));
+
+        initModelScaleX = model.transform.localScale.x;
     }
 
     private void Update()
     {
-        stateMachine.ExecuteCurrentState();
+        StateMachine.ExecuteCurrentState();
     }
 
     #endregion
@@ -79,12 +85,24 @@ public class PlayerController : MonoBehaviour
     {
         if (toggleEnabled)
         {
-            playerInput.actions[actionName].Enable();
+            PlayerInput.actions[actionName].Enable();
         }
         else
         {
-            playerInput.actions[actionName].Disable();
+            PlayerInput.actions[actionName].Disable();
         }
+    }
+    
+    private IEnumerator _StopInteractionInputUntil(float delay)
+    {
+        StopInteractionInput = true;
+        yield return new WaitForSeconds(delay);
+        StopInteractionInput = false;
+    }
+    
+    public void StopInteractionInputUntil(float delay)
+    {
+        StartCoroutine(_StopInteractionInputUntil(delay));
     }
 
     #endregion
@@ -118,6 +136,45 @@ public class PlayerController : MonoBehaviour
         if (context.canceled)
         {
             InteractionInput = false;
+        }
+    }
+
+    #endregion
+
+    #region ETC
+    
+    private int lastFacing = 1;
+    private float initModelScaleX;
+    private Coroutine _scaleRoutine;
+
+    public void ChangePlayerFacing(int dir)
+    {
+        if (lastFacing == dir)
+            return;
+
+        lastFacing = dir;
+        this.EnsureCoroutineStopped(ref _scaleRoutine);
+        _scaleRoutine = StartCoroutine(SmoothReverseScaleX(dir));
+    }
+
+    private IEnumerator SmoothReverseScaleX(int dir)
+    {
+        float startTime = Time.time;
+        float targetScaleX = initModelScaleX * dir;
+        float elapsed = 0f;
+        
+        while (elapsed < data.ChangeFacingDuration)
+        {
+            elapsed = Time.time - startTime;
+            float progress = elapsed / data.ChangeFacingDuration;
+            float smoothScaleX = Mathf.Lerp(model.transform.localScale.x, targetScaleX, progress);
+            
+            model.transform.localScale = new Vector3(
+                smoothScaleX,
+                model.transform.localScale.y,
+                model.transform.localScale.z);
+
+            yield return null;
         }
     }
 

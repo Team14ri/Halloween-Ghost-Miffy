@@ -1,6 +1,6 @@
 <div align=center>
 
-# 𝕳𝖆𝖑𝖑𝖔𝖜𝖊𝖊𝖓, 𝕲𝖍𝖔𝖘𝖙 𝕸𝖎𝖋𝖋𝖞
+<img style="width: 30%;" src="https://github.com/Team14ri/Halloween-Ghost-Miffy/assets/66173558/d26aa59d-5035-48f8-b5c2-85af99bece29" />
 
 </div>
 

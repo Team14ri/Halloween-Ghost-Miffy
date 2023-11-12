@@ -116,7 +116,8 @@ namespace DS.Editor
                             NodeType = noChoiceNode.NodeType,
                             Position = noChoiceNode.GetPosition().position,
                             TargetObjectID = noChoiceNode.TargetObjectID,
-                            DialogueText = noChoiceNode.DialogueText
+                            DialogueText = noChoiceNode.DialogueText,
+                            SkipDelay = noChoiceNode.SkipDelay
                         });
                         break;
                     case NodeTypes.NodeType.MultiChoice:
@@ -141,6 +142,30 @@ namespace DS.Editor
                             Position = startQuestNode.GetPosition().position,
                             QuestType = startQuestNode.QuestType,
                             QuestID = startQuestNode.QuestID
+                        });
+                        break;
+                    case NodeTypes.NodeType.AddItem:
+                        var addItemNode = dialogueNode as AddItemNode;
+                        container.NodeData.Add(new AddItemNodeData
+                        {
+                            GUID = addItemNode.GUID,
+                            NodeTitle = addItemNode.NodeTitle,
+                            NodeType = addItemNode.NodeType,
+                            Position = addItemNode.GetPosition().position,
+                            ItemID = addItemNode.ItemID,
+                            ItemCount = addItemNode.ItemCount
+                        });
+                        break;
+                    case NodeTypes.NodeType.Condition:
+                        var conditionNode = dialogueNode as ConditionNode;
+                        container.NodeData.Add(new ConditionNodeData
+                        {
+                            GUID = conditionNode.GUID,
+                            NodeTitle = conditionNode.NodeTitle,
+                            NodeType = conditionNode.NodeType,
+                            Position = conditionNode.GetPosition().position,
+                            ItemID = conditionNode.ItemID,
+                            EqualOrMany = conditionNode.EqualOrMany
                         });
                         break;
                 }
@@ -210,6 +235,12 @@ namespace DS.Editor
                     case NodeTypes.NodeType.StartQuest:
                         CreateStartQuestNode(nodeData as StartQuestNodeData);
                         break;
+                    case NodeTypes.NodeType.AddItem:
+                        CreateAddItemNode(nodeData as AddItemNodeData);
+                        break;
+                    case NodeTypes.NodeType.Condition:
+                        CreateConditionNode(nodeData as ConditionNodeData);
+                        break;
                 }
             }
         }
@@ -220,6 +251,7 @@ namespace DS.Editor
             tempNode.GUID = nodeData.GUID;
             tempNode.TargetObjectID = nodeData.TargetObjectID;
             tempNode.DialogueText = nodeData.DialogueText;
+            tempNode.SkipDelay = nodeData.SkipDelay;
             _targetGraphView.AddElement(tempNode);
         }
 
@@ -241,6 +273,24 @@ namespace DS.Editor
             tempNode.GUID = nodeData.GUID;
             tempNode.QuestType = nodeData.QuestType;
             tempNode.QuestID = nodeData.QuestID;
+            _targetGraphView.AddElement(tempNode);
+        }
+        
+        private void CreateAddItemNode(AddItemNodeData nodeData)
+        {
+            var tempNode = _targetGraphView.CreateAddItemNode(nodeData.NodeTitle, nodeData.Position) as AddItemNode;
+            tempNode.GUID = nodeData.GUID;
+            tempNode.ItemID = nodeData.ItemID;
+            tempNode.ItemCount = nodeData.ItemCount;
+            _targetGraphView.AddElement(tempNode);
+        }
+        
+        private void CreateConditionNode(ConditionNodeData nodeData)
+        {
+            var tempNode = _targetGraphView.CreateConditionNode(nodeData.NodeTitle, nodeData.Position) as ConditionNode;
+            tempNode.GUID = nodeData.GUID;
+            tempNode.ItemID = nodeData.ItemID;
+            tempNode.EqualOrMany = nodeData.EqualOrMany;
             _targetGraphView.AddElement(tempNode);
         }
 

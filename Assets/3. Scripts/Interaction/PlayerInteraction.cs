@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -9,6 +10,7 @@ namespace Interaction
 {
     public class PlayerInteraction : MonoBehaviour
     {
+        [SerializeField] private float interactionDelay = 0.8f;
         [SerializeField] private List<InteractionTrigger> interactionTriggers = new();
 
         public bool Enabled { get; set; }
@@ -22,6 +24,16 @@ namespace Interaction
 
         private void Update()
         {
+            for (int i = interactionTriggers.Count - 1; i >= 0; i--)
+            {
+                var trigger = interactionTriggers[i];
+                if (!trigger.gameObject.activeInHierarchy)
+                {
+                    interactionTriggers.RemoveAt(i);
+                    trigger.Exit();
+                }
+            }
+            
             if (!Enabled || interactionTriggers.Count == 0)
             {
                 closestInteractionTrigger = null;
@@ -33,11 +45,12 @@ namespace Interaction
             }
 
             var newClosestInteractionTrigger = interactionTriggers
+                .Where(c => !c.DisableInteraction)
                 .OrderBy(c => Vector3.Distance(transform.position, c.transform.position))
                 .FirstOrDefault();
 
-            if (closestInteractionTrigger == null 
-                || newClosestInteractionTrigger != closestInteractionTrigger)
+            if (newClosestInteractionTrigger != null 
+                && newClosestInteractionTrigger != closestInteractionTrigger)
             {
                 foreach (var trigger in interactionTriggers)
                 {
@@ -50,8 +63,22 @@ namespace Interaction
             if (PlayerController.Instance.InteractionInput)
             {
                 PlayerController.Instance.InteractionInput = false;
-                closestInteractionTrigger.Execute();
+                if (closestInteractionTrigger != null)
+                {
+                    closestInteractionTrigger.Execute();
+                    closestInteractionTrigger = null;
+                }
             }
+        }
+
+        private void SetInteractionEnable()
+        {
+            Enabled = true;
+        }
+        
+        public void SetInteractionEnableAfterDelay()
+        {
+            Invoke(nameof(SetInteractionEnable), interactionDelay);
         }
 
         private void OnTriggerEnter(Collider other)
@@ -70,6 +97,9 @@ namespace Interaction
             
             if (interactionTrigger == null)
                 return;
+
+            if (closestInteractionTrigger == interactionTrigger)
+                closestInteractionTrigger = null;
             
             interactionTriggers.Remove(interactionTrigger);
             interactionTrigger.Exit();

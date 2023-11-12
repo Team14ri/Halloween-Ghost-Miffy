@@ -1,0 +1,180 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Q4_2_2_Roide
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: e16643f0-7aea-4886-8856-cadebae5a364
+    PortName: Execute
+    TargetNodeGuid: 74b49290-c956-4d17-8c1f-5a411d1333a2
+  - BaseNodeGuid: 74b49290-c956-4d17-8c1f-5a411d1333a2
+    PortName: Next
+    TargetNodeGuid: 17b25655-677f-4cd6-a967-daad99c76573
+  - BaseNodeGuid: 17b25655-677f-4cd6-a967-daad99c76573
+    PortName: Next
+    TargetNodeGuid: 7d6b8c0e-153c-42b3-9d49-60559c90f54e
+  - BaseNodeGuid: 7d6b8c0e-153c-42b3-9d49-60559c90f54e
+    PortName: "(\uC564\uC758 \uD3B8\uC9C0\uB3C4 \uC804\uB2EC\uD55C\uB2E4.)"
+    TargetNodeGuid: 498388bf-454b-4125-9620-d6dc9e94b126
+  - BaseNodeGuid: 498388bf-454b-4125-9620-d6dc9e94b126
+    PortName: Next
+    TargetNodeGuid: 5c2db113-72de-45dc-adc5-9d6f659cc965
+  - BaseNodeGuid: 5c2db113-72de-45dc-adc5-9d6f659cc965
+    PortName: Next
+    TargetNodeGuid: a498ac29-beff-4176-8b58-473595d76a84
+  - BaseNodeGuid: a498ac29-beff-4176-8b58-473595d76a84
+    PortName: Next
+    TargetNodeGuid: 169eda99-ac31-4e47-a373-3736db4f18c1
+  - BaseNodeGuid: 169eda99-ac31-4e47-a373-3736db4f18c1
+    PortName: Next
+    TargetNodeGuid: 2d428c86-fa3b-4a8a-af3c-a8ae7f90488b
+  - BaseNodeGuid: 2d428c86-fa3b-4a8a-af3c-a8ae7f90488b
+    PortName: Next
+    TargetNodeGuid: 1ebee09b-ffe2-4ceb-975c-633cd3c529e1
+  - BaseNodeGuid: 1ebee09b-ffe2-4ceb-975c-633cd3c529e1
+    PortName: Next
+    TargetNodeGuid: 18e91a50-f5e5-4778-bd5c-cff0a3a002a3
+  - BaseNodeGuid: 18e91a50-f5e5-4778-bd5c-cff0a3a002a3
+    PortName: Next
+    TargetNodeGuid: 36e03550-0907-4068-abe5-81884b239843
+  NodeData:
+  - rid: 3681219989066743901
+  - rid: 3681219989066743902
+  - rid: 3681219989066743903
+  - rid: 3681219989066743904
+  - rid: 3681219989066743905
+  - rid: 3681219989066743906
+  - rid: 3681219989066743907
+  - rid: 3681219989066743908
+  - rid: 3681219989066743909
+  - rid: 3681219989066743910
+  - rid: 3681219989066743911
+  references:
+    version: 2
+    RefIds:
+    - rid: 3681219989066743901
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 74b49290-c956-4d17-8c1f-5a411d1333a2
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 362, y: 191}
+        TargetObjectID: Roide
+        DialogueText: "\uC74C.. \uC800\uBC88\uC5D0 \uCC3E\uC544\uC654\uB358 \uAF2C\uB9C8
+          \uB140\uC11D\uC774\uC796\uC544.."
+        SkipDelay: 0
+    - rid: 3681219989066743902
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 17b25655-677f-4cd6-a967-daad99c76573
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 805, y: 191}
+        TargetObjectID: Roide
+        DialogueText: "\uC74C\u2026? \uC774 \uB0C4\uC0C8\uB294.."
+        SkipDelay: 0
+    - rid: 3681219989066743903
+      type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 7d6b8c0e-153c-42b3-9d49-60559c90f54e
+        NodeTitle: MultiChoice Node
+        NodeType: 1
+        Position: {x: 1187, y: 191}
+        TargetObjectID: Roide
+        DialogueText: "?! \uB108 \uC5B4\uB5BB\uAC8C \uADF8\uAC78\u2026"
+    - rid: 3681219989066743904
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 498388bf-454b-4125-9620-d6dc9e94b126
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1617, y: 191}
+        TargetObjectID: Roide
+        DialogueText: "\uD6C4\uC6B0\u2026 \uADF8\uB807\uAD70.. \uC564\uC740 \uC9C0\uCF1C\uBCF4\uACE0
+          \uC788\uC5C8\uB358 \uAC74\uAC00.."
+        SkipDelay: 0
+    - rid: 3681219989066743905
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 5c2db113-72de-45dc-adc5-9d6f659cc965
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2211, y: 189}
+        TargetObjectID: Roide
+        DialogueText: "\uAF2C\uB9C8\uC57C.. \uC774\uB984\uC774 \uBB50\uB2C8?"
+        SkipDelay: 0
+    - rid: 3681219989066743906
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: a498ac29-beff-4176-8b58-473595d76a84
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2687, y: 189}
+        TargetObjectID: Roide
+        DialogueText: "\uBBF8\uD53C.. \uACE0\uB9D9\uB2E4. \uC774 \uCF00\uC774\uD06C\uB294
+          \uC564\uC774 \uB098\uC5D0\uAC8C \uC790\uC8FC \uBA39\uC774\uB358 \uC74C\uC2DD\uC774\uC9C0.."
+        SkipDelay: 0
+    - rid: 3681219989066743907
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 169eda99-ac31-4e47-a373-3736db4f18c1
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 3356, y: 189}
+        TargetObjectID: Roide
+        DialogueText: "\uD558! (\uCC71\uCC71) \uC815\uC2E0 \uCC28\uB9AC\uACE0 \uC0B4\uC544\uAC00\uC57C\uACA0\uAD70."
+        SkipDelay: 0
+    - rid: 3681219989066743908
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 2d428c86-fa3b-4a8a-af3c-a8ae7f90488b
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 3860, y: 189}
+        TargetObjectID: Roide
+        DialogueText: "\uC564\uC5D0\uAC8C \uC798\uBCF4\uC774\uB824\uBA74 \uB9D0\uC774\uC9C0..
+          \uD558\uD558!"
+        SkipDelay: 0
+    - rid: 3681219989066743909
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 18e91a50-f5e5-4778-bd5c-cff0a3a002a3
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 5001, y: 189}
+        TargetObjectID: Roide
+        DialogueText: "\uC790, \uC774 \uC2A4\uD2F0\uCEE4\uB294 \uB108\uC5D0\uAC8C
+          \uC904\uAC8C \uC815\uB9D0 \uACE0\uB9D9\uB2E4."
+        SkipDelay: 0
+    - rid: 3681219989066743910
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 1ebee09b-ffe2-4ceb-975c-633cd3c529e1
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 4350, y: 189}
+        TargetObjectID: Roide
+        DialogueText: "\uAF2C\uB9C8\uC57C \uACE0\uB9D9\uB2E4. \uC77C\uC804\uC5D0
+          \uBA54\uC2A4\uD130\uC528\uC5D0\uAC8C \uC2A4\uD2F0\uCEE4\uB97C \uBC1B\uC544\uB450\uAE38
+          \uC798\uD588\uC5B4.."
+        SkipDelay: 0
+    - rid: 3681219989066743911
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 36e03550-0907-4068-abe5-81884b239843
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 5487, y: 189}
+        TargetObjectID: Roide
+        DialogueText: "\uAE5C\uC9DD\uC774\uC57C.. \uBB34\uC2A8 \uC77C\uC774\uC9C0?
+          \uB9C8\uD0D1 \uCABD\uC5D0\uC11C \uB09C \uC18C\uB9AC \uAC19\uC740\uB370\u2026"
+        SkipDelay: 0

@@ -11,7 +11,10 @@ namespace Interaction
         [SerializeField] private InteractionButtonController interactionButtonController;
         
         [SerializeField] private DialogueContainer dialogueContainer;
-        [SerializeField] private UnityEvent events;
+        [SerializeField] private UnityEvent enterEvents;
+        [SerializeField] private UnityEvent exitEvents;
+        
+        public bool DisableInteraction { get; private set; }
         
         public void Enter()
         {
@@ -29,11 +32,23 @@ namespace Interaction
             
             if (dialogueContainer != null)
             {
-                PlayerController.Instance.stateMachine.ChangeState(
+                PlayerController.Instance.StateMachine.ChangeState(
                     new PlayerInteractionState(PlayerController.Instance, 
-                        PlayerController.Instance.stateMachine, dialogueContainer));
+                        PlayerController.Instance.StateMachine, dialogueContainer,
+                        () => { exitEvents?.Invoke(); }));
             }
-            events?.Invoke();
+            enterEvents?.Invoke();
+        }
+        
+        private void SetInteractionEnable()
+        {
+            DisableInteraction = false;
+        }
+        
+        public void DisableUntil(float seconds)
+        {
+            DisableInteraction = true;
+            Invoke(nameof(SetInteractionEnable), seconds);
         }
     }
 }
