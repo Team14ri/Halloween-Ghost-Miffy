@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class FadeInformationExecute : MonoBehaviour
 {
     [SerializeField] private float delay;
-    [SerializeField] private string text;
+    [SerializeField, TextArea(5, 10)] private string text;
     
     [SerializeField] private UnityEvent startUnityEvent;
     [SerializeField] private UnityEvent endUnityEvent;

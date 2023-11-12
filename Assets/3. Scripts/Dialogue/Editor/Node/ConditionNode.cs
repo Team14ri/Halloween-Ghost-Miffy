@@ -53,19 +53,22 @@ namespace DS.Editor
             _dialogueGraphView = dialogueGraphView;
         }
 
-        public void Build(Vector2 position)
+        public void Build(Vector2 position, bool withoutOutput = false)
         {
             var inputPort = GeneratePort(Direction.Input, Port.Capacity.Multi);
             inputPort.portName = "Connection";
             inputContainer.Add(inputPort);
             
-            var outputTruePort = GeneratePort(Direction.Output);
-            outputTruePort.portName = "True";
-            outputContainer.Add(outputTruePort);
-            
-            var outputFalsePort = GeneratePort(Direction.Output);
-            outputFalsePort.portName = "False";
-            outputContainer.Add(outputFalsePort);
+            if (!withoutOutput)
+            {
+                var outputTruePort = GeneratePort(Direction.Output);
+                outputTruePort.portName = "True";
+                outputContainer.Add(outputTruePort);
+                
+                var outputFalsePort = GeneratePort(Direction.Output);
+                outputFalsePort.portName = "False";
+                outputContainer.Add(outputFalsePort);
+            }
             
             LoadStyleSheet();
 
@@ -77,6 +80,17 @@ namespace DS.Editor
             RefreshPorts();
             
             SetPosition(new Rect(position, NodeSize));
+        }
+        
+        public void AddConditionPort(string portName)
+        {
+            var generatedPort = GeneratePort(Direction.Output);
+
+            generatedPort.portName = portName;
+            outputContainer.Add(generatedPort);
+            
+            RefreshExpandedState();
+            RefreshPorts();
         }
 
         private void AddTitleTextField()

@@ -38,8 +38,6 @@ namespace Quest
     public class QuestFlow
     {
         [TabGroup("Settings", "Quest Info")]
-        public string QuestName;
-        [TabGroup("Settings", "Quest Info"), Space(5)]
         public QuestLocation QuestLocationID; 
         [TabGroup("Settings", "Quest Info"), Space(5)]
         public int QuestID; 
@@ -172,6 +170,16 @@ namespace Quest
         public void AcceptMainQuest(string questTitle)
         {
             QuestManager.Instance.AcceptMainQuest(questTitle);
+        }
+        
+        public void AddOneItem(string id)
+        {
+            VariableManager.Instance.AddOneItem(id);
+        }
+        
+        public void ResetItem(string id)
+        {
+            VariableManager.Instance.ResetItem(id);
         }
         
         public void ChangeFlowManager(QuestFlowManager newManager)
