@@ -23,7 +23,8 @@ public class QuestRightConditionEditor : MonoBehaviour
             string conditionText = condition.ConditionText;
             if (condition.EnableVariable)
             {
-                conditionText = $"{condition.ConditionText} ({VariableManager.Instance.GetVariableValue(condition.VariableID)}/{condition.EqualOrMany})";
+                int clampValue = Mathf.Min(VariableManager.Instance.GetVariableValue(condition.VariableID), condition.EqualOrMany);
+                conditionText = $"{condition.ConditionText} ({clampValue}/{condition.EqualOrMany})";
             }
             
             temp.GetComponent<TmpTextEditor>().Edit("Text", conditionText);

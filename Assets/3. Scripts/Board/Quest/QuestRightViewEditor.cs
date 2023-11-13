@@ -4,16 +4,6 @@ using System.Linq;
 using Quest;
 using UnityEngine;
 
-[Serializable]
-public class QuestRightData
-{
-    public string title;
-    [TextArea(3, 10)]
-    public string description;
-    public List<string> conditions;
-    public bool clear;
-}
-
 [RequireComponent(typeof(TmpTextEditor))]
 public class QuestRightViewEditor : MonoBehaviour
 {
@@ -29,10 +19,13 @@ public class QuestRightViewEditor : MonoBehaviour
     {
         _textEditor = GetComponent<TmpTextEditor>();
     }
-
-    private void OnEnable()
+    
+    public void DestroyChild()
     {
-        UpdateQuestBoard(QuestLocation.Plaza, questID);
+        foreach (Transform child in parent)
+        {
+            Destroy(child.gameObject);
+        }
     }
     
     public void UpdateQuestBoard(QuestLocation location, int id)
@@ -50,11 +43,11 @@ public class QuestRightViewEditor : MonoBehaviour
              ((int)location == currentQuestID[0] && item.QuestID == currentQuestID[1] && item.QuestDetailID < currentQuestID[2]) ||
              ((int)location == currentQuestID[0] && item.QuestID == currentQuestID[1] && item.QuestDetailID == currentQuestID[2] && item.QuestFlowID <= currentQuestID[3])))
              .Reverse().ToList();
-        
+
         SetView(targetSummary.QuestTitle, location, targetData);
     }
 
-    public void SetView(string title, QuestLocation location, List<QuestData> data)
+    private void SetView(string title, QuestLocation location, List<QuestData> data)
     {
         _textEditor.Edit("Title", title);
         
