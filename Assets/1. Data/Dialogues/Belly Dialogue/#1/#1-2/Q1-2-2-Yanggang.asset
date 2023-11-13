@@ -16,13 +16,16 @@ MonoBehaviour:
   - BaseNodeGuid: 2054ca7c-cca0-49be-a606-a5f87dba3a66
     PortName: Execute
     TargetNodeGuid: 29315578-f577-41a1-904c-e96c84a8a3f8
-  - BaseNodeGuid: 29315578-f577-41a1-904c-e96c84a8a3f8
-    PortName: Next
-    TargetNodeGuid: abc80d71-2e86-4651-abec-1d9778ea7e1d
   - BaseNodeGuid: abc80d71-2e86-4651-abec-1d9778ea7e1d
     PortName: Next
     TargetNodeGuid: 5b0d4af6-a296-4bb6-8f44-92455faa1be5
   - BaseNodeGuid: 5b0d4af6-a296-4bb6-8f44-92455faa1be5
+    PortName: Next
+    TargetNodeGuid: c18f87e0-3f73-4349-84ec-be2ef5be372e
+  - BaseNodeGuid: 29315578-f577-41a1-904c-e96c84a8a3f8
+    PortName: Next
+    TargetNodeGuid: abc80d71-2e86-4651-abec-1d9778ea7e1d
+  - BaseNodeGuid: c18f87e0-3f73-4349-84ec-be2ef5be372e
     PortName: Next
     TargetNodeGuid: 4ae48b41-dad4-485f-808a-90600d99e89f
   - BaseNodeGuid: 4ae48b41-dad4-485f-808a-90600d99e89f
@@ -31,27 +34,22 @@ MonoBehaviour:
   - BaseNodeGuid: a0fb4c6a-4d35-4fec-b66f-be4976167250
     PortName: Next
     TargetNodeGuid: dd5d9e59-247d-405e-82e2-f9ec394a6080
+  - BaseNodeGuid: dd5d9e59-247d-405e-82e2-f9ec394a6080
+    PortName: Next
+    TargetNodeGuid: 81b9ad2a-a6e3-46ff-93c5-7b803a4054af
   NodeData:
-  - rid: 3681219989066743972
-  - rid: 3681219989066743973
-  - rid: 3681219989066743974
-  - rid: 3681219989066743975
-  - rid: 3681219989066743976
-  - rid: 3681219989066743977
+  - rid: 5154282119801864442
+  - rid: 5154282119801864443
+  - rid: 5154282119801864444
+  - rid: 5154282119801864445
+  - rid: 5154282119801864446
+  - rid: 5154282119801864447
+  - rid: 5154282119801864448
+  - rid: 5154282119801864449
   references:
     version: 2
     RefIds:
-    - rid: 3681219989066743972
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: 29315578-f577-41a1-904c-e96c84a8a3f8
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 264, y: 191}
-        TargetObjectID: Yanggang
-        DialogueText: "\uC559? \uB10C \uB204\uAD6C\uC57C?"
-        SkipDelay: 0
-    - rid: 3681219989066743973
+    - rid: 5154282119801864442
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: abc80d71-2e86-4651-abec-1d9778ea7e1d
@@ -62,7 +60,7 @@ MonoBehaviour:
         DialogueText: "\uB0B4\uAC00 1\uC2DC\uAC04 \uC804\uC5D0 \uBB58 \uD558\uACE0
           \uC788\uC5C8\uB0D0\uACE0?"
         SkipDelay: 0
-    - rid: 3681219989066743974
+    - rid: 5154282119801864443
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 5b0d4af6-a296-4bb6-8f44-92455faa1be5
@@ -70,20 +68,10 @@ MonoBehaviour:
         NodeType: 0
         Position: {x: 1151, y: 186}
         TargetObjectID: Yanggang
-        DialogueText: "\uBCF4\uBA74 \uBAA8\uB974\uACA0\uC5B4? \uC774 \uAECC\uB531\uC9C0
+        DialogueText: "\uBCF4\uBA74 \uBAA8\uB974\uACA0\uC5B4? \n\uC774 \uAECC\uB531\uC9C0
           \uB140\uC11D\uB4E4\uC5D0\uAC8C \uB2F9\uD558\uACE0 \uC788\uC5C8\uB2E4."
         SkipDelay: 0
-    - rid: 3681219989066743975
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: 4ae48b41-dad4-485f-808a-90600d99e89f
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 1767, y: 186}
-        TargetObjectID: Yanggang
-        DialogueText: "\uC0C1\uAC00\uC5D0\uB294 \uAC08 \uC77C\uB3C4 \uC5C6\uC5C8\uC5B4."
-        SkipDelay: 0
-    - rid: 3681219989066743976
+    - rid: 5154282119801864444
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: dd5d9e59-247d-405e-82e2-f9ec394a6080
@@ -93,14 +81,56 @@ MonoBehaviour:
         TargetObjectID: Yanggang
         DialogueText: "<anim:shake>\uC544\uC58F! \uC774 \uB140\uC11D\uB4E4!! \uADF8\uB9CC\uD574!</anim>"
         SkipDelay: 0
-    - rid: 3681219989066743977
+    - rid: 5154282119801864445
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 29315578-f577-41a1-904c-e96c84a8a3f8
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 204, y: 189}
+        TargetObjectID: Yanggang
+        DialogueText: "<size:1.5><anim:shake>\uC559?</anim> <size:1>\uB10C \uB204\uAD6C\uC57C?"
+        SkipDelay: 0
+    - rid: 5154282119801864446
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: c18f87e0-3f73-4349-84ec-be2ef5be372e
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1561, y: 162}
+        TargetObjectID: Yanggang
+        DialogueText: "\uB098 \uCC38, \uC560\uB4E4\uC740 \uADC0\uCC2E\uB2E4\uB2C8\uAE4C.\n\uC5B4\uCA54
+          \uC218 \uC5C6\uC774 \uB3CC\uBCF4\uB294 \uAC70\uC9C0\uB9CC."
+        SkipDelay: 0
+    - rid: 5154282119801864447
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 4ae48b41-dad4-485f-808a-90600d99e89f
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1933, y: 168}
+        TargetObjectID: Yanggang
+        DialogueText: "\uC5B4\uCA0C\uB4E0, \uB098\uB294 \uC0C1\uAC00\uC5D0\uB294
+          \uAC08 \uC77C\uB3C4 \uC5C6\uC5C8\uC5B4."
+        SkipDelay: 0
+    - rid: 5154282119801864448
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: a0fb4c6a-4d35-4fec-b66f-be4976167250
         NodeTitle: NoChoice Node
         NodeType: 0
-        Position: {x: 2307, y: 201}
+        Position: {x: 2352, y: 158}
         TargetObjectID: Yanggang
         DialogueText: "\uADF8\uB798.. \uBCFC\uC77C\uC774 \uB05D\uB0AC\uC73C\uBA74
-          \uADF8\uB9CC \uAC00\uC904\uB798? \uB09C \uBC14\uBE60\uC11C \uB9D0\uC774\uC57C."
+          \uADF8\uB9CC \uAC00\uC904\uB798?\n\uC9C0\uAE08 \uB09C \uBC14\uBE60\uC11C
+          \uB9D0\uC774\uC57C."
         SkipDelay: 0
+    - rid: 5154282119801864449
+      type: {class: StartQuestNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 81b9ad2a-a6e3-46ff-93c5-7b803a4054af
+        NodeTitle: StartQuest Node
+        NodeType: 2
+        Position: {x: 3455, y: 199}
+        QuestType: Complete
+        QuestID: "\uC591\uAC31\uACFC \uB300\uD654\uD558\uAE30"
