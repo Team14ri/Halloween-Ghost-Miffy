@@ -109,6 +109,9 @@ public class VariableManager : MonoBehaviour
             }
             return;
         }
+        
+        PlayerPrefs.SetInt(id, PlayerPrefs.GetInt(id, 0) + value);
+        QuestDetailViewer.Instance.UpdateQuestDetail();
     }
 
     public void AddOneItem(string id)

@@ -30,7 +30,8 @@ namespace DS.Core
         {
             if (Handlers.TryGetValue(id, out DialogueHandler value))
                 return value;
-            throw new Exception($"DialogueHandler not found with ID: {id}");
+            Debug.LogError($"DialogueHandler not found with ID: {id}");
+            return null;
         }
 
         public void PlayDialogue(TMP_Text textBox, string value, bool skipTyping = false)
