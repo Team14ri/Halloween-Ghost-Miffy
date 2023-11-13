@@ -38,10 +38,9 @@ public class QuestRightViewEditor : MonoBehaviour
             return;
 
         var targetData = data.Where(item => item.QuestID == id &&
-            ((int)location < currentQuestID[0] ||
-             ((int)location == currentQuestID[0] && item.QuestID < currentQuestID[1]) ||
-             ((int)location == currentQuestID[0] && item.QuestID == currentQuestID[1] && item.QuestDetailID < currentQuestID[2]) ||
-             ((int)location == currentQuestID[0] && item.QuestID == currentQuestID[1] && item.QuestDetailID == currentQuestID[2] && item.QuestFlowID <= currentQuestID[3])))
+            (item.QuestID < currentQuestID[1] ||
+             (item.QuestID == currentQuestID[1] && item.QuestDetailID < currentQuestID[2]) ||
+             (item.QuestID == currentQuestID[1] && item.QuestDetailID == currentQuestID[2] && item.QuestFlowID <= currentQuestID[3])))
              .Reverse().ToList();
 
         SetView(targetSummary.QuestTitle, location, targetData);

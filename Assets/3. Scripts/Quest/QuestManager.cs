@@ -83,12 +83,14 @@ namespace Quest
         
         public (List<QuestSummary>, List<QuestData>) GetQuestData(QuestLocation location)
         {
-            if (location == QuestLocation.Plaza)
+            if (location == QuestLocation.Cemetery || 
+                location == QuestLocation.Plaza)
             {
                 return (plazaQuestSummary, plazaQuestData);
             }
 
-            if (location == QuestLocation.Mall)
+            if (location == QuestLocation.Mall ||
+                location == QuestLocation.Forest)
             {
                 return (mallQuestSummary, mallQuestData);
             }

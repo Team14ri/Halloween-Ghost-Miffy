@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Quest;
@@ -34,41 +35,29 @@ public class QuestViewer : MonoBehaviour
         viewEditor.UpdateQuestBoard(location, summary.QuestID);
     }
 
-    private void Awake()
-    {
-        viewEditor.DestroyChild();
-        SetupQuestView(plazaFoldField, plazaListField, _plazaEditor, QuestLocation.Plaza);
-        SetupQuestView(mallFoldField, mallListField, _mallEditor, QuestLocation.Mall);
-        
-        var currentQuestID = QuestManager.Instance.CurrentQuestInfo;
-        if (currentQuestID[0] == (int)QuestLocation.Plaza)
-        {
-            plazaFoldField.SetActive(true);
-            _plazaEditor.LastOrDefault()?.SetSelect(true);
-            _plazaEditor.LastOrDefault()?.Execute();
-        }
-        if (currentQuestID[0] == (int)QuestLocation.Mall)
-        {
-            mallFoldField.SetActive(true);
-            _mallEditor.LastOrDefault()?.SetSelect(true);
-            _mallEditor.LastOrDefault()?.Execute();
-        }
-    }
-
     private void OnEnable()
     {
+        StartCoroutine(OnEnableOneFrameLate());
+    }
+
+    private IEnumerator OnEnableOneFrameLate()
+    {
+        yield return null;
+        
         viewEditor.DestroyChild();
         SetupQuestView(plazaFoldField, plazaListField, _plazaEditor, QuestLocation.Plaza);
         SetupQuestView(mallFoldField, mallListField, _mallEditor, QuestLocation.Mall);
         
         var currentQuestID = QuestManager.Instance.CurrentQuestInfo;
-        if (currentQuestID[0] == (int)QuestLocation.Plaza)
+        if (currentQuestID[0] == (int)QuestLocation.Cemetery || 
+            currentQuestID[0] == (int)QuestLocation.Plaza)
         {
             plazaFoldField.SetActive(true);
             _plazaEditor.LastOrDefault()?.SetSelect(true);
             _plazaEditor.LastOrDefault()?.Execute();
         }
-        if (currentQuestID[0] == (int)QuestLocation.Mall)
+        if (currentQuestID[0] == (int)QuestLocation.Mall || 
+            currentQuestID[0] == (int)QuestLocation.Forest)
         {
             mallFoldField.SetActive(true);
             _mallEditor.LastOrDefault()?.SetSelect(true);
