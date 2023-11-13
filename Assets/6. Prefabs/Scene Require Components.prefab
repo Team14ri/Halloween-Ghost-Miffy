@@ -13267,6 +13267,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4894413889873537688}
   - component: {fileID: 1783078073903031074}
+  - component: {fileID: 6949925919124877520}
   m_Layer: 5
   m_Name: Quest Board
   m_TagString: Untagged
@@ -13317,6 +13318,19 @@ MonoBehaviour:
   mallListField: {fileID: 3430094584616702052}
   questLeftItemPrefab: {fileID: 7135577483838795688, guid: 2503639b609b6624b83878551b864b5f, type: 3}
   viewEditor: {fileID: 4202105613927234707}
+--- !u!114 &6949925919124877520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4894413889873537691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60e69b548dd521c49a98fb51d9ce6efa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 4894413889873537691}
 --- !u!1 &4894413889890475712
 GameObject:
   m_ObjectHideFlags: 0
@@ -13860,6 +13874,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4894413889966990574}
   - component: {fileID: 4239344325983737272}
+  - component: {fileID: 6239099648790395064}
   m_Layer: 5
   m_Name: King Sticker Board
   m_TagString: Untagged
@@ -13910,6 +13925,19 @@ MonoBehaviour:
   mallFieldImage: {fileID: 645543260885905809}
   forestSticker: {fileID: 11400000, guid: c1f9e575ccc64be44bd4d45af198d36a, type: 2}
   forestFieldImage: {fileID: 7560549057466343253}
+--- !u!114 &6239099648790395064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4894413889966990561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60e69b548dd521c49a98fb51d9ce6efa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 4894413889966990561}
 --- !u!1 &4894413889987002075
 GameObject:
   m_ObjectHideFlags: 0
@@ -14011,13 +14039,13 @@ MonoBehaviour:
     m_ActionName: UI/Esc[/Keyboard/escape]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4894413889987002073}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 6949925919124877520}
+        m_TargetAssemblyTypeName: UICallbackContext, Assembly-CSharp
         m_MethodName: EnterUIAlone
-        m_Mode: 2
+        m_Mode: 0
         m_Arguments:
-          m_ObjectArgument: {fileID: 4894413889873537691}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -14027,13 +14055,13 @@ MonoBehaviour:
     m_ActionName: UI/Quest[/Keyboard/q]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4894413889987002073}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 6239099648790395064}
+        m_TargetAssemblyTypeName: UICallbackContext, Assembly-CSharp
         m_MethodName: EnterUIAlone
-        m_Mode: 2
+        m_Mode: 0
         m_Arguments:
-          m_ObjectArgument: {fileID: 4894413889966990561}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

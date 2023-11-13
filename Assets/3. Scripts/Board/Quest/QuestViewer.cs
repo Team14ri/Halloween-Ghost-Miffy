@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Quest;
@@ -31,6 +32,27 @@ public class QuestViewer : MonoBehaviour
             editor.SetSelect(isSelected);
         }
         viewEditor.UpdateQuestBoard(location, summary.QuestID);
+    }
+
+    private void Awake()
+    {
+        viewEditor.DestroyChild();
+        SetupQuestView(plazaFoldField, plazaListField, _plazaEditor, QuestLocation.Plaza);
+        SetupQuestView(mallFoldField, mallListField, _mallEditor, QuestLocation.Mall);
+        
+        var currentQuestID = QuestManager.Instance.CurrentQuestInfo;
+        if (currentQuestID[0] == (int)QuestLocation.Plaza)
+        {
+            plazaFoldField.SetActive(true);
+            _plazaEditor.LastOrDefault()?.SetSelect(true);
+            _plazaEditor.LastOrDefault()?.Execute();
+        }
+        if (currentQuestID[0] == (int)QuestLocation.Mall)
+        {
+            mallFoldField.SetActive(true);
+            _mallEditor.LastOrDefault()?.SetSelect(true);
+            _mallEditor.LastOrDefault()?.Execute();
+        }
     }
 
     private void OnEnable()
