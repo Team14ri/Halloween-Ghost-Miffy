@@ -19,15 +19,12 @@ MonoBehaviour:
   - BaseNodeGuid: 34cc5fe9-dd00-47d5-922e-f972d94132e0
     PortName: Next
     TargetNodeGuid: bc58260c-6546-406a-827c-2f63ea3e7c6b
-  - BaseNodeGuid: bc58260c-6546-406a-827c-2f63ea3e7c6b
-    PortName: "1\uBC88 \uBC18\uC9C0"
-    TargetNodeGuid: a2879c44-993f-4852-bb57-6878013ab6b9
-  - BaseNodeGuid: bc58260c-6546-406a-827c-2f63ea3e7c6b
-    PortName: "2\uBC88 \uBC18\uC9C0"
-    TargetNodeGuid: 26f124d0-e09e-43a2-a9d8-d7728c578544
-  - BaseNodeGuid: bc58260c-6546-406a-827c-2f63ea3e7c6b
-    PortName: "3\uBC88 \uBC18\uC9C0"
-    TargetNodeGuid: 6901261f-a5d9-4e0b-9289-b2f8ea340434
+  - BaseNodeGuid: c6be79b1-3d55-46b7-9b6a-f0754eb617fd
+    PortName: Next
+    TargetNodeGuid: 8618e979-f409-4b98-9114-344da245c6d1
+  - BaseNodeGuid: 8618e979-f409-4b98-9114-344da245c6d1
+    PortName: Next
+    TargetNodeGuid: 5c7610b2-b77e-4282-aaf7-4bd41db46db8
   - BaseNodeGuid: a2879c44-993f-4852-bb57-6878013ab6b9
     PortName: Next
     TargetNodeGuid: 5814ff2a-109e-4e83-ab67-5e414ad06358
@@ -37,33 +34,36 @@ MonoBehaviour:
   - BaseNodeGuid: 6901261f-a5d9-4e0b-9289-b2f8ea340434
     PortName: Next
     TargetNodeGuid: 5814ff2a-109e-4e83-ab67-5e414ad06358
-  - BaseNodeGuid: 5814ff2a-109e-4e83-ab67-5e414ad06358
-    PortName: Next
-    TargetNodeGuid: 501650d0-f671-4ed2-bdac-635c76534b4f
-  - BaseNodeGuid: c6be79b1-3d55-46b7-9b6a-f0754eb617fd
-    PortName: Next
-    TargetNodeGuid: 8618e979-f409-4b98-9114-344da245c6d1
   - BaseNodeGuid: 501650d0-f671-4ed2-bdac-635c76534b4f
     PortName: Next
     TargetNodeGuid: c6be79b1-3d55-46b7-9b6a-f0754eb617fd
-  - BaseNodeGuid: 8618e979-f409-4b98-9114-344da245c6d1
+  - BaseNodeGuid: 5814ff2a-109e-4e83-ab67-5e414ad06358
     PortName: Next
-    TargetNodeGuid: 5c7610b2-b77e-4282-aaf7-4bd41db46db8
+    TargetNodeGuid: 501650d0-f671-4ed2-bdac-635c76534b4f
+  - BaseNodeGuid: bc58260c-6546-406a-827c-2f63ea3e7c6b
+    PortName: "\uB2E4\uC774\uC544 \uBC18\uC9C0"
+    TargetNodeGuid: a2879c44-993f-4852-bb57-6878013ab6b9
+  - BaseNodeGuid: bc58260c-6546-406a-827c-2f63ea3e7c6b
+    PortName: "\uBE68\uAC04\uC0C9 \uBC18\uC9C0"
+    TargetNodeGuid: 26f124d0-e09e-43a2-a9d8-d7728c578544
+  - BaseNodeGuid: bc58260c-6546-406a-827c-2f63ea3e7c6b
+    PortName: "\uC624\uB798\uB41C \uBC18\uC9C0"
+    TargetNodeGuid: 6901261f-a5d9-4e0b-9289-b2f8ea340434
   NodeData:
-  - rid: 4135296497778163821
-  - rid: 4135296497778163822
-  - rid: 4135296497778163823
-  - rid: 4135296497778163824
-  - rid: 4135296497778163825
-  - rid: 4135296497778163826
-  - rid: 4135296497778163827
-  - rid: 4135296497778163828
-  - rid: 4135296497778163829
-  - rid: 4135296497778163830
+  - rid: 3681220215633084416
+  - rid: 3681220215633084417
+  - rid: 3681220215633084418
+  - rid: 3681220215633084419
+  - rid: 3681220215633084420
+  - rid: 3681220215633084421
+  - rid: 3681220215633084422
+  - rid: 3681220215633084423
+  - rid: 3681220215633084424
+  - rid: 3681220215633084425
   references:
     version: 2
     RefIds:
-    - rid: 4135296497778163821
+    - rid: 3681220215633084416
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 34cc5fe9-dd00-47d5-922e-f972d94132e0
@@ -74,17 +74,35 @@ MonoBehaviour:
         DialogueText: "\uB9C8\uC744 \uC0AC\uB78C\uB4E4\uC5D0\uAC8C \uBAA8\uB450 \uC804\uD558\uACE0
           \uC624\uB294 \uAE38\uC778\uAC00\uBCF4\uAD6C\uB098."
         SkipDelay: 0
-    - rid: 4135296497778163822
-      type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+    - rid: 3681220215633084417
+      type: {class: AddItemNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
-        GUID: bc58260c-6546-406a-827c-2f63ea3e7c6b
-        NodeTitle: MultiChoice Node
-        NodeType: 1
-        Position: {x: 852, y: 278}
+        GUID: c6be79b1-3d55-46b7-9b6a-f0754eb617fd
+        NodeTitle: AddItem Node
+        NodeType: 3
+        Position: {x: 2496, y: 287}
+        ItemID: Sticker@Anderson
+        ItemCount: 1
+    - rid: 3681220215633084418
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 8618e979-f409-4b98-9114-344da245c6d1
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2844, y: 287}
         TargetObjectID: Anderson
-        DialogueText: "\uACE0\uB9D9\uB2E4, \uC57D\uC18D\uB300\uB85C \uCC3E\uB294
-          \uBC18\uC9C0\uB97C \uB9D0\uD574\uBCF4\uB834."
-    - rid: 4135296497778163823
+        DialogueText: "\uB610 \uBCF4\uC790\uAFB8\uB098, \uBBF8\uD53C."
+        SkipDelay: 0
+    - rid: 3681220215633084419
+      type: {class: StartQuestNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 5c7610b2-b77e-4282-aaf7-4bd41db46db8
+        NodeTitle: StartQuest Node
+        NodeType: 2
+        Position: {x: 3197, y: 287}
+        QuestType: MAIN QUEST
+        QuestID: "#4-5 \uC0AC\uB77C\uC5D0\uAC8C \uBC18\uC9C0\uB97C \uC804\uD574\uC8FC\uC790"
+    - rid: 3681220215633084420
       type: {class: AddItemNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: a2879c44-993f-4852-bb57-6878013ab6b9
@@ -93,7 +111,7 @@ MonoBehaviour:
         Position: {x: 1305, y: 208}
         ItemID: Item@BetterRing
         ItemCount: 1
-    - rid: 4135296497778163824
+    - rid: 3681220215633084421
       type: {class: AddItemNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 26f124d0-e09e-43a2-a9d8-d7728c578544
@@ -102,7 +120,7 @@ MonoBehaviour:
         Position: {x: 1305, y: 349}
         ItemID: Item@WorseRing
         ItemCount: 1
-    - rid: 4135296497778163825
+    - rid: 3681220215633084422
       type: {class: AddItemNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 6901261f-a5d9-4e0b-9289-b2f8ea340434
@@ -111,18 +129,7 @@ MonoBehaviour:
         Position: {x: 1305, y: 490}
         ItemID: Item@SaraRing
         ItemCount: 1
-    - rid: 4135296497778163826
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: 5814ff2a-109e-4e83-ab67-5e414ad06358
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 1678, y: 278}
-        TargetObjectID: Anderson
-        DialogueText: "\uADF8 \uBC18\uC9C0\uAC00 \uCC3E\uB294 \uBC18\uC9C0\uC600\uC73C\uBA74
-          \uC88B\uACA0\uAD70."
-        SkipDelay: 0
-    - rid: 4135296497778163827
+    - rid: 3681220215633084423
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 501650d0-f671-4ed2-bdac-635c76534b4f
@@ -133,31 +140,24 @@ MonoBehaviour:
         DialogueText: "\uCC38 \uBBF8\uD53C. \uB0B4 \uCE6D\uCC2C \uC2A4\uD2F0\uCEE4\uB97C
           \uAC00\uC838\uAC00\uB834"
         SkipDelay: 0
-    - rid: 4135296497778163828
-      type: {class: AddItemNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: c6be79b1-3d55-46b7-9b6a-f0754eb617fd
-        NodeTitle: AddItem Node
-        NodeType: 3
-        Position: {x: 2496, y: 287}
-        ItemID: Sticker@Anderson
-        ItemCount: 1
-    - rid: 4135296497778163829
+    - rid: 3681220215633084424
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
-        GUID: 8618e979-f409-4b98-9114-344da245c6d1
+        GUID: 5814ff2a-109e-4e83-ab67-5e414ad06358
         NodeTitle: NoChoice Node
         NodeType: 0
-        Position: {x: 2844, y: 287}
+        Position: {x: 1678, y: 278}
         TargetObjectID: Anderson
-        DialogueText: "\uB610 \uBCF4\uC790\uAFB8\uB098, \uBBF8\uD53C."
+        DialogueText: "\uADF8 \uBC18\uC9C0\uAC00 \uCC3E\uB294 \uBC18\uC9C0\uC600\uC73C\uBA74
+          \uC88B\uACA0\uAD70."
         SkipDelay: 0
-    - rid: 4135296497778163830
-      type: {class: StartQuestNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+    - rid: 3681220215633084425
+      type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
-        GUID: 5c7610b2-b77e-4282-aaf7-4bd41db46db8
-        NodeTitle: StartQuest Node
-        NodeType: 2
-        Position: {x: 3197, y: 287}
-        QuestType: MAIN QUEST
-        QuestID: "#4-5 \uC0AC\uB77C\uC5D0\uAC8C \uBC18\uC9C0\uB97C \uC804\uD574\uC8FC\uC790"
+        GUID: bc58260c-6546-406a-827c-2f63ea3e7c6b
+        NodeTitle: MultiChoice Node
+        NodeType: 1
+        Position: {x: 852, y: 278}
+        TargetObjectID: Anderson
+        DialogueText: "\uACE0\uB9D9\uB2E4, \uC57D\uC18D\uB300\uB85C \uCC3E\uB294
+          \uBC18\uC9C0\uB97C \uB9D0\uD574\uBCF4\uB834."
