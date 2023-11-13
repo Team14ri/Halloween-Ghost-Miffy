@@ -16,28 +16,28 @@ MonoBehaviour:
   - BaseNodeGuid: 61226ef9-1eb0-4e9c-8f97-f01e1a498482
     PortName: Execute
     TargetNodeGuid: d17fd845-22f4-459e-8ba6-df56d31741ed
-  - BaseNodeGuid: a5b44c56-5528-4289-961a-aa5c938db270
-    PortName: Next
-    TargetNodeGuid: 53b60565-48a0-41e6-9fba-8172fa9f3ea4
-  - BaseNodeGuid: 53b60565-48a0-41e6-9fba-8172fa9f3ea4
-    PortName: Next
-    TargetNodeGuid: 9d4fe50f-7fa9-4dc7-8d19-8f07b22045f4
   - BaseNodeGuid: d17fd845-22f4-459e-8ba6-df56d31741ed
     PortName: True
     TargetNodeGuid: b8dff47a-f6a6-4b85-aa32-fc7dc4413873
   - BaseNodeGuid: d17fd845-22f4-459e-8ba6-df56d31741ed
     PortName: False
     TargetNodeGuid: a5b44c56-5528-4289-961a-aa5c938db270
+  - BaseNodeGuid: a5b44c56-5528-4289-961a-aa5c938db270
+    PortName: Next
+    TargetNodeGuid: 53b60565-48a0-41e6-9fba-8172fa9f3ea4
+  - BaseNodeGuid: 53b60565-48a0-41e6-9fba-8172fa9f3ea4
+    PortName: Next
+    TargetNodeGuid: 9d4fe50f-7fa9-4dc7-8d19-8f07b22045f4
   NodeData:
-  - rid: 4135296497778163808
-  - rid: 4135296497778163809
-  - rid: 4135296497778163810
-  - rid: 4135296497778163811
-  - rid: 4135296497778163812
+  - rid: 3681220212507804026
+  - rid: 3681220212507804027
+  - rid: 3681220212507804028
+  - rid: 3681220212507804029
+  - rid: 3681220212507804030
   references:
     version: 2
     RefIds:
-    - rid: 4135296497778163808
+    - rid: 3681220212507804026
       type: {class: ConditionNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: d17fd845-22f4-459e-8ba6-df56d31741ed
@@ -46,7 +46,7 @@ MonoBehaviour:
         Position: {x: 224, y: 216}
         ItemID: Quest@Plaza-4-3-1-Cliko
         EqualOrMany: 1
-    - rid: 4135296497778163809
+    - rid: 3681220212507804027
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: a5b44c56-5528-4289-961a-aa5c938db270
@@ -57,7 +57,7 @@ MonoBehaviour:
         DialogueText: "\uC5B4\uBA38\uB098, \uBBF8\uD53C \uC544\uB2C8\uB2C8? \uBB34\uC2A8
           \uC77C\uC774\uB2C8? \uAF2C\uAF2C!"
         SkipDelay: 0
-    - rid: 4135296497778163810
+    - rid: 3681220212507804028
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 53b60565-48a0-41e6-9fba-8172fa9f3ea4
@@ -65,21 +65,10 @@ MonoBehaviour:
         NodeType: 0
         Position: {x: 1075, y: 322}
         TargetObjectID: Cliko
-        DialogueText: "\uADF8\uB807\uAD6C\uB098... \uBD84\uC218\uB300\uC5D0 \uC4F0\uB808\uAE30\uB97C
-          \uBC84\uB9AC\uB2E4\uB2C8! \uAF2C\uAF2C!"
+        DialogueText: "\uADF8\uB807\uAD6C\uB098... <anim:shake>\uBD84\uC218\uB300\uC5D0
+          \uC4F0\uB808\uAE30\uB97C \uBC84\uB9AC\uB2E4\uB2C8! \uAF2C\uAF2C!</anim>"
         SkipDelay: 0
-    - rid: 4135296497778163811
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: 9d4fe50f-7fa9-4dc7-8d19-8f07b22045f4
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 1671, y: 327}
-        TargetObjectID: Cliko
-        DialogueText: "\uADF8\uB798, \uBBF8\uD53C. \uB098\uB3C4 \uC0AC\uB78C\uB4E4\uC744
-          \uBCF4\uBA74 \uAF2D \uC804\uD560\uAC8C~ \uAF2C\uAF2C~"
-        SkipDelay: 0
-    - rid: 4135296497778163812
+    - rid: 3681220212507804029
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: b8dff47a-f6a6-4b85-aa32-fc7dc4413873
@@ -89,4 +78,15 @@ MonoBehaviour:
         TargetObjectID: Cliko
         DialogueText: "\uB098\uB3C4 \uC0AC\uB78C\uB4E4\uC744 \uBCF4\uBA74 \uAF2D
           \uC804\uD560\uAC8C~ \uAF2C\uAF2C~"
+        SkipDelay: 0
+    - rid: 3681220212507804030
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 9d4fe50f-7fa9-4dc7-8d19-8f07b22045f4
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1671, y: 327}
+        TargetObjectID: Cliko
+        DialogueText: "\uADF8\uB798, \uBBF8\uD53C. \uB098\uB3C4 \uC0AC\uB78C\uB4E4\uC744
+          \uBCF4\uBA74 \uAF2D \uC804\uD560\uAC8C~ \uAF2C\uAF2C~"
         SkipDelay: 0
