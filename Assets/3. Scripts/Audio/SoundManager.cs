@@ -24,7 +24,8 @@ public class SoundManager : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            transform.parent = null;
+            DontDestroyOnLoad(transform.gameObject);
             eventInstances = new List<EventInstance>();
             masterBus = FMODUnity.RuntimeManager.GetBus("{adad2423-c25d-4945-9aeb-435077848bbd}");
         }

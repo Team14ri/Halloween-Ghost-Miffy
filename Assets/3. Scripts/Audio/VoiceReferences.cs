@@ -20,7 +20,6 @@ public class VoiceReferences : MonoBehaviour
     {
         if (Instance != null)
         {
-            Debug.LogError("한 씬에 VoiceReferences가 여러 개 있습니다.");
             Destroy(gameObject);
         }
         else
