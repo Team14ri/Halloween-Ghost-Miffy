@@ -19,8 +19,8 @@ namespace DS.Core
 
         private int _currentIndex;
         [SerializeField] private List<ChoiceData> choiceDataList = new();
-
-        private PlayerInteractionState _interactionState;
+        
+        private Action<string> _returnAction;
 
         private bool _observeDialogueEnd;
         
@@ -80,11 +80,11 @@ namespace DS.Core
             }
         }
 
-        public void Init(PlayerInteractionState state, List<NodeLinkData> links)
+        public void Init(List<NodeLinkData> links, Action<string> returnAction)
         {
             _currentIndex = 0;
             
-            _interactionState = state;
+            _returnAction = returnAction;
 
             choiceDataList.Clear();
 
@@ -144,7 +144,7 @@ namespace DS.Core
         
         public void SelectChoice()
         {
-            _interactionState.SelectChoice(choiceDataList[_currentIndex].guid);
+            _returnAction?.Invoke(choiceDataList[_currentIndex].guid);
             Exit();
         }
 

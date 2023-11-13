@@ -72,11 +72,11 @@
 ## 캐릭터 애니메이션 적용
 - ### 태그
 ```
-<state:{value@string}</anim>
+<state:{value@string}>
 ```
 - ### 사용 예시
 ```
-<state:Luke@Hungry</anim>
+<state:Luke@Hungry>
 ```
 - ### 사용 예시 설명
 캐릭터 아이디 (`Luke`)의 애니메이터에서 (`Luke@Hungry`)라는 이름의 애니메이션을 적용합니다

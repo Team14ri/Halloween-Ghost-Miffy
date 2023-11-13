@@ -129,7 +129,7 @@ public class PlayerInteractionState : IState
                 
                 var nodeLinks = dialogueFlow.GetCurrentNodeLinks();
                 
-                MultiDialogueHandler.Instance.Init(this, nodeLinks);
+                MultiDialogueHandler.Instance.Init(nodeLinks, SelectChoice);
                 break;
             case NodeTypes.NodeType.StartQuest:
                 var startQuestNodeData = dialogueFlow.GetCurrentNodeData() as StartQuestNodeData;

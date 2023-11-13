@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +26,15 @@ public class AutoResizeParent : MonoBehaviour
         if (parentRectTransform != null)
         {
             updateParentLayout = true;
+        }
+        
+        if (appendSize)
+        {
+            AdjustSizeTotal();
+        }
+        else
+        {
+            AdjustSizeMax();
         }
     }
 

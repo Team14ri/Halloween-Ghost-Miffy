@@ -53,6 +53,11 @@ public class VariableManager : MonoBehaviour
     {
         return itemData;
     }
+    
+    public void ResetEveryData()
+    {
+        PlayerPrefs.DeleteAll();
+    }
 
     public int GetItemValue(string id)
     {
@@ -85,6 +90,7 @@ public class VariableManager : MonoBehaviour
         if (sticker != null)
         {
             sticker.SetValue(sticker.GetValue() + value);
+            QuestDetailViewer.Instance.UpdateQuestDetail();
             if (value > 0)
             {
                 ItemCollect.Instance.ShowPopup($"(<u>{sticker.Name} <size=50><color=red>x 1</color></size></u>) 스티커 획득!", sticker.Sprite);
@@ -96,12 +102,16 @@ public class VariableManager : MonoBehaviour
         if (item != null)
         {
             item.SetValue(item.GetValue() + value);
+            QuestDetailViewer.Instance.UpdateQuestDetail();
             if (value > 0)
             {
                 ItemCollect.Instance.ShowPopup($"(<u>{item.Name} <size=50><color=red>x 1</color></size></u>) 아이템 획득!", item.Sprite);
             }
             return;
         }
+        
+        PlayerPrefs.SetInt(id, PlayerPrefs.GetInt(id, 0) + value);
+        QuestDetailViewer.Instance.UpdateQuestDetail();
     }
 
     public void AddOneItem(string id)
@@ -110,6 +120,7 @@ public class VariableManager : MonoBehaviour
         if (sticker != null)
         {
             sticker.SetValue(sticker.GetValue() + 1);
+            QuestDetailViewer.Instance.UpdateQuestDetail();
             ItemCollect.Instance.ShowPopup($"(<u>{sticker.Name} <size=50><color=red>x 1</color></size></u>) 스티커 획득!", sticker.Sprite);
             return;
         }
@@ -118,10 +129,17 @@ public class VariableManager : MonoBehaviour
         if (item != null)
         {
             item.SetValue(item.GetValue() + 1);
+            QuestDetailViewer.Instance.UpdateQuestDetail();
             ItemCollect.Instance.ShowPopup($"(<u>{item.Name} <size=50><color=red>x 1</color></size></u>) 아이템 획득!", item.Sprite);
             return;
         }
         
         PlayerPrefs.SetInt(id, PlayerPrefs.GetInt(id, 0) + 1);
+        QuestDetailViewer.Instance.UpdateQuestDetail();
+    }
+    
+    public void ResetItem(string id)
+    {
+        PlayerPrefs.DeleteKey(id);
     }
 }

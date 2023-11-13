@@ -23,9 +23,11 @@ public class StickerViewer : MonoBehaviour
     public void UpdateStickerBoard(StickerData sticker)
     {
         var stickerData = VariableManager.Instance.GetStickersList()
-            .Where(data => data.GetValue() > 0 && data.Type == sticker.Type)
+            .Where(data => data.GetValue() > 0 && 
+                           data.LocationType == sticker.LocationType &&
+                           data.Type == StickerType.Normal)
             .ToList();
-        
+
         for (int i = 0; i < stickerData.Count; ++i)
         {
             stickerStorage[i].gameObject.SetActive(true);

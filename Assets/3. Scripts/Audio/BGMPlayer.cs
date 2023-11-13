@@ -9,6 +9,10 @@ public class BGMPlayer : MonoBehaviour
     private string currentEventName = null;
 
     public static BGMPlayer Instance { get; private set; }
+    
+    // TODO: 테스트 용, 삭제 필요
+    [SerializeField] private bool playOnStart;
+    
     private void Awake()
     {
         if (Instance != null)
@@ -25,7 +29,10 @@ public class BGMPlayer : MonoBehaviour
     private void Start()
     {
         currentEventName = "TestMapA";
-        PlayBGM(currentEventName);
+        if (playOnStart)
+        {
+            PlayBGM(currentEventName);
+        }
     }
 
     public void PlayBGM(string eventName)
@@ -48,8 +55,11 @@ public class BGMPlayer : MonoBehaviour
 
     public void ChangeBGM(string eventName)
     {
-        EventReference currentEventRef = FMODEvents.Instance.eventDictionary[currentEventName];
-        EventReference newEventRef = FMODEvents.Instance.eventDictionary[eventName];
+        FMODEvents.Instance.eventDictionary.TryGetValue(currentEventName, out EventReference currentEventRef);
+        FMODEvents.Instance.eventDictionary.TryGetValue(eventName, out EventReference newEventRef);
+        
+        if (currentEventRef.IsNull || newEventRef.IsNull)
+            return;
         
         if (currentEventRef.Guid == newEventRef.Guid)
         {
