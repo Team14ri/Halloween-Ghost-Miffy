@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq;
 using Quest;
 using TMPro;
@@ -13,6 +14,20 @@ public class QuestDetailViewer : MonoBehaviour
     [SerializeField] private Transform targetParent;
 
     private int[] _saveQuestID;
+
+    public static QuestDetailViewer Instance;
+    
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
     
     private void Start()
     {
@@ -31,8 +46,15 @@ public class QuestDetailViewer : MonoBehaviour
         }
     }
 
-    private void UpdateQuestDetail()
+    public void UpdateQuestDetail()
     {
+        StartCoroutine(UpdateQuestDetailOneFrameLate());
+    }
+
+    private IEnumerator UpdateQuestDetailOneFrameLate()
+    {
+        yield return null;
+        
         foreach (Transform child in targetParent)
         {
             Destroy(child.gameObject);
@@ -44,8 +66,8 @@ public class QuestDetailViewer : MonoBehaviour
         var targetSummary = summary.FirstOrDefault(item => item.QuestID == currentQuestID[1]);
         
         var targetData = data.LastOrDefault(item => item.QuestID < currentQuestID[1] ||
-            (item.QuestID == currentQuestID[1] && item.QuestDetailID < currentQuestID[2]) ||
-            (item.QuestID == currentQuestID[1] && item.QuestDetailID == currentQuestID[2] && item.QuestFlowID <= currentQuestID[3]));
+                                                    (item.QuestID == currentQuestID[1] && item.QuestDetailID < currentQuestID[2]) ||
+                                                    (item.QuestID == currentQuestID[1] && item.QuestDetailID == currentQuestID[2] && item.QuestFlowID <= currentQuestID[3]));
 
         questTitle.text = targetSummary?.QuestTitle ?? "";
         questSubTitle.text = targetData?.QuestTitle ?? "";

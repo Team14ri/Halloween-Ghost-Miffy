@@ -35,7 +35,7 @@ public class VoiceManager : MonoBehaviour
     {
         if (Instance != null)
         {
-            Debug.LogError("한 씬에 VoiceManager가 여러 개 있습니다.");
+            // Debug.LogError("한 씬에 VoiceManager가 여러 개 있습니다.");
             Destroy(gameObject);
         }
         else

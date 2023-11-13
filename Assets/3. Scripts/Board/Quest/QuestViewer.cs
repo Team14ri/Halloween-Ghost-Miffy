@@ -79,7 +79,13 @@ public class QuestViewer : MonoBehaviour
         var currentQuestID = QuestManager.Instance.CurrentQuestInfo;
         var (summary, data) = QuestManager.Instance.GetQuestData(location);
 
-        var filteredSummary = summary.Where(s => currentQuestID[1] >= s.QuestID).ToList();
+        if (currentQuestID[0] == (int)QuestLocation.Cemetery)
+        {
+            currentQuestID[0] = (int)QuestLocation.Plaza;
+        }
+
+        var filteredSummary = summary.Where(s => (int)location < currentQuestID[0] ||
+                                                 ((int)location == currentQuestID[0] && s.QuestID <= currentQuestID[1])).ToList();
 
         if (filteredSummary.Count == 0)
         {

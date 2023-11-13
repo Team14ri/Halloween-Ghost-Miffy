@@ -37,12 +37,18 @@ public class QuestRightViewEditor : MonoBehaviour
         if (targetSummary == null)
             return;
 
+        if (currentQuestID[0] == (int)QuestLocation.Cemetery)
+        {
+            currentQuestID[0] = (int)QuestLocation.Plaza;
+        }
+        
         var targetData = data.Where(item => item.QuestID == id &&
-            (item.QuestID < currentQuestID[1] ||
-             (item.QuestID == currentQuestID[1] && item.QuestDetailID < currentQuestID[2]) ||
-             (item.QuestID == currentQuestID[1] && item.QuestDetailID == currentQuestID[2] && item.QuestFlowID <= currentQuestID[3])))
+            ((int)location < currentQuestID[0] ||
+             ((int)location == currentQuestID[0] && item.QuestID < currentQuestID[1]) ||
+             ((int)location == currentQuestID[0] && item.QuestID == currentQuestID[1] && item.QuestDetailID < currentQuestID[2]) ||
+             ((int)location == currentQuestID[0] && item.QuestID == currentQuestID[1] && item.QuestDetailID == currentQuestID[2] && item.QuestFlowID <= currentQuestID[3])))
              .Reverse().ToList();
-
+        
         SetView(targetSummary.QuestTitle, location, targetData);
     }
 
