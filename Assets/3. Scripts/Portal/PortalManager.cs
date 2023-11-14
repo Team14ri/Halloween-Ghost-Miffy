@@ -55,7 +55,7 @@ public class PortalManager : MonoBehaviour
             return Vector3.zero;
         }
 
-        Vector3 portalPosition = PortalDictionary[portalNum].transform.position;
+        Vector3 portalPosition = PortalDictionary[portalNum].GetSpawnPoint().position;
         return portalPosition;
     }
     
