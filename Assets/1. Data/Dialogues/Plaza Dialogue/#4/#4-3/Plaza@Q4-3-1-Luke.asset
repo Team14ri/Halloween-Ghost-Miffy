@@ -16,28 +16,32 @@ MonoBehaviour:
   - BaseNodeGuid: 61226ef9-1eb0-4e9c-8f97-f01e1a498482
     PortName: Execute
     TargetNodeGuid: 8247a5bb-7aa4-49d2-973b-32defec316c0
-  - BaseNodeGuid: 09987b14-cac6-4c8d-9490-1f2e321dfe4a
-    PortName: Next
-    TargetNodeGuid: 431bab9b-c0c9-4071-81f0-0d09391db1bd
-  - BaseNodeGuid: 431bab9b-c0c9-4071-81f0-0d09391db1bd
-    PortName: Next
-    TargetNodeGuid: aa5c2c11-32d6-4850-8996-337dff5beef5
   - BaseNodeGuid: 8247a5bb-7aa4-49d2-973b-32defec316c0
     PortName: True
     TargetNodeGuid: e389a82c-84b5-4d3c-a6b3-5943ded1cfb5
   - BaseNodeGuid: 8247a5bb-7aa4-49d2-973b-32defec316c0
     PortName: False
     TargetNodeGuid: 09987b14-cac6-4c8d-9490-1f2e321dfe4a
+  - BaseNodeGuid: 09987b14-cac6-4c8d-9490-1f2e321dfe4a
+    PortName: Next
+    TargetNodeGuid: 431bab9b-c0c9-4071-81f0-0d09391db1bd
+  - BaseNodeGuid: 431bab9b-c0c9-4071-81f0-0d09391db1bd
+    PortName: Next
+    TargetNodeGuid: aa5c2c11-32d6-4850-8996-337dff5beef5
+  - BaseNodeGuid: aa5c2c11-32d6-4850-8996-337dff5beef5
+    PortName: Next
+    TargetNodeGuid: d37fd349-dec5-48c1-aed6-4fc1f6ba6e47
   NodeData:
-  - rid: 4135296497778163803
-  - rid: 4135296497778163804
-  - rid: 4135296497778163805
-  - rid: 4135296497778163806
-  - rid: 4135296497778163807
+  - rid: 4135296552606629910
+  - rid: 4135296552606629911
+  - rid: 4135296552606629912
+  - rid: 4135296552606629913
+  - rid: 4135296552606629914
+  - rid: 4135296552606629915
   references:
     version: 2
     RefIds:
-    - rid: 4135296497778163803
+    - rid: 4135296552606629910
       type: {class: ConditionNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 8247a5bb-7aa4-49d2-973b-32defec316c0
@@ -46,7 +50,7 @@ MonoBehaviour:
         Position: {x: 224, y: 195}
         ItemID: Quest@Plaza-4-3-1-Luke
         EqualOrMany: 1
-    - rid: 4135296497778163804
+    - rid: 4135296552606629911
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 09987b14-cac6-4c8d-9490-1f2e321dfe4a
@@ -56,7 +60,7 @@ MonoBehaviour:
         TargetObjectID: Luke
         DialogueText: "\uC751? \uC548\uB155?"
         SkipDelay: 0
-    - rid: 4135296497778163805
+    - rid: 4135296552606629912
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 431bab9b-c0c9-4071-81f0-0d09391db1bd
@@ -66,7 +70,7 @@ MonoBehaviour:
         TargetObjectID: Luke
         DialogueText: "\uC774\uB7F0 \uC0AC\uB78C\uC774 \uC788\uB2E8 \uB9D0\uC774\uC57C?"
         SkipDelay: 0
-    - rid: 4135296497778163806
+    - rid: 4135296552606629913
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: aa5c2c11-32d6-4850-8996-337dff5beef5
@@ -77,7 +81,7 @@ MonoBehaviour:
         DialogueText: "\uC751, \uC751! \uB098\uB3C4 \uAF2D \uB0B4 \uCE5C\uAD6C\uB4E4\uD55C\uD14C
           \uC804\uD574\uC904\uAC8C!"
         SkipDelay: 0
-    - rid: 4135296497778163807
+    - rid: 4135296552606629914
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: e389a82c-84b5-4d3c-a6b3-5943ded1cfb5
@@ -88,3 +92,12 @@ MonoBehaviour:
         DialogueText: "\uB098\uB3C4 \uAF2D \uB0B4 \uCE5C\uAD6C\uB4E4\uD55C\uD14C
           \uC804\uD574\uC904\uAC8C!"
         SkipDelay: 0
+    - rid: 4135296552606629915
+      type: {class: AddItemNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: d37fd349-dec5-48c1-aed6-4fc1f6ba6e47
+        NodeTitle: AddItem Node
+        NodeType: 3
+        Position: {x: 1824, y: 293}
+        ItemID: Quest@Plaza-4-3-1-Luke
+        ItemCount: 1
