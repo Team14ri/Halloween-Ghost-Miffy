@@ -40,11 +40,6 @@ public class PortalManager : MonoBehaviour
     void FindPlayer()
     {
         Player = GameObject.FindWithTag("Player");
-        
-        if (Player == null)
-        {
-            Debug.LogWarning("플레이어를 찾을 수 없습니다.");
-        }
     }
     
     private Vector3 GetPortalPosition(int portalNum)
