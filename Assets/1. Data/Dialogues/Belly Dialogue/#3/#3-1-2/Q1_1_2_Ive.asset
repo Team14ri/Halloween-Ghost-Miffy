@@ -19,33 +19,33 @@ MonoBehaviour:
   - BaseNodeGuid: 57cad4af-adba-449e-90ff-597b9dd2385d
     PortName: Next
     TargetNodeGuid: 0ad08b2f-2510-4fc0-b9da-61ad61f8228b
-  - BaseNodeGuid: 0ad08b2f-2510-4fc0-b9da-61ad61f8228b
-    PortName: Next
-    TargetNodeGuid: a8650dc4-f8e4-4a0e-a4d8-14103acd10ea
   - BaseNodeGuid: a8650dc4-f8e4-4a0e-a4d8-14103acd10ea
     PortName: Next
     TargetNodeGuid: 67ca4721-36fe-49c4-ad23-1941b757e8a6
   - BaseNodeGuid: 67ca4721-36fe-49c4-ad23-1941b757e8a6
     PortName: Next
     TargetNodeGuid: eb764560-431b-48ae-8e9a-0eab2fd8f4ce
-  - BaseNodeGuid: eb764560-431b-48ae-8e9a-0eab2fd8f4ce
-    PortName: Next
-    TargetNodeGuid: 9e663bf1-728d-4f76-963a-85e7c0b455c6
   - BaseNodeGuid: 9e663bf1-728d-4f76-963a-85e7c0b455c6
     PortName: Next
     TargetNodeGuid: 70be2f76-3955-4aef-8084-c86170fba380
+  - BaseNodeGuid: 0ad08b2f-2510-4fc0-b9da-61ad61f8228b
+    PortName: Next
+    TargetNodeGuid: a8650dc4-f8e4-4a0e-a4d8-14103acd10ea
+  - BaseNodeGuid: eb764560-431b-48ae-8e9a-0eab2fd8f4ce
+    PortName: Next
+    TargetNodeGuid: 9e663bf1-728d-4f76-963a-85e7c0b455c6
   NodeData:
-  - rid: 3681219989066743844
-  - rid: 3681219989066743845
-  - rid: 3681219989066743846
-  - rid: 3681219989066743847
-  - rid: 3681219989066743848
-  - rid: 3681219989066743849
-  - rid: 3681219989066743850
+  - rid: 5154282140972876784
+  - rid: 5154282140972876785
+  - rid: 5154282140972876786
+  - rid: 5154282140972876787
+  - rid: 5154282140972876788
+  - rid: 5154282140972876789
+  - rid: 5154282140972876790
   references:
     version: 2
     RefIds:
-    - rid: 3681219989066743844
+    - rid: 5154282140972876784
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 57cad4af-adba-449e-90ff-597b9dd2385d
@@ -53,9 +53,9 @@ MonoBehaviour:
         NodeType: 0
         Position: {x: 263, y: 200}
         TargetObjectID: Ive
-        DialogueText: "\uBBF8\uD53C..! \uC190\uC5D0 \uB4E0\uAC74 \uC124\uB9C8..!"
+        DialogueText: "\uBBF8\uD53C..! <anim:shake>\uC190\uC5D0 \uB4E0\uAC74 \uC124\uB9C8..!</anim>"
         SkipDelay: 0
-    - rid: 3681219989066743845
+    - rid: 5154282140972876785
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: a8650dc4-f8e4-4a0e-a4d8-14103acd10ea
@@ -64,42 +64,9 @@ MonoBehaviour:
         Position: {x: 1173, y: 219}
         TargetObjectID: Ive
         DialogueText: "\uC774 \uAF43\uC740 \uC18C\uC911\uD788 \uAC04\uC9C1\uD574\uC57C\uACA0\uC5B4..
-          \uC815\uB9D0 \uAC00\uC838\uC62C \uC904 \uBAB0\uB790\uB294\uB370.. \uB300\uB2E8\uD558\uB2E4..!"
+          \n\uC815\uB9D0 \uAC00\uC838\uC62C \uC904 \uBAB0\uB790\uB294\uB370.. \uB300\uB2E8\uD558\uB2E4..!"
         SkipDelay: 0
-    - rid: 3681219989066743846
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: 67ca4721-36fe-49c4-ad23-1941b757e8a6
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 1773, y: 196}
-        TargetObjectID: Ive
-        DialogueText: "\uB2E4\uC2DC \uD55C\uBC88 \uC815\uB9D0 \uACE0\uB9C8\uC6CC
-          \uC5EC\uAE30 \uCE6D\uCC2C \uCE94\uB514 \uC2A4\uD2F0\uCEE4\uB97C \uC904\uAC8C..!"
-        SkipDelay: 0
-    - rid: 3681219989066743847
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: 9e663bf1-728d-4f76-963a-85e7c0b455c6
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 2649, y: 196}
-        TargetObjectID: Ive
-        DialogueText: "\uC544\uAE4C \uC0C1\uC810\uAC00 \uAD6C\uC11D\uC5D0\uC11C \uC720\uB839\uC744
-          \uBCF8 \uAC70 \uAC19\uAC70\uB4E0\u2026"
-        SkipDelay: 0
-    - rid: 3681219989066743848
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: 0ad08b2f-2510-4fc0-b9da-61ad61f8228b
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 693, y: 191}
-        TargetObjectID: Ive
-        DialogueText: "\uAC00\uC838\uC654\uAD6C\uB098! \uACE0\uB9C8\uC6CC.. \uC815\uB9D0
-          \uC544\uB984\uB2F5\uB2E4\u2026"
-        SkipDelay: 0
-    - rid: 3681219989066743849
+    - rid: 5154282140972876786
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 70be2f76-3955-4aef-8084-c86170fba380
@@ -109,14 +76,47 @@ MonoBehaviour:
         TargetObjectID: Ive
         DialogueText: "\uBD84\uC7A5\uC774 \uC544\uB2C8\uB77C \uC9C4\uC9DC \uC720\uB839\uB9D0\uC774\uC57C!"
         SkipDelay: 0
-    - rid: 3681219989066743850
+    - rid: 5154282140972876787
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 0ad08b2f-2510-4fc0-b9da-61ad61f8228b
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 726, y: 192}
+        TargetObjectID: Ive
+        DialogueText: "\uAC00\uC838\uC654\uAD6C\uB098! \n\uACE0\uB9C8\uC6CC.. \uC815\uB9D0
+          \uC544\uB984\uB2F5\uB2E4\u2026"
+        SkipDelay: 0
+    - rid: 5154282140972876788
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 67ca4721-36fe-49c4-ad23-1941b757e8a6
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1634, y: 199}
+        TargetObjectID: Ive
+        DialogueText: "\uB2E4\uC2DC \uD55C\uBC88 \uC815\uB9D0 \uACE0\uB9C8\uC6CC!\n\uC5EC\uAE30
+          \uCE6D\uCC2C \uCE94\uB514 \uC2A4\uD2F0\uCEE4\uB97C \uC904\uAC8C..!"
+        SkipDelay: 0
+    - rid: 5154282140972876789
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: eb764560-431b-48ae-8e9a-0eab2fd8f4ce
         NodeTitle: NoChoice Node
         NodeType: 0
-        Position: {x: 2180, y: 196}
+        Position: {x: 2063, y: 206}
         TargetObjectID: Ive
-        DialogueText: "\uC544 \uB9DE\uB2E4, \uBBF8\uD53C.. \uC0C1\uAC00 \uAD6C\uC11D\uC5D0\uB294
+        DialogueText: "\uC544 \uB9DE\uB2E4, \uBBF8\uD53C.. \uC0C1\uC810\uAC00 \uAD6C\uC11D\uC5D0\uB294
           \uAC00\uC9C0\uB9C8..!"
+        SkipDelay: 0
+    - rid: 5154282140972876790
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 9e663bf1-728d-4f76-963a-85e7c0b455c6
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2466, y: 206}
+        TargetObjectID: Ive
+        DialogueText: "\uC544\uAE4C \uC0C1\uC810\uAC00 \uAD6C\uC11D\uC5D0\uC11C \uC720\uB839\uC744
+          \uBCF8 \uAC70 \uAC19\uAC70\uB4E0\u2026"
         SkipDelay: 0

@@ -23,13 +23,13 @@ MonoBehaviour:
     PortName: Next
     TargetNodeGuid: 797f9c15-1ff4-404c-b307-18d369502362
   NodeData:
-  - rid: 3681219989066743969
-  - rid: 3681219989066743970
-  - rid: 3681219989066743971
+  - rid: 5154282142586110581
+  - rid: 5154282142586110582
+  - rid: 5154282142586110583
   references:
     version: 2
     RefIds:
-    - rid: 3681219989066743969
+    - rid: 5154282142586110581
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 56810fe0-312c-43ad-904d-dd914fabd9c4
@@ -39,18 +39,7 @@ MonoBehaviour:
         TargetObjectID: Mester
         DialogueText: "\uCD95\uD558\uD55C\uB2E4 \uBBF8\uD53C~"
         SkipDelay: 0
-    - rid: 3681219989066743970
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: 8f308e4d-d3d0-48c2-a703-af82a1b78139
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 731, y: 200}
-        TargetObjectID: Mester
-        DialogueText: "\uC774\uB807\uAC8C \uBE68\uB9AC \uBAA8\uC740 \uAC74 \uB124\uAC00
-          \uCC98\uC74C\uC774\uB780\uB2E4. \uD5C8\uD5C8\uD5C8~"
-        SkipDelay: 0
-    - rid: 3681219989066743971
+    - rid: 5154282142586110582
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 797f9c15-1ff4-404c-b307-18d369502362
@@ -59,6 +48,17 @@ MonoBehaviour:
         Position: {x: 1251, y: 200}
         TargetObjectID: Mester
         DialogueText: "\uB9DB\uC788\uB294 \uC655 \uCE94\uB514\uB294 \uB0B4\uAC00
-          \uD2B9\uBCC4\uD788 \uC8FC\uBB38\uC81C\uC791 \uD558\uB294 \uC0AC\uD0D5\uC774\uB780\uB2E4~
-          \uD5C8\uD5C8\uD5C8~"
+          \uD2B9\uBCC4\uD788 \n\uC8FC\uBB38\uC81C\uC791 \uD558\uB294 \uC0AC\uD0D5\uC774\uB780\uB2E4~
+          <anim:wave>\uD5C8\uD5C8\uD5C8~</anim>"
+        SkipDelay: 0
+    - rid: 5154282142586110583
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 8f308e4d-d3d0-48c2-a703-af82a1b78139
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 731, y: 200}
+        TargetObjectID: Mester
+        DialogueText: "\uC774\uB807\uAC8C \uBE68\uB9AC \uBAA8\uC740 \uAC74 \uB124\uAC00
+          \uCC98\uC74C\uC774\uB780\uB2E4. \n<anim:wave>\uD5C8\uD5C8\uD5C8~</anim>"
         SkipDelay: 0

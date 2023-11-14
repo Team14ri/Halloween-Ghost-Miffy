@@ -16,13 +16,13 @@ MonoBehaviour:
   - BaseNodeGuid: e16643f0-7aea-4886-8856-cadebae5a364
     PortName: Execute
     TargetNodeGuid: 1ca55b4c-043a-4c97-8fe8-d2b6dee9588a
-  - BaseNodeGuid: 1ca55b4c-043a-4c97-8fe8-d2b6dee9588a
-    PortName: "*(\uBE14\uB8E8\uBCA0\uB9AC \uCE58\uC988 \uCF00\uC774\uD06C \uADF8\uB9BC\uC744
-      \uBCF4\uC5EC\uC900\uB2E4.)*"
-    TargetNodeGuid: bdd72dc1-8d68-432b-894f-1e6bc12ced63
   - BaseNodeGuid: bdd72dc1-8d68-432b-894f-1e6bc12ced63
     PortName: Next
     TargetNodeGuid: 62e83111-7836-40f3-bbfc-be48157fe1a0
+  - BaseNodeGuid: 1ca55b4c-043a-4c97-8fe8-d2b6dee9588a
+    PortName: "\uBE14\uB8E8\uBCA0\uB9AC \uCE58\uC988 \uCF00\uC774\uD06C \uADF8\uB9BC\uC744
+      \uBCF4\uC5EC\uC900\uB2E4."
+    TargetNodeGuid: bdd72dc1-8d68-432b-894f-1e6bc12ced63
   - BaseNodeGuid: 62e83111-7836-40f3-bbfc-be48157fe1a0
     PortName: Next
     TargetNodeGuid: a0c76873-bc53-426c-8348-ff8ea0e86953
@@ -32,90 +32,98 @@ MonoBehaviour:
   - BaseNodeGuid: 9e96620a-22a2-43e9-a7af-d0b64e269dee
     PortName: Next
     TargetNodeGuid: 005e2815-35d7-478c-a70e-824bfb7c8c5d
-  - BaseNodeGuid: aea0c369-f6e3-48fc-9498-140e3b49fd2e
-    PortName: Next
-    TargetNodeGuid: a841f5dc-00cf-4a43-a411-ab5a8934fb4e
   - BaseNodeGuid: 7d7004d9-6ba6-48b7-a15f-a48b8bd64097
     PortName: Next
     TargetNodeGuid: aea0c369-f6e3-48fc-9498-140e3b49fd2e
-  - BaseNodeGuid: 005e2815-35d7-478c-a70e-824bfb7c8c5d
-    PortName: "(\uC54C\uACE0 \uC788\uB2E4\uB294 \uD45C\uC815\uC744 \uD55C\uB2E4)"
-    TargetNodeGuid: 7d7004d9-6ba6-48b7-a15f-a48b8bd64097
   - BaseNodeGuid: a841f5dc-00cf-4a43-a411-ab5a8934fb4e
     PortName: "\uBE14\uB8E8\uBCA0\uB9AC \u2192 \uD638\uBC15 \uBC00\uAC00\uB8E8 \u2192
       \uCE58\uC988 \uC21C\uC11C"
     TargetNodeGuid: 08bf25ce-d26a-4a11-8454-ee09a49ceb8e
-  - BaseNodeGuid: a841f5dc-00cf-4a43-a411-ab5a8934fb4e
-    PortName: "\uD638\uBC15 \uBC00\uAC00\uB8E8 \u2192 \uBE14\uB8E8\uBCA0\uB9AC \u2192
-      \uCE58\uC988 \uC21C\uC11C"
-    TargetNodeGuid: 08bf25ce-d26a-4a11-8454-ee09a49ceb8e
-  - BaseNodeGuid: 08bf25ce-d26a-4a11-8454-ee09a49ceb8e
-    PortName: Next
-    TargetNodeGuid: a841f5dc-00cf-4a43-a411-ab5a8934fb4e
-  - BaseNodeGuid: a841f5dc-00cf-4a43-a411-ab5a8934fb4e
-    PortName: "\uD638\uBC15 \uBC00\uAC00\uB8E8 \u2192 \uCE58\uC988 \u2192 \uBE14\uB8E8\uBCA0\uB9AC
-      \uC21C\uC11C"
-    TargetNodeGuid: 75f85383-e330-43ea-9790-6b67e83820bd
+  - BaseNodeGuid: 005e2815-35d7-478c-a70e-824bfb7c8c5d
+    PortName: "(\uC54C\uACE0 \uC788\uB2E4\uB294 \uD45C\uC815\uC744 \uD55C\uB2E4)"
+    TargetNodeGuid: 7d7004d9-6ba6-48b7-a15f-a48b8bd64097
   - BaseNodeGuid: 75f85383-e330-43ea-9790-6b67e83820bd
     PortName: "\uB3D9\uADF8\uB77C\uBBF8 \uBAA8\uC591\uC758 \uCF00\uC774\uD06C"
     TargetNodeGuid: 01f6187b-c220-447f-b1f9-0d0ce0b50be4
   - BaseNodeGuid: 75f85383-e330-43ea-9790-6b67e83820bd
     PortName: "\uC870\uAC01 \uCF00\uC774\uD06C \uBAA8\uC591"
     TargetNodeGuid: 01f6187b-c220-447f-b1f9-0d0ce0b50be4
-  - BaseNodeGuid: 01f6187b-c220-447f-b1f9-0d0ce0b50be4
-    PortName: Next
-    TargetNodeGuid: 75f85383-e330-43ea-9790-6b67e83820bd
   - BaseNodeGuid: 75f85383-e330-43ea-9790-6b67e83820bd
     PortName: "\uB124\uBAA8 \uBAA8\uC591\uC758 \uCF00\uC774\uD06C"
     TargetNodeGuid: 1900c192-b8d0-4fdd-98cc-16ecea87f30b
+  - BaseNodeGuid: 01f6187b-c220-447f-b1f9-0d0ce0b50be4
+    PortName: Next
+    TargetNodeGuid: 75f85383-e330-43ea-9790-6b67e83820bd
+  - BaseNodeGuid: 08bf25ce-d26a-4a11-8454-ee09a49ceb8e
+    PortName: Next
+    TargetNodeGuid: a841f5dc-00cf-4a43-a411-ab5a8934fb4e
   - BaseNodeGuid: 1900c192-b8d0-4fdd-98cc-16ecea87f30b
     PortName: "\uC77C\uBC18 \uC0DD\uD06C\uB9BC\uC744 \uACE0\uB978\uB2E4."
     TargetNodeGuid: 012e850a-846c-42d3-b212-d2d5ced80c28
   - BaseNodeGuid: 1900c192-b8d0-4fdd-98cc-16ecea87f30b
     PortName: "\uB538\uAE30 \uC0DD\uD06C\uB9BC\uC744 \uACE0\uB978\uB2E4."
     TargetNodeGuid: 012e850a-846c-42d3-b212-d2d5ced80c28
-  - BaseNodeGuid: 012e850a-846c-42d3-b212-d2d5ced80c28
-    PortName: Next
-    TargetNodeGuid: 1900c192-b8d0-4fdd-98cc-16ecea87f30b
   - BaseNodeGuid: 1900c192-b8d0-4fdd-98cc-16ecea87f30b
     PortName: "\uCD08\uCF54 \uC0DD\uD06C\uB9BC\uC744 \uACE0\uB978\uB2E4. "
     TargetNodeGuid: 7111f22e-699a-427c-90ad-272f9dc17208
-  - BaseNodeGuid: 7111f22e-699a-427c-90ad-272f9dc17208
+  - BaseNodeGuid: 012e850a-846c-42d3-b212-d2d5ced80c28
     PortName: Next
-    TargetNodeGuid: fa6fdc00-c813-46b9-94ca-ccf609122c56
-  - BaseNodeGuid: fa6fdc00-c813-46b9-94ca-ccf609122c56
-    PortName: Next
-    TargetNodeGuid: 6b7cdf90-9162-4c85-97fa-21dc934f63d0
+    TargetNodeGuid: 1900c192-b8d0-4fdd-98cc-16ecea87f30b
   - BaseNodeGuid: 6b7cdf90-9162-4c85-97fa-21dc934f63d0
     PortName: Next
     TargetNodeGuid: 90a26013-eb78-49f5-a157-8ef8f2cc00e9
+  - BaseNodeGuid: fa6fdc00-c813-46b9-94ca-ccf609122c56
+    PortName: Next
+    TargetNodeGuid: 6b7cdf90-9162-4c85-97fa-21dc934f63d0
   - BaseNodeGuid: 90a26013-eb78-49f5-a157-8ef8f2cc00e9
     PortName: Next
     TargetNodeGuid: 5dd4883b-1869-4e16-8d4b-a1ba55736f5d
+  - BaseNodeGuid: aea0c369-f6e3-48fc-9498-140e3b49fd2e
+    PortName: Next
+    TargetNodeGuid: 3a6baf5f-e74e-434a-bfcd-8e28aae45321
+  - BaseNodeGuid: 3a6baf5f-e74e-434a-bfcd-8e28aae45321
+    PortName: Next
+    TargetNodeGuid: a841f5dc-00cf-4a43-a411-ab5a8934fb4e
+  - BaseNodeGuid: a841f5dc-00cf-4a43-a411-ab5a8934fb4e
+    PortName: "\uD638\uBC15 \uBC00\uAC00\uB8E8 \u2192 \uCE58\uC988 \u2192 \uBE14\uB8E8\uBCA0\uB9AC
+      \uC21C\uC11C"
+    TargetNodeGuid: 75f85383-e330-43ea-9790-6b67e83820bd
+  - BaseNodeGuid: a841f5dc-00cf-4a43-a411-ab5a8934fb4e
+    PortName: "\uD638\uBC15 \uBC00\uAC00\uB8E8 \u2192 \uBE14\uB8E8\uBCA0\uB9AC \u2192
+      \uCE58\uC988 \uC21C\uC11C"
+    TargetNodeGuid: 08bf25ce-d26a-4a11-8454-ee09a49ceb8e
+  - BaseNodeGuid: 7111f22e-699a-427c-90ad-272f9dc17208
+    PortName: Next
+    TargetNodeGuid: 862a6fec-7ea2-443f-aee8-62a0b8f146bd
+  - BaseNodeGuid: 862a6fec-7ea2-443f-aee8-62a0b8f146bd
+    PortName: Next
+    TargetNodeGuid: fa6fdc00-c813-46b9-94ca-ccf609122c56
   NodeData:
-  - rid: 3681219989066743877
-  - rid: 3681219989066743878
-  - rid: 3681219989066743879
-  - rid: 3681219989066743880
-  - rid: 3681219989066743881
-  - rid: 3681219989066743882
-  - rid: 3681219989066743883
-  - rid: 3681219989066743884
-  - rid: 3681219989066743885
-  - rid: 3681219989066743886
-  - rid: 3681219989066743887
-  - rid: 3681219989066743888
-  - rid: 3681219989066743889
-  - rid: 3681219989066743890
-  - rid: 3681219989066743891
-  - rid: 3681219989066743892
-  - rid: 3681219989066743893
-  - rid: 3681219989066743894
-  - rid: 3681219989066743895
+  - rid: 5154282142176641819
+  - rid: 5154282142176641820
+  - rid: 5154282142176641821
+  - rid: 5154282142176641822
+  - rid: 5154282142176641823
+  - rid: 5154282142176641824
+  - rid: 5154282142176641825
+  - rid: 5154282142176641826
+  - rid: 5154282142176641827
+  - rid: 5154282142176641828
+  - rid: 5154282142176641829
+  - rid: 5154282142176641830
+  - rid: 5154282142176641831
+  - rid: 5154282142176641832
+  - rid: 5154282142176641833
+  - rid: 5154282142176641834
+  - rid: 5154282142176641835
+  - rid: 5154282142176641836
+  - rid: 5154282142176641837
+  - rid: 5154282142176641838
+  - rid: 5154282142176641839
   references:
     version: 2
     RefIds:
-    - rid: 3681219989066743877
+    - rid: 5154282142176641819
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: bdd72dc1-8d68-432b-894f-1e6bc12ced63
@@ -123,9 +131,9 @@ MonoBehaviour:
         NodeType: 0
         Position: {x: 781, y: 200}
         TargetObjectID: Halden
-        DialogueText: "\uC774\uAC74..!"
+        DialogueText: "<size:1.3>\uC774\uAC74..!"
         SkipDelay: 0
-    - rid: 3681219989066743878
+    - rid: 5154282142176641820
       type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 1ca55b4c-043a-4c97-8fe8-d2b6dee9588a
@@ -134,7 +142,7 @@ MonoBehaviour:
         Position: {x: 285, y: 200}
         TargetObjectID: Bibian
         DialogueText: "\uC74C? \uBBF8\uD53C \uB610 \uC654\uB124? \uBB34\uC2A8 \uC77C\uC774\uC57C?"
-    - rid: 3681219989066743879
+    - rid: 5154282142176641821
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 62e83111-7836-40f3-bbfc-be48157fe1a0
@@ -144,7 +152,7 @@ MonoBehaviour:
         TargetObjectID: Bibian
         DialogueText: "\uD560\uB374\uC528 \uBB34\uC2A8 \uC77C\uC774\uC5D0\uC694?"
         SkipDelay: 0
-    - rid: 3681219989066743880
+    - rid: 5154282142176641822
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: a0c76873-bc53-426c-8348-ff8ea0e86953
@@ -153,30 +161,9 @@ MonoBehaviour:
         Position: {x: 1565, y: 200}
         TargetObjectID: Halden
         DialogueText: "\uC608\uC804\uC5D0 \uC790\uC8FC \uC624\uB358 \uC190\uB2D8\uC774
-          \uC8FC\uBB38 \uC81C\uC791\uC744 \uB9E1\uACBC\uB358 \uCF00\uC774\uD06C\uC57C.."
+          \n\uC8FC\uBB38 \uC81C\uC791\uC744 \uB9E1\uACBC\uB358 \uCF00\uC774\uD06C\uC57C.."
         SkipDelay: 0
-    - rid: 3681219989066743881
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: 9e96620a-22a2-43e9-a7af-d0b64e269dee
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 2185, y: 200}
-        TargetObjectID: Halden
-        DialogueText: "\uD56D\uC0C1 \uBCF8\uC778\uC758 \uB808\uC2DC\uD53C\uB300\uB85C
-          \uB9CC\uB4E4\uC5B4\uB2EC\uB77C\uACE0 \uD588\uC5C8\uC9C0."
-        SkipDelay: 0
-    - rid: 3681219989066743882
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: 7d7004d9-6ba6-48b7-a15f-a48b8bd64097
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 3319, y: 200}
-        TargetObjectID: Bibian
-        DialogueText: "\uBBF8\uD53C\uAC00 \uC54C\uACE0 \uC788\uB294 \uAC70 \uAC19\uC544\uC694!"
-        SkipDelay: 0
-    - rid: 3681219989066743883
+    - rid: 5154282142176641823
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: aea0c369-f6e3-48fc-9498-140e3b49fd2e
@@ -184,20 +171,10 @@ MonoBehaviour:
         NodeType: 0
         Position: {x: 3781, y: 200}
         TargetObjectID: Bibian
-        DialogueText: "\uBBF8\uD53C\uAC00 \uC800\uB97C \uB3C4\uC640\uC92C\uC5C8\uC73C\uB2C8\uAE4C
-          \uC774\uBC88\uC5D4 \uC81C\uAC00 \uB3C4\uC640\uC8FC\uACE0 \uC2F6\uC5B4\uC694."
+        DialogueText: "\uBBF8\uD53C\uAC00 \uC800\uB97C \uB3C4\uC640\uC92C\uC5C8\uC73C\uB2C8\uAE4C..\n\uC774\uBC88\uC5D4
+          \uC81C\uAC00 \uB3C4\uC640\uC8FC\uACE0 \uC2F6\uC5B4\uC694."
         SkipDelay: 0
-    - rid: 3681219989066743884
-      type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: a841f5dc-00cf-4a43-a411-ab5a8934fb4e
-        NodeTitle: MultiChoice Node
-        NodeType: 1
-        Position: {x: 4532, y: 227}
-        TargetObjectID: Halden
-        DialogueText: "\uADF8\uB798? \uADF8\uB7FC \uD568\uAED8 \uB9CC\uB4E4\uC5B4\uBCF4\uBA74
-          \uB418\uACA0\uAD70!"
-    - rid: 3681219989066743885
+    - rid: 5154282142176641824
       type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 005e2815-35d7-478c-a70e-824bfb7c8c5d
@@ -206,8 +183,9 @@ MonoBehaviour:
         Position: {x: 2736, y: 200}
         TargetObjectID: Halden
         DialogueText: "\uD760.. \uD558\uC9C0\uB9CC \uB108\uBB34 \uC624\uB798 \uB3FC\uC11C
-          \uC0C1\uC138\uD55C \uB808\uC2DC\uD53C\uAC00 \uAE30\uC5B5\uC774 \uC548 \uB098\uB294\uAC78.."
-    - rid: 3681219989066743886
+          \n\uC0C1\uC138\uD55C \uB808\uC2DC\uD53C\uAC00 \uAE30\uC5B5\uC774 \uC548
+          \uB098\uB294\uAC78.."
+    - rid: 5154282142176641825
       type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 75f85383-e330-43ea-9790-6b67e83820bd
@@ -215,8 +193,8 @@ MonoBehaviour:
         NodeType: 1
         Position: {x: 4940, y: 443}
         TargetObjectID: Halden
-        DialogueText: "\uB2E4\uC74C\uC740 \uBE75\uC758 \uBAA8\uC591\uC774\uC57C"
-    - rid: 3681219989066743887
+        DialogueText: "\uC790! \uB2E4\uC74C\uC740 \uBE75\uC758 \uBAA8\uC591\uC774\uC57C."
+    - rid: 5154282142176641826
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 01f6187b-c220-447f-b1f9-0d0ce0b50be4
@@ -226,7 +204,7 @@ MonoBehaviour:
         TargetObjectID: Halden
         DialogueText: "\uC774\uAC8C \uC544\uB2CC \uAC83 \uAC19\uC740\uB370..."
         SkipDelay: 0
-    - rid: 3681219989066743888
+    - rid: 5154282142176641827
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 08bf25ce-d26a-4a11-8454-ee09a49ceb8e
@@ -236,7 +214,7 @@ MonoBehaviour:
         TargetObjectID: Halden
         DialogueText: "\uC774\uAC8C \uC544\uB2CC \uAC83 \uAC19\uC740\uB370..."
         SkipDelay: 0
-    - rid: 3681219989066743889
+    - rid: 5154282142176641828
       type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 1900c192-b8d0-4fdd-98cc-16ecea87f30b
@@ -245,7 +223,7 @@ MonoBehaviour:
         Position: {x: 5421, y: 455}
         TargetObjectID: Halden
         DialogueText: "\uB9C8\uC9C0\uB9C9\uC740 \uC0DD\uD06C\uB9BC\uC758 \uC885\uB958.."
-    - rid: 3681219989066743890
+    - rid: 5154282142176641829
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 012e850a-846c-42d3-b212-d2d5ced80c28
@@ -255,17 +233,7 @@ MonoBehaviour:
         TargetObjectID: Halden
         DialogueText: "\uC774\uAC8C \uC544\uB2CC \uAC83 \uAC19\uC740\uB370..."
         SkipDelay: 0
-    - rid: 3681219989066743891
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: 7111f22e-699a-427c-90ad-272f9dc17208
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 5892, y: 460}
-        TargetObjectID: Halden
-        DialogueText: "\uC774\uAC70\uC600\uAD70.. \uAE30\uC5B5\uC774 \uB0AC\uC5B4."
-        SkipDelay: 0
-    - rid: 3681219989066743892
+    - rid: 5154282142176641830
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 6b7cdf90-9162-4c85-97fa-21dc934f63d0
@@ -273,37 +241,100 @@ MonoBehaviour:
         NodeType: 0
         Position: {x: 6950, y: 471}
         TargetObjectID: Halden
-        DialogueText: "\uD638\uD638.. \uBE44\uBE44\uC548.. \uB3C8\uC740 \uB124\uAC00
-          \uB0B4\uB294 \uAC70\uB2C8?"
+        DialogueText: "\uD638\uD638.. <size:1.2><anim:wave>\uBE44\uBE44\uC548..</anim>
+          <size:1>\uB3C8\uC740 \uB124\uAC00 \uB0B4\uB294 \uAC70\uB2C8?"
         SkipDelay: 0
-    - rid: 3681219989066743893
+    - rid: 5154282142176641831
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 9e96620a-22a2-43e9-a7af-d0b64e269dee
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1864, y: 192}
+        TargetObjectID: Halden
+        DialogueText: "\uD56D\uC0C1 \uBCF8\uC778\uC758 \uB808\uC2DC\uD53C\uB300\uB85C
+          \uB9CC\uB4E4\uC5B4\uB2EC\uB77C\uACE0 \uD588\uC5C8\uC9C0."
+        SkipDelay: 0
+    - rid: 5154282142176641832
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 7d7004d9-6ba6-48b7-a15f-a48b8bd64097
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 3200, y: 199}
+        TargetObjectID: Bibian
+        DialogueText: "\uBBF8\uD53C\uAC00 \uC54C\uACE0 \uC788\uB294 \uAC70 \uAC19\uC544\uC694!"
+        SkipDelay: 0
+    - rid: 5154282142176641833
+      type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: a841f5dc-00cf-4a43-a411-ab5a8934fb4e
+        NodeTitle: MultiChoice Node
+        NodeType: 1
+        Position: {x: 4271, y: 189}
+        TargetObjectID: 'Halden '
+        DialogueText: "\uBA3C\uC800 \uC7AC\uB8CC\uB97C \uB123\uB294 \uC21C\uC11C\uB97C
+          \uC54C\uB824\uC904\uB798?"
+    - rid: 5154282142176641834
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 3a6baf5f-e74e-434a-bfcd-8e28aae45321
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 4098, y: 409}
+        TargetObjectID: Halden
+        DialogueText: "\uADF8\uB798? \uADF8\uB7FC \uD568\uAED8 \uB9CC\uB4E4\uC5B4\uBCF4\uBA74
+          \uB418\uACA0\uAD70!"
+        SkipDelay: 0
+    - rid: 5154282142176641835
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 862a6fec-7ea2-443f-aee8-62a0b8f146bd
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 6280, y: 653}
+        TargetObjectID: Halden
+        DialogueText: "\uC790, \uC644\uC131\uC774\uB2E4!"
+        SkipDelay: 0
+    - rid: 5154282142176641836
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 7111f22e-699a-427c-90ad-272f9dc17208
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 5892, y: 459}
+        TargetObjectID: Halden
+        DialogueText: "\uB9DE\uC544, \uC774\uAC70\uC600\uC5B4.. \uAE30\uC5B5\uC774
+          \uB0AC\uB2E4!"
+        SkipDelay: 0
+    - rid: 5154282142176641837
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: fa6fdc00-c813-46b9-94ca-ccf609122c56
         NodeTitle: NoChoice Node
         NodeType: 0
-        Position: {x: 6375, y: 471}
+        Position: {x: 6547, y: 461}
         TargetObjectID: Bibian
-        DialogueText: "\uBBF8\uD53C \uC774\uAC74 \uC800\uBC88\uC5D0 \uB3C4\uC640\uC92C\uB358
-          \uAC83\uC5D0 \uB300\uD55C \uBCF4\uB2F5\uC774\uC57C. \uAC00\uC838\uAC00!"
+        DialogueText: "\uBBF8\uD53C! \uC774\uAC74 \uC800\uBC88\uC5D0 \uB3C4\uC640\uC92C\uB358
+          \uAC83\uC5D0 \n\uB300\uD55C \uBCF4\uB2F5\uC774\uC57C. \uAC00\uC838\uAC00!"
         SkipDelay: 0
-    - rid: 3681219989066743894
+    - rid: 5154282142176641838
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 90a26013-eb78-49f5-a157-8ef8f2cc00e9
         NodeTitle: NoChoice Node
         NodeType: 0
-        Position: {x: 7503, y: 471}
+        Position: {x: 7599, y: 459}
         TargetObjectID: Bibian
-        DialogueText: "\uBB34..\uBB3C\uB860\uC774\uC8E0!"
+        DialogueText: "<anim:shake>\uBB34..\uBB3C\uB860\uC774\uC8E0!</anim>"
         SkipDelay: 0
-    - rid: 3681219989066743895
+    - rid: 5154282142176641839
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 5dd4883b-1869-4e16-8d4b-a1ba55736f5d
         NodeTitle: NoChoice Node
         NodeType: 0
-        Position: {x: 7955, y: 485}
+        Position: {x: 8050, y: 464}
         TargetObjectID: Bibian
         DialogueText: "\uC5BC\uB978 \uAC00\uBD10 \uBBF8\uD53C!"
         SkipDelay: 0
