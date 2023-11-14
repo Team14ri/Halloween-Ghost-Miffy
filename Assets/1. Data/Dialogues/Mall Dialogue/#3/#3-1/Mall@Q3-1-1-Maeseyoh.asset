@@ -1,0 +1,213 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Mall@Q3-1-1-Maeseyoh
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: e16643f0-7aea-4886-8856-cadebae5a364
+    PortName: Execute
+    TargetNodeGuid: b3fdde7a-44c0-4f7f-82f5-6f250440bf73
+  - BaseNodeGuid: b3fdde7a-44c0-4f7f-82f5-6f250440bf73
+    PortName: Next
+    TargetNodeGuid: 9f0d54ff-2dc8-4056-8040-fc6aaec39d56
+  - BaseNodeGuid: fa5db90f-9c59-4cf6-8fd9-a8cd11426d20
+    PortName: Next
+    TargetNodeGuid: 85bc181b-b978-4669-a0bf-fde254ffa519
+  - BaseNodeGuid: 9f0d54ff-2dc8-4056-8040-fc6aaec39d56
+    PortName: "\uBB34\uC2A8 \uC77C\uC778\uC9C0 \uB07C\uC5B4\uB4E0\uB2E4."
+    TargetNodeGuid: fa5db90f-9c59-4cf6-8fd9-a8cd11426d20
+  - BaseNodeGuid: 85bc181b-b978-4669-a0bf-fde254ffa519
+    PortName: ???
+    TargetNodeGuid: a611a2a0-80b7-4e8b-80ab-aa02364f2dbb
+  - BaseNodeGuid: 85bc181b-b978-4669-a0bf-fde254ffa519
+    PortName: "\uB3C4\uB9AC\uB3C4\uB9AC.."
+    TargetNodeGuid: a611a2a0-80b7-4e8b-80ab-aa02364f2dbb
+  - BaseNodeGuid: a611a2a0-80b7-4e8b-80ab-aa02364f2dbb
+    PortName: Next
+    TargetNodeGuid: 6ac3b394-83c6-4172-87ff-22b7f5598492
+  - BaseNodeGuid: 6ac3b394-83c6-4172-87ff-22b7f5598492
+    PortName: Next
+    TargetNodeGuid: 4f17a209-3753-49b1-a0ce-2762b71005ad
+  - BaseNodeGuid: 4f17a209-3753-49b1-a0ce-2762b71005ad
+    PortName: Next
+    TargetNodeGuid: 3f0616ea-beae-4650-a8f7-ee50a960788f
+  - BaseNodeGuid: 5242e75d-8c6d-4ba6-9ddf-609500e5d69a
+    PortName: Next
+    TargetNodeGuid: e6a9463c-6d24-4602-b409-94e2e6050615
+  - BaseNodeGuid: 631f5eae-e4ea-4ec1-9818-48832c8c1e8e
+    PortName: Next
+    TargetNodeGuid: 81edc8d6-e3d2-4cbd-b819-9101b9def020
+  - BaseNodeGuid: 3f0616ea-beae-4650-a8f7-ee50a960788f
+    PortName: Next
+    TargetNodeGuid: 5242e75d-8c6d-4ba6-9ddf-609500e5d69a
+  - BaseNodeGuid: e6a9463c-6d24-4602-b409-94e2e6050615
+    PortName: "\uB0B4\uAC00 \uB3D5\uACA0\uB2E4\uB294 \uC758\uC9C0\uB97C \uBCF4\uC778\uB2E4."
+    TargetNodeGuid: b7d9dfcf-5af9-416a-9339-13f559446587
+  - BaseNodeGuid: b7d9dfcf-5af9-416a-9339-13f559446587
+    PortName: Next
+    TargetNodeGuid: 631f5eae-e4ea-4ec1-9818-48832c8c1e8e
+  NodeData:
+  - rid: 5154282140972876691
+  - rid: 5154282140972876692
+  - rid: 5154282140972876693
+  - rid: 5154282140972876694
+  - rid: 5154282140972876695
+  - rid: 5154282140972876696
+  - rid: 5154282140972876697
+  - rid: 5154282140972876698
+  - rid: 5154282140972876699
+  - rid: 5154282140972876700
+  - rid: 5154282140972876701
+  - rid: 5154282140972876702
+  - rid: 5154282140972876703
+  references:
+    version: 2
+    RefIds:
+    - rid: 5154282140972876691
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: b3fdde7a-44c0-4f7f-82f5-6f250440bf73
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 253, y: 191}
+        TargetObjectID: Maeseyoh
+        DialogueText: "\uC544 \uAE00\uC384, \uC800\uB294 \uC548\uB41C\uB2E4\uB2C8\uAE4C<size:1.2><anim:wave>\uC6A9!</anim>"
+        SkipDelay: 0
+    - rid: 5154282140972876692
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: fa5db90f-9c59-4cf6-8fd9-a8cd11426d20
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1156, y: 191}
+        TargetObjectID: Maeseyoh
+        DialogueText: "\uC544, \uBBF8\uD53C\uAD70\uC6A9. \n\uAE00\uC384 \uC774\uBD84\uC774
+          \uD638\uBC15 \uAF43\uC744 \uCC3E\uACE0 \uC788\uB300\uC11C\uC6A9."
+        SkipDelay: 0
+    - rid: 5154282140972876693
+      type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 9f0d54ff-2dc8-4056-8040-fc6aaec39d56
+        NodeTitle: MultiChoice Node
+        NodeType: 1
+        Position: {x: 704, y: 182}
+        TargetObjectID: Ive
+        DialogueText: "\uADF8\uB7EC\uC9C0\uB9D0\uACE0.. \uD55C\uBC88\uB9CC \uBD80\uD0C1\uD560\uAC8C..
+          \n\uC5B4\uB5BB\uAC8C \uC548\uB420\uAE4C?"
+    - rid: 5154282140972876694
+      type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 85bc181b-b978-4669-a0bf-fde254ffa519
+        NodeTitle: MultiChoice Node
+        NodeType: 1
+        Position: {x: 1637, y: 203}
+        TargetObjectID: Maeseyoh
+        DialogueText: "\uC544 \uD639\uC2DC \uD638\uBC15 \uAF43\uC774 \uBB54\uC9C0
+          \uC544\uC2DC\uB098\uC6A9?"
+    - rid: 5154282140972876695
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: a611a2a0-80b7-4e8b-80ab-aa02364f2dbb
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2124, y: 197}
+        TargetObjectID: Maeseyoh
+        DialogueText: "\uD638\uBC15 \uAF43\uC740, 27\uB144\uB9C8\uB2E4 \uD55C\uBC88\uC529
+          \uD53C\uB294\n<anim:shake>\uC544\uC8FC \uD76C\uADC0\uD55C</anim> \uAF43\uC774\uC5D0\uC6A9!"
+        SkipDelay: 0
+    - rid: 5154282140972876696
+      type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: e6a9463c-6d24-4602-b409-94e2e6050615
+        NodeTitle: MultiChoice Node
+        NodeType: 1
+        Position: {x: 4567, y: 253}
+        TargetObjectID: Ive
+        DialogueText: "\u2026."
+    - rid: 5154282140972876697
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 81edc8d6-e3d2-4cbd-b819-9101b9def020
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 5878, y: 299}
+        TargetObjectID: Ive
+        DialogueText: "\uAE30\uB2E4\uB9AC\uACE0 \uC788\uC744\uAC8C..!"
+        SkipDelay: 0
+    - rid: 5154282140972876698
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 631f5eae-e4ea-4ec1-9818-48832c8c1e8e
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 5373, y: 248}
+        TargetObjectID: Ive
+        DialogueText: "\uC815\uB9D0\uC774\uC57C..? \uACE0\uB9C8\uC6CC..! \uADF8\uB7FC\n\uB098\uB294
+          \uBA3C\uC800 \uC774 \uC544\uB798 \uC232\uC5D0 \uAC00\uC788\uC744\uAC8C,
+          \uC232\uC5D0\uC11C \uB9CC\uB098\uC790!"
+        SkipDelay: 0
+    - rid: 5154282140972876699
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: b7d9dfcf-5af9-416a-9339-13f559446587
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 4958, y: 242}
+        TargetObjectID: Maeseyoh
+        DialogueText: "\uBBF8\uD53C\uB294 \uC815\uB9D0 \uCC29\uD558\uAD70\uC6A9..!"
+        SkipDelay: 0
+    - rid: 5154282140972876700
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 6ac3b394-83c6-4172-87ff-22b7f5598492
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2575, y: 199}
+        TargetObjectID: Maeseyoh
+        DialogueText: "\uADF8\uB7F0\uB370 \uC774\uAC8C <anim:shake>\uC6CC\uB099~</anim>
+          \uAD6C\uD558\uAE30 \uD798\uB4E0 \uAC70\uB77C\uC11C\uC6A9."
+        SkipDelay: 0
+    - rid: 5154282140972876701
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 4f17a209-3753-49b1-a0ce-2762b71005ad
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 3124, y: 189}
+        TargetObjectID: Maeseyoh
+        DialogueText: "<anim:shake>\uC5C4\uCCAD</anim> \uB192\uC740 \uACF3\uC5D0
+          \uD53C\uAC70\uB098.. \n\uB2E4\uB978 \uC2DD\uBB3C\uACFC \uB3D9\uB5A8\uC5B4\uC838\uC11C
+          <anim:shake>\uC790\uB77C\uB098\uAC70\uB098..</anim> \uD558\uAC70\uB4E0\uC6A9."
+        SkipDelay: 0
+    - rid: 5154282140972876702
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 3f0616ea-beae-4650-a8f7-ee50a960788f
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 3709, y: 185}
+        TargetObjectID: Maeseyoh
+        DialogueText: "\uC544\uBB34\uD2BC! \uC704\uCE58\uB97C \uC54C\uB824\uC92C\uB294\uB370
+          \uC790\uAE30\uAC00 \n\uAC08 \uC218\uAC00 \uC5C6\uC5B4\uC11C \uAC19\uC774
+          \uC880 \uAC00\uC11C \uBD10\uB2EC\uB77C\uB124\uC6A9."
+        SkipDelay: 0
+    - rid: 5154282140972876703
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 5242e75d-8c6d-4ba6-9ddf-609500e5d69a
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 4139, y: 206}
+        TargetObjectID: Maeseyoh
+        DialogueText: "\uC804 \uC9C0\uAE08 \uB3C4\uB451\uB9DE\uC558\uB358 \uD638\uBC15\uBCF4\uC11D\uB3C4
+          \uC788\uACE0,\n\uAC00\uAC8C\uB97C \uC815\uB9AC\uD574\uC57C \uD55C\uB2E4\uAD6C\uC6A9!"
+        SkipDelay: 0
