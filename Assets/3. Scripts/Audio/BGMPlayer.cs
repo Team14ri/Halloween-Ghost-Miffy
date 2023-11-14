@@ -28,7 +28,7 @@ public class BGMPlayer : MonoBehaviour
     
     private void Start()
     {
-        currentEventName = "TestMapA";
+        currentEventName = "Mall";
         if (playOnStart)
         {
             PlayBGM(currentEventName);

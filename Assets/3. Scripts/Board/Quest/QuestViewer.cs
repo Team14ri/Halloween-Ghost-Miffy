@@ -38,6 +38,7 @@ public class QuestViewer : MonoBehaviour
     private void OnEnable()
     {
         StartCoroutine(OnEnableOneFrameLate());
+        SoundManager.Instance.PlaySound("UI_QuestOpen");
     }
 
     private IEnumerator OnEnableOneFrameLate()
