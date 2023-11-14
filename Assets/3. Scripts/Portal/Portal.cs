@@ -1,18 +1,22 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
-    public int portalNum;
-    [Space]
-    [Header("ex) MiffyHouse씬의 1번 포탈로 이동시키고 싶다면?")]
-    [Header("-> exitSceneName = MiffyHouse / exitPortalNum = 1")]
-    [Space]
-    public string exitSceneName;
-    public int exitPortalNum = -1;
+    [BoxGroup("Info"), SerializeField] private int portalNum;
+    [BoxGroup("Info"), SerializeField] private Transform spawnPoint;
 
+    [BoxGroup("Exit Info"), SerializeField] private string exitSceneName;
+    [BoxGroup("Exit Info"), SerializeField] private int exitPortalNum = 1;
+    
     private void Start()
     {
         PortalManager.Instance.PortalDictionary[portalNum] = this;
+    }
+
+    public Transform GetSpawnPoint()
+    {
+        return spawnPoint;
     }
 
     public void LoadScene()
