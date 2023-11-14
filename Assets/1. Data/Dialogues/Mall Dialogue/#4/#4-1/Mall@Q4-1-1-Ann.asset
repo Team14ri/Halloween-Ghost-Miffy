@@ -1,0 +1,216 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Mall@Q4-1-1-Ann
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: e16643f0-7aea-4886-8856-cadebae5a364
+    PortName: Execute
+    TargetNodeGuid: d0a5fb02-a8d4-4b4e-8e4a-1acd8f2cbc6d
+  - BaseNodeGuid: d0a5fb02-a8d4-4b4e-8e4a-1acd8f2cbc6d
+    PortName: "(\uAE84\uC545!!!)"
+    TargetNodeGuid: 5ac17e88-2800-449c-b114-c0cf48d80988
+  - BaseNodeGuid: 5ac17e88-2800-449c-b114-c0cf48d80988
+    PortName: Next
+    TargetNodeGuid: 064a26fc-ca51-4320-9ff2-c216da6f5951
+  - BaseNodeGuid: 064a26fc-ca51-4320-9ff2-c216da6f5951
+    PortName: Next
+    TargetNodeGuid: df83d379-c7aa-4d7e-b356-00b89271c750
+  - BaseNodeGuid: df83d379-c7aa-4d7e-b356-00b89271c750
+    PortName: Next
+    TargetNodeGuid: 53764af8-f7c4-497a-a218-1c1ba6a28984
+  - BaseNodeGuid: 53764af8-f7c4-497a-a218-1c1ba6a28984
+    PortName: Next
+    TargetNodeGuid: 5ec70bae-49c9-45e8-b61a-c97cd5169b24
+  - BaseNodeGuid: 11dede29-6e20-4fdd-8d52-be54f1e89761
+    PortName: Next
+    TargetNodeGuid: 1e2b9660-5142-4107-afff-0e2babfc5ade
+  - BaseNodeGuid: 1e2b9660-5142-4107-afff-0e2babfc5ade
+    PortName: Next
+    TargetNodeGuid: 55a34f61-d087-40bb-b1c1-73be84ab2873
+  - BaseNodeGuid: 5ec70bae-49c9-45e8-b61a-c97cd5169b24
+    PortName: Next
+    TargetNodeGuid: 4839b262-6591-4f2c-83f3-741b442124ea
+  - BaseNodeGuid: 4839b262-6591-4f2c-83f3-741b442124ea
+    PortName: Next
+    TargetNodeGuid: d4d3089c-c7c2-405b-84c5-3bf91b6d01d7
+  - BaseNodeGuid: d4d3089c-c7c2-405b-84c5-3bf91b6d01d7
+    PortName: Next
+    TargetNodeGuid: 5a723556-3832-407e-9655-7bf635952a5f
+  - BaseNodeGuid: 5a723556-3832-407e-9655-7bf635952a5f
+    PortName: Next
+    TargetNodeGuid: 6c9fdade-abcc-450c-adfd-e48f33fc8607
+  - BaseNodeGuid: 6c9fdade-abcc-450c-adfd-e48f33fc8607
+    PortName: Next
+    TargetNodeGuid: 11dede29-6e20-4fdd-8d52-be54f1e89761
+  NodeData:
+  - rid: 5154282142176641255
+  - rid: 5154282142176641256
+  - rid: 5154282142176641257
+  - rid: 5154282142176641258
+  - rid: 5154282142176641259
+  - rid: 5154282142176641260
+  - rid: 5154282142176641261
+  - rid: 5154282142176641262
+  - rid: 5154282142176641263
+  - rid: 5154282142176641264
+  - rid: 5154282142176641265
+  - rid: 5154282142176641266
+  - rid: 5154282142176641267
+  references:
+    version: 2
+    RefIds:
+    - rid: 5154282142176641255
+      type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: d0a5fb02-a8d4-4b4e-8e4a-1acd8f2cbc6d
+        NodeTitle: MultiChoice Node
+        NodeType: 1
+        Position: {x: 307, y: 200}
+        TargetObjectID: Ann
+        DialogueText: "\uC5B4\uB5BB\uAC8C \uD574\uC57C\uD560\uAE4C\u2026"
+    - rid: 5154282142176641256
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 5ac17e88-2800-449c-b114-c0cf48d80988
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 650, y: 194}
+        TargetObjectID: Ann
+        DialogueText: "<size:1.3>\uC7A0\uAE50!! <size:1>\uB0B4\uAC00 \uBCF4\uC774\uB2C8?
+          \n\uB09C \uB098\uC05C \uC720\uB839\uC774 \uC544\uB2C8\uC57C!"
+        SkipDelay: 0
+    - rid: 5154282142176641257
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 064a26fc-ca51-4320-9ff2-c216da6f5951
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1220, y: 191}
+        TargetObjectID: Ann
+        DialogueText: "\uB108\uB3C4 \uC720\uB839\uC774\uB2C8?"
+        SkipDelay: 0
+    - rid: 5154282142176641258
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: df83d379-c7aa-4d7e-b356-00b89271c750
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1669, y: 189}
+        TargetObjectID: Ann
+        DialogueText: "\uCE6D\uCC2C \uCE94\uB514 \uC2A4\uD2F0\uCEE4\uB97C \uBAA8\uC73C\uACE0
+          \uC788\uAD6C\uB098?"
+        SkipDelay: 0
+    - rid: 5154282142176641259
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 53764af8-f7c4-497a-a218-1c1ba6a28984
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2207, y: 181}
+        TargetObjectID: Ann
+        DialogueText: "\uADF8\uB807\uB2E4\uBA74 \uD639\uC2DC\u2026"
+        SkipDelay: 0
+    - rid: 5154282142176641260
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 5ec70bae-49c9-45e8-b61a-c97cd5169b24
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2502, y: 180}
+        TargetObjectID: Ann
+        DialogueText: "\uAD11\uC7A5\uC5D0\uC11C <anim:shake>\uC220\uCDE8\uD55C \uC544\uC800\uC528</anim>\uB97C
+          \uBCF8 \uC801 \uC788\uB2C8?"
+        SkipDelay: 0
+    - rid: 5154282142176641261
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 4839b262-6591-4f2c-83f3-741b442124ea
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 3039, y: 174}
+        TargetObjectID: Ann
+        DialogueText: "\uADF8\uB294 \uB0B4 <anim:shake>\uB0A8\uD3B8 \uB85C\uC774\uB4DC</anim>\uC778\uB370..
+          \n\uBCF4\uB2E4\uC2DC\uD53C \uB09C \uC774\uBBF8 \uC720\uB839\uC774 \uB418\uBC84\uB838\uC5B4."
+        SkipDelay: 0
+    - rid: 5154282142176641262
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: d4d3089c-c7c2-405b-84c5-3bf91b6d01d7
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 3674, y: 185}
+        TargetObjectID: Ann
+        DialogueText: "\uADF8\uB294 \uB0B4\uAC00 \uB5A0\uB09C \uD6C4 \uC2AC\uD514\uC5D0
+          \uBE60\uC84C\uACE0 \n\uB9E4\uC77C \uC220\uB85C \uADF8\uAC83\uC744 \uC78A\uC73C\uB824
+          \uD558\uB294 \uAC70 \uAC19\uC544.."
+        SkipDelay: 0
+    - rid: 5154282142176641263
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 5a723556-3832-407e-9655-7bf635952a5f
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 4127, y: 277}
+        TargetObjectID: Ann
+        DialogueText: "\uB0B4\uAC00 \uADF8\uC5D0\uAC8C \uD798\uB0B4\uC11C \uC0B4\uC544\uAC00\uB77C\uACE0
+          \n\uD558\uACE0\uC2F6\uC9C0\uB9CC \uC804\uB2EC\uD560 \uC218 \uC5C6\uC5C8\uC9C0."
+        SkipDelay: 0
+    - rid: 5154282142176641264
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 6c9fdade-abcc-450c-adfd-e48f33fc8607
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 4581, y: 271}
+        TargetObjectID: Ann
+        DialogueText: "\uB108\uB294 \uBB34\uC5B8\uAC00 \uD2B9\uBCC4\uD55C \uAC83
+          \uAC19\uC544, <anim:shake>\uC720\uB839\uC778\uB370..</anim> \n\uC0AC\uB78C\uB4E4\uC5D0\uAC8C
+          \uBCF4\uC774\uB294 \uAC70 \uB9DE\uC9C0?"
+        SkipDelay: 0
+    - rid: 5154282142176641265
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 11dede29-6e20-4fdd-8d52-be54f1e89761
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 5431, y: 502}
+        TargetObjectID: Ann
+        DialogueText: "\uADF8\uB798\uC11C \uB9D0\uC778\uB370.. \uD639\uC2DC \uB85C\uC774\uB4DC\uC5D0\uAC8C
+          \n\uB0B4 \uCF00\uC774\uD06C\uB97C \uB9CC\uB4E4\uC5B4\uC11C \uC804\uB2EC\uD574\uC904
+          \uC218 \uC788\uC744\uAE4C?"
+        SkipDelay: 0
+    - rid: 5154282142176641266
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 1e2b9660-5142-4107-afff-0e2babfc5ade
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 6226, y: 545}
+        TargetObjectID: Ann
+        DialogueText: "\uADF8\uB294 \uB0B4\uAC00 \uB9CC\uB4E0 <size:1.2>\uBE14\uB8E8\uBCA0\uB9AC
+          \uCE58\uC988 \uCF00\uC774\uD06C<size:1>\uB97C \n\uC544\uC8FC \uC88B\uC544\uD588\uAC70\uB4E0..
+          \n\uC544\uB9C8 \uADF8\uAC78 \uBA39\uC73C\uBA74 \uAE30\uC6B4\uC744 \uCC28\uB9B4
+          \uAC70\uC57C."
+        SkipDelay: 0
+    - rid: 5154282142176641267
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 55a34f61-d087-40bb-b1c1-73be84ab2873
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 6909, y: 541}
+        TargetObjectID: Ann
+        DialogueText: "\uB808\uC2DC\uD53C\uAC00 \uBB50\uC600\uB354\uB77C..\n\uB2E4\uC2DC
+          \uB0B4\uAC8C \uB9D0\uC744 \uAC78\uC5B4\uC904\uB798?\n\uB808\uC2DC\uD53C\uB97C
+          \uB5A0\uC62C\uB9AC\uACE0 \uC788\uC744\uAC8C."
+        SkipDelay: 0
