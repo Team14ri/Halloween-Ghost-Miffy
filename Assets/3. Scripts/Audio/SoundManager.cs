@@ -31,10 +31,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void PlayOneShot(EventReference sound, Vector3 worldPos)
-    {
-        RuntimeManager.PlayOneShot(sound, worldPos);
-    }
+
 
     public EventInstance CreateInstance(EventReference eventReference)
     {
@@ -83,5 +80,14 @@ public class SoundManager : MonoBehaviour
 
         currentMasterVolume = goalVol;
         masterBus.setVolume(currentMasterVolume);
+    }
+
+    public void PlaySound(string key)
+    {
+        RuntimeManager.PlayOneShot(FMODEvents.Instance.eventDictionary[key]);
+    }
+    public void PlaySound(string key, Vector3 pos)
+    {
+        RuntimeManager.PlayOneShot(FMODEvents.Instance.eventDictionary[key], pos);
     }
 }
