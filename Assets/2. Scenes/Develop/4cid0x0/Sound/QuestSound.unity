@@ -4082,6 +4082,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81761bccdd719d445a64e2b34d2d05e3, type: 3}
   m_PrefabInstance: {fileID: 2132497728}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &227541490
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 227541491}
+  - component: {fileID: 227541492}
+  m_Layer: 0
+  m_Name: AMB Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &227541491
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227541490}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 166455228386596886}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &227541492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227541490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 945635b8c4e470345b56551ebe884891, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playOnStart: 1
 --- !u!4 &231808433 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e92694d89a11501439164d5aa9d79c3a, type: 3}
@@ -43640,6 +43685,7 @@ Transform:
   m_Children:
   - {fileID: 9019411360385788703}
   - {fileID: 8465241459477620863}
+  - {fileID: 227541491}
   m_Father: {fileID: 4894413889656045227}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -44621,9 +44667,9 @@ RectTransform:
   m_Father: {fileID: 4894413890334175572}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 595, y: 0}
   m_SizeDelta: {x: 595, y: 52}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &740875283397076547
@@ -51874,7 +51920,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -53520,9 +53566,9 @@ RectTransform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -17, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &4894413889207360969
 GameObject:
@@ -56250,7 +56296,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4894413889847478259
 RectTransform:
   m_ObjectHideFlags: 0
@@ -56643,7 +56689,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &4894413889897657259
 GameObject:
@@ -57682,7 +57728,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 105}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &4894413890334175573
 GameObject:
@@ -59972,7 +60018,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serializableDictionary:
     BGM:
-    - key: Cemetery
+    - key: BGM_Cemetery
       eventReference:
         Guid:
           Data1: -1254291103
@@ -59980,7 +60026,7 @@ MonoBehaviour:
           Data3: 1598225029
           Data4: 668555016
         Path: event:/01BGM/01Ingame/01Cemetery
-    - key: Plaza
+    - key: BGM_Plaza
       eventReference:
         Guid:
           Data1: -404313095
@@ -59988,7 +60034,7 @@ MonoBehaviour:
           Data3: 859866509
           Data4: 1971425430
         Path: event:/01BGM/01Ingame/02Plaza
-    - key: Mall
+    - key: BGM_Mall
       eventReference:
         Guid:
           Data1: -1064276197
@@ -59996,7 +60042,7 @@ MonoBehaviour:
           Data3: 106594228
           Data4: -271064814
         Path: event:/01BGM/01Ingame/03Mall
-    - key: Mall_JazzBar
+    - key: BGM_Mall_JazzBar
       eventReference:
         Guid:
           Data1: 116310841
@@ -60004,7 +60050,7 @@ MonoBehaviour:
           Data3: 1087474864
           Data4: 1404621797
         Path: event:/01BGM/01Ingame/03Mall_JazzBar
-    - key: Tower
+    - key: BGM_Tower
       eventReference:
         Guid:
           Data1: 2087164164
@@ -60012,7 +60058,7 @@ MonoBehaviour:
           Data3: 1333408396
           Data4: -1952605063
         Path: event:/01BGM/01Ingame/04Tower
-    - key: Church
+    - key: BGM_Church
       eventReference:
         Guid:
           Data1: 748506813
@@ -64267,9 +64313,9 @@ RectTransform:
   m_Father: {fileID: 4894413890334175572}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 595, y: -53}
   m_SizeDelta: {x: 595, y: 52}
   m_Pivot: {x: 1, y: 1}
 --- !u!1 &7820588525375364061
