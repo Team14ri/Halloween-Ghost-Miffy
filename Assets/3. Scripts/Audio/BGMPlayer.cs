@@ -6,10 +6,13 @@ using STOP_MODE = FMOD.Studio.STOP_MODE;
 public class BGMPlayer : MonoBehaviour
 {
     private EventInstance bgmInstance;
-    private string currentEventName = null;
+    private EventInstance ambInstance;
 
-    public static BGMPlayer Instance { get; private set; }
+    private string curEventName = null;
+    private string curBGMEventName = null;
+    private string curAMBEventName = null;
     
+    public static BGMPlayer Instance { get; private set; }
     // TODO: 테스트 용, 삭제 필요
     [SerializeField] private bool playOnStart;
     
@@ -28,34 +31,45 @@ public class BGMPlayer : MonoBehaviour
     
     private void Start()
     {
-        currentEventName = "TestMapA";
+        SetCurEventName("Mall");
         if (playOnStart)
         {
-            PlayBGM(currentEventName);
+            PlaySound(curEventName);
         }
     }
 
-    public void PlayBGM(string eventName)
+    public void SetCurEventName(string eventName)
+    {
+        curEventName = eventName;
+        curBGMEventName = "BGM_" + eventName;
+        curAMBEventName = "AMB_" + eventName;
+    }
+
+    public void PlaySound(string eventName)
     {
         if (eventName == null)
         {
             Debug.Log("eventName에 해당하는 event가 존재하지 않습니다.");
             return;
         }
-        bgmInstance = SoundManager.Instance.CreateInstance(FMODEvents.Instance.eventDictionary[eventName]);
-        currentEventName = eventName;
-            
-        if (!bgmInstance.isValid())
+        
+        SetCurEventName(eventName);
+        bgmInstance = SoundManager.Instance.CreateInstance(FMODEvents.Instance.eventDictionary[curBGMEventName]);
+        ambInstance = SoundManager.Instance.CreateInstance(FMODEvents.Instance.eventDictionary[curAMBEventName]);
+
+        if (!bgmInstance.isValid() || !ambInstance.isValid())
         {
             Debug.Log("FMODEvents로부터 event를 받아오는데 실패했습니다.");
             return;
         }
+        
         bgmInstance.start();
+        ambInstance.start();
     }
 
     public void ChangeBGM(string eventName)
     {
-        FMODEvents.Instance.eventDictionary.TryGetValue(currentEventName, out EventReference currentEventRef);
+        FMODEvents.Instance.eventDictionary.TryGetValue(curBGMEventName, out EventReference currentEventRef);
         FMODEvents.Instance.eventDictionary.TryGetValue(eventName, out EventReference newEventRef);
         
         if (currentEventRef.IsNull || newEventRef.IsNull)
@@ -68,7 +82,7 @@ public class BGMPlayer : MonoBehaviour
         }
         
         SoundManager.Instance.CleanUp();
-        PlayBGM(eventName);
+        PlaySound(eventName);
     }
 
     public void StopBGM()
