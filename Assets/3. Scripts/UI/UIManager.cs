@@ -47,6 +47,7 @@ public class UIManager : MonoBehaviour
         }
         _uiStack.Push(obj);
         obj.SetActive(true);
+        SoundManager.Instance.PlaySound("UI_QuestOpen");
     }
     
     public void EnterUIAlone(GameObject obj)
@@ -59,6 +60,7 @@ public class UIManager : MonoBehaviour
         EscapeAllUI();
         _uiStack.Push(obj);
         obj.SetActive(true);
+        SoundManager.Instance.PlaySound("UI_QuestOpen");
     }
     
     public void EscapeOneUI()
