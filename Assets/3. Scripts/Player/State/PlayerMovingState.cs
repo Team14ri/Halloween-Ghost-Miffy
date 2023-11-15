@@ -40,6 +40,7 @@ public class PlayerMovingState : IState
     public void Enter()
     {
         SetAnimation(MovingState);
+        player.movingTrail.Play();
     }
     
     private const float RAY_DISTANCE = 1.8f;
@@ -121,5 +122,6 @@ public class PlayerMovingState : IState
     public void Exit()
     {
         SetAnimation(IdleState);
+        player.movingTrail.Stop();
     }
 }
