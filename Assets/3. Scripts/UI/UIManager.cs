@@ -28,17 +28,39 @@ public class UIManager : MonoBehaviour
         PlayerInput = GetComponent<PlayerInput>();
     }
 
+    private bool CheckAlreadyOpen(GameObject obj)
+    {
+        var topObj =  _uiStack.FirstOrDefault();
+
+        if (topObj == null)
+            return false;
+        
+        return topObj == obj && topObj.activeInHierarchy;
+    }
+
     public void EnterUI(GameObject obj)
     {
+        if (CheckAlreadyOpen(obj))
+        {
+            EscapeOneUI();
+            return;
+        }
         _uiStack.Push(obj);
         obj.SetActive(true);
+        SoundManager.Instance.PlaySound("UI_QuestOpen");
     }
     
     public void EnterUIAlone(GameObject obj)
     {
+        if (CheckAlreadyOpen(obj))
+        {
+            EscapeAllUI();
+            return;
+        }
         EscapeAllUI();
         _uiStack.Push(obj);
         obj.SetActive(true);
+        SoundManager.Instance.PlaySound("UI_QuestOpen");
     }
     
     public void EscapeOneUI()
