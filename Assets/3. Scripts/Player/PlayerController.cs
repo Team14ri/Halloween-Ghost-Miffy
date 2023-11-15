@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
 
     public PlayerData data;
     public GameObject model;
+    public ParticleSystem movingTrail;
     
     public Rigidbody Rb { get; private set; }
     public PlayerInteraction Interaction { get; private set; }
