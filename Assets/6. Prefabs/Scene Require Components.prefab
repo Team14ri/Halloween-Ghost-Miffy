@@ -12534,6 +12534,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4894413889226790729}
   - component: {fileID: 404040376046720245}
+  - component: {fileID: 8246442200292281239}
   m_Layer: 5
   m_Name: Inventory Board
   m_TagString: Untagged
@@ -12594,6 +12595,19 @@ MonoBehaviour:
   - {fileID: 7775874224696532399}
   - {fileID: 8788394024577350638}
   - {fileID: 7037416105986793020}
+--- !u!114 &8246442200292281239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4894413889226790728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60e69b548dd521c49a98fb51d9ce6efa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 4894413889226790728}
 --- !u!1 &4894413889239320606
 GameObject:
   m_ObjectHideFlags: 0
@@ -16032,6 +16046,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 653732b0-6bfa-48dc-b46c-4f092b76eaad
     m_ActionName: UI/Sticker[/Keyboard/j]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8246442200292281239}
+        m_TargetAssemblyTypeName: UICallbackContext, Assembly-CSharp
+        m_MethodName: EnterUIAlone
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0e17835b-8dc7-45f1-8632-f2a28febef5c
+    m_ActionName: UI/Inventory[/Keyboard/f]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: UI
