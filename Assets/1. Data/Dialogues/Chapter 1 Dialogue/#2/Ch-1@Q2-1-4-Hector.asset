@@ -1,0 +1,146 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Ch-1@Q2-1-4-Hector
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: 60144c2e-0e86-4f03-8652-01729239d81e
+    PortName: Execute
+    TargetNodeGuid: d8eab14c-ab33-47bc-ac1e-659869e08a4d
+  - BaseNodeGuid: d8eab14c-ab33-47bc-ac1e-659869e08a4d
+    PortName: Next
+    TargetNodeGuid: 4d6cc1a7-6d01-4662-8049-c2de4863fc80
+  - BaseNodeGuid: 4d6cc1a7-6d01-4662-8049-c2de4863fc80
+    PortName: Next
+    TargetNodeGuid: 39f051bc-eabc-4ad6-a0f2-f7e65a797f43
+  - BaseNodeGuid: 39f051bc-eabc-4ad6-a0f2-f7e65a797f43
+    PortName: Next
+    TargetNodeGuid: a73b0911-33cb-417f-9971-239fef942fd0
+  - BaseNodeGuid: a73b0911-33cb-417f-9971-239fef942fd0
+    PortName: Next
+    TargetNodeGuid: b57e32bd-092c-4540-adb2-565955dd4a07
+  - BaseNodeGuid: b57e32bd-092c-4540-adb2-565955dd4a07
+    PortName: Next
+    TargetNodeGuid: 76696d20-e67a-42d9-9190-cf9618b63dbc
+  - BaseNodeGuid: 76696d20-e67a-42d9-9190-cf9618b63dbc
+    PortName: Next
+    TargetNodeGuid: 11a71887-9f4f-4eb3-9597-8b53d76e2dc7
+  - BaseNodeGuid: 11a71887-9f4f-4eb3-9597-8b53d76e2dc7
+    PortName: Next
+    TargetNodeGuid: 41f1f312-c144-4d45-8b46-a65c64b05a79
+  - BaseNodeGuid: 41f1f312-c144-4d45-8b46-a65c64b05a79
+    PortName: Next
+    TargetNodeGuid: c5f17ea6-78e4-4fe8-9c18-b71ab90f736d
+  NodeData:
+  - rid: 5154282182368035294
+  - rid: 5154282182368035295
+  - rid: 5154282182368035296
+  - rid: 5154282182368035297
+  - rid: 5154282182368035298
+  - rid: 5154282182368035299
+  - rid: 5154282182368035300
+  - rid: 5154282182368035301
+  - rid: 5154282182368035302
+  references:
+    version: 2
+    RefIds:
+    - rid: 5154282182368035294
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: d8eab14c-ab33-47bc-ac1e-659869e08a4d
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 240, y: 193}
+        TargetObjectID: Hector
+        DialogueText: "\uC559? \uB10C \uB204\uAD6C\uC57C?"
+        SkipDelay: 0
+    - rid: 5154282182368035295
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 4d6cc1a7-6d01-4662-8049-c2de4863fc80
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 524, y: 27}
+        TargetObjectID: Miffy
+        DialogueText: <anim:shake>( !!!!! ) </anim>
+        SkipDelay: 0
+    - rid: 5154282182368035296
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 39f051bc-eabc-4ad6-a0f2-f7e65a797f43
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 886, y: 201}
+        TargetObjectID: Hector
+        DialogueText: "\uD558\uC544.. \uC774\uBD10 \uBB34\uC11C\uC6CC\uD558\uC9C0
+          \uB9D0\uB77C\uACE0.\n\uAC81\uBA39\uAC8C \uD558\uB824\uB294 \uAC8C \uC544\uB2C8\uC57C."
+        SkipDelay: 0
+    - rid: 5154282182368035297
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: a73b0911-33cb-417f-9971-239fef942fd0
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1264, y: 14}
+        TargetObjectID: Hector
+        DialogueText: "\uB0B4 \uB538\uB4E4 \uB450 \uBA85\uC744 \uB3CC\uBCF4\uB290\uB77C\n\uC870\uAE08
+          \uC2E0\uACBD\uC774 \uC608\uBBFC\uD574\uC9C4 \uAC70\uC9C0.."
+        SkipDelay: 0
+    - rid: 5154282182368035298
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: b57e32bd-092c-4540-adb2-565955dd4a07
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1616, y: 119}
+        TargetObjectID: Hector
+        DialogueText: "<size:1.7><anim:wave>\uD654! </anim>"
+        SkipDelay: 0
+    - rid: 5154282182368035299
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 76696d20-e67a-42d9-9190-cf9618b63dbc
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2003, y: -43}
+        TargetObjectID: Hector
+        DialogueText: "<size:1.7><anim:wave>\uB09C \uAC70! \n</anim>"
+        SkipDelay: 0
+    - rid: 5154282182368035300
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 11a71887-9f4f-4eb3-9597-8b53d76e2dc7
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2368, y: 151}
+        TargetObjectID: Hector
+        DialogueText: "<size:1.7><anim:wave>\uC544\uB2C8! \uC57C!!!!!!!!!</anim><anim:shake>\uD06C\uC544\uC544\uC545!!</anim>"
+        SkipDelay: 0
+    - rid: 5154282182368035301
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 41f1f312-c144-4d45-8b46-a65c64b05a79
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 3011, y: -39}
+        TargetObjectID: Miffy
+        DialogueText: "(\uB3C4\uB9DD\uCE58\uC790..!!)"
+        SkipDelay: 0
+    - rid: 5154282182368035302
+      type: {class: StartQuestNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: c5f17ea6-78e4-4fe8-9c18-b71ab90f736d
+        NodeTitle: StartQuest Node
+        NodeType: 2
+        Position: {x: 3282, y: 163}
+        QuestType: Clear
+        QuestID: "\uD575\uD130\uC5D0\uAC8C \uC548\uBD80 \uBB3B\uAE30"
