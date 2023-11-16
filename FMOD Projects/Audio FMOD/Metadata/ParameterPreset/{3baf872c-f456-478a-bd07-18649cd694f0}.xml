@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{3baf872c-f456-478a-bd07-18649cd694f0}">
+		<property name="name">
+			<value>AreaNow</value>
+		</property>
+		<relationship name="folder">
+			<destination>{5375acb7-cde6-4f64-9844-c25f50ee9ca9}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{80652e59-5ad7-4684-9861-467cb415599c}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{80652e59-5ad7-4684-9861-467cb415599c}">
+		<property name="parameterType">
+			<value>2</value>
+		</property>
+		<property name="maximum">
+			<value>6</value>
+		</property>
+		<property name="enumerationLabels">
+			<value>00nowhere</value>
+			<value>01cemetery</value>
+			<value>02oldtown</value>
+			<value>03newtown</value>
+			<value>04magetower</value>
+			<value>05backstreet</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>
