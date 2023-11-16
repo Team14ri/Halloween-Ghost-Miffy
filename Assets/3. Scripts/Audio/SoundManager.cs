@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using FMOD.Studio;
@@ -9,11 +10,17 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AnimationCurve crossfadeCurve;
 
     private List<EventInstance> eventInstances;
-    private Bus masterBus;
-    private float currentMasterVolume = 1.0f;
-
+    private Dictionary<BusType, Bus> busDictionary = new Dictionary<BusType, Bus>();
+    
+    public enum BusType
+    {
+        Master,
+        BGM,
+        AMB,
+        SFX
+    }
+    
     public static SoundManager Instance { get; private set; }
-
     private void Awake()
     {
         if (Instance != null)
@@ -27,16 +34,17 @@ public class SoundManager : MonoBehaviour
             transform.parent = null;
             DontDestroyOnLoad(transform.gameObject);
             eventInstances = new List<EventInstance>();
-            masterBus = FMODUnity.RuntimeManager.GetBus("{adad2423-c25d-4945-9aeb-435077848bbd}");
+            
+            busDictionary.Add(BusType.Master, FMODUnity.RuntimeManager.GetBus("{adad2423-c25d-4945-9aeb-435077848bbd}"));
+            busDictionary.Add(BusType.BGM, FMODUnity.RuntimeManager.GetBus("{ea6f7763-a705-4240-a8fe-c397e21ca0e9}"));
+            busDictionary.Add(BusType.AMB, FMODUnity.RuntimeManager.GetBus("{bed5f750-b5a9-40f3-843b-4bc574cf8e2f}"));
+            busDictionary.Add(BusType.SFX, FMODUnity.RuntimeManager.GetBus("{1127e86d-81c8-4e7f-9866-7b56d22ab475}"));
         }
     }
-
-
 
     public EventInstance CreateInstance(EventReference eventReference)
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
-        eventInstance.setVolume(currentMasterVolume);
         eventInstances.Add(eventInstance);
         return eventInstance;
     }
@@ -50,21 +58,28 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void SetMasterVolume(float vol)
+    public void SetVolume(float vol, BusType type)
     {
-        currentMasterVolume = vol;
-        masterBus.setVolume(vol);
+        if (busDictionary.TryGetValue(type, out var bus))
+        {
+            bus.setVolume(vol);
+        }
+        else
+        {
+            Debug.LogError("BusType에 해당하는 Bus를 찾을 수 없습니다.");
+        }
     }
 
-    public void Crossfade(float goalVol, float goalTime)
+    public void Crossfade(float goalVol, float goalTime, BusType type)
     {
-        StartCoroutine(CrossfadeCoroutine(goalVol, goalTime));
+        StartCoroutine(CrossfadeCoroutine(goalVol, goalTime, type));
     }
 
-    private IEnumerator CrossfadeCoroutine(float goalVol, float goalTime)
+    private IEnumerator CrossfadeCoroutine(float goalVol, float goalTime, BusType type)
     {
         float startTime = Time.time;
-        float startVol = currentMasterVolume;
+        float startVol = 0f;
+        busDictionary[type].getVolume(out startVol);
 
         while (Time.time < startTime + goalTime)
         {
@@ -72,14 +87,13 @@ public class SoundManager : MonoBehaviour
             float t = Mathf.Clamp01(elapsed / goalTime);
 
             float curveValue = Mathf.Clamp01(SoundManager.Instance.crossfadeCurve.Evaluate(t));
-            currentMasterVolume = Mathf.Lerp(startVol, goalVol, curveValue);
-            masterBus.setVolume(currentMasterVolume);
+            float currentVolume = Mathf.Lerp(startVol, goalVol, curveValue);
+            busDictionary[type].setVolume(currentVolume);
 
             yield return null;
         }
 
-        currentMasterVolume = goalVol;
-        masterBus.setVolume(currentMasterVolume);
+        busDictionary[type].setVolume(goalVol);
     }
 
     public void PlaySound(string key)
