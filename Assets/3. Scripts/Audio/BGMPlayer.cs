@@ -30,7 +30,7 @@ public class BGMPlayer : MonoBehaviour
         }
     }
     
-    private void OnEnable()
+    private void Start()
     {
         SetCurEventName(SceneManager.GetActiveScene().name);
         if (playOnStart)
@@ -55,6 +55,7 @@ public class BGMPlayer : MonoBehaviour
         }
         
         SetCurEventName(eventName);
+        
         bgmInstance = SoundManager.Instance.CreateInstance(FMODEvents.Instance.eventDictionary[curBGMEventName]);
         ambInstance = SoundManager.Instance.CreateInstance(FMODEvents.Instance.eventDictionary[curAMBEventName]);
 
