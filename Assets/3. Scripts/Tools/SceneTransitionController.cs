@@ -72,7 +72,7 @@ public class SceneTransitionController : MonoBehaviour
         if (BGMPlayer.Instance == null)
             return;
         
-        BGMPlayer.Instance.StopBGM();
+        BGMPlayer.Instance.StopSound();
     }
     
     private IEnumerator IrisOpenProcess(Action action)

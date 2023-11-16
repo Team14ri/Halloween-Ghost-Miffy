@@ -1,6 +1,7 @@
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 public class BGMPlayer : MonoBehaviour
@@ -29,9 +30,9 @@ public class BGMPlayer : MonoBehaviour
         }
     }
     
-    private void Start()
+    private void OnEnable()
     {
-        SetCurEventName("Mall");
+        SetCurEventName(SceneManager.GetActiveScene().name);
         if (playOnStart)
         {
             PlaySound(curEventName);
@@ -85,8 +86,11 @@ public class BGMPlayer : MonoBehaviour
         PlaySound(eventName);
     }
 
-    public void StopBGM()
+    public void StopSound()
     {
         bgmInstance.stop(STOP_MODE.ALLOWFADEOUT);
+        ambInstance.stop(STOP_MODE.ALLOWFADEOUT);
     }
+
+
 }
