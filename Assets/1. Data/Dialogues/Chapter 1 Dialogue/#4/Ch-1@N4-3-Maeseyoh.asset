@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Ch-1@N4-3-Maeseyoh
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: 60144c2e-0e86-4f03-8652-01729239d81e
+    PortName: Execute
+    TargetNodeGuid: 1cd52563-d569-44f4-962e-0832077263cf
+  - BaseNodeGuid: 1cd52563-d569-44f4-962e-0832077263cf
+    PortName: Next
+    TargetNodeGuid: dd45bad2-f298-4fd7-abe2-27c045424cb7
+  - BaseNodeGuid: dd45bad2-f298-4fd7-abe2-27c045424cb7
+    PortName: Next
+    TargetNodeGuid: 181a6a26-630f-4521-8ad7-6f7d835feafe
+  NodeData:
+  - rid: 5154282191349088534
+  - rid: 5154282191349088535
+  - rid: 5154282191349088536
+  references:
+    version: 2
+    RefIds:
+    - rid: 5154282191349088534
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 1cd52563-d569-44f4-962e-0832077263cf
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 250, y: 212}
+        TargetObjectID: Maeseyoh
+        DialogueText: "\uD638\uBC15 \uBC31\uC791\uC774\uC6A9..?"
+        SkipDelay: 0
+    - rid: 5154282191349088535
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 181a6a26-630f-4521-8ad7-6f7d835feafe
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 886, y: 254}
+        TargetObjectID: Maeseyoh
+        DialogueText: "\uAD11\uC7A5\uCABD\uC774 \uC544\uB2C8\uB77C\uBA74 \uC544\uB798\uC5D0\uB3C4
+          \uAE38\uC774 \uC788\uAE34 \uD574\uC6A9.."
+        SkipDelay: 0
+    - rid: 5154282191349088536
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: dd45bad2-f298-4fd7-abe2-27c045424cb7
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 564, y: 76}
+        TargetObjectID: Maeseyoh
+        DialogueText: "\uC774\uBC88\uC5D4 \uC9C4\uC9DC \uBAA8\uB974\uACA0\uC5B4\uC6A9.."
+        SkipDelay: 0

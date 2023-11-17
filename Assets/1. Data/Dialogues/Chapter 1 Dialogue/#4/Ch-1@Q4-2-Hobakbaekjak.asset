@@ -1,0 +1,134 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Ch-1@Q4-2-Hobakbaekjak
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: 60144c2e-0e86-4f03-8652-01729239d81e
+    PortName: Execute
+    TargetNodeGuid: a3edb8dd-20a8-4b9f-aa2d-4fbb0c0813de
+  - BaseNodeGuid: dcaebd42-9d0b-41fc-aa0e-78747d702cc7
+    PortName: Next
+    TargetNodeGuid: 0b0743a1-0753-4f1c-8d56-3f4ee760cffb
+  - BaseNodeGuid: 26728186-334b-45fd-b928-8615e724cd41
+    PortName: Next
+    TargetNodeGuid: d16c2111-c7de-4716-88e3-b77ad271231e
+  - BaseNodeGuid: 0b0743a1-0753-4f1c-8d56-3f4ee760cffb
+    PortName: Next
+    TargetNodeGuid: d16c2111-c7de-4716-88e3-b77ad271231e
+  - BaseNodeGuid: d16c2111-c7de-4716-88e3-b77ad271231e
+    PortName: Next
+    TargetNodeGuid: 813299cc-9714-41d1-84eb-41782a47df36
+  - BaseNodeGuid: 813299cc-9714-41d1-84eb-41782a47df36
+    PortName: Next
+    TargetNodeGuid: 3671a809-7697-457d-95e9-f956fd17fa45
+  - BaseNodeGuid: 3671a809-7697-457d-95e9-f956fd17fa45
+    PortName: Next
+    TargetNodeGuid: 4810ef6f-c128-4666-93b3-6cee14c48759
+  - BaseNodeGuid: a3edb8dd-20a8-4b9f-aa2d-4fbb0c0813de
+    PortName: "\uC55E\uC5D0\uC11C \uCDA4\uC744 \uCD98\uB2E4."
+    TargetNodeGuid: dcaebd42-9d0b-41fc-aa0e-78747d702cc7
+  - BaseNodeGuid: a3edb8dd-20a8-4b9f-aa2d-4fbb0c0813de
+    PortName: "\uB2E4\uAC00\uAC04\uB2E4."
+    TargetNodeGuid: 26728186-334b-45fd-b928-8615e724cd41
+  NodeData:
+  - rid: 5154282191349088485
+  - rid: 5154282191349088486
+  - rid: 5154282191349088487
+  - rid: 5154282191349088488
+  - rid: 5154282191349088489
+  - rid: 5154282191349088490
+  - rid: 5154282191349088491
+  - rid: 5154282191349088492
+  references:
+    version: 2
+    RefIds:
+    - rid: 5154282191349088485
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: dcaebd42-9d0b-41fc-aa0e-78747d702cc7
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 542, y: 355}
+        TargetObjectID: Hobakbaekjak
+        DialogueText: ??
+        SkipDelay: 0
+    - rid: 5154282191349088486
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 26728186-334b-45fd-b928-8615e724cd41
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1010, y: 153}
+        TargetObjectID: Hobakbaekjak
+        DialogueText: "\uC751? \uC5B4\uB5BB\uAC8C \uC54C\uC558\uC9C0..? "
+        SkipDelay: 0
+    - rid: 5154282191349088487
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 0b0743a1-0753-4f1c-8d56-3f4ee760cffb
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 830, y: 353}
+        TargetObjectID: Hobakbaekjak
+        DialogueText: "\uBB50\uD558\uB294 \uAC70\uC9C0?"
+        SkipDelay: 0
+    - rid: 5154282191349088488
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: d16c2111-c7de-4716-88e3-b77ad271231e
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1332, y: 336}
+        TargetObjectID: Hobakbaekjak
+        DialogueText: "\uB208\uCE58 \uBE60\uB978 \uAF2C\uB9C8\uB140\uC11D\uC774\uAD70.."
+        SkipDelay: 0
+    - rid: 5154282191349088489
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 813299cc-9714-41d1-84eb-41782a47df36
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1661, y: 155}
+        TargetObjectID: Hobakbaekjak
+        DialogueText: "\uD558\uC9C0\uB9CC, \uB124\uAC00 \uB0A0 \uCC3E\uB294\uB2E4\uACE0
+          \n\uBB54\uAC00 \uB2EC\uB77C\uC9C8 \uAC83 \uAC19\uC73C\uB0D0?"
+        SkipDelay: 0
+    - rid: 5154282191349088490
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 3671a809-7697-457d-95e9-f956fd17fa45
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2003, y: 314}
+        TargetObjectID: Hobakbaekjak
+        DialogueText: "<anim:wave>\uD765. \uC5B4\uB514 \uD55C \uBC88 \uCAD2\uC544
+          \uC640\uBCF4\uAC70\uB77C!!</anim>"
+        SkipDelay: 0
+    - rid: 5154282191349088491
+      type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: a3edb8dd-20a8-4b9f-aa2d-4fbb0c0813de
+        NodeTitle: MultiChoice Node
+        NodeType: 1
+        Position: {x: 190, y: 195}
+        TargetObjectID: Miffy
+        DialogueText: "(\uD638\uBC15\uBC31\uC791\uC744 \uBC1C\uACAC\uD588\uB2E4..!)"
+    - rid: 5154282191349088492
+      type: {class: StartQuestNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 4810ef6f-c128-4666-93b3-6cee14c48759
+        NodeTitle: StartQuest Node
+        NodeType: 2
+        Position: {x: 2584, y: 327}
+        QuestType: Main Quest
+        QuestID: "#4-3 \uB2E4\uC2DC \uD638\uBC15 \uBC31\uC791\uC744 \uCC3E\uC790"
