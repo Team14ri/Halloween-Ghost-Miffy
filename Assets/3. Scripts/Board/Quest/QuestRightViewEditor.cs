@@ -28,31 +28,26 @@ public class QuestRightViewEditor : MonoBehaviour
         }
     }
     
-    public void UpdateQuestBoard(QuestLocation location, int id)
+    public void UpdateQuestBoard(QuestChapter chapter, int id)
     {
         var currentQuestID = QuestManager.Instance.CurrentQuestInfo;
-        var (summary, data) = QuestManager.Instance.GetQuestData(location);
+        var (summary, data) = QuestManager.Instance.GetQuestData(chapter);
         var targetSummary = summary.FirstOrDefault(item => item.QuestID == id);
         
         if (targetSummary == null)
             return;
 
-        if (currentQuestID[0] == (int)QuestLocation.Cemetery)
-        {
-            currentQuestID[0] = (int)QuestLocation.Plaza;
-        }
-        
         var targetData = data.Where(item => item.QuestID == id &&
-            ((int)location < currentQuestID[0] ||
-             ((int)location == currentQuestID[0] && item.QuestID < currentQuestID[1]) ||
-             ((int)location == currentQuestID[0] && item.QuestID == currentQuestID[1] && item.QuestDetailID < currentQuestID[2]) ||
-             ((int)location == currentQuestID[0] && item.QuestID == currentQuestID[1] && item.QuestDetailID == currentQuestID[2] && item.QuestFlowID <= currentQuestID[3])))
+            ((int)chapter < currentQuestID[0] || 
+             ((int)chapter == currentQuestID[0] && item.QuestID < currentQuestID[1]) ||
+             ((int)chapter == currentQuestID[0] && item.QuestID == currentQuestID[1] && item.QuestDetailID < currentQuestID[2]) ||
+             ((int)chapter == currentQuestID[0] && item.QuestID == currentQuestID[1] && item.QuestDetailID == currentQuestID[2] && item.QuestFlowID <= currentQuestID[3])))
              .Reverse().ToList();
         
-        SetView(targetSummary.QuestTitle, location, targetData);
+        SetView(targetSummary.QuestTitle, chapter, targetData);
     }
 
-    private void SetView(string title, QuestLocation location, List<QuestData> data)
+    private void SetView(string title, QuestChapter chapter, List<QuestData> data)
     {
         _textEditor.Edit("Title", title);
         
@@ -67,10 +62,10 @@ public class QuestRightViewEditor : MonoBehaviour
             GameObject temp = Instantiate(itemPrefab, parent.position, Quaternion.identity);
             temp.transform.SetParent(parent);
 
-            bool isQuestClear = (int)location < currentQuestID[0] ||
-                                ((int)location == currentQuestID[0] && data[i].QuestID < currentQuestID[1]) ||
-                                ((int)location == currentQuestID[0] && data[i].QuestID == currentQuestID[1] && data[i].QuestDetailID < currentQuestID[2]) ||
-                                ((int)location == currentQuestID[0] && data[i].QuestID == currentQuestID[1] && data[i].QuestDetailID == currentQuestID[2] && data[i].QuestFlowID < currentQuestID[3]);
+            bool isQuestClear = (int)chapter < currentQuestID[0] ||
+                                ((int)chapter == currentQuestID[0] && data[i].QuestID < currentQuestID[1]) ||
+                                ((int)chapter == currentQuestID[0] && data[i].QuestID == currentQuestID[1] && data[i].QuestDetailID < currentQuestID[2]) ||
+                                ((int)chapter == currentQuestID[0] && data[i].QuestID == currentQuestID[1] && data[i].QuestDetailID == currentQuestID[2] && data[i].QuestFlowID < currentQuestID[3]);
             
             temp.GetComponent<QuestRightItemEditor>().SetItem(data[i].QuestTitle, 
                 data[i].QuestDescription, data[i].QuestConditions, isQuestClear);

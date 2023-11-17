@@ -24,7 +24,6 @@ public class StickerViewer : MonoBehaviour
     {
         var stickerData = VariableManager.Instance.GetStickersList()
             .Where(data => data.GetValue() > 0 && 
-                           data.LocationType == sticker.LocationType &&
                            data.Type == StickerType.Normal)
             .ToList();
 

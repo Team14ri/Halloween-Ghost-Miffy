@@ -8,31 +8,31 @@ using UnityEngine;
 
 public class QuestViewer : MonoBehaviour
 {
-    [BoxGroup("Plaza"), SerializeField] private GameObject plazaFoldField;
-    [BoxGroup("Plaza"), SerializeField] private Transform plazaListField;
+    [TabGroup("Chapter", "Chapter 01"), SerializeField] private GameObject chapter01FoldField;
+    [TabGroup("Chapter", "Chapter 01"), SerializeField] private Transform chapter01ListField;
     
-    [BoxGroup("Mall"), SerializeField] private GameObject mallFoldField;
-    [BoxGroup("Mall"), SerializeField] private Transform mallListField;
+    [TabGroup("Chapter", "Chapter 02"), SerializeField] private GameObject chapter02FoldField;
+    [TabGroup("Chapter", "Chapter 02"), SerializeField] private Transform chapter02ListField;
 
     [SerializeField] private GameObject questLeftItemPrefab;
     [SerializeField] private QuestRightViewEditor viewEditor;
 
-    private readonly List<QuestLeftItemEditor> _plazaEditor = new();
-    private readonly List<QuestLeftItemEditor> _mallEditor = new();
+    private readonly List<QuestLeftItemEditor> _chapter01Editor = new();
+    private readonly List<QuestLeftItemEditor> _chapter02Editor = new();
 
-    public void ShowQuestDetail(QuestLocation location, QuestSummary summary)
+    public void ShowQuestDetail(QuestChapter chapter, QuestSummary summary)
     {
-        foreach (var editor in _plazaEditor)
+        foreach (var editor in _chapter01Editor)
         {
-            bool isSelected = editor.GetLocation() == location && editor.GetSummary().QuestID == summary.QuestID;
+            bool isSelected = editor.GetChapter() == chapter && editor.GetSummary().QuestID == summary.QuestID;
             editor.SetSelect(isSelected);
         }
-        foreach (var editor in _mallEditor)
+        foreach (var editor in _chapter02Editor)
         {
-            bool isSelected = editor.GetLocation() == location && editor.GetSummary().QuestID == summary.QuestID;
+            bool isSelected = editor.GetChapter() == chapter && editor.GetSummary().QuestID == summary.QuestID;
             editor.SetSelect(isSelected);
         }
-        viewEditor.UpdateQuestBoard(location, summary.QuestID);
+        viewEditor.UpdateQuestBoard(chapter, summary.QuestID);
     }
 
     private void OnEnable()
@@ -45,27 +45,27 @@ public class QuestViewer : MonoBehaviour
         yield return null;
         
         viewEditor.DestroyChild();
-        SetupQuestView(plazaFoldField, plazaListField, _plazaEditor, QuestLocation.Plaza);
-        SetupQuestView(mallFoldField, mallListField, _mallEditor, QuestLocation.Mall);
+        SetupQuestView(chapter01FoldField, chapter01ListField, _chapter01Editor, QuestChapter.Ch1);
+        SetupQuestView(chapter02FoldField, chapter02ListField, _chapter02Editor, QuestChapter.Ch2);
         
-        var currentQuestID = QuestManager.Instance.CurrentQuestInfo;
-        if (currentQuestID[0] == (int)QuestLocation.Cemetery || 
-            currentQuestID[0] == (int)QuestLocation.Plaza)
+        var currentQuestInfo = QuestManager.Instance.CurrentQuestInfo;
+
+        switch (currentQuestInfo[0])
         {
-            plazaFoldField.SetActive(true);
-            _plazaEditor.LastOrDefault()?.SetSelect(true);
-            _plazaEditor.LastOrDefault()?.Execute();
-        }
-        if (currentQuestID[0] == (int)QuestLocation.Mall || 
-            currentQuestID[0] == (int)QuestLocation.Forest)
-        {
-            mallFoldField.SetActive(true);
-            _mallEditor.LastOrDefault()?.SetSelect(true);
-            _mallEditor.LastOrDefault()?.Execute();
+            case (int)QuestChapter.Ch1:
+                chapter01FoldField.SetActive(true);
+                _chapter01Editor.LastOrDefault()?.SetSelect(true);
+                _chapter01Editor.LastOrDefault()?.Execute();
+                break;
+            case (int)QuestChapter.Ch2:
+                chapter02FoldField.SetActive(true);
+                _chapter02Editor.LastOrDefault()?.SetSelect(true);
+                _chapter02Editor.LastOrDefault()?.Execute();
+                break;
         }
     }
 
-    private void SetupQuestView(GameObject foldField, Transform listField, List<QuestLeftItemEditor> editors, QuestLocation location)
+    private void SetupQuestView(GameObject foldField, Transform listField, List<QuestLeftItemEditor> editors, QuestChapter chapter)
     {
         editors.Clear();
         
@@ -77,19 +77,14 @@ public class QuestViewer : MonoBehaviour
         }
 
         var currentQuestID = QuestManager.Instance.CurrentQuestInfo;
-        var (summary, data) = QuestManager.Instance.GetQuestData(location);
+        var (summary, data) = QuestManager.Instance.GetQuestData(chapter);
 
-        if (currentQuestID[0] == (int)QuestLocation.Cemetery)
-        {
-            currentQuestID[0] = (int)QuestLocation.Plaza;
-        }
-
-        var filteredSummary = summary.Where(s => (int)location < currentQuestID[0] ||
-                                                 ((int)location == currentQuestID[0] && s.QuestID <= currentQuestID[1])).ToList();
+        var filteredSummary = summary.Where(s => (int)chapter < currentQuestID[0] ||
+                                                 ((int)chapter == currentQuestID[0] && s.QuestID <= currentQuestID[1])).ToList();
 
         if (filteredSummary.Count == 0)
         {
-            CreateQuestItem(listField, location, new QuestSummary
+            CreateQuestItem(listField, chapter, new QuestSummary
             {
                 QuestID = -1,
                 QuestTitle = "아직 진행할 수 없다"
@@ -99,16 +94,16 @@ public class QuestViewer : MonoBehaviour
         
         foreach (var s in filteredSummary)
         {
-            CreateQuestItem(listField, location, s, true, editors);
+            CreateQuestItem(listField, chapter, s, true, editors);
         }
     }
 
-    private void CreateQuestItem(Transform listField, QuestLocation location, QuestSummary summary, bool isButtonEnabled, List<QuestLeftItemEditor> editors)
+    private void CreateQuestItem(Transform listField, QuestChapter chapter, QuestSummary summary, bool isButtonEnabled, List<QuestLeftItemEditor> editors)
     {
         GameObject temp = Instantiate(questLeftItemPrefab, listField.position, Quaternion.identity);
         temp.transform.SetParent(listField);
         QuestLeftItemEditor editor = temp.GetComponent<QuestLeftItemEditor>();
-        editor.Set(location, summary, this);
+        editor.Set(chapter, summary, this);
         editor.SetButtonEnable(isButtonEnabled);
         if (isButtonEnabled)
         {

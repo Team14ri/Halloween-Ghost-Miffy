@@ -38,7 +38,7 @@ namespace Quest
     public class QuestFlow
     {
         [TabGroup("Settings", "Quest Info")]
-        public QuestLocation QuestLocationID; 
+        public QuestChapter QuestChapterID; 
         [TabGroup("Settings", "Quest Info"), Space(5)]
         public int QuestID; 
         [TabGroup("Settings", "Quest Info"), Space(5)]
@@ -56,7 +56,7 @@ namespace Quest
         [TabGroup("Settings", "Auto Clear Quest")]
         public bool enableAutoQuestClear;
         [TabGroup("Settings", "Auto Clear Quest"), ShowIf("enableAutoQuestClear"), Space(10)]
-        public QuestLocation NextQuestLocationID;
+        public QuestChapter NextQuestChapterID;
         [TabGroup("Settings", "Auto Clear Quest"), ShowIf("enableAutoQuestClear"), Space(5)]
         public int NextQuestID; 
         [TabGroup("Settings", "Auto Clear Quest"), ShowIf("enableAutoQuestClear"), Space(5)]
@@ -85,11 +85,11 @@ namespace Quest
     {
         [SerializeField] private bool resetQuestData;
         [ShowIf("resetQuestData"), Space(10)]
-        public QuestLocation resetQuestLocationID;
+        public QuestChapter resetQuestChapterID;
         [ShowIf("resetQuestData"), Space(5)]
         public int resetQuestID; 
         [ShowIf("resetQuestData"), Space(5)]
-        public int resetQuestDetailID = 1; 
+        public int resetQuestDetailID; 
         [ShowIf("resetQuestData"), Space(5)]
         public int resetQuestFlowID = 1;
 
@@ -97,7 +97,7 @@ namespace Quest
 
         public static QuestFlowManager Instance;
 
-        private QuestLocation currentQuestLocation;
+        private QuestChapter currentQuestChapterID;
         private int currentQuestID; 
         private int currentQuestDetailID; 
         private int currentQuestFlowID;
@@ -111,14 +111,16 @@ namespace Quest
 
         private void Start()
         {
+#if UNITY_EDITOR
             if (resetQuestData)
             {
                 QuestManager.Instance.CurrentQuestInfo = new[]
-                    { (int)resetQuestLocationID, resetQuestID, resetQuestDetailID, resetQuestFlowID };
+                    { (int)resetQuestChapterID, resetQuestID, resetQuestDetailID, resetQuestFlowID };
             }
+#endif
             
             var questInfo = QuestManager.Instance.CurrentQuestInfo;
-            currentQuestLocation = (QuestLocation)questInfo[0];
+            currentQuestChapterID = (QuestChapter)questInfo[0];
             currentQuestID = questInfo[1];
             currentQuestDetailID = questInfo[2];
             currentQuestFlowID = questInfo[3];
@@ -132,12 +134,12 @@ namespace Quest
                 return;
             
             var questInfo = QuestManager.Instance.CurrentQuestInfo;
-            if (currentQuestLocation != (QuestLocation)questInfo[0] || 
+            if (currentQuestChapterID != (QuestChapter)questInfo[0] || 
                 currentQuestID != questInfo[1] || 
                 currentQuestDetailID != questInfo[2] || 
                 currentQuestFlowID != questInfo[3])
             {
-                currentQuestLocation = (QuestLocation)questInfo[0];
+                currentQuestChapterID = (QuestChapter)questInfo[0];
                 currentQuestID = questInfo[1];
                 currentQuestDetailID = questInfo[2];
                 currentQuestFlowID = questInfo[3];
@@ -148,7 +150,7 @@ namespace Quest
             }
 
             var currentQuest = QuestFlows.FirstOrDefault(flow => 
-                flow.QuestLocationID == currentQuestLocation && 
+                flow.QuestChapterID == currentQuestChapterID && 
                 flow.QuestID == currentQuestID && 
                 flow.QuestDetailID == currentQuestDetailID && 
                 flow.QuestFlowID == currentQuestFlowID);
@@ -159,7 +161,7 @@ namespace Quest
                 return;
             
             QuestManager.Instance.CurrentQuestInfo = new[]
-                { (int)currentQuest.NextQuestLocationID, currentQuest.NextQuestID, currentQuest.NextQuestDetailID, currentQuest.NextQuestFlowID };
+                { (int)currentQuest.NextQuestChapterID, currentQuest.NextQuestID, currentQuest.NextQuestDetailID, currentQuest.NextQuestFlowID };
         }
         
         public void SetQuestID(string id)
@@ -199,10 +201,10 @@ namespace Quest
             QuestFlow currentFlow = null;
             foreach (var flow in QuestFlows)
             {
-                if (flow.QuestLocationID < currentQuestLocation ||
-                    (flow.QuestLocationID == currentQuestLocation && flow.QuestID < currentQuestID) ||
-                    (flow.QuestLocationID == currentQuestLocation && flow.QuestID == currentQuestID && flow.QuestDetailID < currentQuestDetailID) ||
-                    (flow.QuestLocationID == currentQuestLocation && flow.QuestID == currentQuestID && flow.QuestDetailID == currentQuestDetailID && flow.QuestFlowID <= currentQuestFlowID))
+                if (flow.QuestChapterID < currentQuestChapterID ||
+                    (flow.QuestChapterID == currentQuestChapterID && flow.QuestID < currentQuestID) ||
+                    (flow.QuestChapterID == currentQuestChapterID && flow.QuestID == currentQuestID && flow.QuestDetailID < currentQuestDetailID) ||
+                    (flow.QuestChapterID == currentQuestChapterID && flow.QuestID == currentQuestID && flow.QuestDetailID == currentQuestDetailID && flow.QuestFlowID <= currentQuestFlowID))
                 {
                     currentFlow = flow;
                     foreach (var obj in flow.ActiveGameObjects)

@@ -6,13 +6,21 @@ using UnityEngine;
 
 namespace Quest
 {
+    // [Serializable]
+    // public enum QuestLocation
+    // {
+    //     Cemetery = 0,
+    //     Plaza = 1,
+    //     Mall = 2,
+    //     Forest = 3
+    // }
+    
     [Serializable]
-    public enum QuestLocation
+    public enum QuestChapter
     {
-        Cemetery = 0,
-        Plaza = 1,
-        Mall = 2,
-        Forest = 3
+        Ch1 = 1,
+        Ch2 = 2,
+        Ch3 = 3,
     }
 
     [Serializable]
@@ -49,16 +57,21 @@ namespace Quest
         public static QuestManager Instance;
 
         [SerializeField] private GameObject questAcceptUI;
+
+        [TabGroup("Quest Data", "Chapter 01"), SerializeField]
+        private List<QuestSummary> chapter01QuestSummary;
+        [TabGroup("Quest Data", "Chapter 01"), SerializeField]
+        private List<QuestData> chapter01QuestData;
         
-        [TabGroup("Quest Data", "Plaza"), SerializeField]
-        private List<QuestSummary> plazaQuestSummary;
-        [TabGroup("Quest Data", "Plaza"), SerializeField]
-        private List<QuestData> plazaQuestData;
+        [TabGroup("Quest Data", "Chapter 02"), SerializeField]
+        private List<QuestSummary> chapter02QuestSummary;
+        [TabGroup("Quest Data", "Chapter 02"), SerializeField]
+        private List<QuestData> chapter02QuestData;
         
-        [TabGroup("Quest Data", "Mall"), SerializeField]
-        private List<QuestSummary> mallQuestSummary;
-        [TabGroup("Quest Data", "Mall"), SerializeField]
-        private List<QuestData> mallQuestData;
+        [TabGroup("Quest Data", "Chapter 03"), SerializeField]
+        private List<QuestSummary> chapter03QuestSummary;
+        [TabGroup("Quest Data", "Chapter 03"), SerializeField]
+        private List<QuestData> chapter03QuestData;
 
         private TmpTextEditor _questAcceptTmpTextEditor;
         private UIFadeController _questAcceptFadeController;
@@ -67,35 +80,42 @@ namespace Quest
         {
             get => new int[]
             {
-                PlayerPrefs.GetInt("CurrentQuest@LocationID", (int)QuestLocation.Cemetery),
+                PlayerPrefs.GetInt("CurrentQuest@ChapterID", (int)QuestChapter.Ch1),
                 PlayerPrefs.GetInt("CurrentQuest@ID", 0),
-                PlayerPrefs.GetInt("CurrentQuest@DetailID", 1),
+                PlayerPrefs.GetInt("CurrentQuest@DetailID", 0),
                 PlayerPrefs.GetInt("CurrentQuest@FlowID", 1)
             };  
             set
             {
-                PlayerPrefs.SetInt("CurrentQuest@LocationID", value[0]);
+                PlayerPrefs.SetInt("CurrentQuest@ChapterID", value[0]);
                 PlayerPrefs.SetInt("CurrentQuest@ID", value[1]);
                 PlayerPrefs.SetInt("CurrentQuest@DetailID", value[2]);
                 PlayerPrefs.SetInt("CurrentQuest@FlowID", value[3]);
             }
         }
         
-        public (List<QuestSummary>, List<QuestData>) GetQuestData(QuestLocation location)
+        public (List<QuestSummary>, List<QuestData>) GetQuestData(QuestChapter chapter)
         {
-            if (location == QuestLocation.Cemetery || 
-                location == QuestLocation.Plaza)
+            List<QuestSummary> returnSummary = new();
+            List<QuestData> returnData = new();
+            
+            switch (chapter)
             {
-                return (plazaQuestSummary, plazaQuestData);
+                case QuestChapter.Ch1:
+                    returnSummary = chapter01QuestSummary;
+                    returnData = chapter01QuestData;
+                    break;
+                case QuestChapter.Ch2:
+                    returnSummary = chapter02QuestSummary;
+                    returnData = chapter02QuestData;
+                    break;
+                case QuestChapter.Ch3:
+                    returnSummary = chapter03QuestSummary;
+                    returnData = chapter03QuestData;
+                    break;
             }
 
-            if (location == QuestLocation.Mall ||
-                location == QuestLocation.Forest)
-            {
-                return (mallQuestSummary, mallQuestData);
-            }
-
-            return (null, null);
+            return (returnSummary, returnData);
         }
 
         private void Awake()
@@ -142,11 +162,11 @@ namespace Quest
             var match = Regex.Match(input, @"(\w+)@(\d+)-(\d+)-(\d+)");
             if (match.Success)
             {
-                var locationID = Enum.Parse<QuestLocation>(match.Groups[1].Value, true);
+                var chapterID = Enum.Parse<QuestChapter>(match.Groups[1].Value, true);
                 var questID = int.Parse(match.Groups[2].Value);
                 var questDetailID = int.Parse(match.Groups[3].Value);
                 var questFlowID = int.Parse(match.Groups[4].Value);
-                CurrentQuestInfo = new[] { (int)locationID, questID, questDetailID, questFlowID };
+                CurrentQuestInfo = new[] { (int)chapterID, questID, questDetailID, questFlowID };
             }
         }
     }
