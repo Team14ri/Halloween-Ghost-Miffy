@@ -85,7 +85,7 @@ namespace Quest
     {
         [SerializeField] private bool resetQuestData;
         [ShowIf("resetQuestData"), Space(10)]
-        public QuestChapter resetQuestChapterID;
+        public QuestChapter resetQuestChapterID = QuestChapter.Ch1;
         [ShowIf("resetQuestData"), Space(5)]
         public int resetQuestID; 
         [ShowIf("resetQuestData"), Space(5)]
