@@ -6,6 +6,7 @@ using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 public class VoiceManager : MonoBehaviour
 {
@@ -135,6 +136,11 @@ public class VoiceManager : MonoBehaviour
                 return false;
             });
         }
+    }
+    
+    public void StopExecuteCommand()
+    {
+        this.EnsureCoroutineStopped(ref _eventRoutine);
     }
 
     private char ParsingKorean(char hangul)

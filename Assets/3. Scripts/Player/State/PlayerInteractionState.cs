@@ -166,6 +166,7 @@ public class PlayerInteractionState : IState
         player.Interaction.SetInteractionEnableAfterDelay();
         UIManager.Instance.PlayerInput.enabled = true;
         DialogueManager.Instance.StopDialogue();
+        VoiceManager.Instance.StopExecuteCommand();
         
         exitAction?.Invoke();
     }
