@@ -18,9 +18,9 @@ namespace Quest
     [Serializable]
     public enum QuestChapter
     {
-        Ch1 = 1,
-        Ch2 = 2,
-        Ch3 = 3,
+        Ch1,
+        Ch2,
+        Ch3
     }
 
     [Serializable]
@@ -67,11 +67,6 @@ namespace Quest
         private List<QuestSummary> chapter02QuestSummary;
         [TabGroup("Quest Data", "Chapter 02"), SerializeField]
         private List<QuestData> chapter02QuestData;
-        
-        [TabGroup("Quest Data", "Chapter 03"), SerializeField]
-        private List<QuestSummary> chapter03QuestSummary;
-        [TabGroup("Quest Data", "Chapter 03"), SerializeField]
-        private List<QuestData> chapter03QuestData;
 
         private TmpTextEditor _questAcceptTmpTextEditor;
         private UIFadeController _questAcceptFadeController;
@@ -108,10 +103,6 @@ namespace Quest
                 case QuestChapter.Ch2:
                     returnSummary = chapter02QuestSummary;
                     returnData = chapter02QuestData;
-                    break;
-                case QuestChapter.Ch3:
-                    returnSummary = chapter03QuestSummary;
-                    returnData = chapter03QuestData;
                     break;
             }
 
