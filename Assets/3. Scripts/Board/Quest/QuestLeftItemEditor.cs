@@ -12,7 +12,7 @@ public class QuestLeftItemEditor : MonoBehaviour
 
     private Button _button;
     private QuestViewer _viewer;
-    private QuestLocation _location;
+    private QuestChapter _chapter;
     private QuestSummary _summary;
 
     private void Awake()
@@ -22,12 +22,12 @@ public class QuestLeftItemEditor : MonoBehaviour
     
     public void Execute()
     {
-        _viewer.ShowQuestDetail(_location, _summary);
+        _viewer.ShowQuestDetail(_chapter, _summary);
     }
 
-    public QuestLocation GetLocation()
+    public QuestChapter GetChapter()
     {
-        return _location;
+        return _chapter;
     }
 
     public QuestSummary GetSummary()
@@ -40,11 +40,11 @@ public class QuestLeftItemEditor : MonoBehaviour
         _button.interactable = enable;
     }
 
-    public void Set(QuestLocation location, QuestSummary summary, QuestViewer viewer)
+    public void Set(QuestChapter chapter, QuestSummary summary, QuestViewer viewer)
     {
         textField.text = summary.QuestTitle;
         
-        _location = location;
+        _chapter = chapter;
         _summary = summary;
         _viewer = viewer;
     }

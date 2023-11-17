@@ -24,11 +24,7 @@ public class StickerData : ScriptableObject
     [BoxGroup("Sticker Settings"), Title("Sticker Type")]
     [SerializeField] private StickerType type;
     public StickerType Type => type;
-    
-    [BoxGroup("Sticker Settings"), Title("Sticker Location Type")]
-    [SerializeField] private QuestLocation locationType;
-    public QuestLocation LocationType => locationType;
-    
+
     [BoxGroup("Sticker Settings"), Title("Sticker Description")]
     [SerializeField, TextArea(3, 10)] private string description;
     public string Description => description;

@@ -60,14 +60,14 @@ public class QuestDetailViewer : MonoBehaviour
             Destroy(child.gameObject);
         }
         
-        var currentQuestID = QuestManager.Instance.CurrentQuestInfo;
-        var (summary, data) = QuestManager.Instance.GetQuestData((QuestLocation)currentQuestID[0]);
+        var currentChapterInfo = QuestManager.Instance.CurrentQuestInfo;
+        var (summary, data) = QuestManager.Instance.GetQuestData((QuestChapter)currentChapterInfo[0]);
 
-        var targetSummary = summary.FirstOrDefault(item => item.QuestID == currentQuestID[1]);
+        var targetSummary = summary.FirstOrDefault(item => item.QuestID == currentChapterInfo[1]);
         
-        var targetData = data.LastOrDefault(item => item.QuestID < currentQuestID[1] ||
-                                                    (item.QuestID == currentQuestID[1] && item.QuestDetailID < currentQuestID[2]) ||
-                                                    (item.QuestID == currentQuestID[1] && item.QuestDetailID == currentQuestID[2] && item.QuestFlowID <= currentQuestID[3]));
+        var targetData = data.LastOrDefault(item => item.QuestID < currentChapterInfo[1] ||
+                                                    (item.QuestID == currentChapterInfo[1] && item.QuestDetailID < currentChapterInfo[2]) ||
+                                                    (item.QuestID == currentChapterInfo[1] && item.QuestDetailID == currentChapterInfo[2] && item.QuestFlowID <= currentChapterInfo[3]));
 
         questTitle.text = targetSummary?.QuestTitle ?? "";
         questSubTitle.text = targetData?.QuestTitle ?? "";
