@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4962846510813577618}
   - component: {fileID: 4962846510813577629}
   - component: {fileID: 4962846510813577628}
+  - component: {fileID: 6250739458798819722}
   m_Layer: 0
   m_Name: Camella
   m_TagString: NPC
@@ -84,6 +85,20 @@ MonoBehaviour:
   Name: "\uCE74\uBA5C\uB77C"
   dialogueSetter: {fileID: 2450785601403526616}
   cinemachineFreeLook: {fileID: 8091743715544096837}
+--- !u!114 &6250739458798819722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4962846510813577630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c280344f732904a9c52ccafd5440c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: {fileID: 8389382067934330166}
+  vfx: {fileID: 6374212014279886470}
 --- !u!1 &4962846510935433989
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,6 +371,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2065554179067364831, guid: 834012bd78058164699a55fe28d2e04a, type: 3}
   m_PrefabInstance: {fileID: 4962846509097567070}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6374212014279886470 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2065554179067364824, guid: 834012bd78058164699a55fe28d2e04a, type: 3}
+  m_PrefabInstance: {fileID: 4962846509097567070}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4962846510050035822
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -438,6 +458,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1640889748532057341, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
   m_PrefabInstance: {fileID: 4962846510050035822}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8389382067934330166 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3509007874306094424, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
+  m_PrefabInstance: {fileID: 4962846510050035822}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e60bbd4e45e74a2418febfdf14a7a9a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4962846510358619831
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 988727362202273801}
   - component: {fileID: 988727362202273798}
   - component: {fileID: 988727362202273799}
+  - component: {fileID: 2634801502458740614}
   m_Layer: 0
   m_Name: Ann
   m_TagString: NPC
@@ -84,6 +85,20 @@ MonoBehaviour:
   Name: "\uC564"
   dialogueSetter: {fileID: 747568463935993487}
   cinemachineFreeLook: {fileID: 988727363643206194}
+--- !u!114 &2634801502458740614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988727362202273796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c280344f732904a9c52ccafd5440c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: {fileID: 3370149926451048623}
+  vfx: {fileID: 2065554179298902435}
 --- !u!1 &988727363050221011
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,6 +277,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 834012bd78058164699a55fe28d2e04a, type: 3}
+--- !u!1 &2065554179298902435 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2065554179067364824, guid: 834012bd78058164699a55fe28d2e04a, type: 3}
+  m_PrefabInstance: {fileID: 315425915}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2065554179298902436 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2065554179067364831, guid: 834012bd78058164699a55fe28d2e04a, type: 3}
@@ -341,6 +361,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1640889748532057341, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
   m_PrefabInstance: {fileID: 2195414183325746679}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3370149926451048623 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3509007874306094424, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
+  m_PrefabInstance: {fileID: 2195414183325746679}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e60bbd4e45e74a2418febfdf14a7a9a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4119842438537702592
 PrefabInstance:
   m_ObjectHideFlags: 0

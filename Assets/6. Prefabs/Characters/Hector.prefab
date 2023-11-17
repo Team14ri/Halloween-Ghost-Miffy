@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 3469931337851754755}
   - component: {fileID: 3469931337851754752}
   - component: {fileID: 3469931337851754757}
+  - component: {fileID: 2683865448345193324}
   m_Layer: 0
   m_Name: Hector
   m_TagString: NPC
@@ -205,6 +206,20 @@ MonoBehaviour:
   Name: "\uD5E5\uD130"
   dialogueSetter: {fileID: 7260087646667137785}
   cinemachineFreeLook: {fileID: 5675954666121765333}
+--- !u!114 &2683865448345193324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3469931337851754762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c280344f732904a9c52ccafd5440c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: {fileID: 7250390333145500282}
+  vfx: {fileID: 2065554180573317428}
 --- !u!1001 &1590103276
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -265,6 +280,11 @@ PrefabInstance:
 --- !u!4 &2065554180573317427 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2065554179067364831, guid: 834012bd78058164699a55fe28d2e04a, type: 3}
+  m_PrefabInstance: {fileID: 1590103276}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2065554180573317428 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2065554179067364824, guid: 834012bd78058164699a55fe28d2e04a, type: 3}
   m_PrefabInstance: {fileID: 1590103276}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &152103285253550136
@@ -426,6 +446,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1640889748532057341, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
   m_PrefabInstance: {fileID: 6065239883339824930}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7250390333145500282 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3509007874306094424, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
+  m_PrefabInstance: {fileID: 6065239883339824930}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e60bbd4e45e74a2418febfdf14a7a9a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8813894255272503079
 PrefabInstance:
   m_ObjectHideFlags: 0

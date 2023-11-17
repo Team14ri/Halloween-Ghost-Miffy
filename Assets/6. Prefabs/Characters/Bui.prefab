@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 6943085528295298621}
   - component: {fileID: 6943085528295298622}
   - component: {fileID: 6943085528295298623}
+  - component: {fileID: 6685075795612330507}
   m_Layer: 0
   m_Name: Bui
   m_TagString: NPC
@@ -205,6 +206,20 @@ MonoBehaviour:
   Name: "\uBD80\uC774"
   dialogueSetter: {fileID: 470531183381453189}
   cinemachineFreeLook: {fileID: 6111102200993951537}
+--- !u!114 &6685075795612330507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6943085528295298617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c280344f732904a9c52ccafd5440c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: {fileID: 5829992806563611112}
+  vfx: {fileID: 9002863970701081710}
 --- !u!1001 &6943085526252435894
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -265,6 +280,11 @@ PrefabInstance:
 --- !u!4 &9002863970701081705 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2065554179067364831, guid: 834012bd78058164699a55fe28d2e04a, type: 3}
+  m_PrefabInstance: {fileID: 6943085526252435894}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9002863970701081710 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2065554179067364824, guid: 834012bd78058164699a55fe28d2e04a, type: 3}
   m_PrefabInstance: {fileID: 6943085526252435894}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6943085526873090499
@@ -602,6 +622,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
+--- !u!114 &5829992806563611112 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3509007874306094424, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
+  m_PrefabInstance: {fileID: 6943085527509677232}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e60bbd4e45e74a2418febfdf14a7a9a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8547646309653012557 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1640889748532057341, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
