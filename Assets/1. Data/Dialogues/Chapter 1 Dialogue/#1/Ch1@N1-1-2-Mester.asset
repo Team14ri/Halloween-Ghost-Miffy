@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Ch1@N1-1-2-Mester
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: ca32913e-c367-42c9-87fe-fc768e3ec4f7
+    PortName: Execute
+    TargetNodeGuid: 2ca7a430-93d0-4e39-8744-d8ea47e688ec
+  - BaseNodeGuid: 2ca7a430-93d0-4e39-8744-d8ea47e688ec
+    PortName: Next
+    TargetNodeGuid: 73e8ad76-9d8b-4401-a781-d75dfe6a5c0e
+  NodeData:
+  - rid: 4135296615045136509
+  - rid: 4135296615045136510
+  references:
+    version: 2
+    RefIds:
+    - rid: 4135296615045136509
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 2ca7a430-93d0-4e39-8744-d8ea47e688ec
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 280, y: 200}
+        TargetObjectID: Mester
+        DialogueText: "<size:1.3>[Q], [E], [R] \uD0A4<size:1>\uB85C \uC5F4 \uC218
+          \uC788\uB2E8\uB2E4."
+        SkipDelay: 0
+    - rid: 4135296615045136510
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 73e8ad76-9d8b-4401-a781-d75dfe6a5c0e
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 750, y: 393}
+        TargetObjectID: Mester
+        DialogueText: "\uC5F4\uC5B4\uBCF4\uACE0 \uB2E4\uC2DC \uB098\uD55C\uD14C \uB9D0\uC744
+          \uAC78\uC5B4\uC8FC\uB834~<anim:wave> \uD64D\uD64D\uD64D~</anim> "
+        SkipDelay: 0

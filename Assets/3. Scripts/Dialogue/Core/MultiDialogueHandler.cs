@@ -43,8 +43,6 @@ namespace DS.Core
 
         public void Init(List<NodeLinkData> links, Action<string> returnAction)
         {
-            Debug.Log("asdfasdf");
-            
             _returnAction = returnAction;
 
             foreach (Transform child in targetParent)

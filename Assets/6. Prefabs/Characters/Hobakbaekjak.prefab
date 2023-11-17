@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 72777114448273010}
   - component: {fileID: 72777114448273021}
   - component: {fileID: 72777114448273020}
+  - component: {fileID: 762635620450730152}
   m_Layer: 0
   m_Name: Hobakbaekjak
   m_TagString: NPC
@@ -205,6 +206,20 @@ MonoBehaviour:
   Name: "\uD638\uBC15 \uBC31\uC791"
   dialogueSetter: {fileID: 7484961106983116652}
   cinemachineFreeLook: {fileID: 3861479290362259212}
+--- !u!114 &762635620450730152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72777114448273023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c280344f732904a9c52ccafd5440c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: {fileID: 3580377610321355757}
+  vfx: {fileID: 2137200961503982122}
 --- !u!1001 &72777114006916525
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -522,6 +537,10 @@ PrefabInstance:
       propertyPath: dialogueContainer
       value: 
       objectReference: {fileID: 11400000, guid: eaea75950206b564fa3df968622d3b96, type: 2}
+    - target: {fileID: 3509007874306094424, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
+      propertyPath: interactionButtonType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6796724519612229064, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
@@ -545,6 +564,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1640889748532057341, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
   m_PrefabInstance: {fileID: 72777114858247861}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3580377610321355757 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3509007874306094424, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
+  m_PrefabInstance: {fileID: 72777114858247861}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e60bbd4e45e74a2418febfdf14a7a9a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &72777114871609330
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -566,7 +596,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2065554179067364831, guid: 834012bd78058164699a55fe28d2e04a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 2065554179067364831, guid: 834012bd78058164699a55fe28d2e04a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -602,6 +632,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 834012bd78058164699a55fe28d2e04a, type: 3}
+--- !u!1 &2137200961503982122 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2065554179067364824, guid: 834012bd78058164699a55fe28d2e04a, type: 3}
+  m_PrefabInstance: {fileID: 72777114871609330}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2137200961503982125 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2065554179067364831, guid: 834012bd78058164699a55fe28d2e04a, type: 3}

@@ -6044,7 +6044,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4894413889662424000}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3715979460641516798
 MonoBehaviour:
@@ -9001,7 +9001,17 @@ MonoBehaviour:
   questAcceptUI: {fileID: 4894413890768923695}
   chapter01QuestSummary:
   - QuestID: 0
-    QuestTitle: "#0 \uBBF8\uD53C \uBD80\uD65C"
+    QuestTitle: '#0'
+  - QuestID: 1
+    QuestTitle: '#1'
+  - QuestID: 2
+    QuestTitle: '#2'
+  - QuestID: 3
+    QuestTitle: '#3'
+  - QuestID: 4
+    QuestTitle: '#4'
+  - QuestID: 5
+    QuestTitle: '#5'
   chapter01QuestData:
   - QuestTitle: "#0 \uBD80\uD65C...?"
     QuestDescription: "\u3141\u3134\u3147\u3139"
@@ -9023,12 +9033,16 @@ MonoBehaviour:
   - QuestID: 0
     QuestTitle: "\uB2E4\uC74C \uC5C5\uB370\uC774\uD2B8\uB97C \uAE30\uB300\uD574\uC8FC\uC138\uC694"
   chapter02QuestData:
-  - QuestTitle: "\u3141\u3134\u3147\u3139"
-    QuestDescription: 
+  - QuestTitle: "\uB2E4\uC74C \uC5C5\uB370\uC774\uD2B8\uB97C \uAE30\uB300\uD574\uC8FC\uC138\uC694"
+    QuestDescription: "\uC5C5\uB370\uC774\uD2B8 \uB300\uAE30 \uC911..."
     QuestID: 0
     QuestDetailID: 0
     QuestFlowID: 0
-    QuestConditions: []
+    QuestConditions:
+    - ConditionText: "\uC5C5\uB370\uC774\uD2B8 \uB300\uAE30"
+      EnableVariable: 0
+      VariableID: 
+      EqualOrMany: 0
 --- !u!1 &4894413888798612530
 GameObject:
   m_ObjectHideFlags: 0
@@ -11519,8 +11533,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4894413889248494119}
-  m_LocalRotation: {x: 0.016177848, y: 0.4825137, z: -0.23637167, w: 0.8432362}
-  m_LocalPosition: {x: -25.123312, y: 16.953491, z: -29.108856}
+  m_LocalRotation: {x: 0.019181862, y: 0.00000003090384, z: -0.000000015139037, w: 0.99981606}
+  m_LocalPosition: {x: 10.17, y: 0.43368912, z: -61.23007}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13494,8 +13508,8 @@ Transform:
   - {fileID: 4894413888930609048}
   - {fileID: 4894413889571151359}
   - {fileID: 6276129635928265496}
-  - {fileID: 3076814547968096782}
   - {fileID: 166455228391224701}
+  - {fileID: 3076814547968096782}
   m_Father: {fileID: 4894413890758038908}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18413,7 +18427,7 @@ GameObject:
   - component: {fileID: 6276129635928265496}
   - component: {fileID: 1575951479590170866}
   m_Layer: 0
-  m_Name: BGM Player
+  m_Name: '*BGM Player'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23484,6 +23498,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4894413889662424000}
     m_Modifications:
+    - target: {fileID: 66647894233099448, guid: c5762643f07630246b045021dc057f19, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1090337086707968406, guid: c5762643f07630246b045021dc057f19, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -23730,7 +23748,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3808892230080573724, guid: c5762643f07630246b045021dc057f19, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5275568633851341170, guid: c5762643f07630246b045021dc057f19, type: 3}
       propertyPath: m_Name

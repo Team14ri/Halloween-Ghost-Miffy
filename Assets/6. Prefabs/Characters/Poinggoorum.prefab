@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 3861589311823053339}
   - component: {fileID: 3861589311823053336}
   - component: {fileID: 3861589311823053333}
+  - component: {fileID: 7014134726722953228}
   m_Layer: 0
   m_Name: Poinggoorum
   m_TagString: NPC
@@ -205,6 +206,20 @@ MonoBehaviour:
   Name: "\uD3EC\uC789 \uAD6C\uB984"
   dialogueSetter: {fileID: 2101282229510400769}
   cinemachineFreeLook: {fileID: 5715846814759198211}
+--- !u!114 &7014134726722953228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3861589311823053330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c280344f732904a9c52ccafd5440c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: {fileID: 3842542153533137849}
+  vfx: {fileID: 2065554179070865107}
 --- !u!1001 &7727883
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -226,7 +241,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2065554179067364831, guid: 834012bd78058164699a55fe28d2e04a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 2065554179067364831, guid: 834012bd78058164699a55fe28d2e04a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -262,6 +277,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 834012bd78058164699a55fe28d2e04a, type: 3}
+--- !u!1 &2065554179070865107 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2065554179067364824, guid: 834012bd78058164699a55fe28d2e04a, type: 3}
+  m_PrefabInstance: {fileID: 7727883}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2065554179070865108 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2065554179067364831, guid: 834012bd78058164699a55fe28d2e04a, type: 3}
@@ -349,6 +369,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1640889748532057341, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
   m_PrefabInstance: {fileID: 423887756416947937}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3842542153533137849 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3509007874306094424, guid: dfb2e6fd37cede44c8f307a1f80a9279, type: 3}
+  m_PrefabInstance: {fileID: 423887756416947937}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e60bbd4e45e74a2418febfdf14a7a9a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8919081052051478769
 PrefabInstance:
   m_ObjectHideFlags: 0
