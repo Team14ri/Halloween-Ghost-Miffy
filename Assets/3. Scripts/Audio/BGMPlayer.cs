@@ -6,8 +6,8 @@ using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 public class BGMPlayer : MonoBehaviour
 {
-    private EventInstance bgmInstance;
-    private EventInstance ambInstance;
+    public EventInstance bgmInstance { get; private set; }
+    public EventInstance ambInstance { get; private set; }
 
     private string curEventName = null;
     private string curBGMEventName = null;
