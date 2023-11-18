@@ -198,6 +198,9 @@
 		<relationship name="automators">
 			<destination>{51a82e79-51ed-4c35-b66e-54ff3107a3ac}</destination>
 		</relationship>
+		<relationship name="modulators">
+			<destination>{a110b749-789c-427b-9b4c-2f970143a695}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{fb6cfccc-c076-44d1-9e53-5f9ce246854d}</destination>
 		</relationship>
@@ -235,6 +238,9 @@
 		</property>
 		<relationship name="automators">
 			<destination>{7cfbcf84-9a36-489b-a85c-6c34ab739f9e}</destination>
+		</relationship>
+		<relationship name="modulators">
+			<destination>{86b9a813-3627-4812-82d3-69ba84ff12e0}</destination>
 		</relationship>
 		<relationship name="effectChain">
 			<destination>{41ebdf85-5205-4a66-8f90-71217b9b493f}</destination>
@@ -309,6 +315,23 @@
 			<destination>{d33380b9-c877-46a0-a568-ce0ff0ed20d9}</destination>
 		</relationship>
 	</object>
+	<object class="ADSRModulator" id="{a110b749-789c-427b-9b4c-2f970143a695}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="initialValue">
+			<value>-80</value>
+		</property>
+		<property name="attackTime">
+			<value>2000</value>
+		</property>
+		<property name="releaseTime">
+			<value>2000</value>
+		</property>
+		<property name="finalValue">
+			<value>-80</value>
+		</property>
+	</object>
 	<object class="MixerBusEffectChain" id="{fb6cfccc-c076-44d1-9e53-5f9ce246854d}">
 		<relationship name="effects">
 			<destination>{2691eaf7-7d8e-42de-800a-a82cc4004037}</destination>
@@ -322,6 +345,23 @@
 		<relationship name="automationCurves">
 			<destination>{5458a025-cb50-4c4f-9d3f-d34d537d87f3}</destination>
 		</relationship>
+	</object>
+	<object class="ADSRModulator" id="{86b9a813-3627-4812-82d3-69ba84ff12e0}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="initialValue">
+			<value>-80</value>
+		</property>
+		<property name="attackTime">
+			<value>2000</value>
+		</property>
+		<property name="releaseTime">
+			<value>2000</value>
+		</property>
+		<property name="finalValue">
+			<value>-80</value>
+		</property>
 	</object>
 	<object class="MixerBusEffectChain" id="{41ebdf85-5205-4a66-8f90-71217b9b493f}">
 		<relationship name="effects">
@@ -366,6 +406,9 @@
 		<property name="value">
 			<value>0</value>
 		</property>
+		<property name="curveShape">
+			<value>1</value>
+		</property>
 	</object>
 	<object class="AutomationPoint" id="{1a7d328c-26db-42e8-950e-ec0e44d75756}">
 		<property name="position">
@@ -373,6 +416,9 @@
 		</property>
 		<property name="value">
 			<value>-80</value>
+		</property>
+		<property name="curveShape">
+			<value>-1</value>
 		</property>
 	</object>
 	<object class="AutomationPoint" id="{95a50a7a-7d6e-429f-879c-494681bb1e9c}">
