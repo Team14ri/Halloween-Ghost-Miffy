@@ -5,7 +5,7 @@
 			<value>14QuestAccept</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{b2245a83-a877-4488-bc55-97d22575a5ad}</destination>
@@ -116,7 +116,6 @@
 	<object class="MixerBusEffectChain" id="{81d58b9a-bcbd-4ebc-8416-78f271f863ce}">
 		<relationship name="effects">
 			<destination>{f75c47d6-01b2-472a-a13b-02667295d37d}</destination>
-			<destination>{d6eb45d0-9ac9-4b9c-8713-bfe892c59fb1}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{d8cc67ca-e2c9-4221-aadd-1b6b8795bbac}" />
@@ -124,10 +123,18 @@
 	<object class="MixerBusEffectChain" id="{64906c0f-44fe-46f5-ae06-b37e4a2ce669}">
 		<relationship name="effects">
 			<destination>{dbc94f20-984d-4cea-91c5-ee84aa432929}</destination>
+			<destination>{2428e03d-8066-4d17-b968-d798a034cd2b}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{7c965d32-0c8a-4a50-94e1-bc282b9259d8}" />
 	<object class="MixerBusFader" id="{f75c47d6-01b2-472a-a13b-02667295d37d}" />
-	<object class="SpatialiserEffect" id="{d6eb45d0-9ac9-4b9c-8713-bfe892c59fb1}" />
 	<object class="MixerBusFader" id="{dbc94f20-984d-4cea-91c5-ee84aa432929}" />
+	<object class="MultibandEqEffect" id="{2428e03d-8066-4d17-b968-d798a034cd2b}">
+		<property name="frequencyA">
+			<value>7807.50684</value>
+		</property>
+		<property name="qualityA">
+			<value>0.539551735</value>
+		</property>
+	</object>
 </objects>
