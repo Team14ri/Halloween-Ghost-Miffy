@@ -21,16 +21,14 @@ namespace Interaction
             {
                 if (value == false)
                 {
-                    this.EnsureCoroutineStopped(ref _eventRoutine);
+                    CancelInvoke(nameof(SetInteractionEnable));
                 }
                 _enabled = value;
             }
         }
 
         private InteractionTrigger closestInteractionTrigger;
-            
-        private Coroutine _eventRoutine;
-        
+
         private void Start()
         {
             Enabled = true;
@@ -90,16 +88,9 @@ namespace Interaction
             Enabled = true;
         }
 
-        private IEnumerator _SetInteractionEnableAfterDelay()
-        {
-            yield return new WaitForSeconds(interactionDelay);
-
-            SetInteractionEnable(); 
-        }
-        
         public void SetInteractionEnableAfterDelay()
         {
-            _eventRoutine = StartCoroutine(_SetInteractionEnableAfterDelay());
+            Invoke(nameof(SetInteractionEnable), interactionDelay);
         }
 
         private void OnTriggerEnter(Collider other)
