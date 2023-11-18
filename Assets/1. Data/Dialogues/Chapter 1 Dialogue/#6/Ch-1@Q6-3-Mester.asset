@@ -1,0 +1,124 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Ch-1@Q6-3-Mester
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: 60144c2e-0e86-4f03-8652-01729239d81e
+    PortName: Execute
+    TargetNodeGuid: 961ea3c6-7b18-4474-9dbb-14a3b06b90bd
+  - BaseNodeGuid: 961ea3c6-7b18-4474-9dbb-14a3b06b90bd
+    PortName: Next
+    TargetNodeGuid: 3877f44f-9dd4-4f58-a832-062b2a5dae79
+  - BaseNodeGuid: 3877f44f-9dd4-4f58-a832-062b2a5dae79
+    PortName: Next
+    TargetNodeGuid: 61b10ab9-f1d2-4afa-9986-ec14a33dadfc
+  - BaseNodeGuid: 61b10ab9-f1d2-4afa-9986-ec14a33dadfc
+    PortName: Next
+    TargetNodeGuid: 19abda0c-8405-4e11-982d-959e9a4555ef
+  - BaseNodeGuid: 19abda0c-8405-4e11-982d-959e9a4555ef
+    PortName: Next
+    TargetNodeGuid: 21633f11-9bcd-4ceb-b0df-7de160037e46
+  - BaseNodeGuid: 21633f11-9bcd-4ceb-b0df-7de160037e46
+    PortName: Next
+    TargetNodeGuid: cddd8c1b-c488-4bdc-a5f0-5df1559d1ead
+  - BaseNodeGuid: cddd8c1b-c488-4bdc-a5f0-5df1559d1ead
+    PortName: Next
+    TargetNodeGuid: 74ac375a-9303-4b4f-ac53-4845a4ae7a76
+  NodeData:
+  - rid: 5154282203699217030
+  - rid: 5154282203699217031
+  - rid: 5154282203699217032
+  - rid: 5154282203699217033
+  - rid: 5154282203699217034
+  - rid: 5154282203699217035
+  - rid: 5154282203699217036
+  references:
+    version: 2
+    RefIds:
+    - rid: 5154282203699217030
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 961ea3c6-7b18-4474-9dbb-14a3b06b90bd
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 205, y: 273}
+        TargetObjectID: Mester
+        DialogueText: "<anim:shake>\uC790.. \uC774\uBC88 \uCE6D\uCC2C \uCE94\uB514
+          \uB300\uD68C\uC758 \uC6B0\uC2B9\uC790\uB294\u2026.</anim>"
+        SkipDelay: 0
+    - rid: 5154282203699217031
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 3877f44f-9dd4-4f58-a832-062b2a5dae79
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 731, y: 115}
+        TargetObjectID: Mester
+        DialogueText: "<size:1.3>\uBBF8\uD53C!! <size:1.1>\uCD95\uD558\uD55C\uB2E4~
+          <anim:wave>\uD64D\uD64D\uD64D~</anim>"
+        SkipDelay: 0
+    - rid: 5154282203699217032
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 61b10ab9-f1d2-4afa-9986-ec14a33dadfc
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1331, y: 253}
+        TargetObjectID: Luke
+        DialogueText: "<anim:shake>\uC800\uB807\uAC8C \uB9CE\uC740 \uCE6D\uCC2C \uC2A4\uD2F0\uCEE4\uB77C\uB2C8..
+          </anim>"
+        SkipDelay: 0
+    - rid: 5154282203699217033
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 19abda0c-8405-4e11-982d-959e9a4555ef
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1830, y: 126}
+        TargetObjectID: Luke
+        DialogueText: "\uC544\uC27D\uB2E4.. \uB098\uB3C4 \uC655\uCE94\uB514 \uBA39\uACE0
+          \uC2F6\uC5C8\uB294\uB370.."
+        SkipDelay: 0
+    - rid: 5154282203699217034
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 21633f11-9bcd-4ceb-b0df-7de160037e46
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2234, y: 267}
+        TargetObjectID: Camella
+        DialogueText: "\uC774 \uB0B4\uAC00 <size:1.4>\uC27D\uC0AC\uB9AC<size:1> \uC774\uAE30\uC9C0
+          \uBABB\uD558\uB294 \n\uB140\uC11D\uC774 \uB098\uD0C0\uB0A0 \uC904\uC774\uC57C!"
+        SkipDelay: 0
+    - rid: 5154282203699217035
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: cddd8c1b-c488-4bdc-a5f0-5df1559d1ead
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2710, y: 96}
+        TargetObjectID: Camella
+        DialogueText: "\uB291\uB300\uC18C\uB140\uC778 \uB098\uC5D0\uAC8C\uB3C4 \n\uD55C\uACC4\uB294
+          \uC788\uB294 \uBC95\uC774\uAD70! \uD788\uD79B!"
+        SkipDelay: 0
+    - rid: 5154282203699217036
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 74ac375a-9303-4b4f-ac53-4845a4ae7a76
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 3054, y: 286}
+        TargetObjectID: Camella
+        DialogueText: "\uB2E4\uC74C \uB300\uD68C\uC5D0\uB294 \uC9C0\uC9C0 \uC54A\uC744
+          \uD14C\uB2F7!"
+        SkipDelay: 0
