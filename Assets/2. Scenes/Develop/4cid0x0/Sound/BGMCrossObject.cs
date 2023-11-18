@@ -29,4 +29,12 @@ public class BGMCrossObject : MonoBehaviour
         float normalizedDistance = Mathf.Clamp01((distance - minOffset) / (maxOffset - minOffset));
         eventInstance.setParameterByName("trackVol", 1 - normalizedDistance);
     }
+    
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        
+        Gizmos.DrawWireSphere(transform.position, minOffset);
+        Gizmos.DrawWireSphere(transform.position, maxOffset);
+    }
 }
