@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="MixerGroup" id="{0ba945a8-2634-405f-9186-327d8802f7f9}">
+		<property name="name">
+			<value>Ani3D</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{019f05a2-28f9-45d9-b6a8-81b7d069a9e8}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{60c02b35-c741-44e1-bbf1-5172b458623e}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{1127e86d-81c8-4e7f-9866-7b56d22ab475}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{019f05a2-28f9-45d9-b6a8-81b7d069a9e8}">
+		<relationship name="effects">
+			<destination>{d4af2d61-d9d2-47d7-8723-abc44659f806}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{60c02b35-c741-44e1-bbf1-5172b458623e}" />
+	<object class="MixerBusFader" id="{d4af2d61-d9d2-47d7-8723-abc44659f806}" />
+</objects>
