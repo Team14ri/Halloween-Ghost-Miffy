@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Ch-1@Q3-1-1-Mester
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: 984bd89d-9778-496d-a1eb-fdbe8e0324da
+    PortName: Execute
+    TargetNodeGuid: 02ae6c8b-1f1e-4e5f-acca-385b2def94ca
+  - BaseNodeGuid: 02ae6c8b-1f1e-4e5f-acca-385b2def94ca
+    PortName: Next
+    TargetNodeGuid: 225d931c-715f-4cb6-aa37-5a6d961415bb
+  - BaseNodeGuid: 225d931c-715f-4cb6-aa37-5a6d961415bb
+    PortName: Next
+    TargetNodeGuid: 26efca77-4c8c-4007-955b-ebc5cc0aa711
+  - BaseNodeGuid: 26efca77-4c8c-4007-955b-ebc5cc0aa711
+    PortName: Next
+    TargetNodeGuid: 19b31474-4014-4cca-9e60-b6fc7adba27f
+  NodeData:
+  - rid: 3681220325116739636
+  - rid: 3681220325116739637
+  - rid: 3681220325116739638
+  - rid: 3681220325116739639
+  references:
+    version: 2
+    RefIds:
+    - rid: 3681220325116739636
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 02ae6c8b-1f1e-4e5f-acca-385b2def94ca
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 285, y: 200}
+        TargetObjectID: Mester
+        DialogueText: "\uC624 \uBBF8\uD53C\uAD6C\uB098!! \uB9C8\uC744\uC740 \uC798
+          \uB3CC\uC544\uBCF4\uACE0 \uC788\uB2C8? \uD64D\uD64D\uD64D~"
+        SkipDelay: 0
+    - rid: 3681220325116739637
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 225d931c-715f-4cb6-aa37-5a6d961415bb
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 804, y: 200}
+        TargetObjectID: Mester
+        DialogueText: "\uACE0\uC0DD\uD558\uB294\uAD6C\uB098 \uBBF8\uD53C, \uD639\uC2DC
+          \uB0B4 \uBD80\uD0C1 \uD558\uB098\uB9CC \uB4E4\uC5B4\uC904 \uC218 \uC788\uACA0\uB098?
+          \uD64D\uD64D\uD64D~"
+        SkipDelay: 0
+    - rid: 3681220325116739638
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 19b31474-4014-4cca-9e60-b6fc7adba27f
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1957, y: 200}
+        TargetObjectID: Mester
+        DialogueText: "\uD639\uC2DC \uBD84\uC218\uB300\uB97C \uC870\uC0AC\uD574 \uC904
+          \uC218 \uC788\uACA0\uB2C8?"
+        SkipDelay: 0
+    - rid: 3681220325116739639
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 26efca77-4c8c-4007-955b-ebc5cc0aa711
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1378, y: -91}
+        TargetObjectID: Mester
+        DialogueText: "\uCD95\uC81C\uAC00 \uD55C\uCC3D\uC778\uB370 \uBD84\uC218\uB300\uC5D0\uC11C
+          \uBB3C\uC774 \uB098\uC624\uC9C0 \uC54A\uC544\uC11C \uAC71\uC815\uC774\uAD6C\uB098
+          \uD64D\uD64D\uD64D~"
+        SkipDelay: 0
