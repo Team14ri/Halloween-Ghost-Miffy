@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DS.Runtime;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -183,7 +184,17 @@ namespace Quest
         {
             VariableManager.Instance.ResetItem(id);
         }
-        
+
+        public void ExecuteDialogue(DialogueContainer dialogueContainer)
+        {
+            PlayerController.Instance.Interaction.Enabled = false;
+            
+            PlayerController.Instance.StateMachine.ChangeState(
+                new PlayerInteractionState(PlayerController.Instance, 
+                    PlayerController.Instance.StateMachine, dialogueContainer,
+                    () => { PlayerController.Instance.Interaction.Enabled = true; }));
+        }
+
         public void ChangeFlowManager(QuestFlowManager newManager)
         {
             observeUpdate = false;
