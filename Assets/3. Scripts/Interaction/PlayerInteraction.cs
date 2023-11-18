@@ -13,10 +13,24 @@ namespace Interaction
         [SerializeField] private float interactionDelay = 0.8f;
         [SerializeField] private List<InteractionTrigger> interactionTriggers = new();
 
-        public bool Enabled { get; set; }
+        private bool _enabled;
+        public bool Enabled
+        {
+            get => _enabled;
+            set
+            {
+                if (value == false)
+                {
+                    this.EnsureCoroutineStopped(ref _eventRoutine);
+                }
+                _enabled = value;
+            }
+        }
 
         private InteractionTrigger closestInteractionTrigger;
             
+        private Coroutine _eventRoutine;
+        
         private void Start()
         {
             Enabled = true;
@@ -75,10 +89,17 @@ namespace Interaction
         {
             Enabled = true;
         }
+
+        private IEnumerator _SetInteractionEnableAfterDelay()
+        {
+            yield return new WaitForSeconds(interactionDelay);
+
+            SetInteractionEnable(); 
+        }
         
         public void SetInteractionEnableAfterDelay()
         {
-            Invoke(nameof(SetInteractionEnable), interactionDelay);
+            _eventRoutine = StartCoroutine(_SetInteractionEnableAfterDelay());
         }
 
         private void OnTriggerEnter(Collider other)

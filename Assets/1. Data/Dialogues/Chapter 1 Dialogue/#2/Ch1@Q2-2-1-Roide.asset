@@ -1,0 +1,165 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Ch1@Q2-2-1-Roide
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: 60144c2e-0e86-4f03-8652-01729239d81e
+    PortName: Execute
+    TargetNodeGuid: 24afe16d-03b5-47d6-af45-6212232eacc6
+  - BaseNodeGuid: 24afe16d-03b5-47d6-af45-6212232eacc6
+    PortName: False
+    TargetNodeGuid: 18c41025-0b19-4029-ad79-be2c98bb41a6
+  - BaseNodeGuid: 24afe16d-03b5-47d6-af45-6212232eacc6
+    PortName: True
+    TargetNodeGuid: 8d50d406-e130-439a-814d-61f98c7fe7d6
+  - BaseNodeGuid: 18c41025-0b19-4029-ad79-be2c98bb41a6
+    PortName: "\uBBF8\uD53C"
+    TargetNodeGuid: f53fb659-ea7c-426d-8c16-0f7e60c7ed69
+  - BaseNodeGuid: 18c41025-0b19-4029-ad79-be2c98bb41a6
+    PortName: ...
+    TargetNodeGuid: b6e1f318-75c9-4523-8cb4-60583ae435e7
+  - BaseNodeGuid: f53fb659-ea7c-426d-8c16-0f7e60c7ed69
+    PortName: Next
+    TargetNodeGuid: afdee005-1472-49c6-aba2-0aac89b6f245
+  - BaseNodeGuid: afdee005-1472-49c6-aba2-0aac89b6f245
+    PortName: Next
+    TargetNodeGuid: 27f96f78-d317-432b-90c9-229705801dea
+  - BaseNodeGuid: 27f96f78-d317-432b-90c9-229705801dea
+    PortName: Next
+    TargetNodeGuid: c46b0ba3-1b1d-488d-97a9-2c4e5ccb9034
+  - BaseNodeGuid: b6e1f318-75c9-4523-8cb4-60583ae435e7
+    PortName: Next
+    TargetNodeGuid: afdee005-1472-49c6-aba2-0aac89b6f245
+  - BaseNodeGuid: c46b0ba3-1b1d-488d-97a9-2c4e5ccb9034
+    PortName: Next
+    TargetNodeGuid: 81bcea07-bfa2-4954-b9c5-08deb30df999
+  - BaseNodeGuid: 81bcea07-bfa2-4954-b9c5-08deb30df999
+    PortName: Next
+    TargetNodeGuid: 987450d1-1d19-460f-97bd-0a9822185902
+  NodeData:
+  - rid: 4135296627840385247
+  - rid: 4135296627840385248
+  - rid: 4135296627840385249
+  - rid: 4135296627840385250
+  - rid: 4135296627840385251
+  - rid: 4135296627840385252
+  - rid: 4135296627840385253
+  - rid: 4135296627840385254
+  - rid: 4135296627840385255
+  - rid: 4135296627840385256
+  references:
+    version: 2
+    RefIds:
+    - rid: 4135296627840385247
+      type: {class: ConditionNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 24afe16d-03b5-47d6-af45-6212232eacc6
+        NodeTitle: Condition Node
+        NodeType: 4
+        Position: {x: 242, y: 200}
+        ItemID: Condition@Ch1-2-2-1-Roide
+        EqualOrMany: 1
+    - rid: 4135296627840385248
+      type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 18c41025-0b19-4029-ad79-be2c98bb41a6
+        NodeTitle: MultiChoice Node
+        NodeType: 1
+        Position: {x: 647, y: 365}
+        TargetObjectID: Roide
+        DialogueText: "\uD788\uB045.. \uB10C \uB204\uAD6C\uB0D0..?"
+    - rid: 4135296627840385249
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: f53fb659-ea7c-426d-8c16-0f7e60c7ed69
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1033, y: 314}
+        TargetObjectID: Roide
+        DialogueText: "\uBBF8\uD53C..? \uBB50, \uC5B4\uCC28\uD53C \uAD00\uC2EC \uC5C6\uC5B4..
+          \uD788\uB045.."
+        SkipDelay: 0
+    - rid: 4135296627840385250
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: afdee005-1472-49c6-aba2-0aac89b6f245
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1488, y: 487}
+        TargetObjectID: Roide
+        DialogueText: "\uADF8\uB098\uC800\uB098, \uD38C\uD0A8\uB9E8\uC778\uC9C0 \uBB54\uC9C0..\n\uADF8
+          \uC790\uC2DD \uB108\uBB34 \uC2DC\uB044\uB7FD\uB2E4\uACE0."
+        SkipDelay: 0
+    - rid: 4135296627840385251
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 27f96f78-d317-432b-90c9-229705801dea
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1842, y: 683}
+        TargetObjectID: Roide
+        DialogueText: "\uC2DC\uB044\uB7FD\uAC8C \uC6C3\uC5B4\uB300\uACE0 \uB9D0\uC774\uC57C..
+          \n<anim:wave>\uD558!</anim> <anim:shake>\uD788\uB045..</anim> <anim:wave>\uD558!</anim>
+          <anim:shake>\uD788\uB045..</anim> <anim:wave>\uD558!</anim> <anim:shake>\uD788\uB045..</anim>"
+        SkipDelay: 0
+    - rid: 4135296627840385252
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: b6e1f318-75c9-4523-8cb4-60583ae435e7
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1033, y: 530}
+        TargetObjectID: Roide
+        DialogueText: "\uC548\uC54C\uB824\uC8FC\uB294\uAC70\uB0D0...\n\uBB50, \uC5B4\uCC28\uD53C
+          \uAD00\uC2EC \uC5C6\uC5B4.. \uD788\uB045.."
+        SkipDelay: 0
+    - rid: 4135296627840385253
+      type: {class: AddItemNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: c46b0ba3-1b1d-488d-97a9-2c4e5ccb9034
+        NodeTitle: AddItem Node
+        NodeType: 3
+        Position: {x: 3041, y: 890}
+        ItemID: Condition@Ch1-2-2-1
+        ItemCount: 1
+    - rid: 4135296627840385254
+      type: {class: AddItemNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 81bcea07-bfa2-4954-b9c5-08deb30df999
+        NodeTitle: AddItem Node
+        NodeType: 3
+        Position: {x: 3385, y: 890}
+        ItemID: Condition@Ch1-2-2-1-Roide
+        ItemCount: 1
+    - rid: 4135296627840385255
+      type: {class: StartQuestNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 987450d1-1d19-460f-97bd-0a9822185902
+        NodeTitle: StartQuest Node
+        NodeType: 2
+        Position: {x: 3780, y: 890}
+        QuestType: Clear
+        QuestID: "\uB85C\uC774\uB4DC\uC5D0\uAC8C \uC548\uBD80 \uBB3B\uAE30"
+    - rid: 4135296627840385256
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 8d50d406-e130-439a-814d-61f98c7fe7d6
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 678, y: 104}
+        TargetObjectID: Roide
+        DialogueText: "\uD38C\uD0A8\uB9E8\uC778\uC9C0 \uBB54\uC9C0.. \uC2DC\uB044\uB7FD\uAC8C
+          \uC6C3\uC5B4\uB300\uACE0 \uB9D0\uC774\uC57C.. \n<anim:wave>\uD558!</anim>
+          <anim:shake>\uD788\uB045..</anim> <anim:wave>\uD558!</anim> <anim:shake>\uD788\uB045..</anim>
+          <anim:wave>\uD558!</anim> <anim:shake>\uD788\uB045..</anim>"
+        SkipDelay: 0
