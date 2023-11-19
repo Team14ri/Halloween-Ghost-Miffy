@@ -10,11 +10,10 @@ public enum StickerType
 }
 
 [System.Serializable]
-public enum StickerLocation
+public enum StickerChapter
 {
-    Plaza,
-    Mall,
-    Forest
+    Ch1,
+    Ch2
 }
 
 [System.Serializable]
@@ -33,9 +32,9 @@ public class StickerData : ScriptableObject
     [SerializeField] private StickerType type;
     public StickerType Type => type;
     
-    [BoxGroup("Sticker Settings"), Title("Sticker Location")]
-    [SerializeField] private StickerLocation location;
-    public StickerLocation Location => location;
+    [BoxGroup("Sticker Settings"), Title("Sticker Chapter")]
+    [SerializeField] private StickerChapter chapter;
+    public StickerChapter Chapter => chapter;
 
     [BoxGroup("Sticker Settings"), Title("Sticker Description")]
     [SerializeField, TextArea(3, 10)] private string description;

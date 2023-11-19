@@ -6,15 +6,6 @@ using UnityEngine;
 
 namespace Quest
 {
-    // [Serializable]
-    // public enum QuestLocation
-    // {
-    //     Cemetery = 0,
-    //     Plaza = 1,
-    //     Mall = 2,
-    //     Forest = 3
-    // }
-    
     [Serializable]
     public enum QuestChapter
     {
