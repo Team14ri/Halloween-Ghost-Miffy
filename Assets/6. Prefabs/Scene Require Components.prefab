@@ -5325,7 +5325,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1160828531797390210}
-  - component: {fileID: 1546974385884862984}
+  - component: {fileID: 356352943824741747}
   m_Layer: 0
   m_Name: '*Quest System Manager'
   m_TagString: Untagged
@@ -5348,7 +5348,7 @@ Transform:
   m_Father: {fileID: 4894413889662424000}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1546974385884862984
+--- !u!114 &356352943824741747
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5373,7 +5373,9 @@ MonoBehaviour:
   - QuestID: 4
     QuestTitle: "#4 \uD638\uBC15\uBC31\uC791\uC774 \uB098\uD0C0\uB0AC\uB2E4"
   - QuestID: 5
-    QuestTitle: "\uBA54\uC2A4\uD130 \uD560\uC544\uBC84\uC9C0\uC5D0\uAC8C \uAC00\uC790!"
+    QuestTitle: "#5 \uD638\uBC15\uBC31\uC791\uC744 \uBD99\uC7A1\uC544\uB77C!"
+  - QuestID: 6
+    QuestTitle: "#6 \uBA54\uC2A4\uD130 \uD560\uC544\uBC84\uC9C0\uC5D0\uAC8C \uAC00\uC790!"
   chapter01QuestData:
   - QuestTitle: "#0 \uC5EC\uAE30\uB294 \uC5B4\uB51C\uAE4C?"
     QuestDescription: "\uB208\uC744 \uB5A0\uBCF4\uB2C8 \uC5EC\uAE30\uB2E4.\n\uC5EC\uAE30\uAC00
@@ -5396,9 +5398,9 @@ MonoBehaviour:
       EnableVariable: 0
       VariableID: 
       EqualOrMany: 0
-  - QuestTitle: "#1-1 \uCE6D\uCC2C \uCE94\uB514 \uB300\uD654?"
+  - QuestTitle: "#1-1 \uCE6D\uCC2C \uCE94\uB514 \uB300\uD68C? "
     QuestDescription: "\uCE6D\uCC2C \uCE94\uB514 \uB300\uD654\uC5D0 \uCC38\uC5EC\uD558\uB824\uBA74
-      \uC5B4\uB5BB\uAC8C \uD574\uC57C\uD558\uC9C0?"
+      \uC5B4\uB5BB\uAC8C \uD574\uC57C\uD558\uC9C0?\n\uB9C8\uC744\uC5D0\uC11C \uCC3E\uC544\uBCF4\uC790!"
     QuestID: 1
     QuestDetailID: 1
     QuestFlowID: 1
@@ -5441,7 +5443,7 @@ MonoBehaviour:
       EnableVariable: 0
       VariableID: 
       EqualOrMany: 1
-  - QuestTitle: "#1-2 \uAD11\uC7A5\uC758 \uBD88\uC744 \uBC1D\uD788\uC790!"
+  - QuestTitle: "#1-3 \uAD11\uC7A5\uC758 \uBD88\uC744 \uBC1D\uD788\uC790!"
     QuestDescription: "\uAD11\uC7A5\uC774 \uBC1D\uC544\uC84C\uB2E4!\n\uB2E4\uC2DC
       \uBA54\uC2A4\uD130 \uD560\uC544\uBC84\uC9C0\uC5D0\uAC8C \uB3CC\uC544\uAC00\uC790!"
     QuestID: 1
@@ -5466,7 +5468,9 @@ MonoBehaviour:
       VariableID: 
       EqualOrMany: 0
   - QuestTitle: "#2-2 \uB9C8\uC744 \uC0AC\uB78C\uB4E4\uC758 \uC548\uBD80"
-    QuestDescription: "\uB9C8\uC744 \uC0AC\uB78C\uB4E4\uC758 \uC548\uBD80\uB97C \uBB3B\uC790!"
+    QuestDescription: "\uB9C8\uC744 \uC774\uACF3\uC800\uACF3\uC744 \uB458\uB7EC\uBCF4\uBA70,
+      \uC548\uBD80\uB97C \uBB3B\uC790!\n\uC0DD\uAC01\uBCF4\uB2E4 \uB9C8\uC744\uC774
+      \uB113\uB124!"
     QuestID: 2
     QuestDetailID: 2
     QuestFlowID: 1
@@ -5491,6 +5495,17 @@ MonoBehaviour:
       EnableVariable: 1
       VariableID: Condition@Ch1-2-2-1-Sara
       EqualOrMany: 1
+  - QuestTitle: "#2-3 \uC0AC\uB77C\uC5D0\uAC8C \uAC00\uBCF4\uC790"
+    QuestDescription: "\uC0AC\uB77C\uAC00 \uC640\uB2EC\uB77C\uACE0 \uD588\uC5C8\uC9C0?\n\uC0AC\uB77C\uC5D0\uAC8C
+      \uAC00\uBCF4\uC790!\t"
+    QuestID: 2
+    QuestDetailID: 3
+    QuestFlowID: 1
+    QuestConditions:
+    - ConditionText: "\uC0AC\uB77C\uC640 \uB300\uD654"
+      EnableVariable: 0
+      VariableID: 
+      EqualOrMany: 0
   - QuestTitle: "#3-1 \uBD84\uC218\uB300\uC5D0 \uBB34\uC5B8\uAC00?"
     QuestDescription: "\uC0AC\uB77C\uC758 \uB9D0\uB300\uB85C \uBD84\uC218\uB300\uC5D0
       \uBB34\uC5B8\uAC00 \uC788\uB294 \uAC78\uAE4C?\n\uD55C \uBC88 \uAC00\uBCF4\uC790!"
@@ -5498,29 +5513,29 @@ MonoBehaviour:
     QuestDetailID: 1
     QuestFlowID: 1
     QuestConditions:
-    - ConditionText: "\uBD84\uC218\uB300\uC5D0 \uB9D0\uC744 \uAC78\uC5B4\uBCF4\uC790"
+    - ConditionText: "\uBD84\uC218\uB300\uB97C \uC870\uC0AC\uD574\uBCF4\uC790!"
       EnableVariable: 0
       VariableID: 
       EqualOrMany: 0
   - QuestTitle: "#3-2 \uBC18\uC9C0\uC758 \uC8FC\uC778\uC740 \uB204\uAD74\uAE4C?"
-    QuestDescription: "\uB204\uAD70\uAC00 \uC783\uC5B4\uBC84\uB9B0 \uAC78\uAE4C?\n\uC218\uC9D1\uD488\uC5D0\uC11C
-      \uD655\uC778\uD574\uBCF4\uACE0, \uC564\uB354\uC2A8\uC5D0\uAC8C \uBB3C\uC5B4\uBCF4\uC790."
+    QuestDescription: "\uB204\uAD70\uAC00 \uC783\uC5B4\uBC84\uB9B0 \uAC78\uAE4C?\r\n\uBC18\uC9C0\uC758
+      \uC8FC\uC778\uC744 \uCC3E\uC544\uC8FC\uC790."
     QuestID: 3
     QuestDetailID: 2
     QuestFlowID: 1
     QuestConditions:
-    - ConditionText: "\uC564\uB354\uC2A8\uACFC \uB300\uD654"
+    - ConditionText: "\uBC18\uC9C0 \uC8FC\uC778 \uCC3E\uC544\uC8FC\uAE30"
       EnableVariable: 0
       VariableID: 
       EqualOrMany: 0
-  - QuestTitle: "#3-3 \uC0AC\uB77C\uC5D0\uAC8C \uBC18\uC9C0\uB97C \uB3CC\uB824\uC8FC\uC790!"
-    QuestDescription: "\uBC18\uC9C0\uC758 \uC8FC\uC778\uC740 \uC0AC\uB77C\uC600\uB2E4!\n\uB418\uB3CC\uB824\uC8FC\uB7EC
-      \uAC00\uBCF4\uC790."
+  - QuestTitle: "#3-3 \uC564\uB354\uC2A8\uC5D0\uAC8C \uC54C\uB824\uC8FC\uC790"
+    QuestDescription: "\uBC18\uC9C0\uC758 \uC8FC\uC778\uC740 \uC0AC\uB77C\uC600\uB2E4!\n\uC564\uB354\uC2A8\uC5D0\uAC8C
+      \uC54C\uB824\uC8FC\uC790."
     QuestID: 3
-    QuestDetailID: 2
-    QuestFlowID: 2
+    QuestDetailID: 3
+    QuestFlowID: 1
     QuestConditions:
-    - ConditionText: "\uC0AC\uB77C\uC640 \uB300\uD654"
+    - ConditionText: "\uC564\uB354\uC2A8\uACFC \uB300\uD654"
       EnableVariable: 0
       VariableID: 
       EqualOrMany: 0
@@ -5539,8 +5554,8 @@ MonoBehaviour:
     QuestDescription: "\uD638\uBC15\uBC31\uC791\uC740 \uB204\uAD74\uAE4C?\n\uBA54\uC2A4\uD130\uC5D0\uAC8C
       \uC0C1\uD669\uC744 \uC54C\uB9AC\uC790!"
     QuestID: 4
-    QuestDetailID: 1
-    QuestFlowID: 2
+    QuestDetailID: 2
+    QuestFlowID: 1
     QuestConditions:
     - ConditionText: "\uBA54\uC2A4\uD130\uC640 \uB300\uD654 "
       EnableVariable: 0
@@ -5548,10 +5563,10 @@ MonoBehaviour:
       EqualOrMany: 0
   - QuestTitle: "#4-3 \uD3EC\uC2A4\uD130\uB97C \uAC8C\uC2DC\uD310\uC5D0 \uBD99\uC774\uC790"
     QuestDescription: "\uD3EC\uC2A4\uD130\uB97C \uAC8C\uC2DC\uD310\uC5D0 \uBD99\uC778
-      \uB4A4,\n\uD38C\uD0A8\uB9E8\uC5D0\uAC8C \uB3CC\uC544\uAC00\uC790!"
+      \uB4A4,\n\uD38C\uD0A8\uB9E8\uC5D0\uAC8C \uAC00\uBCF4\uC790! "
     QuestID: 4
-    QuestDetailID: 1
-    QuestFlowID: 3
+    QuestDetailID: 3
+    QuestFlowID: 1
     QuestConditions:
     - ConditionText: "\uAC8C\uC2DC\uD310\uC5D0 \uD3EC\uC2A4\uD130 \uBD99\uC774\uAE30 "
       EnableVariable: 1
@@ -5565,32 +5580,32 @@ MonoBehaviour:
     QuestDescription: "\uC0AC\uB77C\uAC00 \uD638\uBC15\uBC31\uC791\uC744 \uC54C\uACE0
       \uC788\uC5C8\uB358 \uAC83 \uAC19\uC544.\n\uC0AC\uB77C\uC5D0\uAC8C \uAC00\uBCF4\uC790!"
     QuestID: 4
-    QuestDetailID: 1
-    QuestFlowID: 4
+    QuestDetailID: 4
+    QuestFlowID: 1
     QuestConditions:
     - ConditionText: "\uC0AC\uB77C\uC640 \uB300\uD654\uD558\uAE30"
       EnableVariable: 0
       VariableID: 
       EqualOrMany: 0
-  - QuestTitle: "#4-5 \uC0C1\uAC00\uC5D0 \uC788\uB294 \uC8FC\uBBFC\uC5D0\uAC8C (1)"
+  - QuestTitle: "#5-1 \uC0C1\uAC00\uC5D0 \uC788\uB294 \uC8FC\uBBFC\uC5D0\uAC8C "
     QuestDescription: "\uD638\uBC15\uBC31\uC791\uC774 \uC9C0\uB098\uAC04 \uC0C1\uAC00.\n\uD638\uBC15\uBC31\uC791\uC744
-      \uBCF8 \uC801\uC740 \uC5C6\uB294\uC9C0, \uBB3C\uC5B4\uBCF4\uC790!"
-    QuestID: 4
-    QuestDetailID: 2
+      \uBCF8 \uC801\uC740 \uC5C6\uB294\uC9C0, \uCC3E\uC544\uBCF4\uC790."
+    QuestID: 5
+    QuestDetailID: 1
     QuestFlowID: 1
     QuestConditions:
     - ConditionText: "\uBD80\uC5C9\uC774 \uBA54\uC138\uC774\uC624\uC5D0\uAC8C \uBB3C\uC5B4\uBCF4\uC790!"
       EnableVariable: 0
       VariableID: 
       EqualOrMany: 0
-  - QuestTitle: "#4-6 \uAD50\uD68C\uC5D0 \uAC00\uBCF4\uC790!"
+  - QuestTitle: "#5-2 \uAD50\uD68C\uC5D0 \uAC00\uBCF4\uC790!"
     QuestDescription: "\uC0C1\uAC00 \uC704\uCABD\uC5D0 \uC788\uB294 \uAD50\uD68C\uC5D0
       \uD638\uBC15\uBC31\uC791\uC774 \uC788\uC744\uC9C0 \uBAB0\uB77C.\n\uAC00\uB294
       \uAE38\uC5D0 \uB2E8\uC11C\uAC00 \uC788\uC744 \uC218 \uC788\uC73C\uB2C8, \uC798
       \uC0B4\uD3B4\uBCF4\uC790!"
-    QuestID: 4
+    QuestID: 5
     QuestDetailID: 2
-    QuestFlowID: 2
+    QuestFlowID: 1
     QuestConditions:
     - ConditionText: "\uD638\uBC15\uBC31\uC791\uACFC \uAD00\uB828\uD55C \uB2E8\uC11C
         \uCC3E\uAE30"
@@ -5601,35 +5616,14 @@ MonoBehaviour:
       EnableVariable: 1
       VariableID: 
       EqualOrMany: 1
-  - QuestTitle: "#4-7 \uC0C1\uAC00\uC5D0 \uC788\uB294 \uC8FC\uBBFC\uC5D0\uAC8C (2)"
-    QuestDescription: "\uC0C1\uAC00\uB97C \uC9C0\uB098\uCCE4\uB2E4\uBA74, \uBCF8
-      \uC0AC\uB78C\uC774 \uC788\uC744\uC9C0\uB3C4 \uBAB0\uB77C!\n\uC0C1\uAC00\uC5D0
-      \uC788\uB294 \uC8FC\uBBFC\uC5D0\uAC8C \uBB3C\uC5B4\uBCF4\uC790!"
-    QuestID: 4
-    QuestDetailID: 3
-    QuestFlowID: 1
-    QuestConditions:
-    - ConditionText: "\uBD80\uC5C9\uC774, \uBA54\uC138\uC774\uC624\uC5D0\uAC8C \uBB3C\uC5B4\uBCF4\uAE30"
-      EnableVariable: 1
-      VariableID: 
-      EqualOrMany: 1
-    - ConditionText: "\uCF54\uBE0C\uB77C, \uC544\uC774\uBE44\uC5D0\uAC8C \uBB3C\uC5B4\uBCF4\uAE30"
-      EnableVariable: 1
-      VariableID: 
-      EqualOrMany: 1
-    - ConditionText: "\uC6B8\uACE0 \uC788\uB294 \uC544\uC774, \uC560\uB7F0\uC5D0\uAC8C
-        \uBB3C\uC5B4\uBCF4\uAE30"
-      EnableVariable: 1
-      VariableID: 
-      EqualOrMany: 1
-  - QuestTitle: "#4-8 \uB9C8\uD0D1\uC5D0 \uAC00\uBCF4\uC790!"
+  - QuestTitle: "#5-3 \uB9C8\uD0D1\uC5D0 \uAC00\uBCF4\uC790!"
     QuestDescription: "\uC0C1\uAC00 \uC67C\uCABD\uC5D0 \uC788\uB294 \uB9C8\uD0D1\uC5D0
       \uD638\uBC15\uBC31\uC791\uC774 \uC788\uC744\uC9C0 \uBAB0\uB77C.\n\uAC00\uB294
       \uAE38\uC5D0 \uB2E8\uC11C\uAC00 \uC788\uC744 \uC218 \uC788\uC73C\uB2C8, \uC798
       \uC0B4\uD3B4\uBCF4\uC790!"
-    QuestID: 4
+    QuestID: 5
     QuestDetailID: 3
-    QuestFlowID: 2
+    QuestFlowID: 1
     QuestConditions:
     - ConditionText: "\uD638\uBC15\uBC31\uC791\uACFC \uAD00\uB828\uD55C \uB2E8\uC11C
         \uCC3E\uAE30"
@@ -5640,21 +5634,21 @@ MonoBehaviour:
       EnableVariable: 1
       VariableID: 
       EqualOrMany: 1
-  - QuestTitle: "#4-9 \uB9C8\uD0D1 \uC544\uB798\uB85C \uB0B4\uB824\uAC00\uBCF4\uC790!"
+  - QuestTitle: "#5-4 \uB9C8\uD0D1 \uC544\uB798\uB85C \uB0B4\uB824\uAC00\uBCF4\uC790!"
     QuestDescription: "\uB9C8\uD0D1 \uC544\uB798\uB85C \uBC31\uC791\uC774 \uB0B4\uB824\uAC14\uB2E4!\n\uC544\uB798\uB85C
       \uB530\uB77C \uB0B4\uB824\uAC00\uBCF4\uC790."
-    QuestID: 4
-    QuestDetailID: 3
-    QuestFlowID: 3
+    QuestID: 5
+    QuestDetailID: 4
+    QuestFlowID: 1
     QuestConditions:
     - ConditionText: "\uB9C8\uD0D1 \uC544\uB798\uB85C \uB0B4\uB824\uAC00\uAE30 "
       EnableVariable: 0
       VariableID: 
       EqualOrMany: 0
-  - QuestTitle: "#5 \uBA54\uC2A4\uD130 \uD560\uC544\uBC84\uC9C0\uC5D0\uAC8C \uAC00\uBCF4\uC790"
+  - QuestTitle: "#6 \uBA54\uC2A4\uD130 \uD560\uC544\uBC84\uC9C0\uC5D0\uAC8C \uAC00\uBCF4\uC790"
     QuestDescription: "\uAD11\uC7A5\uC5D0\uC11C \uBA54\uC2A4\uD130 \uD560\uC544\uBC84\uC9C0\uAC00
       \uAE30\uB2E4\uB9AC\uACE0 \uC788\uC5B4!\n\uAD11\uC7A5\uC73C\uB85C \uAC00\uBCF4\uC790."
-    QuestID: 5
+    QuestID: 6
     QuestDetailID: 1
     QuestFlowID: 1
     QuestConditions:
@@ -12792,7 +12786,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4894413889248494119}
-  m_LocalRotation: {x: 0.019181862, y: 0.00000003090382, z: -0.000000015139028, w: 0.99981606}
+  m_LocalRotation: {x: 0.019181862, y: 0.00000003090384, z: -0.000000015139037, w: 0.99981606}
   m_LocalPosition: {x: 0, y: 2.6613045, z: -51.720528}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
