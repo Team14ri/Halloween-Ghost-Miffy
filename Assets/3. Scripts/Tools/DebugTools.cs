@@ -36,6 +36,8 @@ public class DebugTools : MonoBehaviour
                  (chapterID == currentQuestInfo[0] && questID == currentQuestInfo[1] && questDetailID < currentQuestInfo[2]) ||
                  (chapterID == currentQuestInfo[0] && questID == currentQuestInfo[1] && questDetailID == currentQuestInfo[2] && questFlowID < currentQuestInfo[3]))
             {
+                BGMPlayer.Instance.StopSound();
+                
                 QuestManager.Instance.SetQuestID($"{chapterID}@{questID}-{questDetailID}-{questFlowID}");
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 return;
@@ -62,6 +64,8 @@ public class DebugTools : MonoBehaviour
                 (chapterID == currentQuestInfo[0] && questID == currentQuestInfo[1] && questDetailID < currentQuestInfo[2]) ||
                 (chapterID == currentQuestInfo[0] && questID == currentQuestInfo[1] && questDetailID == currentQuestInfo[2] && questFlowID < currentQuestInfo[3]))
             {
+                BGMPlayer.Instance.StopSound();
+                
                 QuestManager.Instance.SetQuestID($"{chapterID}@{questID}-{questDetailID}-{questFlowID}");
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 return;
