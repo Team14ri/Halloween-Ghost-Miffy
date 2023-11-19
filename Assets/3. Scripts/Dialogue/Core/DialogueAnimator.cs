@@ -148,8 +148,8 @@ namespace DS.Core
             {
                 string id = match.Groups[1].Value;
                 string anim = match.Groups[2].Value; // 애니메이션은 'Idle'과 같은 형태로 들어가지 않고 'Player@Idle'처럼 들어갑니다
-
-                DialogueManager.Instance.Handlers[id].SetAnimation(state);
+                
+                DialogueManager.Instance.GetHandler(id)?.SetAnimation(state);
             }
         }
 

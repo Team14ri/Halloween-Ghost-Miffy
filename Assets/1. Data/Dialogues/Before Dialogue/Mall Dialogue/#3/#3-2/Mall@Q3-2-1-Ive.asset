@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Mall@Q3-2-1-Ive
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: e16643f0-7aea-4886-8856-cadebae5a364
+    PortName: Execute
+    TargetNodeGuid: 0c123484-ec78-44d7-baec-f937fa7fabb2
+  - BaseNodeGuid: 0c123484-ec78-44d7-baec-f937fa7fabb2
+    PortName: Next
+    TargetNodeGuid: 95d04998-d6ba-408d-91e2-f7c509150d86
+  - BaseNodeGuid: 95d04998-d6ba-408d-91e2-f7c509150d86
+    PortName: Next
+    TargetNodeGuid: 83e5de3b-5b9e-48f1-8e61-22c38d18c06d
+  - BaseNodeGuid: 83e5de3b-5b9e-48f1-8e61-22c38d18c06d
+    PortName: Next
+    TargetNodeGuid: 4246ea1f-75af-4490-9ecf-e67493df0a24
+  - BaseNodeGuid: 98f48238-b9cf-46b3-9eef-c25a76b18d88
+    PortName: Next
+    TargetNodeGuid: bd061528-93bf-42cc-a416-57a00c1d3e18
+  - BaseNodeGuid: 4246ea1f-75af-4490-9ecf-e67493df0a24
+    PortName: "\uB044\uB355\uB044\uB355!"
+    TargetNodeGuid: 98f48238-b9cf-46b3-9eef-c25a76b18d88
+  NodeData:
+  - rid: 5154282140972876736
+  - rid: 5154282140972876737
+  - rid: 5154282140972876738
+  - rid: 5154282140972876739
+  - rid: 5154282140972876740
+  - rid: 5154282140972876741
+  references:
+    version: 2
+    RefIds:
+    - rid: 5154282140972876736
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 0c123484-ec78-44d7-baec-f937fa7fabb2
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 308, y: 177}
+        TargetObjectID: Ive
+        DialogueText: "\uADF8\uB798\uC11C \uD638\uBC15 \uAF43\uC774 \uC5B4\uB514\uC788\uB0D0\uBA74\u2026"
+        SkipDelay: 0
+    - rid: 5154282140972876737
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: bd061528-93bf-42cc-a416-57a00c1d3e18
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2836, y: 157}
+        TargetObjectID: Ive
+        DialogueText: "\uC544, \uADF8\uB798\uB3C4 \uBB34\uB9AC\uD558\uC9C0\uB294
+          \uB9D0\uC544\uC918..\n\uADF8\uB7FC, \uBD80\uD0C1\uD560\uAC8C.."
+        SkipDelay: 0
+    - rid: 5154282140972876738
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 95d04998-d6ba-408d-91e2-f7c509150d86
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 733, y: 178}
+        TargetObjectID: Ive
+        DialogueText: "\uC800\uAE30 \uC788\uB294 \uAF43\uC774 \uBCF4\uC5EC?"
+        SkipDelay: 0
+    - rid: 5154282140972876739
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 83e5de3b-5b9e-48f1-8e61-22c38d18c06d
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1092, y: 190}
+        TargetObjectID: Ive
+        DialogueText: "\uC800\uAE30\uC5D0 \uAF43\uC774 \uC788\uB294\uB370.. \uB09C
+          \uBAB8\uC9D1\uC774 <anim:shake>\uCEE4\uC11C..</anim> \n\uC800\uAE30\uAE4C\uC9C0
+          \uAC08 \uBC29\uBC95\uC774 \uC5C6\uC5B4.."
+        SkipDelay: 0
+    - rid: 5154282140972876740
+      type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 4246ea1f-75af-4490-9ecf-e67493df0a24
+        NodeTitle: MultiChoice Node
+        NodeType: 1
+        Position: {x: 1752, y: 199}
+        TargetObjectID: Ive
+        DialogueText: "\uC800 \uAF43\uC744 \uAC00\uC838\uC62C \uC218 \uC788\uC744\uAE4C?"
+    - rid: 5154282140972876741
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 98f48238-b9cf-46b3-9eef-c25a76b18d88
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2279, y: 157}
+        TargetObjectID: Ive
+        DialogueText: "\uACE0\uB9C8\uC6CC..!\n\uC870\uADF8\uB9CC\uD55C \uBAB8\uC774
+          \uAC00\uB054\uC740 \uBD80\uB7FD\uB124..!"
+        SkipDelay: 0

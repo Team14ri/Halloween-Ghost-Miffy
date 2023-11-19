@@ -13,10 +13,22 @@ namespace Interaction
         [SerializeField] private float interactionDelay = 0.8f;
         [SerializeField] private List<InteractionTrigger> interactionTriggers = new();
 
-        public bool Enabled { get; set; }
+        private bool _enabled;
+        public bool Enabled
+        {
+            get => _enabled;
+            set
+            {
+                if (value == false)
+                {
+                    CancelInvoke(nameof(SetInteractionEnable));
+                }
+                _enabled = value;
+            }
+        }
 
         private InteractionTrigger closestInteractionTrigger;
-            
+
         private void Start()
         {
             Enabled = true;
@@ -71,11 +83,11 @@ namespace Interaction
             }
         }
 
-        private void SetInteractionEnable()
+        public void SetInteractionEnable()
         {
             Enabled = true;
         }
-        
+
         public void SetInteractionEnableAfterDelay()
         {
             Invoke(nameof(SetInteractionEnable), interactionDelay);

@@ -2,25 +2,16 @@ using System;
 using System.Collections.Generic;
 using DS.Runtime;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace DS.Core
 {
-    [Serializable]
-    public struct ChoiceData
-    {
-        public string text;
-        public string guid;
-    }
-    
     public class MultiDialogueHandler : MonoBehaviour
     {
-        private DialogueHandler _dialogueHandler;
-        [SerializeField] private MultiDialogueSetter dialogueSetter;
+        [SerializeField] private Transform targetParent;
+        [SerializeField] private GameObject itemPrefab;
 
-        [SerializeField] private int _currentIndex;
-        [SerializeField] private List<ChoiceData> choiceDataList;
-
-        private PlayerInteractionState _interactionState;
+        private Action<string> _returnAction;
 
         private bool _observeDialogueEnd;
         
@@ -38,11 +29,6 @@ namespace DS.Core
             }
         }
 
-        private void Start()
-        {
-            _dialogueHandler = PlayerController.Instance.GetComponent<DialogueHandler>();
-        }
-
         private void Update()
         {
             if (!_observeDialogueEnd)
@@ -51,76 +37,43 @@ namespace DS.Core
             if (DialogueManager.Instance.CheckDialogueEnd())
             {
                 _observeDialogueEnd = false;
-                Invoke(nameof(InitIndex), 1f);
+                Invoke(nameof(ShowSelectMessage), 1f);
             }
         }
 
-        public void Init(PlayerInteractionState state, List<NodeLinkData> links)
+        public void Init(List<NodeLinkData> links, Action<string> returnAction)
         {
-            _currentIndex = 0;
-            
-            _interactionState = state;
+            _returnAction = returnAction;
 
-            choiceDataList.Clear();
+            foreach (Transform child in targetParent)
+            {
+                Destroy(child.gameObject);
+            }
             
             foreach (var link in links)
             {
-                choiceDataList.Add(new ChoiceData
-                {
-                    text = link.PortName,
-                    guid = link.TargetNodeGuid
-                });
+                GameObject temp = Instantiate(itemPrefab, targetParent.position, Quaternion.identity);
+                temp.transform.SetParent(targetParent);
+                
+                temp.GetComponent<SelectMessageViewer>().Set(link.PortName, link.TargetNodeGuid);
             }
-            
-            dialogueSetter.leftButton.interactable = true;
-            dialogueSetter.rightButton.interactable = true;
-            dialogueSetter.selectButton.interactable = true;
 
             _observeDialogueEnd = true;
         }
         
+        private void ShowSelectMessage()
+        {
+            targetParent.gameObject.SetActive(true);
+        }
+        
         private void Exit()
         {
-            dialogueSetter.nameBox.text = "";
-            dialogueSetter.textBox.text = "";
-        }
-        
-        private void InitIndex()
-        {
-            UpdateIndex(0);
-        }
-        
-        public void UpdateIndex(int updateIdx)
-        {
-            _currentIndex += updateIdx;
-            _currentIndex = Mathf.Clamp(_currentIndex, 0, choiceDataList.Count - 1);
-
-            dialogueSetter.leftButton.interactable = true;
-            dialogueSetter.rightButton.interactable = true;
-
-            if (_currentIndex == 0)
-            {
-                dialogueSetter.leftButton.interactable = false;
-            }
-            
-            if (_currentIndex == choiceDataList.Count - 1)
-            {
-                dialogueSetter.rightButton.interactable = false;
-            }
-            
-            ShowMultiDialogue();
+            targetParent.gameObject.SetActive(false);
         }
 
-        private void ShowMultiDialogue()
+        public void SelectChoice(string guid)
         {
-            dialogueSetter.nameBox.text = _dialogueHandler.GetName();
-            dialogueSetter.textBox.text = choiceDataList[_currentIndex].text;
-        }
-        
-        public void SelectChoice()
-        {
-            dialogueSetter.selectButton.interactable = false;
-            _interactionState.SelectChoice(choiceDataList[_currentIndex].guid);
+            _returnAction?.Invoke(guid);
             Exit();
         }
     }

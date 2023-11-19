@@ -23,26 +23,23 @@ public class VirtualCameraController : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            
+            if (freeLookCamera == null)
+                return;
+
+            GameObject player = GameObject.FindGameObjectWithTag("PlayerViewPoint");
+            if (player)
+            {
+                freeLookCamera.Follow = player.transform;
+                freeLookCamera.LookAt = player.transform;
+            }
+        
+            initialYAxisValue = freeLookCamera.m_YAxis.Value;
         }
         else if (Instance != this)
         {
             Destroy(gameObject);
         }
-    }
-    
-    private void Start()
-    {
-        if (freeLookCamera == null)
-            return;
-
-        GameObject player = GameObject.FindGameObjectWithTag("PlayerViewPoint");
-        if (player)
-        {
-            freeLookCamera.Follow = player.transform;
-            freeLookCamera.LookAt = player.transform;
-        }
-        
-        initialYAxisValue = freeLookCamera.m_YAxis.Value;
     }
 
     public void SetXAxis(float xAxis)

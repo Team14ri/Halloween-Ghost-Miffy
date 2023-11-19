@@ -1,0 +1,120 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Plaza@Q1-3-1-Mester
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: 60144c2e-0e86-4f03-8652-01729239d81e
+    PortName: Execute
+    TargetNodeGuid: 96f97c59-8341-46fe-aad3-67ebe2b39fd4
+  - BaseNodeGuid: 96f97c59-8341-46fe-aad3-67ebe2b39fd4
+    PortName: Next
+    TargetNodeGuid: aacc250d-9ccf-4d98-b4cc-622a9f0e7943
+  - BaseNodeGuid: 023895b6-a38c-4695-b515-7c42b227cb83
+    PortName: Next
+    TargetNodeGuid: f6b195b9-e915-4772-a47e-1763fef1ff51
+  - BaseNodeGuid: aacc250d-9ccf-4d98-b4cc-622a9f0e7943
+    PortName: Next
+    TargetNodeGuid: 023895b6-a38c-4695-b515-7c42b227cb83
+  - BaseNodeGuid: efe9894b-cc48-4d9e-896b-a529fb0f2ca4
+    PortName: Next
+    TargetNodeGuid: 593952ad-b80e-4344-8c1b-219e3ed73bc2
+  - BaseNodeGuid: f6b195b9-e915-4772-a47e-1763fef1ff51
+    PortName: Next
+    TargetNodeGuid: e8cee0ab-ce81-4342-a475-492b2129d063
+  - BaseNodeGuid: e8cee0ab-ce81-4342-a475-492b2129d063
+    PortName: Next
+    TargetNodeGuid: efe9894b-cc48-4d9e-896b-a529fb0f2ca4
+  NodeData:
+  - rid: 3681220207891710191
+  - rid: 3681220207891710192
+  - rid: 3681220207891710193
+  - rid: 3681220207891710194
+  - rid: 3681220207891710195
+  - rid: 3681220207891710196
+  - rid: 3681220207891710197
+  references:
+    version: 2
+    RefIds:
+    - rid: 3681220207891710191
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: efe9894b-cc48-4d9e-896b-a529fb0f2ca4
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2169, y: 313}
+        TargetObjectID: Mester
+        DialogueText: "5\uC7A5\uC744 \uBAA8\uB450 \uBAA8\uC73C\uBA74 \n\uB2E4\uC2DC
+          \uB098\uC5D0\uAC8C \uC640\uC8FC\uAC70\uB77C."
+        SkipDelay: 0
+    - rid: 3681220207891710192
+      type: {class: StartQuestNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 593952ad-b80e-4344-8c1b-219e3ed73bc2
+        NodeTitle: StartQuest Node
+        NodeType: 2
+        Position: {x: 2596, y: 354}
+        QuestType: MAIN QUEST
+        QuestID: "#2-1 \uACE4\uB780\uD574 \uBCF4\uC774\uB294 \uD638\uBC15 \uBAA8\uC790\uB97C
+          \uC4F4 \uC0AC\uB78C"
+    - rid: 3681220207891710193
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: e8cee0ab-ce81-4342-a475-492b2129d063
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1709, y: 255}
+        TargetObjectID: Mester
+        DialogueText: "\uC790, \uC774\uC81C \uB2E4\uB978 \uC0AC\uB78C\uB4E4\uC744
+          \uB3C4\uC640\uC8FC\uBA70 \n[\uCE6D\uCC2C \uCE94\uB514 \uC2A4\uD2F0\uCEE4]\uB97C
+          \uBAA8\uC544\uBCF4\uB834."
+        SkipDelay: 0
+    - rid: 3681220207891710194
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 96f97c59-8341-46fe-aad3-67ebe2b39fd4
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 242, y: 200}
+        TargetObjectID: Mester
+        DialogueText: "<anim:shake>\uC624\uC624!</anim> \uB9C8\uC744\uC774 \uBC1D\uC544\uC84C\uAD6C\uB098!"
+        SkipDelay: 0
+    - rid: 3681220207891710195
+      type: {class: AddItemNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: f6b195b9-e915-4772-a47e-1763fef1ff51
+        NodeTitle: AddItem Node
+        NodeType: 3
+        Position: {x: 1400, y: 476}
+        ItemID: Sticker@Mester
+        ItemCount: 1
+    - rid: 3681220207891710196
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: aacc250d-9ccf-4d98-b4cc-622a9f0e7943
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 740, y: 210}
+        TargetObjectID: Mester
+        DialogueText: "\uADF8\uB798, \uB3C4\uC640\uC918\uC11C \uC815\uB9D0 \uACE0\uB9D9\uAD6C\uB098."
+        SkipDelay: 0
+    - rid: 3681220207891710197
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 023895b6-a38c-4695-b515-7c42b227cb83
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1135, y: 210}
+        TargetObjectID: Mester
+        DialogueText: "\uC5EC\uAE30, [\uCE6D\uCC2C \uCE94\uB514 \uC2A4\uD2F0\uCEE4]\uB97C
+          \uBC1B\uAC70\uB77C!"
+        SkipDelay: 0

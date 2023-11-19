@@ -11,9 +11,15 @@ public class LookAtCamera : MonoBehaviour
     private void Start()
     {
         Cam = Camera.main;
+        UpdateRotation();
     }
 
     private void Update()
+    {
+        UpdateRotation();
+    }
+    
+    private void UpdateRotation()
     {
         if (!followX && !followY)
             return;

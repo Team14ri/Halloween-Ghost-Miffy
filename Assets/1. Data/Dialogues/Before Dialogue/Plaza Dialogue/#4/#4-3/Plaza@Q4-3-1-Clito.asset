@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Plaza@Q4-3-1-Clito
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: 61226ef9-1eb0-4e9c-8f97-f01e1a498482
+    PortName: Execute
+    TargetNodeGuid: d17fd845-22f4-459e-8ba6-df56d31741ed
+  - BaseNodeGuid: d17fd845-22f4-459e-8ba6-df56d31741ed
+    PortName: True
+    TargetNodeGuid: b8dff47a-f6a6-4b85-aa32-fc7dc4413873
+  - BaseNodeGuid: d17fd845-22f4-459e-8ba6-df56d31741ed
+    PortName: False
+    TargetNodeGuid: a5b44c56-5528-4289-961a-aa5c938db270
+  - BaseNodeGuid: a5b44c56-5528-4289-961a-aa5c938db270
+    PortName: Next
+    TargetNodeGuid: 53b60565-48a0-41e6-9fba-8172fa9f3ea4
+  - BaseNodeGuid: 53b60565-48a0-41e6-9fba-8172fa9f3ea4
+    PortName: Next
+    TargetNodeGuid: 9d4fe50f-7fa9-4dc7-8d19-8f07b22045f4
+  - BaseNodeGuid: 9d4fe50f-7fa9-4dc7-8d19-8f07b22045f4
+    PortName: Next
+    TargetNodeGuid: 4873554f-4f8e-44af-8f44-05656b828e7c
+  NodeData:
+  - rid: 4135296552606629898
+  - rid: 4135296552606629899
+  - rid: 4135296552606629900
+  - rid: 4135296552606629901
+  - rid: 4135296552606629902
+  - rid: 4135296552606629903
+  references:
+    version: 2
+    RefIds:
+    - rid: 4135296552606629898
+      type: {class: ConditionNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: d17fd845-22f4-459e-8ba6-df56d31741ed
+        NodeTitle: Condition Node
+        NodeType: 4
+        Position: {x: 224, y: 216}
+        ItemID: Quest@Plaza-4-3-1-Cliko
+        EqualOrMany: 1
+    - rid: 4135296552606629899
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: a5b44c56-5528-4289-961a-aa5c938db270
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 611, y: 327}
+        TargetObjectID: Cliko
+        DialogueText: "\uC5B4\uBA38\uB098, \uBBF8\uD53C \uC544\uB2C8\uB2C8? \uBB34\uC2A8
+          \uC77C\uC774\uB2C8? \uAF2C\uAF2C!"
+        SkipDelay: 0
+    - rid: 4135296552606629900
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 53b60565-48a0-41e6-9fba-8172fa9f3ea4
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1075, y: 322}
+        TargetObjectID: Cliko
+        DialogueText: "\uADF8\uB807\uAD6C\uB098... <anim:shake>\uBD84\uC218\uB300\uC5D0
+          \uC4F0\uB808\uAE30\uB97C \uBC84\uB9AC\uB2E4\uB2C8! \uAF2C\uAF2C!</anim>"
+        SkipDelay: 0
+    - rid: 4135296552606629901
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: b8dff47a-f6a6-4b85-aa32-fc7dc4413873
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 611, y: 130}
+        TargetObjectID: Cliko
+        DialogueText: "\uB098\uB3C4 \uC0AC\uB78C\uB4E4\uC744 \uBCF4\uBA74 \uAF2D
+          \uC804\uD560\uAC8C~ \uAF2C\uAF2C~"
+        SkipDelay: 0
+    - rid: 4135296552606629902
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 9d4fe50f-7fa9-4dc7-8d19-8f07b22045f4
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1671, y: 327}
+        TargetObjectID: Cliko
+        DialogueText: "\uADF8\uB798, \uBBF8\uD53C. \uB098\uB3C4 \uC0AC\uB78C\uB4E4\uC744
+          \uBCF4\uBA74 \uAF2D \uC804\uD560\uAC8C~ \uAF2C\uAF2C~"
+        SkipDelay: 0
+    - rid: 4135296552606629903
+      type: {class: AddItemNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 4873554f-4f8e-44af-8f44-05656b828e7c
+        NodeTitle: AddItem Node
+        NodeType: 3
+        Position: {x: 2163, y: 322}
+        ItemID: Quest@Plaza-4-3-1-Cliko
+        ItemCount: 1

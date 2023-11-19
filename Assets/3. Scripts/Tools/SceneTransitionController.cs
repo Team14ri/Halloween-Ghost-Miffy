@@ -35,6 +35,12 @@ public class SceneTransitionController : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(StartOneFrameLate());
+    }
+
+    private IEnumerator StartOneFrameLate()
+    {
+        yield return null;
         IrisOpen(null);
     }
 
@@ -62,6 +68,11 @@ public class SceneTransitionController : MonoBehaviour
         
         this.EnsureCoroutineStopped(ref _transitionRoutine);
         _transitionRoutine = StartCoroutine(IrisCloseProcess(action));
+
+        if (BGMPlayer.Instance == null)
+            return;
+        
+        BGMPlayer.Instance.StopSound();
     }
     
     private IEnumerator IrisOpenProcess(Action action)

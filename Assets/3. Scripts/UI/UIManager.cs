@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -5,19 +6,61 @@ using UnityEngine.InputSystem;
 
 public class UIManager : MonoBehaviour
 {
-    private readonly Stack<GameObject> _uiStack = new();
+    public static UIManager Instance;
+    public PlayerInput PlayerInput { get; private set; }
     
+    private readonly Stack<GameObject> _uiStack = new();
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+    
+    private void Start()
+    {
+        PlayerInput = GetComponent<PlayerInput>();
+    }
+
+    private bool CheckAlreadyOpen(GameObject obj)
+    {
+        var topObj =  _uiStack.FirstOrDefault();
+
+        if (topObj == null)
+            return false;
+        
+        return topObj == obj && topObj.activeInHierarchy;
+    }
+
     public void EnterUI(GameObject obj)
     {
+        if (CheckAlreadyOpen(obj))
+        {
+            EscapeOneUI();
+            return;
+        }
         _uiStack.Push(obj);
         obj.SetActive(true);
+        SoundManager.Instance.PlaySound("UI_QuestOpen");
     }
     
     public void EnterUIAlone(GameObject obj)
     {
+        if (CheckAlreadyOpen(obj))
+        {
+            EscapeAllUI();
+            return;
+        }
         EscapeAllUI();
         _uiStack.Push(obj);
         obj.SetActive(true);
+        SoundManager.Instance.PlaySound("UI_QuestOpen");
     }
     
     public void EscapeOneUI()

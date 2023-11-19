@@ -1,0 +1,89 @@
+using System;
+using System.Collections;
+using System.Linq;
+using Quest;
+using TMPro;
+using UnityEngine;
+
+public class QuestDetailViewer : MonoBehaviour
+{
+    [SerializeField] private TMP_Text questTitle;
+    [SerializeField] private TMP_Text questSubTitle;
+    [SerializeField] private GameObject questDetailItemPrefab;
+
+    [SerializeField] private Transform targetParent;
+
+    private int[] _saveQuestID;
+
+    public static QuestDetailViewer Instance;
+    
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+    
+    private void Start()
+    {
+        _saveQuestID = QuestManager.Instance.CurrentQuestInfo;
+        UpdateQuestDetail();
+    }
+
+    private void Update()
+    {
+        var updateQuestID = QuestManager.Instance.CurrentQuestInfo;
+        var sequenceEqual = _saveQuestID.SequenceEqual(updateQuestID);
+        if (!sequenceEqual)
+        {
+            _saveQuestID = updateQuestID;
+            UpdateQuestDetail();
+        }
+    }
+
+    public void UpdateQuestDetail()
+    {
+        StartCoroutine(UpdateQuestDetailOneFrameLate());
+    }
+
+    private IEnumerator UpdateQuestDetailOneFrameLate()
+    {
+        yield return null;
+        
+        foreach (Transform child in targetParent)
+        {
+            Destroy(child.gameObject);
+        }
+        
+        var currentChapterInfo = QuestManager.Instance.CurrentQuestInfo;
+        var (summary, data) = QuestManager.Instance.GetQuestData((QuestChapter)currentChapterInfo[0]);
+
+        var targetSummary = summary.FirstOrDefault(item => item.QuestID == currentChapterInfo[1]);
+        
+        var targetData = data.LastOrDefault(item => item.QuestID < currentChapterInfo[1] ||
+                                                    (item.QuestID == currentChapterInfo[1] && item.QuestDetailID < currentChapterInfo[2]) ||
+                                                    (item.QuestID == currentChapterInfo[1] && item.QuestDetailID == currentChapterInfo[2] && item.QuestFlowID <= currentChapterInfo[3]));
+
+        questTitle.text = targetSummary?.QuestTitle ?? "";
+        questSubTitle.text = targetData?.QuestTitle ?? "";
+
+        foreach (var condition in targetData.QuestConditions)
+        {
+            GameObject temp = Instantiate(questDetailItemPrefab, targetParent.position, Quaternion.identity);
+            temp.transform.SetParent(targetParent);
+            string conditionText = "";
+            if (condition.EnableVariable)
+            {
+                int clampValue = Mathf.Min(VariableManager.Instance.GetVariableValue(condition.VariableID), condition.EqualOrMany);
+                conditionText = $"{clampValue}/{condition.EqualOrMany}";
+            }
+            temp.GetComponent<TmpTextEditor>().Edit("Title", $"{condition.ConditionText}")
+                .Edit("Condition", conditionText);
+        }
+    }
+}

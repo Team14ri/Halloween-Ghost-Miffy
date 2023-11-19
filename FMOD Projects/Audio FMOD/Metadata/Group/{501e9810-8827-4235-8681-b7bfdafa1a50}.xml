@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="MixerGroup" id="{501e9810-8827-4235-8681-b7bfdafa1a50}">
+		<property name="volume">
+			<value>-6</value>
+		</property>
+		<property name="name">
+			<value>ETC</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{b1cc10dc-74e0-428a-b2ac-90938d5c1080}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{b3ca8f4c-032e-47e5-844f-5421592c84a5}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{1127e86d-81c8-4e7f-9866-7b56d22ab475}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{b1cc10dc-74e0-428a-b2ac-90938d5c1080}">
+		<relationship name="effects">
+			<destination>{51d8e090-4e70-49e4-8294-58283fc2d187}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{b3ca8f4c-032e-47e5-844f-5421592c84a5}">
+		<property name="overridingOutputFormat">
+			<value>1</value>
+		</property>
+	</object>
+	<object class="MixerBusFader" id="{51d8e090-4e70-49e4-8294-58283fc2d187}" />
+</objects>

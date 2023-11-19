@@ -6,12 +6,13 @@ using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 public class VoiceManager : MonoBehaviour
 {
     public static VoiceManager Instance { get; private set; }
     
-    private Dictionary<string, EventInstance> eventInstances = new();
+    private Dictionary<string, List<EventInstance>> eventInstanceLists = new();
     
     private Coroutine _eventRoutine;
     private float textSpeed;
@@ -19,15 +20,15 @@ public class VoiceManager : MonoBehaviour
 
     private void LoadEventReferences()
     {
-        eventInstances = new Dictionary<string, EventInstance>();
+        eventInstanceLists = new Dictionary<string, List<EventInstance>>();
 
         foreach (var data in VoiceReferences.Instance.VoiceDictionary)
         {
             string eventName = data.Key;
             EventReference eventReference = data.Value;
             
-            EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
-            eventInstances[eventName] = eventInstance;
+            // 초기 EventInstance 리스트 생성
+            eventInstanceLists[eventName] = new List<EventInstance>();
         }
     }
     
@@ -35,7 +36,7 @@ public class VoiceManager : MonoBehaviour
     {
         if (Instance != null)
         {
-            Debug.LogError("한 씬에 VoiceManager가 여러 개 있습니다.");
+            // Debug.LogError("한 씬에 VoiceManager가 여러 개 있습니다.");
             Destroy(gameObject);
         }
         else
@@ -101,15 +102,45 @@ public class VoiceManager : MonoBehaviour
     {
         char vowel = ParsingKorean(inputText);
         int conv = ConvertingInitialConsonant(vowel);
-        
-        // Debug.Log($"{inputText} => {vowel} => {conv}");
 
-        // 발음 파라미터 설정
-        eventInstances[characterName].setParameterByName("vowel type", conv);
-        eventInstances[characterName].setPitch(1.5f * Random.Range(0.96f, 1.15f));
-        // eventInstances[characterName].getVolume(out float currentVol);
-        // eventInstances[characterName].setVolume(currentVol * textSize);
-        eventInstances[characterName].start();
+        // 새 EventInstance 생성 및 설정
+        EventInstance newEventInstance = RuntimeManager.CreateInstance(VoiceReferences.Instance.VoiceDictionary[characterName]);
+        newEventInstance.setParameterByName("vowel type", conv);
+        // newEventInstance.setPitch(1.5f * Random.Range(0.96f, 1.15f));
+        newEventInstance.start();
+
+        // 리스트에 추가
+        if (!eventInstanceLists.ContainsKey(characterName))
+        {
+            eventInstanceLists[characterName] = new List<EventInstance>();
+        }
+        eventInstanceLists[characterName].Add(newEventInstance);
+
+        CleanupEvents(characterName);
+    }
+
+    // 재생이 완료된 이벤트 정리
+    private void CleanupEvents(string characterName)
+    {
+        if (eventInstanceLists.ContainsKey(characterName))
+        {
+            var events = eventInstanceLists[characterName];
+            events.RemoveAll(eventInstance =>
+            {
+                eventInstance.getPlaybackState(out var playbackState);
+                if (playbackState == PLAYBACK_STATE.STOPPED)
+                {
+                    eventInstance.release();
+                    return true;
+                }
+                return false;
+            });
+        }
+    }
+    
+    public void StopExecuteCommand()
+    {
+        this.EnsureCoroutineStopped(ref _eventRoutine);
     }
 
     private char ParsingKorean(char hangul)

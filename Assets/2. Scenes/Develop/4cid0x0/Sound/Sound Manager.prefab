@@ -1,0 +1,527 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &66647894233099448
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5458322822720193045}
+  - component: {fileID: 8291220158718318968}
+  m_Layer: 0
+  m_Name: FMOD Events
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5458322822720193045
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66647894233099448}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3808892230080573724}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8291220158718318968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66647894233099448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11b9a4aed572a674dbe61c1b72b47b15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializableDictionary:
+    BGM:
+    - key: BGM_Cemetery
+      eventReference:
+        Guid:
+          Data1: -1254291103
+          Data2: 1225041837
+          Data3: 1598225029
+          Data4: 668555016
+        Path: event:/01BGM/01Ingame/01Cemetery
+    - key: BGM_Plaza
+      eventReference:
+        Guid:
+          Data1: -404313095
+          Data2: 1283594512
+          Data3: 859866509
+          Data4: 1971425430
+        Path: event:/01BGM/01Ingame/02Plaza
+    - key: BGM_Mall
+      eventReference:
+        Guid:
+          Data1: -1064276197
+          Data2: 1128887615
+          Data3: 106594228
+          Data4: -271064814
+        Path: event:/01BGM/01Ingame/03Mall
+    - key: BGM_Mall_JazzBar
+      eventReference:
+        Guid:
+          Data1: 116310841
+          Data2: 1333012548
+          Data3: 1087474864
+          Data4: 1404621797
+        Path: event:/01BGM/01Ingame/03Mall_JazzBar
+    - key: BGM_Tower
+      eventReference:
+        Guid:
+          Data1: 2087164164
+          Data2: 1341419212
+          Data3: 1333408396
+          Data4: -1952605063
+        Path: event:/01BGM/01Ingame/04Tower
+    - key: BGM_Church
+      eventReference:
+        Guid:
+          Data1: 748506813
+          Data2: 1316028813
+          Data3: -2081167698
+          Data4: -1602047489
+        Path: event:/01BGM/01Ingame/05Church
+    - key: BGM_Title
+      eventReference:
+        Guid:
+          Data1: 1978688133
+          Data2: 1238675104
+          Data3: 279077782
+          Data4: -1217822111
+        Path: event:/01BGM/02ETC/11Title
+    - key: BGM_Ending
+      eventReference:
+        Guid:
+          Data1: -2012457162
+          Data2: 1163622850
+          Data3: -318303557
+          Data4: -1217199528
+        Path: event:/01BGM/02ETC/12Ending
+    - key: BGM_Credit
+      eventReference:
+        Guid:
+          Data1: -1720447878
+          Data2: 1199369232
+          Data3: 1199152776
+          Data4: -615471594
+        Path: event:/01BGM/02ETC/13Credit
+    AMB:
+    - key: AMB_Cemetery
+      eventReference:
+        Guid:
+          Data1: 1848609228
+          Data2: 1200005323
+          Data3: -1470474607
+          Data4: 1404265416
+        Path: event:/02AMB/01Map/01Cemetery
+    - key: AMB_Plaza
+      eventReference:
+        Guid:
+          Data1: 238525851
+          Data2: 1141480483
+          Data3: 145731238
+          Data4: 805632093
+        Path: event:/02AMB/01Map/02Plaza
+    - key: AMB_Mall
+      eventReference:
+        Guid:
+          Data1: 1692358514
+          Data2: 1250978054
+          Data3: 1031642557
+          Data4: 1118176994
+        Path: event:/02AMB/01Map/03Mall
+    - key: AMB_Tower
+      eventReference:
+        Guid:
+          Data1: -539204320
+          Data2: 1273745809
+          Data3: 1653483675
+          Data4: -2076913099
+        Path: event:/02AMB/01Map/04Tower
+    - key: AMB_Tower_Top
+      eventReference:
+        Guid:
+          Data1: -367274659
+          Data2: 1286681670
+          Data3: 1000540840
+          Data4: -293191493
+        Path: event:/02AMB/01Map/04Tower_01Top
+    - key: AMB_Church
+      eventReference:
+        Guid:
+          Data1: 1720416227
+          Data2: 1099850663
+          Data3: -946948708
+          Data4: 2072731998
+        Path: event:/02AMB/01Map/05Church
+    - key: AMB_Wood_Normal
+      eventReference:
+        Guid:
+          Data1: -410533159
+          Data2: 1139990676
+          Data3: -1504484429
+          Data4: -507953006
+        Path: event:/02AMB/02Entity/11Wood_1Normal
+    - key: AMB_Wood_Bare
+      eventReference:
+        Guid:
+          Data1: -30337628
+          Data2: 1312575129
+          Data3: -643836492
+          Data4: -397645267
+        Path: event:/02AMB/02Entity/11Wood_2Bare
+    - key: AMB_River
+      eventReference:
+        Guid:
+          Data1: 1330906532
+          Data2: 1271896489
+          Data3: -1511148627
+          Data4: 770378777
+        Path: event:/02AMB/02Entity/12River
+    - key: AMB_Candle
+      eventReference:
+        Guid:
+          Data1: 281414756
+          Data2: 1330773045
+          Data3: 1184439699
+          Data4: -1029763755
+        Path: event:/02AMB/02Entity/13Candle
+    - key: AMB_Well
+      eventReference:
+        Guid:
+          Data1: 410291647
+          Data2: 1140978090
+          Data3: 1221725070
+          Data4: -1172007279
+        Path: event:/02AMB/02Entity/15Fountain
+    - key: AMB_WitchPot
+      eventReference:
+        Guid:
+          Data1: 1643374845
+          Data2: 1146355076
+          Data3: -251508092
+          Data4: 1805844994
+        Path: event:/02AMB/02Entity/14WitchPot
+    SFX:
+    - key: ETC_TeamLogoSound
+      eventReference:
+        Guid:
+          Data1: -438294460
+          Data2: 1223886875
+          Data3: 97377447
+          Data4: -1325768476
+        Path: event:/03SFX/05ETC/01TeamLogoSound
+    - key: UI_GameStart
+      eventReference:
+        Guid:
+          Data1: -174725012
+          Data2: 1297095397
+          Data3: 6704818
+          Data4: -418749463
+        Path: event:/03SFX/01UI/01GameStart
+    - key: UI_Button_Click
+      eventReference:
+        Guid:
+          Data1: -964772672
+          Data2: 1318690849
+          Data3: 783009194
+          Data4: 1106223046
+        Path: event:/03SFX/01UI/02Button_Click
+    - key: UI_Button_Over
+      eventReference:
+        Guid:
+          Data1: 142113570
+          Data2: 1161373423
+          Data3: -1537274965
+          Data4: 430934615
+        Path: event:/03SFX/01UI/02Button_Over
+    - key: UI_QuestCategory_Over
+      eventReference:
+        Guid:
+          Data1: -644392223
+          Data2: 1115302943
+          Data3: 1266396081
+          Data4: 19698944
+        Path: event:/03SFX/01UI/11QuestCategory_Over
+    - key: UI_QuestCategory_Click
+      eventReference:
+        Guid:
+          Data1: 1150145720
+          Data2: 1074533442
+          Data3: 1797528456
+          Data4: 681927388
+        Path: event:/03SFX/01UI/11QuestCategory_Click
+    - key: UI_QuestList_Over
+      eventReference:
+        Guid:
+          Data1: 1299790500
+          Data2: 1236347929
+          Data3: 1163266184
+          Data4: -784410869
+        Path: event:/03SFX/01UI/12QuestList_Over
+    - key: UI_QuestList_Click
+      eventReference:
+        Guid:
+          Data1: 298486016
+          Data2: 1292328328
+          Data3: -1163077497
+          Data4: 1032737961
+        Path: event:/03SFX/01UI/12QuestList_Click
+    - key: UI_QuestItem_Over
+      eventReference:
+        Guid:
+          Data1: 412122843
+          Data2: 1305059658
+          Data3: 1159804552
+          Data4: 451900989
+        Path: event:/03SFX/01UI/13QuestItem_Over
+    - key: UI_QuestItem_Click
+      eventReference:
+        Guid:
+          Data1: 1571123212
+          Data2: 1287037295
+          Data3: -2063747946
+          Data4: -862821021
+        Path: event:/03SFX/01UI/13QuestItem_Click
+    - key: UI_QuestAccept
+      eventReference:
+        Guid:
+          Data1: -1174651982
+          Data2: 1232156225
+          Data3: 1980278168
+          Data4: -1876064906
+        Path: event:/03SFX/01UI/14QuestAccept
+    - key: UI_QuestOpen
+      eventReference:
+        Guid:
+          Data1: 1910921251
+          Data2: 1323518128
+          Data3: -960003197
+          Data4: -405754073
+        Path: event:/03SFX/01UI/15QuestOpen
+    - key: UI_QuestClose
+      eventReference:
+        Guid:
+          Data1: -295184281
+          Data2: 1125499722
+          Data3: -1626570861
+          Data4: 537850154
+        Path: event:/03SFX/01UI/16QuestClose
+    - key: UI_Get_Item
+      eventReference:
+        Guid:
+          Data1: 1974983906
+          Data2: 1240618113
+          Data3: -1590965360
+          Data4: -1534687686
+        Path: event:/03SFX/01UI/17Get_Item
+    - key: UI_Get_Sticker
+      eventReference:
+        Guid:
+          Data1: -1492614639
+          Data2: 1078289861
+          Data3: 846118051
+          Data4: 385093223
+        Path: event:/03SFX/01UI/17Get_Sticker
+    - key: UI_Get_BigSticker
+      eventReference:
+        Guid:
+          Data1: 221201181
+          Data2: 1274938701
+          Data3: -1524272972
+          Data4: 488916790
+        Path: event:/03SFX/01UI/17Get_BigSticker
+    - key: UI_Dia_Check
+      eventReference:
+        Guid:
+          Data1: 1565365907
+          Data2: 1242639660
+          Data3: 1487641512
+          Data4: -1414519847
+        Path: event:/03SFX/01UI/21DialogueCheck
+    - key: UI_Dia_Choose_Over
+      eventReference:
+        Guid:
+          Data1: 1366600970
+          Data2: 1162494347
+          Data3: 298202266
+          Data4: -2122697842
+        Path: event:/03SFX/01UI/22DialogueChoose_Over
+    - key: UI_Dia_Choose_Click
+      eventReference:
+        Guid:
+          Data1: 146011579
+          Data2: 1171147280
+          Data3: 1637560254
+          Data4: -804977665
+        Path: event:/03SFX/01UI/22DialogueChoose_Click
+    - key: UI_Dia_Choose_Accept
+      eventReference:
+        Guid:
+          Data1: 1635207445
+          Data2: 1307335695
+          Data3: -2116727912
+          Data4: -2067315016
+        Path: event:/03SFX/01UI/22DialogueChoose_Accept
+    - key: UI_HitRepeat
+      eventReference:
+        Guid:
+          Data1: -1825195028
+          Data2: 1242126803
+          Data3: 1301655705
+          Data4: 392259326
+        Path: event:/03SFX/01UI/51HitRepeat
+    - key: Emo_Happy
+      eventReference:
+        Guid:
+          Data1: -1975289187
+          Data2: 1115544272
+          Data3: 947894700
+          Data4: 379324173
+        Path: event:/03SFX/02Emotion/01Happy
+    - key: Emo_Consider
+      eventReference:
+        Guid:
+          Data1: -2066677297
+          Data2: 1219664379
+          Data3: 916043144
+          Data4: 1607258955
+        Path: event:/03SFX/02Emotion/02Consider
+    - key: Emo_Hiccup
+      eventReference:
+        Guid:
+          Data1: 2135692823
+          Data2: 1117356572
+          Data3: 1023852427
+          Data4: 1252700308
+        Path: event:/03SFX/02Emotion/03Hiccup
+    - key: Emo_Surprise
+      eventReference:
+        Guid:
+          Data1: -209280465
+          Data2: 1093921195
+          Data3: 967508151
+          Data4: 1048695494
+        Path: event:/03SFX/02Emotion/04Surprise
+    - key: Emo_Sad
+      eventReference:
+        Guid:
+          Data1: 323221540
+          Data2: 1182739540
+          Data3: -2027233100
+          Data4: -1940150226
+        Path: event:/03SFX/02Emotion/05Sad
+    - key: Emo_Curious
+      eventReference:
+        Guid:
+          Data1: 1093016071
+          Data2: 1261616796
+          Data3: -648717424
+          Data4: 720834935
+        Path: event:/03SFX/02Emotion/06Curious
+    - key: Emo_Angry
+      eventReference:
+        Guid:
+          Data1: -1072912126
+          Data2: 1298107529
+          Data3: -484134775
+          Data4: 720090126
+        Path: event:/03SFX/02Emotion/07Angry
+    - key: Emo_Sigh
+      eventReference:
+        Guid:
+          Data1: 763401990
+          Data2: 1326372742
+          Data3: 1374838959
+          Data4: 1312843828
+        Path: event:/03SFX/02Emotion/08Sigh
+    - key: Emo_Decide
+      eventReference:
+        Guid:
+          Data1: 1664699523
+          Data2: 1234149934
+          Data3: -1539816552
+          Data4: 1931463534
+        Path: event:/03SFX/02Emotion/09Decide
+--- !u!1 &5275568633851341170
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3808892230080573724}
+  - component: {fileID: 8382446609222771782}
+  m_Layer: 0
+  m_Name: Sound Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3808892230080573724
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5275568633851341170}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.0818255, y: 4.09556, z: -8.548405}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5458322822720193045}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8382446609222771782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5275568633851341170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 214a732b581ee3441a58d1a4988c4ed1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crossfadeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
