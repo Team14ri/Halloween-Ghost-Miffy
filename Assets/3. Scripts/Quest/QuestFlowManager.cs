@@ -190,6 +190,11 @@ namespace Quest
             VariableManager.Instance.ResetItem(id);
         }
 
+        public void SetPlayerTransform(Transform tr)
+        {
+            PlayerController.Instance.gameObject.transform.position = tr.position;
+        }
+
         public void ExecuteDialogue(DialogueContainer dialogueContainer)
         {
             PlayerController.Instance.Interaction.Enabled = false;
