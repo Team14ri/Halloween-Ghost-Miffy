@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class StickerViewer : MonoBehaviour
 {
+    [SerializeField] private StickerLocation location;
     [SerializeField] private List<StickerItemButton> stickerStorage;
     
     private void Init()
@@ -24,6 +25,7 @@ public class StickerViewer : MonoBehaviour
     {
         var stickerData = VariableManager.Instance.GetStickersList()
             .Where(data => data.GetValue() > 0 && 
+                           data.Location == location &&
                            data.Type == StickerType.Normal)
             .ToList();
 
