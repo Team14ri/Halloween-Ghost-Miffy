@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Hector_Common_01
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: 1cd78384-77e7-45f2-b1b2-621a7e857b06
+    PortName: Execute
+    TargetNodeGuid: 59038a95-1cf2-4e28-96f8-012b3d550f92
+  - BaseNodeGuid: 59038a95-1cf2-4e28-96f8-012b3d550f92
+    PortName: Next
+    TargetNodeGuid: 4fc88d0e-812e-44da-b369-65340488cc76
+  - BaseNodeGuid: 4fc88d0e-812e-44da-b369-65340488cc76
+    PortName: Next
+    TargetNodeGuid: ffc39a70-6397-434c-b840-4d3367eecb86
+  NodeData:
+  - rid: 4135296627840385314
+  - rid: 4135296627840385315
+  - rid: 4135296627840385316
+  references:
+    version: 2
+    RefIds:
+    - rid: 4135296627840385314
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 59038a95-1cf2-4e28-96f8-012b3d550f92
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 281, y: 200}
+        TargetObjectID: Hector
+        DialogueText: "\uC73C\uD760!! \uAF2C\uB9C8\uC57C!!! \uAD11\uC7A5\uC5D0 \uC788\uB294
+          \uD38C\uD0A8\uB9E8\uC744 \uBCF8 \uC801 \uC788\uB2C8??"
+        SkipDelay: 0
+    - rid: 4135296627840385315
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 4fc88d0e-812e-44da-b369-65340488cc76
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 773, y: 200}
+        TargetObjectID: Hector
+        DialogueText: "\uC800 \uC544\uC800\uC528\uAC00 \uC61B\uB0A0\uC5D0\uB294 \uBA4B\uC9C4
+          \uC0AC\uB0B4\uC600\uB294\uB370"
+        SkipDelay: 0
+    - rid: 4135296627840385316
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: ffc39a70-6397-434c-b840-4d3367eecb86
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1256, y: 200}
+        TargetObjectID: Hector
+        DialogueText: "\uC694\uC998\uC740 \uD1B5\uAE30\uC6B4\uC774 \uC5C6\uC5B4 \uBCF4\uC5EC\uC11C
+          \uAC71\uC815\uC774\uAD70! <anim:wave>\uD750\uC74C!</anim>"
+        SkipDelay: 0

@@ -39,21 +39,25 @@ MonoBehaviour:
     TargetNodeGuid: 36ad7147-17ab-4f1e-a351-ddebbff0902a
   - BaseNodeGuid: 4aaea36b-7980-4461-a61f-e3a3f00a22a7
     PortName: Next
+    TargetNodeGuid: 4322a10b-29b4-426a-af24-30606480b9f4
+  - BaseNodeGuid: 4322a10b-29b4-426a-af24-30606480b9f4
+    PortName: Next
     TargetNodeGuid: f0e8def0-ef34-4a62-ba28-011bf532dd19
   NodeData:
-  - rid: 4135296627840385277
-  - rid: 4135296627840385278
-  - rid: 4135296627840385279
-  - rid: 4135296627840385280
-  - rid: 4135296627840385281
-  - rid: 4135296627840385282
-  - rid: 4135296627840385283
-  - rid: 4135296627840385284
-  - rid: 4135296627840385285
+  - rid: 4135296627840385317
+  - rid: 4135296627840385318
+  - rid: 4135296627840385319
+  - rid: 4135296627840385320
+  - rid: 4135296627840385321
+  - rid: 4135296627840385322
+  - rid: 4135296627840385323
+  - rid: 4135296627840385324
+  - rid: 4135296627840385325
+  - rid: 4135296627840385326
   references:
     version: 2
     RefIds:
-    - rid: 4135296627840385277
+    - rid: 4135296627840385317
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: ecbd2865-a17a-4489-b6c6-3b379f1f9f0f
@@ -63,7 +67,7 @@ MonoBehaviour:
         TargetObjectID: Pumpkinman
         DialogueText: "<anim:wave>\uD558! \uD558! \uD558! \uD558!</anim>"
         SkipDelay: 0
-    - rid: 4135296627840385278
+    - rid: 4135296627840385318
       type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 36ad7147-17ab-4f1e-a351-ddebbff0902a
@@ -73,7 +77,7 @@ MonoBehaviour:
         TargetObjectID: Pumpkinman
         DialogueText: "\uBABB\uBCF4\uB358 \uC5BC\uAD74\uC778\uB370..\n\uADF8\uB300\uC758
           \uC774\uB984\uC740 \uBB50\uC9C0?"
-    - rid: 4135296627840385279
+    - rid: 4135296627840385319
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 86af7a61-dc94-4e89-8c2f-71fc9a20d37a
@@ -84,7 +88,7 @@ MonoBehaviour:
         DialogueText: "\uB09C <anim:wave>\uC560\uB108\uBBF8 \uBC38\uB9AC\uC758 \uC9C0\uD0B4\uC774!</anim>\n<size:1.2>\uD38C.
           \uD0A8. \uB9E8. <size:1>\uC774\uB77C\uACE0 \uD55C\uB2E4!"
         SkipDelay: 0
-    - rid: 4135296627840385280
+    - rid: 4135296627840385320
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 3aaf272d-a326-4d96-ac47-7b3a67d3a8d2
@@ -96,7 +100,7 @@ MonoBehaviour:
           \uAC00\uC9D0\uC774\uAD70!\n\uB098\uCC98\uB7FC \uB9C8\uC744\uC758 \uC9C0\uD0B4\uC774\uAC00
           \uB418\uB294 \uAC8C \uC88B\uACA0\uC5B4!"
         SkipDelay: 0
-    - rid: 4135296627840385281
+    - rid: 4135296627840385321
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: f08e661c-90d3-4ad1-84fb-d27bf01ffccb
@@ -107,7 +111,28 @@ MonoBehaviour:
         DialogueText: "\uBBF8\uD53C! \uADC0\uC5EC\uC6B4 \uC774\uB984\uC774\uAD70!\n<anim:wave>\uD558!
           \uD558! \uD558!</anim>"
         SkipDelay: 0
-    - rid: 4135296627840385282
+    - rid: 4135296627840385322
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: eaea9fb9-1655-4def-a85d-203468520747
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 256, y: 413}
+        TargetObjectID: Pumpkinman
+        DialogueText: "\uC74C? \uCC29\uD55C \uC77C\uC744 \uD558\uACE0 \uC2F6\uB2E4\uACE0?"
+        SkipDelay: 0
+    - rid: 4135296627840385323
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 9a79c870-b203-4884-9acb-ed69e45f7a05
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 645, y: 198}
+        TargetObjectID: Pumpkinman
+        DialogueText: "\uC548\uB155\uD558\uC2E0\uAC00? \uAF2C\uB9C8 \uC720\uB839
+          \uCE5C\uAD6C!"
+        SkipDelay: 0
+    - rid: 4135296627840385324
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 4aaea36b-7980-4461-a61f-e3a3f00a22a7
@@ -119,36 +144,27 @@ MonoBehaviour:
           \uC548\uBD80\uB97C\n\uBB3C\uC5B4 \uBCF4\uACE0 \uC624\uB3C4\uB85D \uD574!
           \uBD80\uD0C1\uD558\uB9C8! <anim:wave>\uD558! \uD558! \uD558!</anim>"
         SkipDelay: 0
-    - rid: 4135296627840385283
+    - rid: 4135296627840385325
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
-        GUID: eaea9fb9-1655-4def-a85d-203468520747
+        GUID: 4322a10b-29b4-426a-af24-30606480b9f4
         NodeTitle: NoChoice Node
         NodeType: 0
-        Position: {x: 256, y: 413}
+        Position: {x: 1720, y: 449}
         TargetObjectID: Pumpkinman
-        DialogueText: "\uC74C? \uCC29\uD55C \uC77C\uC744 \uD558\uACE0 \uC2F6\uB2E4\uACE0?"
+        DialogueText: "\uCC38! \uC5EC\uAE30\uC11C \uC67C\uCABD\uC73C\uB85C \uCB49
+          \uAC00\uBA74 <size:1.2>\uC0C1\uAC00<size:1>\uB791\n<size:1.2>\uAD50\uD68C<size:1>\uB3C4
+          \uC788\uC73C\uB2C8 \uD55C \uBC88 \uAC00\uBCF4\uB3C4\uB85D \uD574!"
         SkipDelay: 0
-    - rid: 4135296627840385284
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: 9a79c870-b203-4884-9acb-ed69e45f7a05
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 645, y: 198}
-        TargetObjectID: Pumpkinman
-        DialogueText: "\uC548\uB155\uD558\uC2E0\uAC00? \uAF2C\uB9C8 \uC720\uB839
-          \uCE5C\uAD6C!"
-        SkipDelay: 0
-    - rid: 4135296627840385285
+    - rid: 4135296627840385326
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: f0e8def0-ef34-4a62-ba28-011bf532dd19
         NodeTitle: NoChoice Node
         NodeType: 0
-        Position: {x: 1741, y: 448}
+        Position: {x: 2243, y: 449}
         TargetObjectID: Pumpkinman
-        DialogueText: "\uB09C <anim:wave>\uC2DC\uC0C1\uB300 \uADFC\uCC98</anim>\uC5D0
+        DialogueText: "\uADF8\uB7FC \uB09C <anim:wave>\uC2DC\uC0C1\uB300 \uADFC\uCC98</anim>\uC5D0
           \uC788\uC744 \uD14C\uB2C8\n\uB9C8\uC744 \uC0AC\uB78C\uB4E4\uC758 \uC548\uBD80\uB97C
           \uBB3B\uACE0 \uB2E4\uC2DC \uB0A0 \uCC3E\uC544\uC624\uB3C4\uB85D!\n<anim:wave>\uD558!
           \uD558! \uD558!</anim>"

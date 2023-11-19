@@ -10,6 +10,14 @@ public enum StickerType
 }
 
 [System.Serializable]
+public enum StickerLocation
+{
+    Plaza,
+    Mall,
+    Forest
+}
+
+[System.Serializable]
 [CreateAssetMenu(fileName = "Sticker@Name", menuName = "Scriptable Objects/Sticker Data")]
 public class StickerData : ScriptableObject
 {
@@ -24,6 +32,10 @@ public class StickerData : ScriptableObject
     [BoxGroup("Sticker Settings"), Title("Sticker Type")]
     [SerializeField] private StickerType type;
     public StickerType Type => type;
+    
+    [BoxGroup("Sticker Settings"), Title("Sticker Location")]
+    [SerializeField] private StickerLocation location;
+    public StickerLocation Location => location;
 
     [BoxGroup("Sticker Settings"), Title("Sticker Description")]
     [SerializeField, TextArea(3, 10)] private string description;
