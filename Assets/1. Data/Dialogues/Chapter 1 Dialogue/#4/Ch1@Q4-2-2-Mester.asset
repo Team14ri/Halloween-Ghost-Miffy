@@ -15,21 +15,25 @@ MonoBehaviour:
   NodeLinks:
   - BaseNodeGuid: 60144c2e-0e86-4f03-8652-01729239d81e
     PortName: Execute
-    TargetNodeGuid: 05543505-041e-4289-86f5-902400346a79
+    TargetNodeGuid: a80525c9-76e6-4449-96e9-b35c0e963069
   - BaseNodeGuid: 05543505-041e-4289-86f5-902400346a79
     PortName: Next
     TargetNodeGuid: ef740129-4bf2-490b-bac8-db43a8b68de1
+  - BaseNodeGuid: a80525c9-76e6-4449-96e9-b35c0e963069
+    PortName: Next
+    TargetNodeGuid: 05543505-041e-4289-86f5-902400346a79
   - BaseNodeGuid: ef740129-4bf2-490b-bac8-db43a8b68de1
     PortName: Next
     TargetNodeGuid: 0d85d9ff-b7b6-4d6f-a992-656f7ff39076
   NodeData:
-  - rid: 5154282233875399032
-  - rid: 5154282233875399033
-  - rid: 5154282233875399034
+  - rid: 4135296653666812353
+  - rid: 4135296653666812354
+  - rid: 4135296653666812355
+  - rid: 4135296653666812356
   references:
     version: 2
     RefIds:
-    - rid: 5154282233875399032
+    - rid: 4135296653666812353
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 05543505-041e-4289-86f5-902400346a79
@@ -37,26 +41,35 @@ MonoBehaviour:
         NodeType: 0
         Position: {x: 520, y: 427}
         TargetObjectID: Mester
-        DialogueText: "\uBBF8\uD53C..! \uC774 \uD3EC\uC2A4\uD130\uB97C <size:1.2>\n\uC2DC\uACC4\uD0D1
-          \uC55E \uAC8C\uC2DC\uD310\uC5D0 <size:1>\uBD99\uC774\uAC70\uB77C."
+        DialogueText: "\uBBF8\uD53C..! \uC774 \uC218\uBC30\uC9C0\uB97C\n<size:1.2>\uD38C\uD0A8\uB9E8
+          \uC606 \uAC8C\uC2DC\uD310<size:1>\uC5D0 \uBD99\uC774\uAC70\uB77C."
         SkipDelay: 0
-    - rid: 5154282233875399033
+    - rid: 4135296653666812354
+      type: {class: AddItemNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: a80525c9-76e6-4449-96e9-b35c0e963069
+        NodeTitle: AddItem Node
+        NodeType: 3
+        Position: {x: 231, y: 408}
+        ItemID: Item@Wanted
+        ItemCount: 99
+    - rid: 4135296653666812355
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: ef740129-4bf2-490b-bac8-db43a8b68de1
         NodeTitle: NoChoice Node
         NodeType: 0
-        Position: {x: 959, y: 446}
+        Position: {x: 976, y: 427}
         TargetObjectID: Mester
         DialogueText: "\uADF8\uB9AC\uACE0.. \uD38C\uD0A8\uB9E8\uC5D0\uAC8C \uB3C4\uC6C0\uC744\n\uC694\uCCAD\uD574\uBCF4\uB294
           \uAC8C \uC88B\uACA0\uC5B4.. <anim:shake>\uD64D\uD64D..</anim>"
         SkipDelay: 0
-    - rid: 5154282233875399034
+    - rid: 4135296653666812356
       type: {class: StartQuestNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 0d85d9ff-b7b6-4d6f-a992-656f7ff39076
         NodeTitle: StartQuest Node
         NodeType: 2
-        Position: {x: 1447, y: 453}
+        Position: {x: 1467, y: 441}
         QuestType: Main Quest
-        QuestID: "#4-3 \uD638\uBC15 \uBC31\uC791\uC758 \uD3EC\uC2A4\uD130\uB97C \uBD99\uC774\uC790"
+        QuestID: "#4-3 \uD638\uBC15 \uBC31\uC791\uC758 \uC218\uBCA0\uC9C0\uB97C \uBD99\uC774\uC790"

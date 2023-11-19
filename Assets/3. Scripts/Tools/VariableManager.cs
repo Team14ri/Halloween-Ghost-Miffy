@@ -93,7 +93,7 @@ public class VariableManager : MonoBehaviour
             QuestDetailViewer.Instance.UpdateQuestDetail();
             if (value > 0)
             {
-                ItemCollect.Instance.ShowPopup($"(<u>{sticker.Name} <size=50><color=red>x 1</color></size></u>) 스티커 획득!", sticker.Sprite);
+                ItemCollect.Instance.ShowPopup($"(<u>{sticker.Name} <size=50><color=red>x {value}</color></size></u>) 스티커 획득!", sticker.Sprite);
             }
             return;
         }
@@ -105,7 +105,7 @@ public class VariableManager : MonoBehaviour
             QuestDetailViewer.Instance.UpdateQuestDetail();
             if (value > 0)
             {
-                ItemCollect.Instance.ShowPopup($"(<u>{item.Name} <size=50><color=red>x 1</color></size></u>) 아이템 획득!", item.Sprite);
+                ItemCollect.Instance.ShowPopup($"(<u>{item.Name} <size=50><color=red>x {value}</color></size></u>) 아이템 획득!", item.Sprite);
             }
             return;
         }
@@ -114,14 +114,17 @@ public class VariableManager : MonoBehaviour
         QuestDetailViewer.Instance.UpdateQuestDetail();
     }
 
-    public void AddOneItem(string id)
+    public void AddOneItem(string id, bool show = true)
     {
         var sticker = stickerData.FirstOrDefault(obj => obj.ID == id);
         if (sticker != null)
         {
             sticker.SetValue(sticker.GetValue() + 1);
             QuestDetailViewer.Instance.UpdateQuestDetail();
-            ItemCollect.Instance.ShowPopup($"(<u>{sticker.Name} <size=50><color=red>x 1</color></size></u>) 스티커 획득!", sticker.Sprite);
+            if (show)
+            {
+                ItemCollect.Instance.ShowPopup($"(<u>{sticker.Name} <size=50><color=red>x 1</color></size></u>) 스티커 획득!", sticker.Sprite);
+            }
             return;
         }
 
@@ -130,7 +133,10 @@ public class VariableManager : MonoBehaviour
         {
             item.SetValue(item.GetValue() + 1);
             QuestDetailViewer.Instance.UpdateQuestDetail();
-            ItemCollect.Instance.ShowPopup($"(<u>{item.Name} <size=50><color=red>x 1</color></size></u>) 아이템 획득!", item.Sprite);
+            if (show)
+            {
+                ItemCollect.Instance.ShowPopup($"(<u>{item.Name} <size=50><color=red>x 1</color></size></u>) 아이템 획득!", item.Sprite);
+            }
             return;
         }
         

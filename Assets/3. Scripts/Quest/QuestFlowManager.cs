@@ -180,6 +180,11 @@ namespace Quest
             VariableManager.Instance.AddOneItem(id);
         }
         
+        public void AddOneItemWithoutPopup(string id)
+        {
+            VariableManager.Instance.AddOneItem(id, false);
+        }
+        
         public void ResetItem(string id)
         {
             VariableManager.Instance.ResetItem(id);
