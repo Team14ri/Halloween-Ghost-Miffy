@@ -8,6 +8,8 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
     public PlayerInput PlayerInput { get; private set; }
+
+    [SerializeField] private GameObject escMenu;
     
     private readonly Stack<GameObject> _uiStack = new();
 
@@ -92,6 +94,11 @@ public class UIManager : MonoBehaviour
 
         if (context.performed)
         {
+            if (_uiStack.Count == 0)
+            {
+                EnterUIAlone(escMenu);
+                return;
+            }
             EscapeOneUI();
         }
 

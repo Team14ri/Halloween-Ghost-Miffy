@@ -28,6 +28,14 @@ public class SceneManagerCustom : MonoBehaviour
         StartCoroutine(LoadSceneCoroutine(sceneName, exitPortalNum));
     }
     
+    public void LoadMainScene()
+    {
+        SceneTransitionController.Instance.IrisClose(() =>
+        {
+            LoadScene("Title", 1);
+        });
+    }
+    
     private IEnumerator LoadSceneCoroutine(string sceneName, int exitPortalNum)
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
