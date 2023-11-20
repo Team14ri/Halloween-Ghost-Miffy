@@ -15,6 +15,8 @@ public class SceneManagerCustom : MonoBehaviour
         else
         {
             Instance = this;
+            transform.parent = null;
+            DontDestroyOnLoad(transform.gameObject);
         }
     }
 
@@ -26,7 +28,7 @@ public class SceneManagerCustom : MonoBehaviour
         StartCoroutine(LoadSceneCoroutine(sceneName, exitPortalNum));
     }
     
-    public void LoadMainScene()
+    public void LoadTitleScene()
     {
         SceneTransitionController.Instance.IrisClose(() =>
         {

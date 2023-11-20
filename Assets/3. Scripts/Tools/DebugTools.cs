@@ -14,7 +14,9 @@ public class DebugTools : MonoBehaviour
 
     private void Awake()
     {
-#if DEVELOPMENT_BUILD
+        
+#if UNITY_EDITOR
+#elif DEVELOPMENT_BUILD
 #else
         Destroy(gameObject);
 #endif
