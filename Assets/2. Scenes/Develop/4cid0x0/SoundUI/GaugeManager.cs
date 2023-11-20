@@ -29,18 +29,10 @@ public class GaugeManager : MonoBehaviour
     private void UpdateGauge()
     {
         decimal currentVolume = (decimal)SoundManager.Instance.GetVolume(volumeType.First());
-        Debug.Log(currentVolume);
         
         for (int i = 0; i < gaugeArray.Length; ++i)
         {
-            if (volumeUnit * i < currentVolume)
-            {
-                gaugeArray[i].sprite = on;
-            }
-            else
-            {
-                gaugeArray[i].sprite = off;
-            }
+            gaugeArray[i].sprite = volumeUnit * i < currentVolume ? on : off;
         }
     }
 
@@ -49,6 +41,7 @@ public class GaugeManager : MonoBehaviour
         foreach (var type in volumeType)
         {
             decimal currentVolume = (decimal)SoundManager.Instance.GetVolume(type);
+            
             currentVolume += volumeUnit;
             if (currentVolume >= maxVolume)
             {
@@ -65,6 +58,7 @@ public class GaugeManager : MonoBehaviour
         foreach (var type in volumeType)
         {
             decimal currentVolume = (decimal)SoundManager.Instance.GetVolume(type);
+            
             currentVolume -= volumeUnit;
             if (currentVolume < minVolume)
             {
