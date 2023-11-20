@@ -23,39 +23,39 @@ MonoBehaviour:
     PortName: Next
     TargetNodeGuid: f447069f-3dd4-492d-9aae-cc9ff4e1a5f9
   NodeData:
-  - rid: 5154282233875399312
-  - rid: 5154282233875399313
-  - rid: 5154282233875399314
+  - rid: 4733365038633452186
+  - rid: 4733365038633452187
+  - rid: 4733365038633452188
   references:
     version: 2
     RefIds:
-    - rid: 5154282233875399312
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: af560eb7-d20b-4aec-bf74-ab6db3ec3cb7
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 235, y: 185}
-        TargetObjectID: Miffy
-        DialogueText: "(\uC0AC\uB77C\uAC00 \uC548\uBD80\uB97C \uB2E4 \uBB3B\uACE0\uB098\uBA74,
-          \n\uC640\uB2EC\uB77C\uACE0 \uD588\uC9C0?)"
-        SkipDelay: 0
-    - rid: 5154282233875399313
+    - rid: 4733365038633452186
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: aeae5473-4be5-414f-bd30-0764fa87e733
         NodeTitle: NoChoice Node
         NodeType: 0
-        Position: {x: 611, y: -2}
+        Position: {x: 611.3333, y: -2}
         TargetObjectID: Miffy
         DialogueText: "(<size:1.2>\uC0AC\uB77C<size:1>\uC5D0\uAC8C \uAC00\uBCF4\uC790!)"
-        SkipDelay: 0
-    - rid: 5154282233875399314
+        SkipDelay: 0.5
+    - rid: 4733365038633452187
       type: {class: StartQuestNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: f447069f-3dd4-492d-9aae-cc9ff4e1a5f9
         NodeTitle: StartQuest Node
         NodeType: 2
-        Position: {x: 1089, y: 6}
+        Position: {x: 1089.3334, y: 6}
         QuestType: Main Quest
         QuestID: "#2-3 \uC0AC\uB77C\uC5D0\uAC8C \uAC00\uBCF4\uC790!"
+    - rid: 4733365038633452188
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: af560eb7-d20b-4aec-bf74-ab6db3ec3cb7
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 240.66667, y: 172.66667}
+        TargetObjectID: Miffy
+        DialogueText: "(\uC0AC\uB77C\uAC00 \uC548\uBD80\uB97C \uB2E4 \uBB3B\uACE0\uB098\uBA74,
+          \n\uC640\uB2EC\uB77C\uACE0 \uD588\uC9C0?)"
+        SkipDelay: 0.5

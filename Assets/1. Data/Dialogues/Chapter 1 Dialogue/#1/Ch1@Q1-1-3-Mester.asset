@@ -22,69 +22,58 @@ MonoBehaviour:
   - BaseNodeGuid: 77dc5007-e5d0-46e7-90d7-86bb3c16f06f
     PortName: Next
     TargetNodeGuid: 9d324525-1aed-4ce6-ab5c-2b5d80f9133a
-  - BaseNodeGuid: d113731e-c3d1-4ed0-bdc6-f60df70c4190
-    PortName: Next
-    TargetNodeGuid: f7ffd85d-6078-48f8-9b56-6623b26d7883
-  - BaseNodeGuid: 9d324525-1aed-4ce6-ab5c-2b5d80f9133a
-    PortName: Next
-    TargetNodeGuid: d113731e-c3d1-4ed0-bdc6-f60df70c4190
   - BaseNodeGuid: f7ffd85d-6078-48f8-9b56-6623b26d7883
     PortName: Next
     TargetNodeGuid: 09f8077b-6567-4bdf-abde-047a74e8d899
+  - BaseNodeGuid: 9d324525-1aed-4ce6-ab5c-2b5d80f9133a
+    PortName: Next
+    TargetNodeGuid: d113731e-c3d1-4ed0-bdc6-f60df70c4190
+  - BaseNodeGuid: d113731e-c3d1-4ed0-bdc6-f60df70c4190
+    PortName: Next
+    TargetNodeGuid: f7ffd85d-6078-48f8-9b56-6623b26d7883
   NodeData:
-  - rid: 5154282182368035082
-  - rid: 5154282182368035083
-  - rid: 5154282182368035084
-  - rid: 5154282182368035085
-  - rid: 5154282182368035086
-  - rid: 5154282182368035087
+  - rid: 4733365038633451673
+  - rid: 4733365038633451674
+  - rid: 4733365038633451675
+  - rid: 4733365038633451676
+  - rid: 4733365038633451677
+  - rid: 4733365038633451678
   references:
     version: 2
     RefIds:
-    - rid: 5154282182368035082
+    - rid: 4733365038633451673
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: c5caad21-4e88-4832-bc4c-e7ced78d746f
         NodeTitle: NoChoice Node
         NodeType: 0
-        Position: {x: 224, y: 197}
+        Position: {x: 224, y: 196.66667}
         TargetObjectID: Mester
         DialogueText: "\uC5F4\uC5B4\uBCF4\uC558\uB2C8? "
-        SkipDelay: 0
-    - rid: 5154282182368035083
+        SkipDelay: 0.5
+    - rid: 4733365038633451674
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 77dc5007-e5d0-46e7-90d7-86bb3c16f06f
         NodeTitle: NoChoice Node
         NodeType: 0
-        Position: {x: 505, y: 200}
+        Position: {x: 505.33334, y: 200}
         TargetObjectID: Mester
-        DialogueText: "\uADF8 \uC2A4\uD2F0\uCEE4 \uD310\uC5D0 \uC2A4\uD2F0\uCEE4\uB97C
-          \n\uBAA8\uC73C\uBA74 \uB41C\uB2E8\uB2E4~!<anim:wave> \uD64D\uD64D\uD64D~</anim> "
-        SkipDelay: 0
-    - rid: 5154282182368035084
+        DialogueText: "<state:Mester@Smile>\uADF8 \uC2A4\uD2F0\uCEE4 \uD310\uC5D0
+          \uC2A4\uD2F0\uCEE4\uB97C \n\uBAA8\uC73C\uBA74 \uB41C\uB2E8\uB2E4~!<anim:wave>
+          \uD64D\uD64D\uD64D~</anim> "
+        SkipDelay: 0.5
+    - rid: 4733365038633451675
       type: {class: StartQuestNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 09f8077b-6567-4bdf-abde-047a74e8d899
         NodeTitle: StartQuest Node
         NodeType: 2
-        Position: {x: 2401, y: 201}
+        Position: {x: 2401.3333, y: 200.66667}
         QuestType: Main Quest
         QuestID: "#1-2 \uB798\uBC84\uB97C \uB2F9\uACA8 \uAD11\uC7A5\uC758 \uBD88\uC744
           \uBC1D\uD788\uC790!"
-    - rid: 5154282182368035085
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: f7ffd85d-6078-48f8-9b56-6623b26d7883
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 1957, y: -10}
-        TargetObjectID: Mester
-        DialogueText: "\uC790, \uC800\uAE30 \uC788\uB294 <size:1.2>\uB798\uBC84<size:1>\uB97C
-          \uB2F9\uAE30\uACE0\n\uB0B4\uAC8C \uB2E4\uC2DC \uC624\uAC70\uB77C~<anim:wave>
-          \uD64D\uD64D\uD64D~</anim> "
-        SkipDelay: 0
-    - rid: 5154282182368035086
+    - rid: 4733365038633451676
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 9d324525-1aed-4ce6-ab5c-2b5d80f9133a
@@ -92,10 +81,22 @@ MonoBehaviour:
         NodeType: 0
         Position: {x: 984, y: 198}
         TargetObjectID: Mester
-        DialogueText: "\uB9D0\uB85C\uB9CC \uD558\uC9C0 \uB9D0\uACE0 \n<anim:wave>\uC9C1\uC811
+        DialogueText: "\uC9C0\uD53C\uC9C0\uAE30\uBA74 \uBC31\uC804\uBC31\uC2B9!\n<anim:wave>\uC9C1\uC811
           \uD574\uBCF4\uB294 \uAC8C \uBE60\uB978 \uBC95!</anim> "
-        SkipDelay: 0
-    - rid: 5154282182368035087
+        SkipDelay: 0.5
+    - rid: 4733365038633451677
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: f7ffd85d-6078-48f8-9b56-6623b26d7883
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1999.3334, y: -202.66666}
+        TargetObjectID: Mester
+        DialogueText: "\uC790, \uC800\uAE30 \uC788\uB294 <size:1.2>\uB798\uBC84<size:1>\uB97C
+          \uB2F9\uAE30\uACE0\n\uB0B4\uAC8C \uB2E4\uC2DC \uC624\uAC70\uB77C~<anim:wave>
+          \uD64D\uD64D~</anim> "
+        SkipDelay: 0.5
+    - rid: 4733365038633451678
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: d113731e-c3d1-4ed0-bdc6-f60df70c4190
@@ -103,5 +104,6 @@ MonoBehaviour:
         NodeType: 0
         Position: {x: 1486, y: 76}
         TargetObjectID: Mester
-        DialogueText: "\uAD11\uC7A5\uC774 \uC5B4\uB450\uC6B0\uB2C8 \uBD88\uC744 \uCF1C\uBCF4\uC790\uAFB8\uB098~"
-        SkipDelay: 0
+        DialogueText: "<state:Mester@Idle>\uAD11\uC7A5\uC774 \uBBFE\uC774 \uC5B4\uB461\uC9C0
+          \uC54A\uB2C8?\n<size:1.2>\uBD88\uC744 \uD55C \uBC88 \uCF1C\uBCF4\uC790\uAFB8\uB098!<size:1>"
+        SkipDelay: 0.5
