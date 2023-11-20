@@ -12,6 +12,14 @@ public class DebugTools : MonoBehaviour
     [SerializeField] private TMP_Text currentChapterField;
     [SerializeField] private TMP_Text chapterField;
 
+    private void Awake()
+    {
+#if DEVELOPMENT_BUILD
+#else
+        Destroy(gameObject);
+#endif
+    }
+
     private void Start()
     {
         switch (SceneManager.GetActiveScene().name)
