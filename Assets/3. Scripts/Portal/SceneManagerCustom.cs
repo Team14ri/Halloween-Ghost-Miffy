@@ -15,8 +15,6 @@ public class SceneManagerCustom : MonoBehaviour
         else
         {
             Instance = this;
-            transform.parent = null;
-            DontDestroyOnLoad(transform.gameObject);
         }
     }
 
