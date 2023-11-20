@@ -7,13 +7,82 @@ using UnityEngine.SceneManagement;
 
 public class DebugTools : MonoBehaviour
 {
+    [SerializeField] private TMP_Dropdown currentLocationField;
+    
     [SerializeField] private TMP_Text currentChapterField;
     [SerializeField] private TMP_Text chapterField;
+
+    private void Awake()
+    {
+        
+#if UNITY_EDITOR
+#elif DEVELOPMENT_BUILD
+#else
+        Destroy(gameObject);
+#endif
+    }
+
+    private void Start()
+    {
+        switch (SceneManager.GetActiveScene().name)
+        {
+            case "Cemetery":
+                currentLocationField.value = 0;
+                break;
+            case "Plaza":
+                currentLocationField.value = 1;
+                break;
+            case "Mall":
+                currentLocationField.value = 2;
+                break;
+            case "Church":
+                currentLocationField.value = 3;
+                break;
+            case "Tower":
+                currentLocationField.value = 4;
+                break;
+            case "Tower_Top":
+                currentLocationField.value = 5;
+                break;
+        }
+    }
 
     private void Update()
     {
         var currentQuestInfo = QuestManager.Instance.CurrentQuestInfo;
         currentChapterField.text = $"{(QuestChapter)currentQuestInfo[0]}@{currentQuestInfo[1]}-{currentQuestInfo[2]}-{currentQuestInfo[3]}";
+    }
+    
+    public void ChangeLocation(int value)
+    {
+        string sceneName = "Title";
+        
+        switch (value)
+        {
+            case 0:
+                sceneName = "Cemetery";
+                break;
+            case 1:
+                sceneName = "Plaza";
+                break;
+            case 2:
+                sceneName = "Mall";
+                break;
+            case 3:
+                sceneName = "Church";
+                break;
+            case 4:
+                sceneName = "Tower";
+                break;
+            case 5:
+                sceneName = "Tower_Top";
+                break;
+        }
+        
+        SceneTransitionController.Instance.IrisClose(() =>
+        {
+            SceneManagerCustom.Instance.LoadScene(sceneName, 1);
+        });
     }
 
     public void ChangeChapter()

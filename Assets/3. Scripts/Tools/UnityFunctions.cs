@@ -20,6 +20,11 @@ public class UnityFunctions : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
     }
+
+    public void GoTitleScene()
+    {
+        SceneManagerCustom.Instance.LoadTitleScene();
+    }
     
     public void ExitGame()
     {

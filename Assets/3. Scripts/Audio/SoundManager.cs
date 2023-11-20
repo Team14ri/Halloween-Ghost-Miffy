@@ -70,6 +70,21 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    public float GetVolume(BusType type)
+    {
+        if (busDictionary.TryGetValue(type, out var bus))
+        {
+            float vol;
+            bus.getVolume(out vol);
+            return vol;
+        }
+        else
+        {
+            Debug.LogError("BusType에 해당하는 Bus를 찾을 수 없습니다.");
+            return -1;
+        }
+    }
+
     public void Crossfade(float goalVol, float goalTime, BusType type)
     {
         StartCoroutine(CrossfadeCoroutine(goalVol, goalTime, type));

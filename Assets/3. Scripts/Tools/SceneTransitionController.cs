@@ -35,6 +35,10 @@ public class SceneTransitionController : MonoBehaviour
 
     private void Start()
     {
+        if (transitionUI != null && !initOpenOnEnable)
+        {
+            transitionUI.sizeDelta = new Vector2(0f, 0f);
+        }
         StartCoroutine(StartOneFrameLate());
     }
 
