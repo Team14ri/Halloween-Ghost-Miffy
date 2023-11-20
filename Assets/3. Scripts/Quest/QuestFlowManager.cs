@@ -189,6 +189,11 @@ namespace Quest
         {
             VariableManager.Instance.ResetItem(id);
         }
+        
+        public void ResetAllVariables()
+        {
+            PlayerPrefs.DeleteAll();
+        }
 
         public void SetPlayerTransform(Transform tr)
         {
