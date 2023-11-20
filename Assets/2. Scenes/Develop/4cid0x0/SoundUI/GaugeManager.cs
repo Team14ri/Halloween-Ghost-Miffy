@@ -1,69 +1,72 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-
 
 public class GaugeManager : MonoBehaviour
 {
     [SerializeField] private Sprite on;
     [SerializeField] private Sprite off;
 
-    public SoundManager.BusType volumeType;
+    public SoundManager.BusType[] volumeType;
     private Image[] gaugeArray;
 
-    private const float volumeUnit = 0.1f;
+    private const decimal volumeUnit = 0.2M;
+    private const decimal minVolume = 0.0M;
+    private decimal maxVolume;
 
     private void Start()
     {
-        gaugeArray = GetComponentsInChildren<Image>();
+        Init();
         UpdateGauge();
+    }
+
+    private void Init()
+    {
+        gaugeArray = GetComponentsInChildren<Image>();
+        maxVolume = 0.2M * gaugeArray.Length;
     }
 
     private void UpdateGauge()
     {
-        float currentVolume = SoundManager.Instance.GetVolume(volumeType);
-
-        for (int i = 0; i < 10; ++i)
+        decimal currentVolume = (decimal)SoundManager.Instance.GetVolume(volumeType.First());
+        
+        for (int i = 0; i < gaugeArray.Length; ++i)
         {
-            if ((float)i * volumeUnit < currentVolume)
-            {
-                gaugeArray[i].sprite = on;
-            }
-            else
-            {
-                gaugeArray[i].sprite = off;
-            }
+            gaugeArray[i].sprite = volumeUnit * i < currentVolume ? on : off;
         }
     }
 
     public void VolumeUp()
     {
-        float currentVolume = SoundManager.Instance.GetVolume(volumeType);
-        currentVolume += volumeUnit;
-
-        if (currentVolume > 1)
+        foreach (var type in volumeType)
         {
-            currentVolume = 1;
-        }
+            decimal currentVolume = (decimal)SoundManager.Instance.GetVolume(type);
+            
+            currentVolume += volumeUnit;
+            if (currentVolume >= maxVolume)
+            {
+                currentVolume = maxVolume;
+            }
         
-        SoundManager.Instance.SetVolume(currentVolume, volumeType);
-        UpdateGauge();
+            SoundManager.Instance.SetVolume((float)currentVolume, type);
+            UpdateGauge();
+        }
     }
     
     public void VolumeDown()
     {
-        float currentVolume = SoundManager.Instance.GetVolume(volumeType);
-        currentVolume -= volumeUnit;
-        
-        if (currentVolume < 0)
+        foreach (var type in volumeType)
         {
-            currentVolume = 0;
+            decimal currentVolume = (decimal)SoundManager.Instance.GetVolume(type);
+            
+            currentVolume -= volumeUnit;
+            if (currentVolume < minVolume)
+            {
+                currentVolume = minVolume;
+            }
+
+            SoundManager.Instance.SetVolume((float)currentVolume, type);
+            UpdateGauge();
         }
-        
-        Debug.Log(currentVolume);
-        SoundManager.Instance.SetVolume(currentVolume, volumeType);
-        UpdateGauge();
     }
 }
