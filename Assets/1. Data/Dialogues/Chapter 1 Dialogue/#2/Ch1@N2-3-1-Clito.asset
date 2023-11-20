@@ -16,48 +16,49 @@ MonoBehaviour:
   - BaseNodeGuid: 60144c2e-0e86-4f03-8652-01729239d81e
     PortName: Execute
     TargetNodeGuid: 6a4ec62f-9e09-4177-b529-dd342d07dd10
-  - BaseNodeGuid: 6a4ec62f-9e09-4177-b529-dd342d07dd10
-    PortName: Next
-    TargetNodeGuid: 3f5915fb-623d-4ed6-aa68-492e69ae17cb
   - BaseNodeGuid: 3f5915fb-623d-4ed6-aa68-492e69ae17cb
     PortName: Next
     TargetNodeGuid: 9a8dda8d-88c9-472f-9b03-104d652e9229
+  - BaseNodeGuid: 6a4ec62f-9e09-4177-b529-dd342d07dd10
+    PortName: Next
+    TargetNodeGuid: 3f5915fb-623d-4ed6-aa68-492e69ae17cb
   NodeData:
-  - rid: 4135296627840385191
-  - rid: 4135296627840385192
-  - rid: 4135296627840385193
+  - rid: 4733365038633452108
+  - rid: 4733365038633452109
+  - rid: 4733365038633452110
   references:
     version: 2
     RefIds:
-    - rid: 4135296627840385191
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: 6a4ec62f-9e09-4177-b529-dd342d07dd10
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 298, y: 200}
-        TargetObjectID: Clito
-        DialogueText: "\uB538\uAFBA! \uB538\uAFBA! \uC090\uC57D!"
-        SkipDelay: 0
-    - rid: 4135296627840385192
+    - rid: 4733365038633452108
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 3f5915fb-623d-4ed6-aa68-492e69ae17cb
         NodeTitle: NoChoice Node
         NodeType: 0
-        Position: {x: 649, y: 200}
+        Position: {x: 649.3333, y: 200}
         TargetObjectID: Cliko
-        DialogueText: "\uC5B4\uBA38, \uC544\uC9C1\uB3C4 \uB538\uAFB9\uC9C8\uC774
-          \uBA48\uCD94\uC9C0 \uC54A\uB2C8?"
-        SkipDelay: 0
-    - rid: 4135296627840385193
+        DialogueText: "<state:Cliko@Smile>\uC5B4\uBA38, \uC544\uC9C1\uB3C4 \uB538\uAFB9\uC9C8\uC774
+          \uBA48\uCD94\uC9C0 \uC54A\uB2C8, \uAF2C\uAF2C~?"
+        SkipDelay: 0.5
+    - rid: 4733365038633452109
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 6a4ec62f-9e09-4177-b529-dd342d07dd10
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 212, y: 238.66667}
+        TargetObjectID: Clito
+        DialogueText: "<state:Clito@Hiccup>\uB538\uAFB8! \uAFB9! \uC090\uC57D! "
+        SkipDelay: 0.5
+    - rid: 4733365038633452110
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 9a8dda8d-88c9-472f-9b03-104d652e9229
         NodeTitle: NoChoice Node
         NodeType: 0
-        Position: {x: 1097, y: 200}
+        Position: {x: 1235.3334, y: 188.66667}
         TargetObjectID: Clito
-        DialogueText: "\uC5C4\uB9C8! \uC090\uC57D! \n\uADF8 \uC774\uC57C\uAE30\uB294
-          \uADF8\uB9CC\uD574\uC694! \uC090\uC57D!"
-        SkipDelay: 0
+        DialogueText: "<state:Clito@Surprise>\uC73C\uC544\uC544\uC544, \uC5C4\uB9C8!
+          \n\uADF8 \uC774\uC57C\uAE30\uB294 \uC774\uC81C \uADF8\uB9CC\uD574\uC694!
+          \uC090\uC57D!"
+        SkipDelay: 0.5

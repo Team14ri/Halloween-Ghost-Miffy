@@ -44,84 +44,42 @@ MonoBehaviour:
     PortName: Next
     TargetNodeGuid: 96f41ac3-0760-4882-ad43-559e2ee73567
   NodeData:
-  - rid: 4135296653666811989
-  - rid: 4135296653666811990
-  - rid: 4135296653666811991
-  - rid: 4135296653666811992
-  - rid: 4135296653666811993
-  - rid: 4135296653666811994
-  - rid: 4135296653666811995
-  - rid: 4135296653666811996
-  - rid: 4135296653666811997
-  - rid: 4135296653666811998
+  - rid: 4733365038633452315
+  - rid: 4733365038633452316
+  - rid: 4733365038633452317
+  - rid: 4733365038633452318
+  - rid: 4733365038633452319
+  - rid: 4733365038633452320
+  - rid: 4733365038633452321
+  - rid: 4733365038633452322
+  - rid: 4733365038633452323
+  - rid: 4733365038633452324
   references:
     version: 2
     RefIds:
-    - rid: 4135296653666811989
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: eb04bf21-71b0-465c-9884-2817bb035eef
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 282, y: 200}
-        TargetObjectID: Anderson
-        DialogueText: "<anim:shake>\uCC3E\uC558\uB2E4 \uC774 \uB188\uC758 \uC790\uC2DD!!!</anim>"
-        SkipDelay: 0
-    - rid: 4135296653666811990
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: 8038f076-fbf9-4d73-8618-3bf27597a6ad
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 1203, y: 200}
-        TargetObjectID: Anderson
-        DialogueText: "\uD760\u2026 \uC544\uB2C8\uB77C\uACE0? "
-        SkipDelay: 0
-    - rid: 4135296653666811991
+    - rid: 4733365038633452315
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 9caabdad-4f52-4135-b8c1-b85641e43eed
         NodeTitle: NoChoice Node
         NodeType: 0
-        Position: {x: 3371, y: 200}
+        Position: {x: 3371.3333, y: 200}
         TargetObjectID: Anderson
-        DialogueText: "<anim:shake>\uB108\uD55C\uD14C \uC774 \uBC18\uC9C0\uB97C \uC8FC\uACA0\uB2E4
-          \uAF2C\uB9C8\uC57C\u2026 \n\uBE68\uB9AC \uBC94\uC778\uC744 \uCC3E\uC544\uC624\uC9C0
-          \uC54A\uC73C\uBA74 \n\uC774 \uBD84\uC218\uC5D0 \uB2C8 \uBA38\uB9AC\uB97C
-          \uCC98 \uBC15\uC544 \uBC84\uB9AC\uACA0\uB2E4!!</anim>"
-        SkipDelay: 0
-    - rid: 4135296653666811992
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: 185ceb58-bcb6-4b16-bf7d-668e8922edc7
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 748, y: 16}
-        TargetObjectID: Anderson
-        DialogueText: "\uC720\uB839 \uAF2C\uB9C8\uC57C \uB108\uAC00 \uC4F0\uB808\uAE30\uB97C
-          \uBC84\uB9AC\uB358 \uB188\uC778\uAC8C\uB0D0??"
-        SkipDelay: 0
-    - rid: 4135296653666811993
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: 286a3900-55fe-4959-9c45-a89103fdef87
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 2401, y: 200}
-        TargetObjectID: Anderson
-        DialogueText: "\uC800\uBC88\uC5D0 \uBC18\uC9C0\uB97C \uBA38\uB9AC\uB97C \uB9DE\uC544
-          \uB1CC\uC9C4\uD0D5\uC774 \n\uC62C \uBED4 \uD588\uC796\uB0D0!"
-        SkipDelay: 0
-    - rid: 4135296653666811994
+        DialogueText: "<state:Anderson@Angry><anim:shake>\uB108\uD55C\uD14C \uC774
+          \uBC18\uC9C0\uB97C \uC8FC\uACA0\uB2E4, \uBBF8\uD53C. \n\uBE68\uB9AC \uBC94\uC778\uC744
+          \uCC3E\uC544\uC624\uC9C0 \uC54A\uC73C\uBA74 \n\uC774 \uBD84\uC218\uC5D0
+          \uB2C8 \uBA38\uB9AC\uB97C \uCC98 \uBC15\uC544 \uBC84\uB9AC\uACA0\uB2E4!</anim>"
+        SkipDelay: 1
+    - rid: 4733365038633452316
       type: {class: AddItemNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: ebc24362-4cab-4fc8-b9cd-045b055290b2
         NodeTitle: AddItem Node
         NodeType: 3
-        Position: {x: 2951, y: 200}
+        Position: {x: 2951.3333, y: 200}
         ItemID: Item@SaraRing
         ItemCount: 1
-    - rid: 4135296653666811995
+    - rid: 4733365038633452317
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 96f41ac3-0760-4882-ad43-559e2ee73567
@@ -130,9 +88,9 @@ MonoBehaviour:
         Position: {x: 4742, y: 200}
         TargetObjectID: Anderson
         DialogueText: "\uC5B4\uB5A4 \uB188\uC778\uC9C0 \uC7A1\uD788\uAE30\uB9CC \uD574\uBD10\u2026
-          \uACE0\uC580\uB188\u2026"
-        SkipDelay: 0
-    - rid: 4135296653666811996
+          \uACE0\uC580\uB188 \u2026"
+        SkipDelay: 0.5
+    - rid: 4733365038633452318
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 128e179b-af33-4638-9766-ae626ed9724c
@@ -140,9 +98,44 @@ MonoBehaviour:
         NodeType: 0
         Position: {x: 5234, y: 284}
         TargetObjectID: Miffy
-        DialogueText: "(\uC774\uAC74... \uC0AC\uB77C\uB97C \uB9D0\uD558\uB294 \uAC78\uAE4C..!?)"
-        SkipDelay: 0
-    - rid: 4135296653666811997
+        DialogueText: "(\uC774\uAC74... \uC0AC\uB77C\uB97C \uB9D0\uD558\uB294 \uAC78\uAE4C..?)"
+        SkipDelay: 0.5
+    - rid: 4733365038633452319
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: a13a13c3-9886-4116-99a9-3afce0e7bcb4
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 4119.3335, y: 200}
+        TargetObjectID: Anderson
+        DialogueText: "<state:Anderson@Idle>\uADF8 \uB54C \uC2E4\uB8E8\uC5E3\uC740
+          \uBA38\uB9AC\uC5D0 \uAF2C\uCC59\uC774\uB97C \uB2EC\uACE0\uB2E4\uB2C8\uB294\n\uAE38\uCB49\uD55C
+          \uB188\uC774\uC600\uB294\uB370\u2026"
+        SkipDelay: 1
+    - rid: 4733365038633452320
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 185ceb58-bcb6-4b16-bf7d-668e8922edc7
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 748, y: 15.999998}
+        TargetObjectID: Anderson
+        DialogueText: "<state:Anderson@Idle>\xB7\xB7\xB7\xB7\xB7\xB7. \uD750\uC74C.\n\uC624\uB79C\uB9CC\uC5D0
+          \uBCF4\uB294 \uAD6C\uB098, '\uBBF8\uD53C'.\n\uBB18\uC9C0\uAE30\uAC00 \uBB34\uC2A8
+          \uC9D3\uC744 \uD558\uB098 \uD588\uB354\uB2C8\xB7\xB7\xB7."
+        SkipDelay: 1
+    - rid: 4733365038633452321
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 8038f076-fbf9-4d73-8618-3bf27597a6ad
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 974.6667, y: 260.66666}
+        TargetObjectID: Anderson
+        DialogueText: "\uBB50, \uC911\uC694\uD558\uC9C4 \uC54A\uC73C\uB2C8 \uB118\uAE30\uC790\uAFB8\uB098.\n\uADF8\uB098\uC800\uB098,
+          \uC774 <size:1.2><anim:wave>\uBC18\uC9C0</anim><size:1>\uB97C \uBCF4\uAC70\uB77C."
+        SkipDelay: 0.5
+    - rid: 4733365038633452322
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: fe06814d-2f5c-4552-9fb5-843ab113e474
@@ -150,19 +143,29 @@ MonoBehaviour:
         NodeType: 0
         Position: {x: 1570, y: 200}
         TargetObjectID: Anderson
-        DialogueText: "\uBC94\uC778\uC744 \uCC3E\uC544\uC624\uBA74 \uB108\uC758 \uB9D0\uC744
-          \uBBFF\uC5B4\uC8FC\uC9C0 \uAF2C\uB9C8\uC57C.\n\uD2B9\uD788 \uC774 \uBC18\uC9C0\uB97C
-          \uB358\uC9C4 \uB188\uC774 \uB204\uAD6C\uC778\uC9C0"
-        SkipDelay: 0
-    - rid: 4135296653666811998
+        DialogueText: "\uBA87 \uC2DC\uAC04 \uC804, \uBD84\uC218\uB300\uB85C \uB5A8\uC5B4\uC84C\uB294\uB370\n\uC18C\uC911\uD55C
+          \uAC83 \uAC19\uC544 \uBCF4\uAD00\uD558\uACE0 \uC788\uC5C8\uB2E4."
+        SkipDelay: 0.5
+    - rid: 4733365038633452323
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
-        GUID: a13a13c3-9886-4116-99a9-3afce0e7bcb4
+        GUID: 286a3900-55fe-4959-9c45-a89103fdef87
         NodeTitle: NoChoice Node
         NodeType: 0
-        Position: {x: 4119, y: 200}
+        Position: {x: 2123.3333, y: 90}
         TargetObjectID: Anderson
-        DialogueText: "\uADF8 \uB54C \uC2E4\uB8E8\uC5E3\uC740 \uBA38\uB9AC\uC5D0
-          \uAF2C\uCC59\uC774\uB97C \uB2EC\uACE0\uB2E4\uB2C8\uB294\n\uAE38\uCB49\uD55C
-          \uB188\uC774\uC600\uB294\uB370\u2026"
-        SkipDelay: 0
+        DialogueText: "\uB2F9\uC2DC \uC774 \uBC18\uC9C0\uB97C \uB9DE\uACE0\n\uC8FD\uC744
+          \uBED4 \uD588\uC9C0\uB9CC, \uADF8\uB7EC\uC9C0 \uB9D0\uB77C\uB294 \uAC83\uB3C4
+          \uD568\uAED8 \uC804\uD574\uC8FC\uAC70\uB77C."
+        SkipDelay: 1
+    - rid: 4733365038633452324
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: eb04bf21-71b0-465c-9884-2817bb035eef
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 282, y: 200}
+        TargetObjectID: Anderson
+        DialogueText: "<state:Anderson@Angry><anim:shake>\uB108\uB85C\uAC8C\uB0D0!
+          \uBD84\uC218\uB300\uC5D0 \n\uC4F0\uB808\uAE30\uB97C \uBC84\uB9B0 \uC790\uC2DD\uC774!</anim>"
+        SkipDelay: 0.5
