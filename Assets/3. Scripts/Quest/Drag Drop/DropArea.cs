@@ -11,6 +11,9 @@ public class DropArea : MonoBehaviour, IDropHandler
         if (eventData.pointerDrag == null)
             return;
 
+        if (eventData.pointerDrag.GetComponent<DragDrop>() == null)
+            return;
+
         Transform droppedItemTransform = eventData.pointerDrag.GetComponent<Transform>();
 
         droppedItemTransform.position = dropAreaPosition.position;
