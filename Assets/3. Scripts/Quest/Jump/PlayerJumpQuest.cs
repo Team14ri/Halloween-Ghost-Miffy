@@ -52,8 +52,12 @@ public class PlayerJumpQuest : MonoBehaviour
 
     public void OnInteraction(InputAction.CallbackContext context)
     {
+        if (_executeDone)
+            return;
+        
         if (context.started)
         {
+            SoundManager.Instance.PlaySound("UI_Button_Click");
             _currentGauge = Mathf.Clamp(_currentGauge + _increaseValue, 0f, _targetGauge);
         }
     }
