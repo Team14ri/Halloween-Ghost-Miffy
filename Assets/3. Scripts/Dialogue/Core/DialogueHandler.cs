@@ -91,6 +91,10 @@ namespace DS.Core
         public void PlayDialogue(string text, bool skipTyping = false)
         {
             dialogueSetter.nameBox.text = Name;
+            if (!skipTyping)
+            {
+                SoundManager.Instance.PlaySound("UI_Dia_Check");
+            }
             DialogueManager.Instance.PlayDialogue(dialogueSetter.textBox, text, skipTyping);
         }
     }

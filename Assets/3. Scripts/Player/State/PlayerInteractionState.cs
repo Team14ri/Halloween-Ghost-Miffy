@@ -103,7 +103,7 @@ public class PlayerInteractionState : IState
                     currentXAxis = oldDialogueHandler.GetXAxis();
                     oldDialogueHandler.DisableLookTarget();
                 }
-                
+
                 lastestDialogueHandler.LookTarget(currentXAxis);
                 lastestDialogueHandler.PlayDialogue(noChoiceNodeData.DialogueText, skipTyping);
 
@@ -123,7 +123,7 @@ public class PlayerInteractionState : IState
                     currentXAxis = oldDialogueHandler.GetXAxis();
                     oldDialogueHandler.DisableLookTarget();
                 }
-                
+
                 lastestDialogueHandler.LookTarget(currentXAxis);
                 lastestDialogueHandler.PlayDialogue(multiChoiceNodeData.DialogueText, skipTyping);
                 
