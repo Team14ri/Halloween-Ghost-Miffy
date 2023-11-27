@@ -15,20 +15,73 @@ MonoBehaviour:
   NodeLinks:
   - BaseNodeGuid: 60144c2e-0e86-4f03-8652-01729239d81e
     PortName: Execute
+    TargetNodeGuid: 78e681d5-191a-4a28-aa1e-5b8fdb169980
+  - BaseNodeGuid: 78e681d5-191a-4a28-aa1e-5b8fdb169980
+    PortName: True
+    TargetNodeGuid: 801a7cdf-0e35-4d71-8207-69d5ba055660
+  - BaseNodeGuid: 7b0bfed1-3c51-4aed-a41b-412ca59b5fd4
+    PortName: Next
+    TargetNodeGuid: e03e15cf-d617-49f9-8489-37894142d15b
+  - BaseNodeGuid: 78e681d5-191a-4a28-aa1e-5b8fdb169980
+    PortName: False
+    TargetNodeGuid: cb0987f0-1c27-4e0d-bac8-74379a686678
+  - BaseNodeGuid: cb0987f0-1c27-4e0d-bac8-74379a686678
+    PortName: "(\uD38C\uD0A8\uB808\uC778\uC838\uC5D0 \uB300\uD574\xB7\xB7\xB7)"
     TargetNodeGuid: 7b0bfed1-3c51-4aed-a41b-412ca59b5fd4
   NodeData:
-  - rid: 5154282434067693888
+  - rid: 4135296840923349468
+  - rid: 4135296840923349469
+  - rid: 4135296840923349470
+  - rid: 4135296840923349471
+  - rid: 4135296840923349472
   references:
     version: 2
     RefIds:
-    - rid: 5154282434067693888
+    - rid: 4135296840923349468
+      type: {class: ConditionNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 78e681d5-191a-4a28-aa1e-5b8fdb169980
+        NodeTitle: Condition Node
+        NodeType: 4
+        Position: {x: 212, y: 200}
+        ItemID: Condition@Ch1-5-3-3-Hector
+        EqualOrMany: 1
+    - rid: 4135296840923349469
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 801a7cdf-0e35-4d71-8207-69d5ba055660
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 682, y: 73}
+        TargetObjectID: Hector
+        DialogueText: "\uAE30\uBD84 \uC548 \uC88B\uAD6C\uB9CC. "
+        SkipDelay: 0
+    - rid: 4135296840923349470
+      type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: cb0987f0-1c27-4e0d-bac8-74379a686678
+        NodeTitle: MultiChoice Node
+        NodeType: 1
+        Position: {x: 682, y: 321}
+        TargetObjectID: Miffy
+        DialogueText: 
+    - rid: 4135296840923349471
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 7b0bfed1-3c51-4aed-a41b-412ca59b5fd4
         NodeTitle: NoChoice Node
         NodeType: 0
-        Position: {x: 236, y: 198}
+        Position: {x: 1012, y: 321}
         TargetObjectID: Hector
         DialogueText: "\uAE30\uBD84 \uC548 \uC88B\uAD6C\uB9CC. \n\uADF8 \uBA38\uC2DC\uAE7D\uC774\uB4E4\uC774
           \uC6B0\uB9AC \uC560\uB4E4\uC744 \uD5E4\uCE58\uB824 \uD588\uC5B4. "
-        SkipDelay: 0
+        SkipDelay: 0.5
+    - rid: 4135296840923349472
+      type: {class: AddItemNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: e03e15cf-d617-49f9-8489-37894142d15b
+        NodeTitle: AddItem Node
+        NodeType: 3
+        Position: {x: 1474, y: 321}
+        ItemID: Condition@Ch1-5-3-3-Hector
+        ItemCount: 1
