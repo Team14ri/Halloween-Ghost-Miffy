@@ -26,4 +26,12 @@ public class Portal : MonoBehaviour
             SceneManagerCustom.Instance.LoadScene(exitSceneName, exitPortalNum);
         });
     }
+    
+    public void LoadLastVisitScene()
+    {
+        SceneTransitionController.Instance.IrisClose(() =>
+        {
+            SceneManagerCustom.Instance.LoadScene(SceneManagerCustom.Instance.LastVisitPortalLocation, SceneManagerCustom.Instance.LastVisitPortalID);
+        });
+    }
 }
