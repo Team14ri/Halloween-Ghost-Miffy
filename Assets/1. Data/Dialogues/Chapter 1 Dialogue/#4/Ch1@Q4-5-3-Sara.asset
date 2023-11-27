@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Ch1@Q4-5-3-Sara
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: 60144c2e-0e86-4f03-8652-01729239d81e
+    PortName: Execute
+    TargetNodeGuid: 0380893c-1614-4812-9e56-10b5468ac2bb
+  - BaseNodeGuid: 0380893c-1614-4812-9e56-10b5468ac2bb
+    PortName: Next
+    TargetNodeGuid: 7896ee88-ad6a-406d-bb5b-bd1540d9dc30
+  - BaseNodeGuid: 7896ee88-ad6a-406d-bb5b-bd1540d9dc30
+    PortName: Next
+    TargetNodeGuid: a0960364-885f-4b8d-b605-3e7a484567a4
+  - BaseNodeGuid: a0960364-885f-4b8d-b605-3e7a484567a4
+    PortName: Next
+    TargetNodeGuid: bed52c22-5210-4ff6-a1e7-ab8e66aa6031
+  NodeData:
+  - rid: 5154282434067693896
+  - rid: 5154282434067693897
+  - rid: 5154282434067693898
+  - rid: 5154282434067693899
+  references:
+    version: 2
+    RefIds:
+    - rid: 5154282434067693896
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 0380893c-1614-4812-9e56-10b5468ac2bb
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 231, y: 427}
+        TargetObjectID: Miffy
+        DialogueText: "(\uC0AC\uB77C\uB97C \uBC1C\uACAC\uD588\uB2E4!)"
+        SkipDelay: 0
+    - rid: 5154282434067693897
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 7896ee88-ad6a-406d-bb5b-bd1540d9dc30
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 492, y: 233}
+        TargetObjectID: Sara
+        DialogueText: "\uD751... \uD751!"
+        SkipDelay: 0
+    - rid: 5154282434067693898
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: a0960364-885f-4b8d-b605-3e7a484567a4
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 789, y: 416}
+        TargetObjectID: Sara
+        DialogueText: "\uC6B0\uB9AC\uB294 \uADF8\uC800, \uD558\uACE0 \uC2F6\uC740
+          \uC77C\uC744 \uD588\uC744 \uBFD0\uC778\uB370, \uC65C \uC5B4\uB978\uC2A4\uB7FD\uC9C0
+          \uBABB \uD558\uB2E4\uACE0 \uD558\uB294 \uAC78\uAE4C?"
+        SkipDelay: 1
+    - rid: 5154282434067693899
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: bed52c22-5210-4ff6-a1e7-ab8e66aa6031
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1399, y: 334}
+        TargetObjectID: Show
+        DialogueText: "\uBBF8\uD53C! \uC774\uC57C\uAE30 \uC911\uC5D0 \uBBF8\uC548\uD558\uC9C0\uB9CC,
+          \uC2DC\uAC04\uC774 \uB2E4 \uB410\uC5B4!"
+        SkipDelay: 1
