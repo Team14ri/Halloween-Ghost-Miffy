@@ -40,6 +40,11 @@ namespace Interaction
             enterEvents?.Invoke();
         }
         
+        public void SetInteractionButtonType(string type)
+        {
+            interactionButtonType = Enum.Parse<InteractionButtonType>(type, true);
+        }
+        
         private void SetInteractionEnable()
         {
             DisableInteraction = false;
