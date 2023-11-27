@@ -27,6 +27,16 @@ public class Portal : MonoBehaviour
         });
     }
     
+    public void LoadSceneWithoutIris()
+    {
+        if (BGMPlayer.Instance != null)
+        {
+            BGMPlayer.Instance.StopSound();
+        }
+        
+        SceneManagerCustom.Instance.LoadScene(exitSceneName, exitPortalNum);
+    }
+    
     public void LoadLastVisitScene()
     {
         SceneTransitionController.Instance.IrisClose(() =>
