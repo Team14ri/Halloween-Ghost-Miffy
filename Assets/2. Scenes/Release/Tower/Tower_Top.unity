@@ -411,7 +411,7 @@ GameObject:
   m_Component:
   - component: {fileID: 156906337}
   m_Layer: 0
-  m_Name: Quest #5-3
+  m_Name: Quest #5-5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -616,11 +616,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2390496760062750212, guid: 2ce81d8b082d3874597b079a415f280e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 3.340016e-15
+      value: -3.3063162e-15
       objectReference: {fileID: 0}
     - target: {fileID: 2390496760062750212, guid: 2ce81d8b082d3874597b079a415f280e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -1.2922673e-16
+      value: 1.7331363e-16
       objectReference: {fileID: 0}
     - target: {fileID: 4545346158691141241, guid: 2ce81d8b082d3874597b079a415f280e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16297,7 +16297,7 @@ MonoBehaviour:
   QuestFlows:
   - QuestChapterID: 0
     QuestID: 5
-    QuestDetailID: 3
+    QuestDetailID: 5
     QuestFlowID: 1
     ActiveGameObjects:
     - {fileID: 2133146025}
@@ -16313,7 +16313,7 @@ MonoBehaviour:
     QuestClearConditions: []
   - QuestChapterID: 0
     QuestID: 5
-    QuestDetailID: 4
+    QuestDetailID: 6
     QuestFlowID: 1
     ActiveGameObjects: []
     InactiveGameObjects:
@@ -21883,24 +21883,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f2afb7ca3ec38048a0125ba65f9995a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  increase: 10
-  decrease: 1
+  increase: 5
+  decrease: 0.5
   targetValue: 100
   unityEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1641405160}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: Play
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Miffy@Idle
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1985292037}
         m_TargetAssemblyTypeName: Cinemachine.CinemachineVirtualCameraBase, Cinemachine
         m_MethodName: set_Priority
@@ -21973,7 +21961,7 @@ GameObject:
   - component: {fileID: 1734953135}
   - component: {fileID: 1734953134}
   m_Layer: 0
-  m_Name: Fade #5-3-1
+  m_Name: Fade #5-5-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22002,6 +21990,18 @@ MonoBehaviour:
   endUnityEvent:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1641405160}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Miffy@Idle
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1121443087}
         m_TargetAssemblyTypeName: Quest.QuestFlowManager, Assembly-CSharp
         m_MethodName: SetQuestID
@@ -22011,7 +22011,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: ch1@5-4-1
+          m_StringArgument: ch1@5-6-1
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1121443087}
@@ -51315,7 +51315,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2133146026}
   m_Layer: 0
-  m_Name: Flow #5-3-1
+  m_Name: Flow #5-5-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
