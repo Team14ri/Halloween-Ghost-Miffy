@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Ch1@N5-4-4-Pumpkinman
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: 60144c2e-0e86-4f03-8652-01729239d81e
+    PortName: Execute
+    TargetNodeGuid: c9a86bc6-0989-4e65-821e-fc6aa9128e2c
+  - BaseNodeGuid: c9a86bc6-0989-4e65-821e-fc6aa9128e2c
+    PortName: Next
+    TargetNodeGuid: 0451a202-0c70-44f5-a6e7-e8426d37402e
+  - BaseNodeGuid: 0451a202-0c70-44f5-a6e7-e8426d37402e
+    PortName: Next
+    TargetNodeGuid: d3e64b4c-2a4a-4684-99d6-38e802b0c3a3
+  NodeData:
+  - rid: 4733365038633452477
+  - rid: 4733365038633452478
+  - rid: 4733365038633452479
+  references:
+    version: 2
+    RefIds:
+    - rid: 4733365038633452477
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: c9a86bc6-0989-4e65-821e-fc6aa9128e2c
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 266, y: 184.66667}
+        TargetObjectID: Pumpkinman
+        DialogueText: "\uC6B0\uD558\uD558\uD56B! \uBBF8\uD53C! \uB10C \uBC29\uAE08
+          \n\uC6B0\uB9AC\uC758 \uD6CC\uB96D\uD55C \uB3D9\uB8CC\uAC00 \uB418\uC5C8\uB2E4!"
+        SkipDelay: 0.5
+    - rid: 4733365038633452478
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 0451a202-0c70-44f5-a6e7-e8426d37402e
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 456.66666, y: 381.3333}
+        TargetObjectID: Pumpkinman
+        DialogueText: "<state:Pumpkinman@Smile><size:3><anim:wave>\uC560\uB108\uBBF8\uBC38\uB9AC\uC758
+          \uC9C0\uD0B4\uC774\uB85C \uC784\uBA85\uD558\uB9C8!</anim><size:1>"
+        SkipDelay: 1
+    - rid: 4733365038633452479
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: d3e64b4c-2a4a-4684-99d6-38e802b0c3a3
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1019.3333, y: 176.66667}
+        TargetObjectID: Pumpkinman
+        DialogueText: "<state:Pumpkinman@Idle><size:1.3><anim:wave>\uC640! \uD558!
+          \uD558! \uD56B!</anim>"
+        SkipDelay: 0.5
