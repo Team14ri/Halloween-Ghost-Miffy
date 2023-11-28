@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: RedHouse_Common_01
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: 1cd78384-77e7-45f2-b1b2-621a7e857b06
+    PortName: Execute
+    TargetNodeGuid: 9fc99b76-e3f5-4cab-966b-7e5e42474303
+  NodeData:
+  - rid: 4135296855097999436
+  references:
+    version: 2
+    RefIds:
+    - rid: 4135296855097999436
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 9fc99b76-e3f5-4cab-966b-7e5e42474303
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 268, y: 200}
+        TargetObjectID: Miffy
+        DialogueText: "(\uC5B4\uB518\uAC00 \uADF8\uB9AC\uC6B4 \uBAA9\uC18C\uB9AC\uC640
+          \uBAA8\uC2B5\uC774 \uBCF4\uC778\uB2E4)"
+        SkipDelay: 0.5
