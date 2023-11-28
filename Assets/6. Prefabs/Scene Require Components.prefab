@@ -6952,7 +6952,7 @@ MonoBehaviour:
   polaroidField: {fileID: 1753346813845567239}
   chapterID: 0
   questID: 5
-  questDetailID: 4
+  questDetailID: 6
   questFlowID: 3
 --- !u!1 &2738111956685455034
 GameObject:
@@ -7375,7 +7375,7 @@ MonoBehaviour:
   - QuestID: 0
     QuestTitle: "#0 \uAE68\uC5B4\uB09C \uD560\uB85C\uC708"
   - QuestID: 1
-    QuestTitle: "#1 \uCE6D\uCC2C \uCE94\uB514 \uB300\uD68C"
+    QuestTitle: "#1 \uCE6D\uCC2C \uCE94\uB514 \uC2A4\uD2F0\uCEE4 \uB300\uD68C"
   - QuestID: 2
     QuestTitle: "#2 \uB9C8\uC744\uC758 \uC9C0\uD0B4\uC774"
   - QuestID: 3
@@ -7408,9 +7408,10 @@ MonoBehaviour:
       EnableVariable: 0
       VariableID: 
       EqualOrMany: 0
-  - QuestTitle: "#1-1 \uCE6D\uCC2C \uCE94\uB514 \uB300\uD68C?"
-    QuestDescription: "\uCE6D\uCC2C \uCE94\uB514 \uB300\uD68C\uC5D0 \uCC38\uC5EC\uD558\uB824\uBA74
-      \uC5B4\uB5BB\uAC8C \uD574\uC57C\uD558\uC9C0?\n\uB9C8\uC744\uC5D0\uC11C \uCC3E\uC544\uBCF4\uC790!"
+  - QuestTitle: "#1-1 \uCE6D\uCC2C \uCE94\uB514 \uC2A4\uD2F0\uCEE4 \uB300\uD68C?"
+    QuestDescription: "\uCE6D\uCC2C \uCE94\uB514 \uC2A4\uD2F0\uCEE4 \uB300\uD68C\uC5D0
+      \uCC38\uC5EC\uD558\uB824\uBA74 \uC5B4\uB5BB\uAC8C \uD574\uC57C\uD558\uC9C0?\n\uB9C8\uC744\uC5D0\uC11C
+      \uCC3E\uC544\uBCF4\uC790!"
     QuestID: 1
     QuestDetailID: 1
     QuestFlowID: 1
@@ -7556,12 +7557,13 @@ MonoBehaviour:
       EnableVariable: 0
       VariableID: 
       EqualOrMany: 1
-    - ConditionText: "\uD38C\uD0A8\uB9E8\uACFC \uB300\uD654\uD558\uAE30"
+    - ConditionText: "\uC218\uBC30\uC9C0\uB97C \uBD99\uD78C \uD6C4 \uD38C\uD0A8\uB9E8\uACFC
+        \uB300\uD654\uD558\uAE30"
       EnableVariable: 0
       VariableID: 
       EqualOrMany: 1
   - QuestTitle: "#4-4 \uC0AC\uB77C\uC5D0\uAC8C \uAC00\uBCF4\uC790 "
-    QuestDescription: "\uC0AC\uB77C\uAC00 \uD638\uBC15\uBC31\uC791\uC744 \uC54C\uACE0
+    QuestDescription: "\uC0AC\uB77C\uAC00 \uD638\uBC15 \uBC31\uC791\uC744 \uC54C\uACE0
       \uC788\uC5C8\uB358 \uAC83 \uAC19\uC544.\n\uC0AC\uB77C\uC5D0\uAC8C \uAC00\uBCF4\uC790!"
     QuestID: 4
     QuestDetailID: 4
@@ -7673,35 +7675,24 @@ MonoBehaviour:
       EnableVariable: 0
       VariableID: 
       EqualOrMany: 0
-  - QuestTitle: "#5-9 \uD638\uBC15 \uBC31\uC791\uC758 \uB9C8\uC74C"
-    QuestDescription: "\uD638\uBC15 \uBC31\uC791\uC758 \uB9C8\uC74C\uC744 \uC54C\uC544\uB0C8\uC5B4...\n\uADF8\uB97C
-      \uB530\uB77C\uAC00\uBCF4\uC790."
+  - QuestTitle: "#5-9 \uB2E4\uC2DC \uB3C4\uB9DD\uAC04 \uD638\uBC15 \uBC31\uC791"
+    QuestDescription: "\uD638\uBC15 \uBC31\uC791\uC774 \uB2E4\uC2DC \uB3C4\uB9DD\uAC14\uC5B4...\n\uB354
+      \uC774\uC0C1 \uB193\uCCD0\uC11C\uB294 \uC548 \uB3FC!"
     QuestID: 5
     QuestDetailID: 6
     QuestFlowID: 1
-    QuestConditions:
-    - ConditionText: "\uD638\uBC15 \uBC31\uC791 \uB530\uB77C\uAC00\uAE30"
-      EnableVariable: 0
-      VariableID: 
-      EqualOrMany: 0
-  - QuestTitle: "#5-10 \uB2E4\uC2DC \uB3C4\uB9DD\uAC04 \uD638\uBC15 \uBC31\uC791"
-    QuestDescription: "\uD638\uBC15 \uBC31\uC791\uC774 \uB2E4\uC2DC \uB3C4\uB9DD\uAC14\uC5B4...\n\uB354\uC774\uC0C1
-      \uB193\uCCD0\uC11C\uB294 \uC548\uB3FC!"
-    QuestID: 5
-    QuestDetailID: 6
-    QuestFlowID: 2
     QuestConditions:
     - ConditionText: "\uB3C4\uB9DD\uAC04 \uD638\uBC15 \uBC31\uC791 \uB4A4\uCAD2\uAE30"
       EnableVariable: 0
       VariableID: 
       EqualOrMany: 0
-  - QuestTitle: "#5-11 \uD38C\uD0A8\uB808\uC778\uC800"
+  - QuestTitle: "#5-10 \uD38C\uD0A8\uB808\uC778\uC800"
     QuestDescription: "\uD38C\uD0A8\uB9E8\uACFC \uC0AC\uB77C\uAC00 \uD638\uBC15\uBC31\uC791\uC744
       \uB9C9\uC73C\uB7EC \uC654\uC5B4.\n\uADF8\uB4E4\uC758 \uB4B7\uC774\uC57C\uAE30\uB97C
       \uB4E4\uC5B4\uBCF4\uC790."
     QuestID: 5
     QuestDetailID: 6
-    QuestFlowID: 3
+    QuestFlowID: 2
     QuestConditions:
     - ConditionText: "\uADF8\uB4E4\uC758 \uC774\uC57C\uAE30 \uB4E3\uAE30"
       EnableVariable: 0
@@ -16278,8 +16269,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4894413889248494119}
-  m_LocalRotation: {x: 0.016177848, y: 0.4825137, z: -0.23637167, w: 0.8432362}
-  m_LocalPosition: {x: -25.123312, y: 16.953491, z: -29.108856}
+  m_LocalRotation: {x: -0.2164396, y: -0, z: -0, w: 0.97629607}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
