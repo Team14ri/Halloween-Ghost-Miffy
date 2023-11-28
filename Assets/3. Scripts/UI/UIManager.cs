@@ -47,6 +47,12 @@ public class UIManager : MonoBehaviour
             EscapeOneUI();
             return;
         }
+
+        if (_uiStack.Count > 0)
+        {
+            _uiStack.Last().SetActive(false);
+        }
+        
         _uiStack.Push(obj);
         obj.SetActive(true);
         SoundManager.Instance.PlaySound("UI_QuestOpen");
@@ -100,6 +106,7 @@ public class UIManager : MonoBehaviour
                 return;
             }
             EscapeOneUI();
+            SoundManager.Instance.PlaySound("UI_Button_Click");
         }
 
         if (context.canceled) { }

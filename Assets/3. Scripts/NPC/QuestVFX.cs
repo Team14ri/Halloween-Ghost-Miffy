@@ -1,3 +1,4 @@
+using System;
 using Interaction;
 using UnityEngine;
 
@@ -12,6 +13,21 @@ public class QuestVFX : MonoBehaviour
         if (trigger.interactionButtonType == InteractionButtonType.Question)
         {
             vfx.SetActive(true);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (trigger.interactionButtonType == InteractionButtonType.Question)
+        {
+            if (!vfx.activeInHierarchy)
+                return;
+            vfx.SetActive(true);
+            return;
+        }
+        if (vfx.activeInHierarchy)
+        {
+            vfx.SetActive(false);
         }
     }
 }

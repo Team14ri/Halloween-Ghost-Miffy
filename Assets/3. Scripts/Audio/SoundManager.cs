@@ -31,8 +31,8 @@ public class SoundManager : MonoBehaviour
         else
         {
             Instance = this;
-            transform.parent = null;
-            DontDestroyOnLoad(transform.gameObject);
+            // transform.parent = null;
+            // DontDestroyOnLoad(transform.gameObject);
             eventInstances = new List<EventInstance>();
             
             busDictionary.Add(BusType.Master, FMODUnity.RuntimeManager.GetBus("{adad2423-c25d-4945-9aeb-435077848bbd}"));

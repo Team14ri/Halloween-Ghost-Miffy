@@ -73,6 +73,7 @@ namespace DS.Core
 
         public void SelectChoice(string guid)
         {
+            SoundManager.Instance.PlaySound("UI_Dia_Choose_Click");
             _returnAction?.Invoke(guid);
             Exit();
         }

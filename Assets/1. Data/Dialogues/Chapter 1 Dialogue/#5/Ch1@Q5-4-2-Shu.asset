@@ -1,0 +1,118 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Ch1@Q5-4-2-Shu
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: 60144c2e-0e86-4f03-8652-01729239d81e
+    PortName: Execute
+    TargetNodeGuid: fffad2bd-9fce-47e0-adb9-a0f2475cc5dd
+  - BaseNodeGuid: fffad2bd-9fce-47e0-adb9-a0f2475cc5dd
+    PortName: "(\uB044\uB355\uB044\uB355!)"
+    TargetNodeGuid: 037184fb-f7fc-4396-8199-991417b426ea
+  - BaseNodeGuid: 037184fb-f7fc-4396-8199-991417b426ea
+    PortName: Next
+    TargetNodeGuid: a9cf6217-bf7d-48ca-8d05-5a2b0fce98d9
+  - BaseNodeGuid: a9cf6217-bf7d-48ca-8d05-5a2b0fce98d9
+    PortName: Next
+    TargetNodeGuid: 9284ddfa-b440-404b-9b2f-fcba010641f8
+  - BaseNodeGuid: 9284ddfa-b440-404b-9b2f-fcba010641f8
+    PortName: Next
+    TargetNodeGuid: 102aa55d-6a92-4adf-82d3-c103c9563ee5
+  - BaseNodeGuid: 102aa55d-6a92-4adf-82d3-c103c9563ee5
+    PortName: Next
+    TargetNodeGuid: 3dba18de-68ef-4877-b6d4-0a6d362861b0
+  - BaseNodeGuid: 3dba18de-68ef-4877-b6d4-0a6d362861b0
+    PortName: Next
+    TargetNodeGuid: 74fe310e-4ba6-4985-b082-3e16b13f0ce8
+  NodeData:
+  - rid: 6420895670632710248
+  - rid: 6420895670632710249
+  - rid: 6420895670632710250
+  - rid: 6420895670632710251
+  - rid: 6420895670632710252
+  - rid: 6420895670632710253
+  - rid: 6420895670632710254
+  references:
+    version: 2
+    RefIds:
+    - rid: 6420895670632710248
+      type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: fffad2bd-9fce-47e0-adb9-a0f2475cc5dd
+        NodeTitle: MultiChoice Node
+        NodeType: 1
+        Position: {x: 252, y: 194}
+        TargetObjectID: Shu
+        DialogueText: "<state:Shu@Smile>\uB3CC\uC544\uC654\uAD6C\uB098! \uC54C\uC544\uB0B8
+          \uAC74 \uC788\uC5C8\uC5B4?"
+    - rid: 6420895670632710249
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 037184fb-f7fc-4396-8199-991417b426ea
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 728, y: 313}
+        TargetObjectID: Shu
+        DialogueText: "\uADF8\uB807\uAD6C\uB098! \uADF8\uB7FC \uC5B4\uC11C \n<size:1.2>\uB9C8\uD0D1
+          \uC704\uB85C \uC62C\uB77C\uAC00 \uBD10!"
+        SkipDelay: 0.5
+    - rid: 6420895670632710250
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: a9cf6217-bf7d-48ca-8d05-5a2b0fce98d9
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1097, y: 508}
+        TargetObjectID: Shu
+        DialogueText: "\xB7\xB7\xB7"
+        SkipDelay: 0
+    - rid: 6420895670632710251
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 9284ddfa-b440-404b-9b2f-fcba010641f8
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1318, y: 313}
+        TargetObjectID: Shu
+        DialogueText: "<size:2><anim:wave>\uC544 \uCC38!</anim>\n<pause:0.5><size:1>\uBCF4\uB2F5\uC774\uB77C
+          \uD558\uAE34 \uBB50\uD558\uC9C0\uB9CC\xB7\xB7\xB7"
+        SkipDelay: 0.5
+    - rid: 6420895670632710252
+      type: {class: AddItemNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 102aa55d-6a92-4adf-82d3-c103c9563ee5
+        NodeTitle: AddItem Node
+        NodeType: 3
+        Position: {x: 1751, y: 335}
+        ItemID: Sticker@Shu
+        ItemCount: 1
+    - rid: 6420895670632710253
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 3dba18de-68ef-4877-b6d4-0a6d362861b0
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2057, y: 335}
+        TargetObjectID: Shu
+        DialogueText: "\uB0B4 \uCE6D\uCC2C \uC2A4\uD2F0\uCEE4\uB97C \uC904\uAC8C!!"
+        SkipDelay: 0
+    - rid: 6420895670632710254
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 74fe310e-4ba6-4985-b082-3e16b13f0ce8
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2413, y: 335}
+        TargetObjectID: Shu
+        DialogueText: "\uADF8\uB7FC \uC548\uB155~~"
+        SkipDelay: 0

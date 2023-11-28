@@ -1,0 +1,152 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Ch1@Q5-3-1-Shu
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: 60144c2e-0e86-4f03-8652-01729239d81e
+    PortName: Execute
+    TargetNodeGuid: 4fb85d7a-ffe3-490f-bc3b-2673a52a42c0
+  - BaseNodeGuid: 4fb85d7a-ffe3-490f-bc3b-2673a52a42c0
+    PortName: Next
+    TargetNodeGuid: d19fa7ea-2f2f-475a-9f1b-69ec3697c802
+  - BaseNodeGuid: d19fa7ea-2f2f-475a-9f1b-69ec3697c802
+    PortName: Next
+    TargetNodeGuid: 26ee7bdc-1026-454c-8648-a63fadb4026b
+  - BaseNodeGuid: 74d9d045-be74-433d-a40e-856f0d7ed4e8
+    PortName: Next
+    TargetNodeGuid: 227d0a4c-e43c-4e53-bf3e-60d89d8474ed
+  - BaseNodeGuid: 227d0a4c-e43c-4e53-bf3e-60d89d8474ed
+    PortName: "\uD38C\uD0A8\uB808\uC778\uC800\uC758 \uC0AC\uC9C4\uC744 \uBCF4\uC5EC\uC900\uB2E4."
+    TargetNodeGuid: 69dfc05a-2588-4e42-9afb-fc7215b8b6fb
+  - BaseNodeGuid: 69dfc05a-2588-4e42-9afb-fc7215b8b6fb
+    PortName: Next
+    TargetNodeGuid: 97ff69e3-e70b-4b98-bb20-a9594c966d0f
+  - BaseNodeGuid: 97ff69e3-e70b-4b98-bb20-a9594c966d0f
+    PortName: Next
+    TargetNodeGuid: d73b001d-d40d-4503-b84d-894e0b84d16f
+  - BaseNodeGuid: 26ee7bdc-1026-454c-8648-a63fadb4026b
+    PortName: Next
+    TargetNodeGuid: 74d9d045-be74-433d-a40e-856f0d7ed4e8
+  - BaseNodeGuid: d73b001d-d40d-4503-b84d-894e0b84d16f
+    PortName: "(\uB044\uB355\uB044\uB355)"
+    TargetNodeGuid: 2440c199-25d0-4e68-b7d0-090eafb8842a
+  NodeData:
+  - rid: 6420895669054079930
+  - rid: 6420895669054079931
+  - rid: 6420895669054079932
+  - rid: 6420895669054079933
+  - rid: 6420895669054079934
+  - rid: 6420895669054079935
+  - rid: 6420895669054079936
+  - rid: 6420895669054079937
+  - rid: 6420895669054079938
+  references:
+    version: 2
+    RefIds:
+    - rid: 6420895669054079930
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 4fb85d7a-ffe3-490f-bc3b-2673a52a42c0
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 351, y: 239}
+        TargetObjectID: Shu
+        DialogueText: "<state:Shu@Idle>\uC1FC\uC1FC\uC1FC\xB7\xB7\xB7 \uD070\uC77C\uC774\uC57C. "
+        SkipDelay: 0.5
+    - rid: 6420895669054079931
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: d19fa7ea-2f2f-475a-9f1b-69ec3697c802
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 774, y: 93}
+        TargetObjectID: Shu
+        DialogueText: "\uD638\uBC15 \uBC31\uC791\uC774 \uB9C8\uD0D1\uC744 \uC810\uB839\uD588\uC5B4\xB7\xB7\xB7"
+        SkipDelay: 0.5
+    - rid: 6420895669054079932
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 74d9d045-be74-433d-a40e-856f0d7ed4e8
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1503, y: 90}
+        TargetObjectID: Shu
+        DialogueText: "\uC544\uBB34\uB798\uB3C4, \uC65C \uD638\uBC15 \uBC31\uC791\uC774
+          \uC774\uB7F0 \uC77C\uC744\n\uBC8C\uC774\uB294\uC9C0 \uC54C\uC544\uBD10\uC57C\uACA0\uC5B4..!
+          \uC1FC\uC1FC.."
+        SkipDelay: 1
+    - rid: 6420895669054079933
+      type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 227d0a4c-e43c-4e53-bf3e-60d89d8474ed
+        NodeTitle: MultiChoice Node
+        NodeType: 1
+        Position: {x: 1956, y: 215}
+        TargetObjectID: Shu
+        DialogueText: "\uD639\uC2DC \uD638\uBC15 \uBC31\uC791\uACFC \uAD00\uB828\uB41C
+          \uAC8C \uC788\uC744\uAE4C?"
+    - rid: 6420895669054079934
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 69dfc05a-2588-4e42-9afb-fc7215b8b6fb
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2428, y: 111}
+        TargetObjectID: Shu
+        DialogueText: "\uC624! \uC774\uAC70\uB77C\uBA74 \uD560 \uC218 \uC788\uC5B4,
+          <anim:wave>\uC1FC\uC1FC\uC1FC!</anim>"
+        SkipDelay: 0.5
+    - rid: 6420895669054079935
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 97ff69e3-e70b-4b98-bb20-a9594c966d0f
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2907, y: 274}
+        TargetObjectID: Shu
+        DialogueText: "\uBBF8\uD53C, \uB108\uB294 \uC720\uB839\uC774\uB77C \uB0B4\uAC00
+          \uB9CC\uB4E0 \n\uB9C8\uBC95\uC73C\uB85C \uACFC\uAC70\uC5D0 \uAC08 \uC218
+          \uC788\uC744 \uAC70\uC57C."
+        SkipDelay: 1
+    - rid: 6420895669054079936
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 26ee7bdc-1026-454c-8648-a63fadb4026b
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1146, y: 274}
+        TargetObjectID: Shu
+        DialogueText: "\uB300\uCCB4 \uBB34\uC2A8 \uC77C\uC774 \uC788\uC5C8\uB358
+          \uAC70\uC9C0?!"
+        SkipDelay: 0.5
+    - rid: 6420895669054079937
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 2440c199-25d0-4e68-b7d0-090eafb8842a
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 3817, y: 146}
+        TargetObjectID: Shu
+        DialogueText: "\uC624! \uACE0\uB9C8\uC6B4 \uAC78~! \uADF8\uB7EC\uBA74, \uB208\uC744
+          \uD55C \uBC88 \uAC10\uC544 \uBD10!"
+        SkipDelay: 1
+    - rid: 6420895669054079938
+      type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: d73b001d-d40d-4503-b84d-894e0b84d16f
+        NodeTitle: MultiChoice Node
+        NodeType: 1
+        Position: {x: 3319, y: 261}
+        TargetObjectID: Shu
+        DialogueText: "\uACFC\uAC70\uB85C \uAC00\uC11C \uC774\uC720\uB97C \uD655\uC778\uD574\uBCF4\uACE0
+          \uC640\uC904 \uC218 \uC788\uC5B4?"

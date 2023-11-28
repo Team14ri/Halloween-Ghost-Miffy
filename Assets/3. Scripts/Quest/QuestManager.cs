@@ -120,6 +120,7 @@ namespace Quest
         
         public void Accept(string questType, string questTitle)
         {
+            SoundManager.Instance.PlaySound("UI_QuestAccept");
             _questAcceptTmpTextEditor.Edit("Quest Type", questType)
                 .Edit("Quest Title", questTitle);
             _questAcceptFadeController.AutoFadeInAndOut();
@@ -127,6 +128,7 @@ namespace Quest
         
         public void AcceptMainQuest(string questTitle)
         {
+            SoundManager.Instance.PlaySound("UI_QuestAccept");
             _questAcceptTmpTextEditor.Edit("Quest Type", "MAIN QUEST")
                 .Edit("Quest Title", questTitle);
             _questAcceptFadeController.AutoFadeInAndOut();
@@ -134,6 +136,7 @@ namespace Quest
         
         public void AcceptSubQuest(string questTitle)
         {
+            SoundManager.Instance.PlaySound("UI_QuestAccept");
             _questAcceptTmpTextEditor.Edit("Quest Type", "SUB QUEST")
                 .Edit("Quest Title", questTitle);
             _questAcceptFadeController.AutoFadeInAndOut();

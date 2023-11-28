@@ -107,9 +107,6 @@
 		<property name="length">
 			<value>0.5</value>
 		</property>
-		<property name="volume">
-			<value>10</value>
-		</property>
 		<property name="soundStealing">
 			<value>3</value>
 		</property>
@@ -131,7 +128,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{70f4a92a-3ecb-471c-8d61-0423c2c2fc1f}">
 		<property name="volume">
-			<value>10</value>
+			<value>6</value>
 		</property>
 		<property name="name">
 			<value>Audio 1</value>
@@ -220,6 +217,9 @@
 		</relationship>
 	</object>
 	<object class="SingleSound" id="{14c5174e-3aa1-47f2-b464-d76810c8fff2}">
+		<property name="volume">
+			<value>-3</value>
+		</property>
 		<relationship name="audioFile">
 			<destination>{d43c68fe-26ae-4b42-b86d-1e2ac6aac0cf}</destination>
 		</relationship>

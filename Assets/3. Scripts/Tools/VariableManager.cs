@@ -93,6 +93,7 @@ public class VariableManager : MonoBehaviour
             QuestDetailViewer.Instance.UpdateQuestDetail();
             if (value > 0)
             {
+                SoundManager.Instance.PlaySound("UI_Get_BigSticker");
                 ItemCollect.Instance.ShowPopup($"(<u>{sticker.Name} <size=50><color=red>x {value}</color></size></u>) 스티커 획득!", sticker.Sprite);
             }
             return;
@@ -105,6 +106,7 @@ public class VariableManager : MonoBehaviour
             QuestDetailViewer.Instance.UpdateQuestDetail();
             if (value > 0)
             {
+                SoundManager.Instance.PlaySound("UI_Get_BigSticker");
                 ItemCollect.Instance.ShowPopup($"(<u>{item.Name} <size=50><color=red>x {value}</color></size></u>) 아이템 획득!", item.Sprite);
             }
             return;
@@ -123,6 +125,7 @@ public class VariableManager : MonoBehaviour
             QuestDetailViewer.Instance.UpdateQuestDetail();
             if (show)
             {
+                SoundManager.Instance.PlaySound("UI_Get_BigSticker");
                 ItemCollect.Instance.ShowPopup($"(<u>{sticker.Name} <size=50><color=red>x 1</color></size></u>) 스티커 획득!", sticker.Sprite);
             }
             return;
@@ -135,6 +138,7 @@ public class VariableManager : MonoBehaviour
             QuestDetailViewer.Instance.UpdateQuestDetail();
             if (show)
             {
+                SoundManager.Instance.PlaySound("UI_Get_BigSticker");
                 ItemCollect.Instance.ShowPopup($"(<u>{item.Name} <size=50><color=red>x 1</color></size></u>) 아이템 획득!", item.Sprite);
             }
             return;

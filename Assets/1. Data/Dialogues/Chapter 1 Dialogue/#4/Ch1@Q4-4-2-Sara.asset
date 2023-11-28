@@ -40,9 +40,6 @@ MonoBehaviour:
   - BaseNodeGuid: e88ff01c-6e47-476d-be42-af28044b7523
     PortName: '!!!!!!!!!!!!!!!'
     TargetNodeGuid: 4bcc4255-a044-4890-b80f-657ee9b37b6b
-  - BaseNodeGuid: 7b663c61-b359-4d1b-baeb-17cf8b93048f
-    PortName: Next
-    TargetNodeGuid: 3f90d7f7-2de2-43c4-b4e7-1dd393ffb55c
   - BaseNodeGuid: 1050d036-1f6b-44de-846b-b960b5920b1a
     PortName: Next
     TargetNodeGuid: 7b663c61-b359-4d1b-baeb-17cf8b93048f
@@ -55,25 +52,28 @@ MonoBehaviour:
   - BaseNodeGuid: 4bcc4255-a044-4890-b80f-657ee9b37b6b
     PortName: Next
     TargetNodeGuid: f596160f-eed9-4b48-acf9-90a92de57ba7
+  - BaseNodeGuid: 7b663c61-b359-4d1b-baeb-17cf8b93048f
+    PortName: Next
+    TargetNodeGuid: 3f90d7f7-2de2-43c4-b4e7-1dd393ffb55c
   NodeData:
-  - rid: 4135296691615301656
-  - rid: 4135296691615301657
-  - rid: 4135296691615301658
-  - rid: 4135296691615301659
-  - rid: 4135296691615301660
-  - rid: 4135296691615301661
-  - rid: 4135296691615301662
-  - rid: 4135296691615301663
-  - rid: 4135296691615301664
-  - rid: 4135296691615301665
-  - rid: 4135296691615301666
-  - rid: 4135296691615301667
-  - rid: 4135296691615301668
-  - rid: 4135296691615301669
+  - rid: 6420895669054079792
+  - rid: 6420895669054079793
+  - rid: 6420895669054079794
+  - rid: 6420895669054079795
+  - rid: 6420895669054079796
+  - rid: 6420895669054079797
+  - rid: 6420895669054079798
+  - rid: 6420895669054079799
+  - rid: 6420895669054079800
+  - rid: 6420895669054079801
+  - rid: 6420895669054079802
+  - rid: 6420895669054079803
+  - rid: 6420895669054079804
+  - rid: 6420895669054079805
   references:
     version: 2
     RefIds:
-    - rid: 4135296691615301656
+    - rid: 6420895669054079792
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: ddbb1996-ac8a-41ad-b54e-f2d0b41cc495
@@ -81,9 +81,9 @@ MonoBehaviour:
         NodeType: 0
         Position: {x: 1296, y: 597}
         TargetObjectID: Sara
-        DialogueText: "\uC544\uB2C8 \uC5EC\uAE30\uAE4C\uC9C0\xB7\xB7\xB7.\n\uBBF8\uD53C!"
+        DialogueText: "\uC544\uB2C8 \uC5EC\uAE30\uAE4C\uC9C0\xB7\xB7\xB7\n\uBBF8\uD53C!"
         SkipDelay: 0.5
-    - rid: 4135296691615301657
+    - rid: 6420895669054079793
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: d2f22be3-7ecd-4bb2-aed2-a22f4fd05751
@@ -91,10 +91,11 @@ MonoBehaviour:
         NodeType: 0
         Position: {x: 1619, y: 764}
         TargetObjectID: Sara
-        DialogueText: "<size:1.2>\uBC31\uC791\uC758 \uB2E8\uC11C\uB97C \uCC3E\uC544\uC11C,
-          \r\n\r<size:1>\uADF8\uB97C \uB9D0\uB824\uC92C\uC73C\uBA74 \uC88B\uACA0\uC5B4."
+        DialogueText: "<size:1.2>\uD638\uBC15 \uBC31\uC791\uC758 \uB2E8\uC11C\uB97C
+          \uCC3E\uC544\uC11C, \r\n\r<size:1>\uADF8\uB97C \uB9D0\uB824\uC92C\uC73C\uBA74
+          \uC88B\uACA0\uC5B4."
         SkipDelay: 0.5
-    - rid: 4135296691615301658
+    - rid: 6420895669054079794
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: f596160f-eed9-4b48-acf9-90a92de57ba7
@@ -102,21 +103,10 @@ MonoBehaviour:
         NodeType: 0
         Position: {x: 680, y: 588}
         TargetObjectID: Sara
-        DialogueText: "<anim:shake>\uB2E4 \uC78A\uC5C8\uB2E4\uACE0 \uC0DD\uAC01\uD588\uC9C0\uB9CC..</anim>\n\uADF8\uAC8C
+        DialogueText: "<anim:shake>\uB2E4 \uC78A\uC5C8\uB2E4\uACE0 \uC0DD\uAC01\uD588\uC9C0\uB9CC\xB7\xB7\xB7</anim>\n\uADF8\uAC8C
           \uC544\uB2C8\uC5C8\uC5B4."
         SkipDelay: 0.5
-    - rid: 4135296691615301659
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: 8340ff3a-cc28-492c-bf03-042d4f2413e0
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 1063, y: 800}
-        TargetObjectID: Sara
-        DialogueText: "\uADF8\uB9AC\uACE0 \uC9C0\uAE08 \uADF8\uAC00 \uC5EC\uAE30\uC5D0
-          \n\uB098\uD0C0\uB09C \uAC74 \uBD84\uBA85\xB7\xB7\xB7."
-        SkipDelay: 0.5
-    - rid: 4135296691615301660
+    - rid: 6420895669054079795
       type: {class: AddItemNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 2e7d10dd-2b82-4130-b4d4-fe945da695c3
@@ -125,7 +115,7 @@ MonoBehaviour:
         Position: {x: 1999, y: 570}
         ItemID: Item@SaraRing
         ItemCount: 1
-    - rid: 4135296691615301661
+    - rid: 6420895669054079796
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 8906a5d6-a39e-4870-8e7c-86634599e28a
@@ -133,9 +123,9 @@ MonoBehaviour:
         NodeType: 0
         Position: {x: 2293, y: 749}
         TargetObjectID: Sara
-        DialogueText: "\uC774 \uBC18\uC9C0\uC640\xB7\xB7\xB7."
+        DialogueText: "\uC774 \uBC18\uC9C0\uC640\xB7\xB7\xB7"
         SkipDelay: 0.5
-    - rid: 4135296691615301662
+    - rid: 6420895669054079797
       type: {class: AddItemNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 6a32beb3-edaf-41e9-834e-873beb6ca7cd
@@ -144,7 +134,7 @@ MonoBehaviour:
         Position: {x: 2557, y: 559}
         ItemID: Item@SaraLetter
         ItemCount: 1
-    - rid: 4135296691615301663
+    - rid: 6420895669054079798
       type: {class: StartQuestNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 3f90d7f7-2de2-43c4-b4e7-1dd393ffb55c
@@ -152,8 +142,8 @@ MonoBehaviour:
         NodeType: 2
         Position: {x: 3551, y: 732}
         QuestType: Main Quest
-        QuestID: "#5-1 \uD638\uBC15 \uBC31\uC791\uC744 \uCC3E\uC544\uBCF4\uC790"
-    - rid: 4135296691615301664
+        QuestID: "#5-1 \uC0AC\uB77C\uC9C4 \uD638\uBC15 \uBC31\uC791"
+    - rid: 6420895669054079799
       type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: e88ff01c-6e47-476d-be42-af28044b7523
@@ -163,18 +153,7 @@ MonoBehaviour:
         TargetObjectID: Sara
         DialogueText: "\uADF8\uB9AC\uACE0 \uD638\uBC15 \uBC31\uC791\uC740 \uB098\uC640
           <size:1.4>\uC57D\uD63C\uD55C \uC0AC\uC774\uC57C."
-    - rid: 4135296691615301665
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: 7b663c61-b359-4d1b-baeb-17cf8b93048f
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 3166, y: 501}
-        TargetObjectID: Sara
-        DialogueText: "\uADF8\uB294 \uAE09\uD558\uAC8C \uC5B4\uB518\uAC00\uB85C \uC0AC\uB77C\uC84C\uC5B4.\r\n\uD55C
-          \uBC88 \uCC3E\uC544\uBD10\uC918."
-        SkipDelay: 0.5
-    - rid: 4135296691615301666
+    - rid: 6420895669054079800
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 1050d036-1f6b-44de-846b-b960b5920b1a
@@ -182,10 +161,10 @@ MonoBehaviour:
         NodeType: 0
         Position: {x: 2829, y: 738}
         TargetObjectID: Sara
-        DialogueText: "\uC774 \uD3B8\uC9C0\uB3C4 \uAC19\uC774 \uAC00\uC838\uAC00\uC918.
-          \n\uBD80\uD0C1\uD560\uAC8C."
+        DialogueText: "\uC774 \uD3B8\uC9C0\uB3C4 \uAC19\uC774 \uAC00\uC838\uAC00
+          \uC918. \n\uBD80\uD0C1\uD560\uAC8C."
         SkipDelay: 0.5
-    - rid: 4135296691615301667
+    - rid: 6420895669054079801
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 9dc687a0-35f8-4d45-a6ea-5934375b8e37
@@ -196,7 +175,7 @@ MonoBehaviour:
         DialogueText: "\uC6B0\uB9B0 \uCE5C\uD55C \uCE5C\uAD6C\uB07C\uB9AC \uBAA8\uC778
           3\uC778\uC870\uC600\uC5B4."
         SkipDelay: 0.5
-    - rid: 4135296691615301668
+    - rid: 6420895669054079802
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: b0f69dc8-5686-420d-b4a0-6190d45157f6
@@ -204,9 +183,10 @@ MonoBehaviour:
         NodeType: 0
         Position: {x: 680, y: 200}
         TargetObjectID: Sara
-        DialogueText: "\uD38C\uD0A8\uB9E8\uACFC \uB098, \uADF8\uB9AC\uACE0 \uD638\uBC15\uBC31\uC791\xB7\xB7\xB7\xB7\xB7\xB7."
+        DialogueText: "\uD38C\uD0A8\uB9E8\uACFC \uB098, \uADF8\uB9AC\uACE0 \uD638\uBC15
+          \uBC31\uC791\xB7\xB7\xB7"
         SkipDelay: 0.5
-    - rid: 4135296691615301669
+    - rid: 6420895669054079803
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 4bcc4255-a044-4890-b80f-657ee9b37b6b
@@ -214,6 +194,29 @@ MonoBehaviour:
         NodeType: 0
         Position: {x: 244, y: 598}
         TargetObjectID: Sara
-        DialogueText: "\uADF8\uB798, \uB124\uAC00 \uCC3E\uC544 \uC92C\uB358 <size:1.2>\uBC18\uC9C0\uAC00\n\uBC14\uB85C
-          \uADF8 \uC57D\uD63C \uBC18\uC9C0\uC57C <size:1> \uD6C4\uD6D7\xB7\xB7\xB7\xB7\xB7\xB7."
+        DialogueText: "\uADF8\uB798, \uB108\uAC00 \uCC3E\uC544\uC900 <size:1.2>\uBC18\uC9C0\uAC00\n\uBC14\uB85C
+          \uADF8 \uC57D\uD63C \uBC18\uC9C0\uC57C<size:1> \uD6C4\uD6D7\xB7\xB7\xB7"
+        SkipDelay: 0.5
+    - rid: 6420895669054079804
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 7b663c61-b359-4d1b-baeb-17cf8b93048f
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 3166, y: 501}
+        TargetObjectID: Sara
+        DialogueText: "\uADF8\uB294 \uC67C\uCABD\uC73C\uB85C \uAC00\uBA74 \uC704\uCE58\uD55C
+          \uC0C1\uAC00\n\uBC29\uD5A5\uC73C\uB85C \uC0AC\uB77C\uC84C\uC5B4.\r\n\uD55C
+          \uBC88 \uCC3E\uC544\uBD10\uC918."
+        SkipDelay: 0.5
+    - rid: 6420895669054079805
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 8340ff3a-cc28-492c-bf03-042d4f2413e0
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1063, y: 800}
+        TargetObjectID: Sara
+        DialogueText: "\uADF8\uB9AC\uACE0 \uC9C0\uAE08 \uADF8\uAC00 \uC5EC\uAE30\uC5D0
+          \n\uB098\uD0C0\uB09C \uAC74 \uBD84\uBA85\xB7\xB7\xB7"
         SkipDelay: 0.5

@@ -17,7 +17,7 @@ MonoBehaviour:
     PortName: Execute
     TargetNodeGuid: a3edb8dd-20a8-4b9f-aa2d-4fbb0c0813de
   - BaseNodeGuid: a3edb8dd-20a8-4b9f-aa2d-4fbb0c0813de
-    PortName: "\uC55E\uC5D0\uC11C \uCDA4\uC744 \uCD98\uB2E4."
+    PortName: "\uB4A4\uD1B5\uC218\uB97C \uB54C\uB9B0\uB2E4."
     TargetNodeGuid: dcaebd42-9d0b-41fc-aa0e-78747d702cc7
   - BaseNodeGuid: a3edb8dd-20a8-4b9f-aa2d-4fbb0c0813de
     PortName: "\uB2E4\uAC00\uAC04\uB2E4."
@@ -25,51 +25,66 @@ MonoBehaviour:
   - BaseNodeGuid: dcaebd42-9d0b-41fc-aa0e-78747d702cc7
     PortName: Next
     TargetNodeGuid: 0b0743a1-0753-4f1c-8d56-3f4ee760cffb
+  - BaseNodeGuid: 0b0743a1-0753-4f1c-8d56-3f4ee760cffb
+    PortName: Next
+    TargetNodeGuid: f57e3fdd-34a1-46e9-8dee-a638916c3917
   NodeData:
-  - rid: 4733365038633452490
-  - rid: 4733365038633452491
-  - rid: 4733365038633452492
-  - rid: 4733365038633452493
+  - rid: 6420895669054079895
+  - rid: 6420895669054079896
+  - rid: 6420895669054079897
+  - rid: 6420895669054079898
+  - rid: 6420895669054079899
   references:
     version: 2
     RefIds:
-    - rid: 4733365038633452490
+    - rid: 6420895669054079895
       type: {class: MultiChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: a3edb8dd-20a8-4b9f-aa2d-4fbb0c0813de
         NodeTitle: MultiChoice Node
         NodeType: 1
-        Position: {x: 190, y: 194.66667}
+        Position: {x: 190, y: 195}
         TargetObjectID: Miffy
         DialogueText: "(\uD638\uBC15\uBC31\uC791\uC744 \uBC1C\uACAC\uD588\uB2E4\xB7\xB7\xB7!)"
-    - rid: 4733365038633452491
-      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
-      data:
-        GUID: 26728186-334b-45fd-b928-8615e724cd41
-        NodeTitle: NoChoice Node
-        NodeType: 0
-        Position: {x: 612, y: 146.66667}
-        TargetObjectID: Hobakbaekjak
-        DialogueText: "<state:Hobakbaekjak@Idle>\uC751? \uC5B4\uB5BB\uAC8C \uC548
-          \uAC8C\uB0D0\xB7\xB7\xB7\xB7\xB7\xB7! "
-        SkipDelay: 0.5
-    - rid: 4733365038633452492
+    - rid: 6420895669054079896
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: 0b0743a1-0753-4f1c-8d56-3f4ee760cffb
         NodeTitle: NoChoice Node
         NodeType: 0
-        Position: {x: 970, y: 354.66666}
+        Position: {x: 970, y: 355}
         TargetObjectID: Hobakbaekjak
-        DialogueText: "\uBB50\uD558\uB294 \uAC70\uC9C0?"
+        DialogueText: "\uBB50 \uD558\uB294 \uAC70\uC9C0?"
         SkipDelay: 0.5
-    - rid: 4733365038633452493
+    - rid: 6420895669054079897
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: f57e3fdd-34a1-46e9-8dee-a638916c3917
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1269, y: 355}
+        TargetObjectID: Miffy
+        DialogueText: "(\uC720\uB839\uC758 \uBAB8\uC774\uB77C \uC190\uC774 \uB140\uC11D\uC758
+          \uBAB8\uC744 \uD1B5\uACFC\uD588\uB2E4\xB7\xB7\xB7)"
+        SkipDelay: 0
+    - rid: 6420895669054079898
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 26728186-334b-45fd-b928-8615e724cd41
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 612, y: 147}
+        TargetObjectID: Hobakbaekjak
+        DialogueText: "<state:Hobakbaekjak@Idle>\uC751? \uB124 \uB140\uC11D\uC774
+          \uC5B4\uB5BB\uAC8C \uC548 \uAC70\uB0D0..! "
+        SkipDelay: 0.5
+    - rid: 6420895669054079899
       type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
       data:
         GUID: dcaebd42-9d0b-41fc-aa0e-78747d702cc7
         NodeTitle: NoChoice Node
         NodeType: 0
-        Position: {x: 542, y: 354.66666}
+        Position: {x: 542, y: 355}
         TargetObjectID: Hobakbaekjak
         DialogueText: <state:Hobakbaekjak@Idle>??
         SkipDelay: 0.5
