@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Basshu_Common_01
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: c80b61e0-3e3a-4557-a591-25fdc3779afc
+    PortName: Execute
+    TargetNodeGuid: b51d0d12-58d0-48f9-9e5c-40742af119f0
+  - BaseNodeGuid: b51d0d12-58d0-48f9-9e5c-40742af119f0
+    PortName: Next
+    TargetNodeGuid: c999c9b9-5640-4b4f-81ac-66d049b5ecf9
+  NodeData:
+  - rid: 3681220554986618884
+  - rid: 3681220554986618885
+  references:
+    version: 2
+    RefIds:
+    - rid: 3681220554986618884
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: b51d0d12-58d0-48f9-9e5c-40742af119f0
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 247, y: 200}
+        TargetObjectID: Basshu
+        DialogueText: "\uC5D0\uC789\u2026 \uC140\uB9AC \uB140\uC11D \uC77C \uC880
+          \uC801\uB2F9\uD788 \uBC1B\uC73C\uB77C\uB2C8\uAE50!!\r"
+        SkipDelay: 0
+    - rid: 3681220554986618885
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: c999c9b9-5640-4b4f-81ac-66d049b5ecf9
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 782, y: 229}
+        TargetObjectID: Basshu
+        DialogueText: "\uC7A5\uC0AC\uAC00 \uB108\uBB34 \uC798 \uB3FC\uC11C \uBC14\uBE60
+          \uC8FD\uACA0\uAD6C\uBA3C!!!"
+        SkipDelay: 0
