@@ -1,0 +1,140 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031e90537efea04bbc4b78b5ff5a533, type: 3}
+  m_Name: Clito_Common_01
+  m_EditorClassIdentifier: 
+  NodeLinks:
+  - BaseNodeGuid: 60144c2e-0e86-4f03-8652-01729239d81e
+    PortName: Execute
+    TargetNodeGuid: f26d2fe4-f8ae-412e-91c8-c9f2f71b2167
+  - BaseNodeGuid: 313e246b-9f3a-4438-bd53-8b2970998785
+    PortName: Next
+    TargetNodeGuid: 5156466f-17cd-445e-9561-5bcbfe6db6c5
+  - BaseNodeGuid: da7f0a46-1397-4381-8029-54004429db2d
+    PortName: Next
+    TargetNodeGuid: 018e0bc4-9798-4676-b9e4-cb0da714edc7
+  - BaseNodeGuid: 138916ce-37ef-4571-ad6c-a79de41ef907
+    PortName: Next
+    TargetNodeGuid: da7f0a46-1397-4381-8029-54004429db2d
+  - BaseNodeGuid: 5156466f-17cd-445e-9561-5bcbfe6db6c5
+    PortName: Next
+    TargetNodeGuid: 138916ce-37ef-4571-ad6c-a79de41ef907
+  - BaseNodeGuid: 018e0bc4-9798-4676-b9e4-cb0da714edc7
+    PortName: Next
+    TargetNodeGuid: 7cddb679-6140-407b-be88-1e203e0e4e31
+  - BaseNodeGuid: 41e43b9b-3d06-4061-bdf8-cde1f768fcdb
+    PortName: Next
+    TargetNodeGuid: 313e246b-9f3a-4438-bd53-8b2970998785
+  - BaseNodeGuid: f26d2fe4-f8ae-412e-91c8-c9f2f71b2167
+    PortName: Next
+    TargetNodeGuid: 41e43b9b-3d06-4061-bdf8-cde1f768fcdb
+  NodeData:
+  - rid: 4135296855097999428
+  - rid: 4135296855097999429
+  - rid: 4135296855097999430
+  - rid: 4135296855097999431
+  - rid: 4135296855097999432
+  - rid: 4135296855097999433
+  - rid: 4135296855097999434
+  - rid: 4135296855097999435
+  references:
+    version: 2
+    RefIds:
+    - rid: 4135296855097999428
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: da7f0a46-1397-4381-8029-54004429db2d
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2923, y: 277}
+        TargetObjectID: Clito
+        DialogueText: "\uC5C4\uB9C8! \uC090\uC57D! \n\uADF8\uB7F0 \uC774\uC57C\uAE30
+          \uD558\uC9C0\uB9C8\uC694! \uC090\uC57D!"
+        SkipDelay: 0.5
+    - rid: 4135296855097999429
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 7cddb679-6140-407b-be88-1e203e0e4e31
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1174, y: 522}
+        TargetObjectID: Clito
+        DialogueText: "<state:Clito@Smile>\uC090\uC57D? \uC815\uB9D0\uC774\uB124!\n\uD558\uC9C0\uB9CC
+          \uD638\uBC15\uBC31\uC791\uC740 \uBB34\uC11C\uC6CC\uC694! \uC090\uC57D!"
+        SkipDelay: 0.5
+    - rid: 4135296855097999430
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 5156466f-17cd-445e-9561-5bcbfe6db6c5
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1903, y: 267}
+        TargetObjectID: Cliko
+        DialogueText: "<size:1.2>\uD638\uBC15 \uBC31\uC791<size:1>\uC774 \uB098\uD0C0\uB098
+          \uBA38\uB9AC\uB97C\n<anim:shake>\uD638\uBC15\uC73C\uB85C \uB9CC\uB4E4\uC9C0\uB3C4
+          \uBAA8\uB978\uB2E4, \uAF2C\uAF2C~?</anim>"
+        SkipDelay: 0.5
+    - rid: 4135296855097999431
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 018e0bc4-9798-4676-b9e4-cb0da714edc7
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 483, y: 504}
+        TargetObjectID: Cliko
+        DialogueText: "<state:Cliko@Smile>\uC5B4\uBA38, \uB538\uAFB9\uC9C8\uC774
+          \uBA48\uCDC4\uB124? <anim:wave>\uD638\uD638\uD638~</anim>"
+        SkipDelay: 0.5
+    - rid: 4135296855097999432
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: f26d2fe4-f8ae-412e-91c8-c9f2f71b2167
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 383, y: 235}
+        TargetObjectID: Clito
+        DialogueText: "<state:Clito@Hiccup><anim:wave>\uC544\uAFB8! \uB530\uAFB8!
+          \uAFB9! \uB538\uAFB9!</anim>\n\uC090\uC57C\uC545\xB7\xB7\xB7\xB7\xB7\xB7\xB7\xB7\xB7.
+          \uB538\uAFB9!"
+        SkipDelay: 0.5
+    - rid: 4135296855097999433
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 41e43b9b-3d06-4061-bdf8-cde1f768fcdb
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 934, y: 235}
+        TargetObjectID: Cliko
+        DialogueText: "\uC5B4\uBA38, \uD06C\uB9AC\uD1A0 \uB538\uAFB9\uC9C8\uC774
+          \uBA48\uCD94\uC9C0 \uC54A\uB2C8, \uAF2C\uAF2C~?"
+        SkipDelay: 0.5
+    - rid: 4135296855097999434
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 313e246b-9f3a-4438-bd53-8b2970998785
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 1373, y: 267}
+        TargetObjectID: Cliko
+        DialogueText: "\uD06C\uB9AC\uD1A0... <anim:shake>\uB538\uAFB9\uC9C8\uC744
+          \uBA48\uCD94\uC9C0 \uC54A\uC73C\uBA74....</anim>"
+        SkipDelay: 0.5
+    - rid: 4135296855097999435
+      type: {class: NoChoiceNodeData, ns: DS.Runtime, asm: Assembly-CSharp}
+      data:
+        GUID: 138916ce-37ef-4571-ad6c-a79de41ef907
+        NodeTitle: NoChoice Node
+        NodeType: 0
+        Position: {x: 2423, y: 277}
+        TargetObjectID: Clito
+        DialogueText: "<state:Clito@Surprise><size:1.4>\uC090\uC57C\uC544\uC544\uC544\uC544\uC544\uC544\uC544\uC545!!!"
+        SkipDelay: 0.5
