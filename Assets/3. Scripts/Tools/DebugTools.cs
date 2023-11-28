@@ -14,7 +14,6 @@ public class DebugTools : MonoBehaviour
 
     private void Awake()
     {
-        
 #if UNITY_EDITOR
 #elif DEVELOPMENT_BUILD
 #else
@@ -24,25 +23,37 @@ public class DebugTools : MonoBehaviour
 
     private void Start()
     {
-        switch (SceneManager.GetActiveScene().name)
+        switch (SceneManager.GetActiveScene().name.ToLower())
         {
-            case "Cemetery":
+            case "cemetery":
                 currentLocationField.value = 0;
                 break;
-            case "Plaza":
+            case "plaza":
                 currentLocationField.value = 1;
                 break;
-            case "Mall":
+            case "plaza_retro":
                 currentLocationField.value = 2;
                 break;
-            case "Church":
+            case "mall":
                 currentLocationField.value = 3;
                 break;
-            case "Tower":
+            case "mall_retro":
                 currentLocationField.value = 4;
                 break;
-            case "Tower_Top":
+            case "church":
                 currentLocationField.value = 5;
+                break;
+            case "tower":
+                currentLocationField.value = 6;
+                break;
+            case "tower_retro":
+                currentLocationField.value = 7;
+                break;
+            case "tower_top":
+                currentLocationField.value = 8;
+                break;
+            case "tower_top_retro":
+                currentLocationField.value = 9;
                 break;
         }
     }
@@ -66,16 +77,28 @@ public class DebugTools : MonoBehaviour
                 sceneName = "Plaza";
                 break;
             case 2:
-                sceneName = "Mall";
+                sceneName = "Plaza_Retro";
                 break;
             case 3:
-                sceneName = "Church";
+                sceneName = "Mall";
                 break;
             case 4:
-                sceneName = "Tower";
+                sceneName = "Mall_Retro";
                 break;
             case 5:
+                sceneName = "Church";
+                break;
+            case 6:
+                sceneName = "Tower";
+                break;
+            case 7:
+                sceneName = "Tower_Retro";
+                break;
+            case 8:
                 sceneName = "Tower_Top";
+                break;
+            case 9:
+                sceneName = "Tower_Top_Retro";
                 break;
         }
         
