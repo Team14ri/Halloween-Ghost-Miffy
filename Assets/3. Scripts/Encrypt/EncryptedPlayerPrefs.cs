@@ -55,10 +55,6 @@ public class EncryptedPlayerPrefs
         string check = Sha256($"{key}_{type}_{privateKey}_{secretKey}_{value}");
         PlayerPrefs.SetString($"{key}@CheckSum", check);
         PlayerPrefs.SetInt($"{key}@Key", keyIndex);
-        
-        Debug.Log($"{key} - {value}");
-        Debug.Log($"{key}@CheckSum - {check}");
-        Debug.Log($"{key}@Key - {keyIndex}");
     }
 
     private static bool CheckEncryption(string key, string type, string value) 
