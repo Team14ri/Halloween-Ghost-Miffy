@@ -36,11 +36,11 @@ public class VariableManager : MonoBehaviour
 
         foreach (var data in stickerData)
         {
-            PlayerPrefs.DeleteKey(data.ID);
+            EncryptedPlayerPrefs.DeleteKey(data.ID);
         }
         foreach (var data in itemData)
         {
-            PlayerPrefs.DeleteKey(data.ID);
+            EncryptedPlayerPrefs.DeleteKey(data.ID);
         }
     }
 
@@ -81,7 +81,7 @@ public class VariableManager : MonoBehaviour
             return item.GetValue();
         }
 
-        return PlayerPrefs.GetInt(id, 0);
+        return EncryptedPlayerPrefs.GetInt(id, 0);
     }
     
     public void AddItems(string id, int value)
@@ -112,7 +112,7 @@ public class VariableManager : MonoBehaviour
             return;
         }
         
-        PlayerPrefs.SetInt(id, PlayerPrefs.GetInt(id, 0) + value);
+        EncryptedPlayerPrefs.SetInt(id, EncryptedPlayerPrefs.GetInt(id, 0) + value);
         QuestDetailViewer.Instance.UpdateQuestDetail();
     }
 
@@ -144,12 +144,12 @@ public class VariableManager : MonoBehaviour
             return;
         }
         
-        PlayerPrefs.SetInt(id, PlayerPrefs.GetInt(id, 0) + 1);
+        EncryptedPlayerPrefs.SetInt(id, EncryptedPlayerPrefs.GetInt(id, 0) + 1);
         QuestDetailViewer.Instance.UpdateQuestDetail();
     }
     
     public void ResetItem(string id)
     {
-        PlayerPrefs.DeleteKey(id);
+        EncryptedPlayerPrefs.DeleteKey(id);
     }
 }
