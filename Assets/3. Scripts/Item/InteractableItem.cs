@@ -17,7 +17,7 @@ public class InteractableItem : MonoBehaviour
     {
         if (item == null || 
             guid.Equals("") || 
-            PlayerPrefs.GetInt($"Interactable@{guid}", 0) != 0)
+            EncryptedPlayerPrefs.GetInt($"Interactable@{guid}", 0) != 0)
         {
             gameObject.SetActive(false);
         }
@@ -27,11 +27,11 @@ public class InteractableItem : MonoBehaviour
     {
         if (item == null || 
             guid.Equals("") || 
-            PlayerPrefs.GetInt($"Interactable@{guid}", 0) != 0)    
+            EncryptedPlayerPrefs.GetInt($"Interactable@{guid}", 0) != 0)    
             return;
 
         VariableManager.Instance.AddOneItem(item.ID);
-        PlayerPrefs.SetInt($"Interactable@{guid}", 1);
+        EncryptedPlayerPrefs.SetInt($"Interactable@{guid}", 1);
         
         gameObject.SetActive(false);
     }

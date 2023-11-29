@@ -50,11 +50,11 @@ public class StickerData : ScriptableObject
 
     public void SetValue(int value)
     {
-        PlayerPrefs.SetInt(id, value);
+        EncryptedPlayerPrefs.SetInt(id, value);
     }
     
     public int GetValue()
     {
-        return PlayerPrefs.GetInt(id, defaultValue);
+        return EncryptedPlayerPrefs.GetInt(id, defaultValue);
     }
 }
