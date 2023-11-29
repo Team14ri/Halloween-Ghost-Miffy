@@ -8,13 +8,13 @@ public class SceneManagerCustom : MonoBehaviour
     
     public string LastVisitPortalLocation
     {
-        get => PlayerPrefs.GetString("LastVisitPortal@Location", "Cemetery");  
-        set => PlayerPrefs.SetString("LastVisitPortal@Location", value);
+        get => EncryptedPlayerPrefs.GetString("LastVisitPortal@Location", "Cemetery");  
+        set => EncryptedPlayerPrefs.SetString("LastVisitPortal@Location", value);
     }
     public int LastVisitPortalID
     {
-        get => PlayerPrefs.GetInt("LastVisitPortal@ID", 0);  
-        set => PlayerPrefs.SetInt("LastVisitPortal@ID", value);
+        get => EncryptedPlayerPrefs.GetInt("LastVisitPortal@ID", 0);  
+        set => EncryptedPlayerPrefs.SetInt("LastVisitPortal@ID", value);
     }
     
     private void Awake()
@@ -36,8 +36,11 @@ public class SceneManagerCustom : MonoBehaviour
     {
         // 기존 포탈 정보를 초기화
         PortalManager.Instance.PortalDictionary.Clear();
-        LastVisitPortalLocation = sceneName;
-        LastVisitPortalID = exitPortalNum;
+        if (sceneName != "Title")
+        {
+            LastVisitPortalLocation = sceneName;
+            LastVisitPortalID = exitPortalNum;
+        }
         StartCoroutine(LoadSceneCoroutine(sceneName, exitPortalNum));
     }
     

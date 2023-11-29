@@ -7,15 +7,15 @@ namespace Interaction
 {
     public class InteractionTrigger : MonoBehaviour
     {
+        public bool disableInteraction;
+        
         public InteractionButtonType interactionButtonType;
         [SerializeField] private InteractionButtonController interactionButtonController;
         
         [SerializeField] private DialogueContainer dialogueContainer;
         [SerializeField] private UnityEvent enterEvents;
         [SerializeField] private UnityEvent exitEvents;
-        
-        public bool DisableInteraction { get; private set; }
-        
+
         public void Enter()
         {
             interactionButtonController.Enable(interactionButtonType);
@@ -30,6 +30,8 @@ namespace Interaction
         {
             interactionButtonController.Disable();
             
+            enterEvents?.Invoke();
+            
             if (dialogueContainer != null)
             {
                 PlayerController.Instance.StateMachine.ChangeState(
@@ -37,7 +39,6 @@ namespace Interaction
                         PlayerController.Instance.StateMachine, dialogueContainer,
                         () => { exitEvents?.Invoke(); }));
             }
-            enterEvents?.Invoke();
         }
         
         public void SetInteractionButtonType(string type)
@@ -47,12 +48,12 @@ namespace Interaction
         
         private void SetInteractionEnable()
         {
-            DisableInteraction = false;
+            disableInteraction = false;
         }
         
         public void DisableUntil(float seconds)
         {
-            DisableInteraction = true;
+            disableInteraction = true;
             Invoke(nameof(SetInteractionEnable), seconds);
         }
     }

@@ -30,7 +30,7 @@ namespace Quest
                 case QuestClearConditionType.Item:
                     return VariableManager.Instance.GetItemValue(variableID) >= equalOrMany;
                 default:
-                    return PlayerPrefs.GetInt(variableID, 0) >= equalOrMany;
+                    return EncryptedPlayerPrefs.GetInt(variableID, 0) >= equalOrMany;
             }
         }
     }

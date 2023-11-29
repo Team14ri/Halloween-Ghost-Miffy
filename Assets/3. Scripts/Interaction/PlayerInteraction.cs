@@ -57,7 +57,7 @@ namespace Interaction
             }
 
             var newClosestInteractionTrigger = interactionTriggers
-                .Where(c => !c.DisableInteraction)
+                .Where(c => !c.disableInteraction)
                 .OrderBy(c => Vector3.Distance(transform.position, c.transform.position))
                 .FirstOrDefault();
 

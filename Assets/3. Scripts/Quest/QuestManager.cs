@@ -66,17 +66,17 @@ namespace Quest
         {
             get => new int[]
             {
-                PlayerPrefs.GetInt("CurrentQuest@ChapterID", (int)QuestChapter.Ch1),
-                PlayerPrefs.GetInt("CurrentQuest@ID", 0),
-                PlayerPrefs.GetInt("CurrentQuest@DetailID", 0),
-                PlayerPrefs.GetInt("CurrentQuest@FlowID", 1)
+                EncryptedPlayerPrefs.GetInt("CurrentQuest@ChapterID", (int)QuestChapter.Ch1),
+                EncryptedPlayerPrefs.GetInt("CurrentQuest@ID", 0),
+                EncryptedPlayerPrefs.GetInt("CurrentQuest@DetailID", 0),
+                EncryptedPlayerPrefs.GetInt("CurrentQuest@FlowID", 1)
             };  
             set
             {
-                PlayerPrefs.SetInt("CurrentQuest@ChapterID", value[0]);
-                PlayerPrefs.SetInt("CurrentQuest@ID", value[1]);
-                PlayerPrefs.SetInt("CurrentQuest@DetailID", value[2]);
-                PlayerPrefs.SetInt("CurrentQuest@FlowID", value[3]);
+                EncryptedPlayerPrefs.SetInt("CurrentQuest@ChapterID", value[0]);
+                EncryptedPlayerPrefs.SetInt("CurrentQuest@ID", value[1]);
+                EncryptedPlayerPrefs.SetInt("CurrentQuest@DetailID", value[2]);
+                EncryptedPlayerPrefs.SetInt("CurrentQuest@FlowID", value[3]);
             }
         }
         
