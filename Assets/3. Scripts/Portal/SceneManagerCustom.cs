@@ -36,8 +36,11 @@ public class SceneManagerCustom : MonoBehaviour
     {
         // 기존 포탈 정보를 초기화
         PortalManager.Instance.PortalDictionary.Clear();
-        LastVisitPortalLocation = sceneName;
-        LastVisitPortalID = exitPortalNum;
+        if (sceneName != "Title")
+        {
+            LastVisitPortalLocation = sceneName;
+            LastVisitPortalID = exitPortalNum;
+        }
         StartCoroutine(LoadSceneCoroutine(sceneName, exitPortalNum));
     }
     
