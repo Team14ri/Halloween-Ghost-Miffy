@@ -5,6 +5,7 @@ public class Portal : MonoBehaviour
 {
     [BoxGroup("Info"), SerializeField] private int portalNum;
     [BoxGroup("Info"), SerializeField] private Transform spawnPoint;
+    [BoxGroup("Info"), SerializeField] private bool spawnFacingLeft;
 
     [BoxGroup("Exit Info"), SerializeField] private string exitSceneName;
     [BoxGroup("Exit Info"), SerializeField] private int exitPortalNum = 1;
@@ -17,6 +18,11 @@ public class Portal : MonoBehaviour
     public Transform GetSpawnPoint()
     {
         return spawnPoint;
+    }
+    
+    public bool CheckSpawnFacingLeft()
+    {
+        return spawnFacingLeft;
     }
 
     public void LoadScene()

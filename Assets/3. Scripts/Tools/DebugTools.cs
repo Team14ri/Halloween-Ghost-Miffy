@@ -14,13 +14,12 @@ public class DebugTools : MonoBehaviour
 
     private void Awake()
     {
-#if UNITY_EDITOR
-#elif DEVELOPMENT_BUILD
-#else
-        Destroy(gameObject);
+#if !UNITY_EDITOR && !DEVELOPMENT_BUILD
+    Destroy(gameObject);
 #endif
     }
 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
     private void Start()
     {
         switch (SceneManager.GetActiveScene().name.ToLower())
@@ -166,4 +165,5 @@ public class DebugTools : MonoBehaviour
             QuestManager.Instance.SetQuestID($"{chapterID}@{questID}-{questDetailID}-{questFlowID}");
         }
     }
+#endif
 }
