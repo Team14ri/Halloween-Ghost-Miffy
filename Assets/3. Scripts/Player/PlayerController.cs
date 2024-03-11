@@ -157,6 +157,16 @@ public class PlayerController : MonoBehaviour
         this.EnsureCoroutineStopped(ref _scaleRoutine);
         _scaleRoutine = StartCoroutine(SmoothReverseScaleX(dir));
     }
+    
+    public void ChangePlayerFacingImmediately(int dir)
+    {
+        lastFacing = dir;
+        float targetScaleX = initModelScaleX * dir;
+        model.transform.localScale = new Vector3(
+            targetScaleX,
+            model.transform.localScale.y,
+            model.transform.localScale.z);
+    }
 
     private IEnumerator SmoothReverseScaleX(int dir)
     {

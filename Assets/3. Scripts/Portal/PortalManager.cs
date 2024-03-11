@@ -34,7 +34,8 @@ public class PortalManager : MonoBehaviour
 
         FindPlayer();
         Vector3 exitPortalPosition = GetPortalPosition(exitPortalNum);
-        SetPlayerPosition(exitPortalPosition);
+        bool spawnFacingLeft = CheckSpawnFacingLeft(exitPortalNum);
+        SetPlayerPosition(exitPortalPosition, spawnFacingLeft);
     }
     
     void FindPlayer()
@@ -54,11 +55,23 @@ public class PortalManager : MonoBehaviour
         return portalPosition;
     }
     
-    private void SetPlayerPosition(Vector3 portalPos)
+    private bool CheckSpawnFacingLeft(int portalNum)
+    {
+        if (!PortalDictionary.ContainsKey(portalNum))
+        {
+            Debug.LogError($"포탈 {portalNum}을 찾을 수 없습니다.");
+            return false;
+        }
+
+        return PortalDictionary[portalNum].CheckSpawnFacingLeft();
+    }
+    
+    private void SetPlayerPosition(Vector3 portalPos, bool facingLeft)
     {
         if (Player == null)
             return;
         
         Player.transform.position = portalPos;
+        PlayerController.Instance.ChangePlayerFacingImmediately(facingLeft ? -1 : 1);
     }
 }
